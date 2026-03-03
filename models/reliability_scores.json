@@ -1,5 +1,5 @@
 {
-  "inputs_hash": "dedf291166e78e87d0f9c0cbabad6ec10f188241c151049c209f5f6c8319acf0",
+  "inputs_hash": "f0c992dde37d21ee1141e27c4c3208d31d4b6e34d326dba33b0300cd88bfbea1",
   "season": 2025,
   "source_features": "data/processed/features_season_2025.json",
   "teams": [
@@ -16,9 +16,9 @@
       "components": {
         "dnf_history": 58.19147,
         "new_component_penalties": 71.05,
-        "power_unit_reliability": 69.0
+        "power_unit_reliability": 43.692135
       },
-      "reliability_score": 64.546161,
+      "reliability_score": 55.688409,
       "team": "Aston Martin"
     },
     {

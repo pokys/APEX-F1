@@ -12,6 +12,12 @@ on:
       - "outputs/prediction_wet.json"
       - "config/race_config.json"
       - ".github/workflows/deploy-pages.yml"
+  workflow_run:
+    workflows:
+      - Full Prediction Pipeline
+      - Simulate Race
+    types:
+      - completed
 
 permissions:
   contents: read
@@ -24,6 +30,7 @@ concurrency:
 
 jobs:
   deploy:
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -31,6 +38,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: main
 
       - name: Prepare static site
         run: |

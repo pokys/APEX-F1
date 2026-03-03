@@ -26,13 +26,22 @@ from typing import Any
 LOGGER = logging.getLogger("build_features")
 
 UPGRADE_MAGNITUDE_SCORE = {"minor": 1.0, "medium": 2.0, "major": 3.0}
-SOURCE_CREDIBILITY = {
-    "the-race": 0.90,
-    "racefans": 0.86,
-    "motorsport": 0.86,
-    "autosport": 0.85,
+DEFAULT_SIGNAL_GUARDRAILS = {
+    "source_credibility": {
+        "the-race": 0.90,
+        "racefans": 0.86,
+        "motorsport": 0.86,
+        "autosport": 0.85,
+    },
+    "default_source_credibility": 0.45,
+    "source_confidence_floor": 0.2,
+    "echo_decay": 0.6,
+    "caps": {
+        "upgrade": {"baseline": 1.0, "max_delta": 0.8},
+        "reliability": {"baseline": 0.2, "max_delta": 0.25},
+        "driver_confidence": {"baseline": 0.0, "max_delta": 0.35},
+    },
 }
-DEFAULT_SOURCE_CREDIBILITY = 0.70
 SEASON_FILE_RE = re.compile(r"^season_(\d{4})\.json$")
 
 
@@ -60,6 +69,11 @@ def parse_args() -> argparse.Namespace:
         help="Output directory for processed feature files.",
     )
     parser.add_argument(
+        "--guardrails-config",
+        default="config/signal_guardrails.json",
+        help="Signal guardrails configuration JSON path.",
+    )
+    parser.add_argument(
         "--log-level",
         default="INFO",
         choices=["DEBUG", "INFO", "WARNING", "ERROR"],
@@ -75,6 +89,52 @@ def parse_args() -> argparse.Namespace:
 
 def load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def load_signal_guardrails(path: Path) -> dict[str, Any]:
+    merged = json.loads(json.dumps(DEFAULT_SIGNAL_GUARDRAILS))
+    if not path.exists():
+        return merged
+    try:
+        raw = load_json(path)
+    except Exception as exc:
+        LOGGER.warning("Could not parse signal guardrails config %s: %s", path, exc)
+        return merged
+    if not isinstance(raw, dict):
+        return merged
+
+    credibility = raw.get("source_credibility")
+    if isinstance(credibility, dict):
+        normalized: dict[str, float] = {}
+        for key, value in credibility.items():
+            if not isinstance(key, str):
+                continue
+            num = to_float(value)
+            if num is None:
+                continue
+            normalized[key.strip().lower()] = max(0.0, min(1.0, num))
+        if normalized:
+            merged["source_credibility"] = normalized
+
+    for key in ("default_source_credibility", "source_confidence_floor", "echo_decay"):
+        num = to_float(raw.get(key))
+        if num is not None:
+            merged[key] = max(0.0, min(1.0, num))
+
+    raw_caps = raw.get("caps")
+    if isinstance(raw_caps, dict):
+        caps = merged["caps"]
+        for cap_key in ("upgrade", "reliability", "driver_confidence"):
+            cap_raw = raw_caps.get(cap_key)
+            if not isinstance(cap_raw, dict):
+                continue
+            baseline = to_float(cap_raw.get("baseline"))
+            max_delta = to_float(cap_raw.get("max_delta"))
+            if baseline is not None:
+                caps[cap_key]["baseline"] = baseline
+            if max_delta is not None:
+                caps[cap_key]["max_delta"] = max(0.0, max_delta)
+    return merged
 
 
 def to_float(value: Any) -> float | None:
@@ -219,21 +279,68 @@ def collect_signals(signals_dir: Path) -> tuple[list[dict[str, Any]], list[str]]
     return all_signals, used_files
 
 
-def signal_weight(signal: dict[str, Any]) -> float:
+def signal_weight(signal: dict[str, Any], guardrails: dict[str, Any]) -> float:
     source_name = str(signal.get("source_name") or "").strip().lower()
-    credibility = SOURCE_CREDIBILITY.get(source_name, DEFAULT_SOURCE_CREDIBILITY)
+    source_credibility = guardrails.get("source_credibility", {})
+    if not isinstance(source_credibility, dict):
+        source_credibility = {}
+    credibility = to_float(source_credibility.get(source_name))
+    if credibility is None:
+        credibility = to_float(guardrails.get("default_source_credibility"))
+    if credibility is None:
+        credibility = 0.45
+    credibility = max(0.0, min(1.0, credibility))
     source_confidence = to_float(signal.get("source_confidence"))
     if source_confidence is None:
         source_confidence = 0.5
-    return max(0.0, min(1.0, source_confidence)) * credibility
+    source_confidence = max(0.0, min(1.0, source_confidence))
+    floor = to_float(guardrails.get("source_confidence_floor"))
+    if floor is None:
+        floor = 0.2
+    if source_confidence < max(0.0, min(1.0, floor)):
+        return 0.0
+    return source_confidence * credibility
 
 
-def aggregate_signals(signals: list[dict[str, Any]]) -> tuple[dict[str, dict[str, float]], dict[str, dict[str, float]]]:
+def signal_fingerprint(signal: dict[str, Any]) -> str:
+    team_key = slug(str(signal.get("team") or ""))
+    driver_key = slug(str(signal.get("driver") or signal.get("driver_name") or ""))
+    if signal.get("upgrade_detected"):
+        magnitude = str(signal.get("upgrade_magnitude") or "").strip().lower()
+        component = slug(str(signal.get("upgrade_component") or "unknown"))
+        return f"upgrade|{team_key}|{component}|{magnitude}"
+    reliability = to_float(signal.get("reliability_concern"))
+    if reliability is not None:
+        return f"reliability|{team_key}|{round(max(0.0, min(1.0, reliability)), 1)}"
+    confidence = to_float(signal.get("driver_confidence_change"))
+    if confidence is not None:
+        sign = 1 if confidence > 0 else -1 if confidence < 0 else 0
+        return f"driver_conf|{driver_key}|{sign}|{round(abs(confidence), 1)}"
+    return f"generic|{team_key}|{driver_key}"
+
+
+def capped_soft_signal(value: float, baseline: float, max_delta: float, lo: float, hi: float) -> float:
+    delta = max(-max_delta, min(max_delta, value - baseline))
+    return max(lo, min(hi, baseline + delta))
+
+
+def aggregate_signals(signals: list[dict[str, Any]], guardrails: dict[str, Any]) -> tuple[dict[str, dict[str, float]], dict[str, dict[str, float]]]:
     team_agg: dict[str, dict[str, float]] = {}
     driver_agg: dict[str, dict[str, float]] = {}
+    echo_decay = to_float(guardrails.get("echo_decay"))
+    if echo_decay is None:
+        echo_decay = 0.6
+    echo_decay = max(0.0, min(1.0, echo_decay))
+    echo_counts: dict[str, int] = {}
 
     for signal in signals:
-        weight = signal_weight(signal)
+        weight = signal_weight(signal, guardrails)
+        if weight <= 0:
+            continue
+        fingerprint = signal_fingerprint(signal)
+        seen_count = echo_counts.get(fingerprint, 0)
+        weight *= echo_decay**seen_count
+        echo_counts[fingerprint] = seen_count + 1
         if weight <= 0:
             continue
 
@@ -278,7 +385,7 @@ def aggregate_signals(signals: list[dict[str, Any]]) -> tuple[dict[str, dict[str
     return team_agg, driver_agg
 
 
-def build_features(fastf1_snapshot: dict[str, Any], signals: list[dict[str, Any]]) -> dict[str, Any]:
+def build_features(fastf1_snapshot: dict[str, Any], signals: list[dict[str, Any]], guardrails: dict[str, Any]) -> dict[str, Any]:
     season = int(fastf1_snapshot.get("season"))
     events = fastf1_snapshot.get("events", [])
     if not isinstance(events, list):
@@ -381,7 +488,10 @@ def build_features(fastf1_snapshot: dict[str, Any], signals: list[dict[str, Any]
             if team_key in teams:
                 teams[team_key]["qualifying_positions"].append(q_pos)
 
-    team_signal_agg, driver_signal_agg = aggregate_signals(signals)
+    team_signal_agg, driver_signal_agg = aggregate_signals(signals, guardrails=guardrails)
+    caps = guardrails.get("caps", {})
+    if not isinstance(caps, dict):
+        caps = {}
 
     driver_rows: list[dict[str, Any]] = []
     for key in sorted(drivers.keys()):
@@ -395,7 +505,15 @@ def build_features(fastf1_snapshot: dict[str, Any], signals: list[dict[str, Any]
         signal_weight = signal.get("weight_sum", 0.0)
         confidence_delta = None
         if signal_weight > 0:
-            confidence_delta = round(signal.get("confidence_weighted_sum", 0.0) / signal_weight, 6)
+            raw_conf_delta = signal.get("confidence_weighted_sum", 0.0) / signal_weight
+            cap_cfg = caps.get("driver_confidence", {}) if isinstance(caps.get("driver_confidence"), dict) else {}
+            baseline = to_float(cap_cfg.get("baseline"))
+            max_delta = to_float(cap_cfg.get("max_delta"))
+            if baseline is None:
+                baseline = 0.0
+            if max_delta is None:
+                max_delta = 0.35
+            confidence_delta = round(capped_soft_signal(raw_conf_delta, baseline, max_delta, -1.0, 1.0), 6)
 
         driver_rows.append(
             {
@@ -423,8 +541,24 @@ def build_features(fastf1_snapshot: dict[str, Any], signals: list[dict[str, Any]
         upgrade_score = None
         reliability_concern = None
         if signal_weight > 0:
-            upgrade_score = round(signal.get("upgrade_weighted_sum", 0.0) / signal_weight, 6)
-            reliability_concern = round(signal.get("reliability_weighted_sum", 0.0) / signal_weight, 6)
+            raw_upgrade = signal.get("upgrade_weighted_sum", 0.0) / signal_weight
+            raw_rel = signal.get("reliability_weighted_sum", 0.0) / signal_weight
+            up_cfg = caps.get("upgrade", {}) if isinstance(caps.get("upgrade"), dict) else {}
+            rel_cfg = caps.get("reliability", {}) if isinstance(caps.get("reliability"), dict) else {}
+            up_baseline = to_float(up_cfg.get("baseline"))
+            up_max_delta = to_float(up_cfg.get("max_delta"))
+            rel_baseline = to_float(rel_cfg.get("baseline"))
+            rel_max_delta = to_float(rel_cfg.get("max_delta"))
+            if up_baseline is None:
+                up_baseline = 1.0
+            if up_max_delta is None:
+                up_max_delta = 0.8
+            if rel_baseline is None:
+                rel_baseline = 0.2
+            if rel_max_delta is None:
+                rel_max_delta = 0.25
+            upgrade_score = round(capped_soft_signal(raw_upgrade, up_baseline, up_max_delta, 0.0, 3.0), 6)
+            reliability_concern = round(capped_soft_signal(raw_rel, rel_baseline, rel_max_delta, 0.0, 1.0), 6)
 
         team_rows.append(
             {
@@ -475,7 +609,8 @@ def main() -> int:
             )
 
         signals, signal_files = collect_signals(Path(args.signals_dir))
-        features = build_features(fastf1_snapshot, signals)
+        guardrails = load_signal_guardrails(Path(args.guardrails_config))
+        features = build_features(fastf1_snapshot, signals, guardrails=guardrails)
         features["fastf1_snapshot"] = fastf1_path.as_posix()
         features["signals_files"] = signal_files
 

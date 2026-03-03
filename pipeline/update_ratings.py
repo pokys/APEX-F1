@@ -29,6 +29,18 @@ from typing import Any
 
 LOGGER = logging.getLogger("update_ratings")
 FEATURE_FILE_RE = re.compile(r"^features_season_(\d{4})\.json$")
+DEFAULT_SIGNAL_GUARDRAILS = {
+    "source_credibility": {
+        "the-race": 0.90,
+        "racefans": 0.86,
+        "motorsport": 0.86,
+        "autosport": 0.85,
+    },
+    "default_source_credibility": 0.45,
+    "source_confidence_floor": 0.2,
+    "echo_decay": 0.6,
+    "penalty_index_cap": 0.35,
+}
 
 
 def parse_args() -> argparse.Namespace:
@@ -53,6 +65,11 @@ def parse_args() -> argparse.Namespace:
         "--models-dir",
         default="models",
         help="Directory to write model JSON files.",
+    )
+    parser.add_argument(
+        "--guardrails-config",
+        default="config/signal_guardrails.json",
+        help="Signal guardrails configuration JSON path.",
     )
     parser.add_argument(
         "--allow-missing-features",
@@ -105,6 +122,39 @@ def stable_hash_json(value: Any) -> str:
 
 def load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def load_signal_guardrails(path: Path) -> dict[str, Any]:
+    merged = json.loads(json.dumps(DEFAULT_SIGNAL_GUARDRAILS))
+    if not path.exists():
+        return merged
+    try:
+        raw = load_json(path)
+    except Exception as exc:
+        LOGGER.warning("Could not parse signal guardrails config %s: %s", path, exc)
+        return merged
+    if not isinstance(raw, dict):
+        return merged
+
+    credibility = raw.get("source_credibility")
+    if isinstance(credibility, dict):
+        normalized: dict[str, float] = {}
+        for key, value in credibility.items():
+            if not isinstance(key, str):
+                continue
+            num = safe_float(value)
+            if num is None:
+                continue
+            normalized[key.strip().lower()] = clamp(num, 0.0, 1.0)
+        if normalized:
+            merged["source_credibility"] = normalized
+
+    for key in ("default_source_credibility", "source_confidence_floor", "echo_decay", "penalty_index_cap"):
+        num = safe_float(raw.get(key))
+        if num is not None:
+            merged[key] = clamp(num, 0.0, 1.0)
+
+    return merged
 
 
 def season_from_features_path(path: Path) -> int | None:
@@ -193,36 +243,107 @@ def load_signals(signals_dir: Path) -> list[dict[str, Any]]:
     return signals
 
 
-def aggregate_optional_signal_indexes(signals: list[dict[str, Any]]) -> tuple[dict[str, float], dict[str, float], dict[str, float]]:
+def signal_weight(signal: dict[str, Any], guardrails: dict[str, Any]) -> float:
+    source_name = str(signal.get("source_name") or "").strip().lower()
+    source_credibility = guardrails.get("source_credibility", {})
+    if not isinstance(source_credibility, dict):
+        source_credibility = {}
+    credibility = safe_float(source_credibility.get(source_name))
+    if credibility is None:
+        credibility = safe_float(guardrails.get("default_source_credibility"))
+    if credibility is None:
+        credibility = 0.45
+    credibility = clamp(credibility, 0.0, 1.0)
+
+    source_confidence = safe_float(signal.get("source_confidence"))
+    if source_confidence is None:
+        source_confidence = 0.5
+    source_confidence = clamp(source_confidence, 0.0, 1.0)
+    floor = safe_float(guardrails.get("source_confidence_floor"))
+    if floor is None:
+        floor = 0.2
+    if source_confidence < clamp(floor, 0.0, 1.0):
+        return 0.0
+    return source_confidence * credibility
+
+
+def aggregate_optional_signal_indexes(signals: list[dict[str, Any]], guardrails: dict[str, Any]) -> tuple[dict[str, float], dict[str, float], dict[str, float]]:
     # Team wet index, team safety-car index, team penalty index.
-    wet_acc: dict[str, list[float]] = {}
-    safety_acc: dict[str, list[float]] = {}
-    penalty_acc: dict[str, list[float]] = {}
+    wet_sum: dict[str, float] = {}
+    wet_w: dict[str, float] = {}
+    safety_sum: dict[str, float] = {}
+    safety_w: dict[str, float] = {}
+    penalty_sum: dict[str, float] = {}
+    penalty_w: dict[str, float] = {}
+    echo_decay = safe_float(guardrails.get("echo_decay"))
+    if echo_decay is None:
+        echo_decay = 0.6
+    echo_decay = clamp(echo_decay, 0.0, 1.0)
+    echo_counts: dict[str, int] = {}
 
     for signal in signals:
         team_key = slug(str(signal.get("team") or ""))
         if not team_key:
             continue
+        base_weight = signal_weight(signal, guardrails=guardrails)
+        if base_weight <= 0:
+            continue
 
         wet = safe_float(signal.get("wet_performance_index"))
         if wet is not None:
-            wet_acc.setdefault(team_key, []).append(clamp(wet, 0.0, 1.0))
+            wet = clamp(wet, 0.0, 1.0)
+            fp = f"wet|{team_key}|{round(wet, 2)}"
+            seen = echo_counts.get(fp, 0)
+            weight = base_weight * (echo_decay**seen)
+            echo_counts[fp] = seen + 1
+            if weight > 0:
+                wet_sum[team_key] = wet_sum.get(team_key, 0.0) + weight * wet
+                wet_w[team_key] = wet_w.get(team_key, 0.0) + weight
 
         safety = safe_float(signal.get("safety_car_reaction"))
         if safety is not None:
-            safety_acc.setdefault(team_key, []).append(clamp(safety, 0.0, 1.0))
+            safety = clamp(safety, 0.0, 1.0)
+            fp = f"safety|{team_key}|{round(safety, 2)}"
+            seen = echo_counts.get(fp, 0)
+            weight = base_weight * (echo_decay**seen)
+            echo_counts[fp] = seen + 1
+            if weight > 0:
+                safety_sum[team_key] = safety_sum.get(team_key, 0.0) + weight * safety
+                safety_w[team_key] = safety_w.get(team_key, 0.0) + weight
 
         penalty = safe_float(signal.get("new_component_penalty"))
         if penalty is not None:
-            penalty_acc.setdefault(team_key, []).append(clamp(penalty, 0.0, 1.0))
+            penalty = clamp(penalty, 0.0, 1.0)
+            fp = f"penalty|{team_key}|{round(penalty, 2)}"
+            seen = echo_counts.get(fp, 0)
+            weight = base_weight * (echo_decay**seen)
+            echo_counts[fp] = seen + 1
+            if weight > 0:
+                penalty_sum[team_key] = penalty_sum.get(team_key, 0.0) + weight * penalty
+                penalty_w[team_key] = penalty_w.get(team_key, 0.0) + weight
 
-    def avg_map(acc: dict[str, list[float]]) -> dict[str, float]:
+    def avg_map(sum_map: dict[str, float], weight_map: dict[str, float], cap: float | None = None) -> dict[str, float]:
         out: dict[str, float] = {}
-        for key in sorted(acc.keys()):
-            out[key] = round(statistics.fmean(acc[key]), 6)
+        for key in sorted(sum_map.keys()):
+            w = weight_map.get(key, 0.0)
+            if w <= 0:
+                continue
+            value = sum_map[key] / w
+            if cap is not None:
+                value = min(value, cap)
+            out[key] = round(value, 6)
         return out
 
-    return avg_map(wet_acc), avg_map(safety_acc), avg_map(penalty_acc)
+    penalty_cap = safe_float(guardrails.get("penalty_index_cap"))
+    if penalty_cap is None:
+        penalty_cap = 0.35
+    penalty_cap = clamp(penalty_cap, 0.0, 1.0)
+
+    return (
+        avg_map(wet_sum, wet_w),
+        avg_map(safety_sum, safety_w),
+        avg_map(penalty_sum, penalty_w, cap=penalty_cap),
+    )
 
 
 def compute_driver_ratings(features: dict[str, Any], wet_by_team: dict[str, float]) -> dict[str, Any]:
@@ -462,7 +583,8 @@ def main() -> int:
             raise ValueError(f"Features file has no driver rows: {features_path}")
 
         signals = load_signals(Path(args.signals_dir))
-        wet_by_team, safety_by_team, penalties_by_team = aggregate_optional_signal_indexes(signals)
+        guardrails = load_signal_guardrails(Path(args.guardrails_config))
+        wet_by_team, safety_by_team, penalties_by_team = aggregate_optional_signal_indexes(signals, guardrails=guardrails)
 
         drivers = compute_driver_ratings(features, wet_by_team)
         teams = compute_team_ratings(features)

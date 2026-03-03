@@ -1,0 +1,26 @@
+{
+  "caps": {
+    "driver_confidence": {
+      "baseline": 0.0,
+      "max_delta": 0.35
+    },
+    "reliability": {
+      "baseline": 0.2,
+      "max_delta": 0.25
+    },
+    "upgrade": {
+      "baseline": 1.0,
+      "max_delta": 0.8
+    }
+  },
+  "default_source_credibility": 0.45,
+  "echo_decay": 0.6,
+  "penalty_index_cap": 0.35,
+  "source_confidence_floor": 0.2,
+  "source_credibility": {
+    "autosport": 0.85,
+    "motorsport": 0.86,
+    "racefans": 0.86,
+    "the-race": 0.9
+  }
+}

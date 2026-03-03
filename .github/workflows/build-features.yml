@@ -12,6 +12,8 @@ on:
       - "pipeline/build_features.py"
       - "data/raw/fastf1/**"
       - "knowledge/processed/**"
+      - "config/signal_guardrails.json"
+      - "requirements.lock"
       - ".github/workflows/build-features.yml"
   schedule:
     - cron: "10 5 * * *"
@@ -34,6 +36,10 @@ jobs:
           python-version: "3.12"
 
       - name: Build feature dataset
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.lock
+      - name: Run feature build
         env:
           SEASON: ${{ github.event.inputs.season }}
         run: |
@@ -42,7 +48,7 @@ jobs:
             ARGS+=(--season "$SEASON")
           fi
           python pipeline/validate_signals.py --signals-dir knowledge/processed --allow-empty --log-level INFO
-          python pipeline/build_features.py "${ARGS[@]}" --allow-missing-fastf1 --log-level INFO
+          python pipeline/build_features.py "${ARGS[@]}" --guardrails-config config/signal_guardrails.json --allow-missing-fastf1 --log-level INFO
 
       - name: Commit changes
         run: |
@@ -55,4 +61,15 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -- data/processed
           git commit -m "Update processed feature dataset"
-          git push
+          for attempt in 1 2 3; do
+            if git push; then
+              exit 0
+            fi
+            if [ "$attempt" -lt 3 ]; then
+              echo "git push failed (attempt $attempt), retrying after rebase..."
+              git pull --rebase || true
+              sleep $((attempt * 7))
+            fi
+          done
+          echo "git push failed after 3 attempts."
+          exit 1

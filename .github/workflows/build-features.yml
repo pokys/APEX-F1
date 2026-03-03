@@ -1,0 +1,57 @@
+name: Build Features
+
+on:
+  workflow_dispatch:
+    inputs:
+      season:
+        description: "Season year (e.g. 2026)"
+        required: false
+        type: string
+  push:
+    paths:
+      - "pipeline/build_features.py"
+      - "data/raw/fastf1/**"
+      - "knowledge/processed/**"
+      - ".github/workflows/build-features.yml"
+  schedule:
+    - cron: "10 5 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build feature dataset
+        env:
+          SEASON: ${{ github.event.inputs.season }}
+        run: |
+          ARGS=()
+          if [ -n "$SEASON" ]; then
+            ARGS+=(--season "$SEASON")
+          fi
+          python pipeline/build_features.py "${ARGS[@]}" --allow-missing-fastf1 --log-level INFO
+
+      - name: Commit changes
+        run: |
+          if git diff --quiet -- data/processed; then
+            echo "No processed feature changes."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/processed
+          git commit -m "Update processed feature dataset"
+          git push

@@ -2,7 +2,7 @@
   "races": [
     {
       "actual_winner": "NOR",
-      "brier_podium": 0.039582,
+      "brier_podium": 0.039573,
       "brier_win": 0.052228,
       "event_date": "2025-03-16",
       "podium_overlap": 2,
@@ -37,8 +37,8 @@
     },
     {
       "actual_winner": "PIA",
-      "brier_podium": 0.058457,
-      "brier_win": 0.050952,
+      "brier_podium": 0.058329,
+      "brier_win": 0.050937,
       "event_date": "2025-03-23",
       "podium_overlap": 2,
       "predicted_winner": "RUS",
@@ -46,7 +46,7 @@
       "round": 2,
       "win_probabilities": {
         "ALB": 0.0002,
-        "ALO": 0.0004,
+        "ALO": 0.0,
         "ANT": 0.0,
         "BEA": 0.0,
         "BOR": 0.0,
@@ -58,9 +58,9 @@
         "HUL": 0.0,
         "LAW": 0.0,
         "LEC": 0.0592,
-        "NOR": 0.1008,
+        "NOR": 0.101,
         "OCO": 0.0,
-        "PIA": 0.1112,
+        "PIA": 0.1114,
         "RUS": 0.3948,
         "SAI": 0.0,
         "STR": 0.0,
@@ -68,12 +68,12 @@
         "VER": 0.3324
       },
       "winner_hit": false,
-      "winner_log_loss": 2.196425
+      "winner_log_loss": 2.194628
     },
     {
       "actual_winner": "VER",
-      "brier_podium": 0.061041,
-      "brier_win": 0.030019,
+      "brier_podium": 0.060879,
+      "brier_win": 0.03002,
       "event_date": "2025-04-06",
       "podium_overlap": 2,
       "predicted_winner": "RUS",
@@ -81,7 +81,7 @@
       "round": 3,
       "win_probabilities": {
         "ALB": 0.0006,
-        "ALO": 0.0006,
+        "ALO": 0.0004,
         "ANT": 0.0002,
         "BEA": 0.0,
         "BOR": 0.0,
@@ -92,7 +92,7 @@
         "HAM": 0.0006,
         "HUL": 0.0,
         "LAW": 0.0,
-        "LEC": 0.0546,
+        "LEC": 0.0548,
         "NOR": 0.0932,
         "OCO": 0.0,
         "PIA": 0.1142,
@@ -107,8 +107,8 @@
     },
     {
       "actual_winner": "PIA",
-      "brier_podium": 0.056534,
-      "brier_win": 0.050427,
+      "brier_podium": 0.056343,
+      "brier_win": 0.050392,
       "event_date": "2025-04-13",
       "podium_overlap": 2,
       "predicted_winner": "RUS",
@@ -116,7 +116,7 @@
       "round": 4,
       "win_probabilities": {
         "ALB": 0.0002,
-        "ALO": 0.0004,
+        "ALO": 0.0002,
         "ANT": 0.0,
         "BEA": 0.0,
         "BOR": 0.0,
@@ -128,9 +128,9 @@
         "HUL": 0.0002,
         "LAW": 0.0,
         "LEC": 0.0642,
-        "NOR": 0.0968,
+        "NOR": 0.0966,
         "OCO": 0.0,
-        "PIA": 0.1154,
+        "PIA": 0.1158,
         "RUS": 0.396,
         "SAI": 0.0,
         "STR": 0.0,
@@ -138,12 +138,12 @@
         "VER": 0.3258
       },
       "winner_hit": false,
-      "winner_log_loss": 2.159351
+      "winner_log_loss": 2.155891
     },
     {
       "actual_winner": "PIA",
-      "brier_podium": 0.06945,
-      "brier_win": 0.050936,
+      "brier_podium": 0.069336,
+      "brier_win": 0.050943,
       "event_date": "2025-04-20",
       "podium_overlap": 2,
       "predicted_winner": "RUS",
@@ -151,7 +151,7 @@
       "round": 5,
       "win_probabilities": {
         "ALB": 0.0002,
-        "ALO": 0.0002,
+        "ALO": 0.0,
         "ANT": 0.0002,
         "BEA": 0.0,
         "BOR": 0.0,
@@ -166,7 +166,7 @@
         "NOR": 0.0922,
         "OCO": 0.0,
         "PIA": 0.1126,
-        "RUS": 0.3936,
+        "RUS": 0.3938,
         "SAI": 0.0,
         "STR": 0.0,
         "TSU": 0.0,
@@ -177,8 +177,8 @@
     },
     {
       "actual_winner": "PIA",
-      "brier_podium": 0.057973,
-      "brier_win": 0.050996,
+      "brier_podium": 0.057922,
+      "brier_win": 0.050979,
       "event_date": "2025-05-04",
       "podium_overlap": 2,
       "predicted_winner": "RUS",
@@ -186,7 +186,7 @@
       "round": 6,
       "win_probabilities": {
         "ALB": 0.0006,
-        "ALO": 0.0004,
+        "ALO": 0.0002,
         "ANT": 0.0,
         "BEA": 0.0002,
         "BOR": 0.0,
@@ -200,7 +200,7 @@
         "LEC": 0.0592,
         "NOR": 0.0924,
         "OCO": 0.0,
-        "PIA": 0.1126,
+        "PIA": 0.1128,
         "RUS": 0.4044,
         "SAI": 0.0,
         "STR": 0.0,
@@ -208,12 +208,12 @@
         "VER": 0.3284
       },
       "winner_hit": false,
-      "winner_log_loss": 2.183914
+      "winner_log_loss": 2.182139
     },
     {
       "actual_winner": "VER",
-      "brier_podium": 0.060847,
-      "brier_win": 0.030123,
+      "brier_podium": 0.06078,
+      "brier_win": 0.030112,
       "event_date": "2025-05-18",
       "podium_overlap": 2,
       "predicted_winner": "RUS",
@@ -221,7 +221,7 @@
       "round": 7,
       "win_probabilities": {
         "ALB": 0.0006,
-        "ALO": 0.0006,
+        "ALO": 0.0,
         "ANT": 0.0,
         "BEA": 0.0,
         "BOR": 0.0,
@@ -232,7 +232,7 @@
         "HAM": 0.0004,
         "HUL": 0.0,
         "LAW": 0.0,
-        "LEC": 0.059,
+        "LEC": 0.0594,
         "NOR": 0.0918,
         "OCO": 0.0,
         "PIA": 0.1066,
@@ -240,14 +240,14 @@
         "SAI": 0.0,
         "STR": 0.0,
         "TSU": 0.0,
-        "VER": 0.3338
+        "VER": 0.334
       },
       "winner_hit": false,
-      "winner_log_loss": 1.097213
+      "winner_log_loss": 1.096614
     },
     {
       "actual_winner": "NOR",
-      "brier_podium": 0.095955,
+      "brier_podium": 0.095834,
       "brier_win": 0.053717,
       "event_date": "2025-05-25",
       "podium_overlap": 1,
@@ -282,8 +282,8 @@
     },
     {
       "actual_winner": "PIA",
-      "brier_podium": 0.096,
-      "brier_win": 0.052456,
+      "brier_podium": 0.095708,
+      "brier_win": 0.052462,
       "event_date": "2025-06-01",
       "podium_overlap": 1,
       "predicted_winner": "RUS",
@@ -291,7 +291,7 @@
       "round": 9,
       "win_probabilities": {
         "ALB": 0.0006,
-        "ALO": 0.0002,
+        "ALO": 0.0,
         "ANT": 0.0,
         "BEA": 0.0,
         "BOR": 0.0,
@@ -310,15 +310,15 @@
         "SAI": 0.0,
         "STR": 0.0,
         "TSU": 0.0,
-        "VER": 0.3474
+        "VER": 0.3476
       },
       "winner_hit": false,
       "winner_log_loss": 2.290657
     },
     {
       "actual_winner": "RUS",
-      "brier_podium": 0.086044,
-      "brier_win": 0.022372,
+      "brier_podium": 0.086241,
+      "brier_win": 0.022374,
       "event_date": "2025-06-15",
       "podium_overlap": 2,
       "predicted_winner": "RUS",
@@ -326,7 +326,7 @@
       "round": 10,
       "win_probabilities": {
         "ALB": 0.0006,
-        "ALO": 0.0004,
+        "ALO": 0.0002,
         "ANT": 0.0,
         "BEA": 0.0002,
         "BOR": 0.0,
@@ -340,7 +340,7 @@
         "LEC": 0.0524,
         "NOR": 0.0998,
         "OCO": 0.0,
-        "PIA": 0.1092,
+        "PIA": 0.1094,
         "RUS": 0.4154,
         "SAI": 0.0,
         "STR": 0.0,
@@ -352,8 +352,8 @@
     },
     {
       "actual_winner": "NOR",
-      "brier_podium": 0.095791,
-      "brier_win": 0.053894,
+      "brier_podium": 0.095557,
+      "brier_win": 0.0539,
       "event_date": "2025-06-29",
       "podium_overlap": 1,
       "predicted_winner": "RUS",
@@ -361,7 +361,7 @@
       "round": 11,
       "win_probabilities": {
         "ALB": 0.0004,
-        "ALO": 0.0006,
+        "ALO": 0.0004,
         "ANT": 0.0,
         "BEA": 0.0,
         "BOR": 0.0,
@@ -380,14 +380,14 @@
         "SAI": 0.0,
         "STR": 0.0,
         "TSU": 0.0,
-        "VER": 0.3356
+        "VER": 0.3358
       },
       "winner_hit": false,
       "winner_log_loss": 2.416874
     },
     {
       "actual_winner": "NOR",
-      "brier_podium": 0.131464,
+      "brier_podium": 0.131429,
       "brier_win": 0.053095,
       "event_date": "2025-07-06",
       "podium_overlap": 1,
@@ -422,8 +422,8 @@
     },
     {
       "actual_winner": "PIA",
-      "brier_podium": 0.09267,
-      "brier_win": 0.051604,
+      "brier_podium": 0.092489,
+      "brier_win": 0.051606,
       "event_date": "2025-07-27",
       "podium_overlap": 1,
       "predicted_winner": "RUS",
@@ -431,7 +431,7 @@
       "round": 13,
       "win_probabilities": {
         "ALB": 0.0002,
-        "ALO": 0.0004,
+        "ALO": 0.0002,
         "ANT": 0.0,
         "BEA": 0.0,
         "BOR": 0.0,
@@ -443,7 +443,7 @@
         "HUL": 0.0,
         "LAW": 0.0,
         "LEC": 0.0588,
-        "NOR": 0.095,
+        "NOR": 0.0952,
         "OCO": 0.0,
         "PIA": 0.107,
         "RUS": 0.4004,
@@ -457,8 +457,8 @@
     },
     {
       "actual_winner": "NOR",
-      "brier_podium": 0.058179,
-      "brier_win": 0.051807,
+      "brier_podium": 0.05814,
+      "brier_win": 0.051826,
       "event_date": "2025-08-03",
       "podium_overlap": 2,
       "predicted_winner": "RUS",
@@ -466,7 +466,7 @@
       "round": 14,
       "win_probabilities": {
         "ALB": 0.0006,
-        "ALO": 0.0012,
+        "ALO": 0.0002,
         "ANT": 0.0002,
         "BEA": 0.0002,
         "BOR": 0.0,
@@ -474,14 +474,14 @@
         "DOO": 0.0,
         "GAS": 0.0,
         "HAD": 0.0,
-        "HAM": 0.0,
+        "HAM": 0.0002,
         "HUL": 0.0,
         "LAW": 0.0,
         "LEC": 0.061,
         "NOR": 0.103,
         "OCO": 0.0,
-        "PIA": 0.1052,
-        "RUS": 0.4038,
+        "PIA": 0.1056,
+        "RUS": 0.4042,
         "SAI": 0.0,
         "STR": 0.0,
         "TSU": 0.0,
@@ -492,8 +492,8 @@
     },
     {
       "actual_winner": "PIA",
-      "brier_podium": 0.108552,
-      "brier_win": 0.052502,
+      "brier_podium": 0.108628,
+      "brier_win": 0.052503,
       "event_date": "2025-08-31",
       "podium_overlap": 2,
       "predicted_winner": "RUS",
@@ -501,7 +501,7 @@
       "round": 15,
       "win_probabilities": {
         "ALB": 0.0004,
-        "ALO": 0.0004,
+        "ALO": 0.0002,
         "ANT": 0.0,
         "BEA": 0.0004,
         "BOR": 0.0,
@@ -512,7 +512,7 @@
         "HAM": 0.0006,
         "HUL": 0.0,
         "LAW": 0.0,
-        "LEC": 0.0524,
+        "LEC": 0.0526,
         "NOR": 0.102,
         "OCO": 0.0,
         "PIA": 0.1004,
@@ -527,8 +527,8 @@
     },
     {
       "actual_winner": "VER",
-      "brier_podium": 0.061224,
-      "brier_win": 0.030781,
+      "brier_podium": 0.061126,
+      "brier_win": 0.030783,
       "event_date": "2025-09-07",
       "podium_overlap": 2,
       "predicted_winner": "RUS",
@@ -536,7 +536,7 @@
       "round": 16,
       "win_probabilities": {
         "ALB": 0.0004,
-        "ALO": 0.0008,
+        "ALO": 0.0004,
         "ANT": 0.0,
         "BEA": 0.0002,
         "BOR": 0.0,
@@ -544,13 +544,13 @@
         "DOO": 0.0,
         "GAS": 0.0,
         "HAD": 0.0,
-        "HAM": 0.0002,
+        "HAM": 0.0004,
         "HUL": 0.0,
         "LAW": 0.0,
         "LEC": 0.0534,
         "NOR": 0.1018,
         "OCO": 0.0,
-        "PIA": 0.1076,
+        "PIA": 0.1078,
         "RUS": 0.4094,
         "SAI": 0.0,
         "STR": 0.0,
@@ -562,8 +562,8 @@
     },
     {
       "actual_winner": "VER",
-      "brier_podium": 0.086132,
-      "brier_win": 0.029816,
+      "brier_podium": 0.086333,
+      "brier_win": 0.02982,
       "event_date": "2025-09-21",
       "podium_overlap": 2,
       "predicted_winner": "RUS",
@@ -571,7 +571,7 @@
       "round": 17,
       "win_probabilities": {
         "ALB": 0.0004,
-        "ALO": 0.0004,
+        "ALO": 0.0,
         "ANT": 0.0002,
         "BEA": 0.0,
         "BOR": 0.0,
@@ -583,9 +583,9 @@
         "HUL": 0.0,
         "LAW": 0.0,
         "LEC": 0.053,
-        "NOR": 0.0992,
+        "NOR": 0.0994,
         "OCO": 0.0,
-        "PIA": 0.1172,
+        "PIA": 0.1174,
         "RUS": 0.3942,
         "SAI": 0.0,
         "STR": 0.0,
@@ -597,8 +597,8 @@
     },
     {
       "actual_winner": "RUS",
-      "brier_podium": 0.039303,
-      "brier_win": 0.025453,
+      "brier_podium": 0.039274,
+      "brier_win": 0.02546,
       "event_date": "2025-10-05",
       "podium_overlap": 2,
       "predicted_winner": "RUS",
@@ -606,7 +606,7 @@
       "round": 18,
       "win_probabilities": {
         "ALB": 0.0,
-        "ALO": 0.0012,
+        "ALO": 0.0004,
         "ANT": 0.0,
         "BEA": 0.0004,
         "BOR": 0.0,
@@ -617,10 +617,10 @@
         "HAM": 0.001,
         "HUL": 0.0,
         "LAW": 0.0,
-        "LEC": 0.0618,
-        "NOR": 0.111,
+        "LEC": 0.062,
+        "NOR": 0.1114,
         "OCO": 0.0,
-        "PIA": 0.1176,
+        "PIA": 0.1178,
         "RUS": 0.3728,
         "SAI": 0.0,
         "STR": 0.0,
@@ -632,8 +632,8 @@
     },
     {
       "actual_winner": "VER",
-      "brier_podium": 0.074433,
-      "brier_win": 0.030484,
+      "brier_podium": 0.074286,
+      "brier_win": 0.030489,
       "event_date": "2025-10-19",
       "podium_overlap": 1,
       "predicted_winner": "RUS",
@@ -641,7 +641,7 @@
       "round": 19,
       "win_probabilities": {
         "ALB": 0.0004,
-        "ALO": 0.0014,
+        "ALO": 0.0004,
         "ANT": 0.0,
         "BEA": 0.0002,
         "BOR": 0.0,
@@ -649,26 +649,26 @@
         "DOO": 0.0,
         "GAS": 0.0,
         "HAD": 0.0,
-        "HAM": 0.0002,
+        "HAM": 0.0004,
         "HUL": 0.0,
         "LAW": 0.0,
         "LEC": 0.0496,
-        "NOR": 0.092,
+        "NOR": 0.0922,
         "OCO": 0.0,
         "PIA": 0.1206,
-        "RUS": 0.4062,
+        "RUS": 0.4066,
         "SAI": 0.0,
         "STR": 0.0,
         "TSU": 0.0,
-        "VER": 0.3294
+        "VER": 0.3296
       },
       "winner_hit": false,
-      "winner_log_loss": 1.110482
+      "winner_log_loss": 1.109875
     },
     {
       "actual_winner": "NOR",
-      "brier_podium": 0.075528,
-      "brier_win": 0.054013,
+      "brier_podium": 0.07557,
+      "brier_win": 0.053997,
       "event_date": "2025-10-26",
       "podium_overlap": 1,
       "predicted_winner": "RUS",
@@ -676,7 +676,7 @@
       "round": 20,
       "win_probabilities": {
         "ALB": 0.0006,
-        "ALO": 0.0004,
+        "ALO": 0.0,
         "ANT": 0.0,
         "BEA": 0.0,
         "BOR": 0.0,
@@ -687,8 +687,8 @@
         "HAM": 0.0008,
         "HUL": 0.0002,
         "LAW": 0.0,
-        "LEC": 0.0494,
-        "NOR": 0.0884,
+        "LEC": 0.0496,
+        "NOR": 0.0886,
         "OCO": 0.0,
         "PIA": 0.1018,
         "RUS": 0.418,
@@ -698,12 +698,12 @@
         "VER": 0.3402
       },
       "winner_hit": false,
-      "winner_log_loss": 2.425883
+      "winner_log_loss": 2.423623
     },
     {
       "actual_winner": "NOR",
-      "brier_podium": 0.110493,
-      "brier_win": 0.05186,
+      "brier_podium": 0.110585,
+      "brier_win": 0.051874,
       "event_date": "2025-11-09",
       "podium_overlap": 1,
       "predicted_winner": "RUS",
@@ -711,7 +711,7 @@
       "round": 21,
       "win_probabilities": {
         "ALB": 0.0004,
-        "ALO": 0.0008,
+        "ALO": 0.0004,
         "ANT": 0.0,
         "BEA": 0.0004,
         "BOR": 0.0,
@@ -726,18 +726,18 @@
         "NOR": 0.101,
         "OCO": 0.0,
         "PIA": 0.1124,
-        "RUS": 0.3872,
+        "RUS": 0.3874,
         "SAI": 0.0,
         "STR": 0.0,
         "TSU": 0.0,
-        "VER": 0.3394
+        "VER": 0.3396
       },
       "winner_hit": false,
       "winner_log_loss": 2.292635
     },
     {
       "actual_winner": "VER",
-      "brier_podium": 0.086455,
+      "brier_podium": 0.086612,
       "brier_win": 0.02935,
       "event_date": "2025-11-23",
       "podium_overlap": 2,
@@ -772,7 +772,7 @@
     },
     {
       "actual_winner": "VER",
-      "brier_podium": 0.107634,
+      "brier_podium": 0.107591,
       "brier_win": 0.029256,
       "event_date": "2025-11-30",
       "podium_overlap": 2,
@@ -807,8 +807,8 @@
     },
     {
       "actual_winner": "VER",
-      "brier_podium": 0.059767,
-      "brier_win": 0.030169,
+      "brier_podium": 0.059679,
+      "brier_win": 0.030166,
       "event_date": "2025-12-07",
       "podium_overlap": 2,
       "predicted_winner": "RUS",
@@ -816,7 +816,7 @@
       "round": 24,
       "win_probabilities": {
         "ALB": 0.0002,
-        "ALO": 0.0008,
+        "ALO": 0.0002,
         "ANT": 0.0,
         "BEA": 0.0,
         "BOR": 0.0,
@@ -828,29 +828,29 @@
         "HUL": 0.0,
         "LAW": 0.0,
         "LEC": 0.0582,
-        "NOR": 0.0934,
+        "NOR": 0.0936,
         "OCO": 0.0,
         "PIA": 0.109,
-        "RUS": 0.4048,
+        "RUS": 0.405,
         "SAI": 0.0,
         "STR": 0.0,
         "TSU": 0.0,
-        "VER": 0.3324
+        "VER": 0.3326
       },
       "winner_hit": false,
-      "winner_log_loss": 1.101416
+      "winner_log_loss": 1.100815
     }
   ],
   "races_evaluated": 24,
   "season": 2025,
   "summary": {
-    "avg_log_loss": 1.673723,
-    "mean_brier_podium": 0.077896,
-    "mean_brier_win": 0.04243,
+    "avg_log_loss": 1.671503,
+    "mean_brier_podium": 0.077843,
+    "mean_brier_win": 0.042429,
     "mean_podium_overlap_top3": 1.666667,
-    "mean_winner_log_loss": 1.779613,
+    "mean_winner_log_loss": 1.77915,
     "recommended_win_temperature": 1.6,
-    "win_ece_10_bins": 0.319107,
+    "win_ece_10_bins": 0.319165,
     "winner_accuracy": 0.083333
   }
 }

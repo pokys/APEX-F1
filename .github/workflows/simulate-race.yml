@@ -7,6 +7,7 @@ on:
   push:
     paths:
       - "pipeline/simulate_race.py"
+      - "pipeline/simulate_weather_scenarios.py"
       - "pipeline/render_prediction_page.py"
       - "models/*.json"
       - "config/race_config.json"
@@ -44,28 +45,30 @@ jobs:
         run: |
           python pipeline/apply_backtest_calibration.py --season "$(date -u +%Y)" --race-config config/race_config.json --allow-missing-report --log-level INFO
 
-      - name: Simulate race
+      - name: Simulate dry and wet scenarios
         run: |
-          python pipeline/simulate_race.py --allow-missing-models --log-level INFO
+          python pipeline/simulate_weather_scenarios.py --allow-missing-models --log-level INFO
 
       - name: Publish canonical prediction
         run: |
+          python pipeline/publish_prediction.py --input outputs/prediction_dry.json --output outputs/prediction_dry.json --allow-missing-input --log-level INFO
+          python pipeline/publish_prediction.py --input outputs/prediction_wet.json --output outputs/prediction_wet.json --allow-missing-input --log-level INFO
           python pipeline/publish_prediction.py --allow-missing-input --log-level INFO
 
       - name: Render prediction page
         run: |
-          python pipeline/render_prediction_page.py --prediction outputs/prediction.json --race-config config/race_config.json --output outputs/prediction_report.html --allow-missing-input --log-level INFO
+          python pipeline/render_prediction_page.py --prediction outputs/prediction.json --prediction-dry outputs/prediction_dry.json --prediction-wet outputs/prediction_wet.json --race-config config/race_config.json --output outputs/prediction_report.html --allow-missing-input --log-level INFO
 
       - name: Commit changes
         run: |
-          if [ -z "$(git status --porcelain -- outputs/prediction.json outputs/prediction_report.html config/race_config.json)" ]; then
+          if [ -z "$(git status --porcelain -- outputs/prediction.json outputs/prediction_dry.json outputs/prediction_wet.json outputs/prediction_report.html config/race_config.json)" ]; then
             echo "No prediction changes."
             exit 0
           fi
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- outputs/prediction.json outputs/prediction_report.html config/race_config.json
+          git add -- outputs/prediction.json outputs/prediction_dry.json outputs/prediction_wet.json outputs/prediction_report.html config/race_config.json
           git commit -m "Update race prediction"
           for attempt in 1 2 3; do
             if git push; then

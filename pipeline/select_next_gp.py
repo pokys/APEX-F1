@@ -35,6 +35,7 @@ def parse_args() -> argparse.Namespace:
         help="Reference date in YYYY-MM-DD used for selecting the next GP.",
     )
     parser.add_argument("--race-config", default="config/race_config.json", help="Race config path.")
+    parser.add_argument("--raw-dir", default="data/raw/fastf1", help="FastF1 raw snapshot directory.")
     parser.add_argument(
         "--log-level",
         default="INFO",
@@ -143,35 +144,98 @@ def load_existing_config(path: Path) -> dict[str, Any]:
     return merged
 
 
-def next_event_for_season(season: int, as_of: date) -> dict[str, Any] | None:
-    schedule = fastf1.get_event_schedule(season, include_testing=False, backend="f1timing")
-    schedule = schedule.sort_values(by=["EventDate", "RoundNumber"], kind="stable")
+def normalize_calendar_event(event: dict[str, Any], season: int) -> dict[str, Any] | None:
+    if not isinstance(event, dict):
+        return None
+    event_date = to_utc_date(event.get("event_date"))
+    if event_date is None:
+        return None
+    try:
+        round_number = int(float(event.get("round")))
+    except Exception:
+        round_number = 0
+    return {
+        "season": season,
+        "round": round_number,
+        "event_name": str(event.get("event_name") or "Next GP"),
+        "official_event_name": str(event.get("official_event_name") or event.get("event_name") or "Next GP"),
+        "country": str(event.get("country") or ""),
+        "location": str(event.get("location") or ""),
+        "event_date": event_date.isoformat(),
+    }
 
-    for _, row in schedule.iterrows():
-        event_date = to_utc_date(row.get("EventDate"))
+
+def load_snapshot_calendar(raw_dir: Path, season: int) -> list[dict[str, Any]]:
+    path = raw_dir / f"season_{season}.json"
+    if not path.exists():
+        return []
+    try:
+        payload = load_json(path)
+    except Exception:
+        return []
+    if not isinstance(payload, dict):
+        return []
+    calendar = payload.get("calendar")
+    if not isinstance(calendar, list):
+        return []
+
+    normalized: list[dict[str, Any]] = []
+    for item in calendar:
+        if not isinstance(item, dict):
+            continue
+        normalized_item = normalize_calendar_event(item, season=season)
+        if normalized_item is not None:
+            normalized.append(normalized_item)
+    normalized.sort(key=lambda x: (x["event_date"], x["round"], x["event_name"]))
+    return normalized
+
+
+def next_event_from_calendar(calendar: list[dict[str, Any]], as_of: date) -> dict[str, Any] | None:
+    for event in calendar:
+        event_date = to_utc_date(event.get("event_date"))
         if event_date is None:
             continue
         if event_date < as_of:
             continue
-        round_number = row.get("RoundNumber")
-        try:
-            round_number = int(float(round_number))
-        except Exception:
-            round_number = 0
-
-        return {
-            "season": season,
-            "round": round_number,
-            "event_name": str(row.get("EventName") or "Next GP"),
-            "official_event_name": str(row.get("OfficialEventName") or row.get("EventName") or "Next GP"),
-            "country": str(row.get("Country") or ""),
-            "location": str(row.get("Location") or ""),
-            "event_date": event_date.isoformat(),
-        }
+        return event
     return None
 
 
-def select_next_event(requested_season: int | None, as_of: date) -> dict[str, Any]:
+def next_event_for_season(season: int, as_of: date) -> dict[str, Any] | None:
+    backends = ["f1timing", "ergast"]
+    for backend in backends:
+        try:
+            schedule = fastf1.get_event_schedule(season, include_testing=False, backend=backend)
+        except Exception as exc:
+            LOGGER.warning("Schedule fetch failed for season %s backend %s: %s", season, backend, exc)
+            continue
+
+        schedule = schedule.sort_values(by=["EventDate", "RoundNumber"], kind="stable")
+        for _, row in schedule.iterrows():
+            event_date = to_utc_date(row.get("EventDate"))
+            if event_date is None:
+                continue
+            if event_date < as_of:
+                continue
+            round_number = row.get("RoundNumber")
+            try:
+                round_number = int(float(round_number))
+            except Exception:
+                round_number = 0
+
+            return {
+                "season": season,
+                "round": round_number,
+                "event_name": str(row.get("EventName") or "Next GP"),
+                "official_event_name": str(row.get("OfficialEventName") or row.get("EventName") or "Next GP"),
+                "country": str(row.get("Country") or ""),
+                "location": str(row.get("Location") or ""),
+                "event_date": event_date.isoformat(),
+            }
+    return None
+
+
+def select_next_event(requested_season: int | None, as_of: date, raw_dir: Path) -> dict[str, Any]:
     if fastf1 is None:
         raise RuntimeError("fastf1 is not installed. Install dependencies from requirements.txt first.")
 
@@ -179,6 +243,12 @@ def select_next_event(requested_season: int | None, as_of: date) -> dict[str, An
     candidate_seasons = [base_season, base_season + 1]
 
     for season in candidate_seasons:
+        local_calendar = load_snapshot_calendar(raw_dir, season=season)
+        local_event = next_event_from_calendar(local_calendar, as_of=as_of)
+        if local_event is not None:
+            LOGGER.info("Selected next GP from local snapshot calendar for season %s.", season)
+            return local_event
+
         event = next_event_for_season(season, as_of)
         if event is not None:
             return event
@@ -197,9 +267,9 @@ def main() -> int:
 
     try:
         as_of = parse_iso_date(args.as_of_date)
-        event = select_next_event(args.season, as_of)
         path = Path(args.race_config)
         config = load_existing_config(path)
+        event = select_next_event(args.season, as_of, raw_dir=Path(args.raw_dir))
 
         config["season"] = event["season"]
         config["next_round"] = event["round"]
@@ -214,7 +284,12 @@ def main() -> int:
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(config, indent=2, sort_keys=True, ensure_ascii=True) + "\n", encoding="utf-8")
     except Exception as exc:
-        LOGGER.error("select_next_gp failed: %s", exc)
+        # Non-fatal fallback: keep the last known config to avoid breaking the full pipeline on transient API issues.
+        LOGGER.warning("Using existing race config due to next-GP selection failure: %s", exc)
+        path = Path(args.race_config)
+        if path.exists():
+            return 0
+        LOGGER.error("select_next_gp failed and no existing race config is available.")
         return 1
 
     LOGGER.info(

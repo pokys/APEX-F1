@@ -269,6 +269,23 @@ def ingest(season: int, sessions: list[str], cutoff: date, output_dir: Path, cac
     schedule = fastf1.get_event_schedule(season, include_testing=False, backend="f1timing")
     schedule = schedule.sort_values(by=["RoundNumber", "EventDate"], kind="stable")
 
+    calendar_payload: list[dict[str, Any]] = []
+    for _, row in schedule.iterrows():
+        round_number = normalize_position(row.get("RoundNumber"))
+        if round_number is None:
+            continue
+        event_date = to_utc_date(row.get("EventDate"))
+        calendar_payload.append(
+            {
+                "round": round_number,
+                "event_name": to_json_scalar(row.get("EventName")),
+                "official_event_name": to_json_scalar(row.get("OfficialEventName")),
+                "country": to_json_scalar(row.get("Country")),
+                "location": to_json_scalar(row.get("Location")),
+                "event_date": event_date.isoformat() if event_date else None,
+            }
+        )
+
     events_payload: list[dict[str, Any]] = []
     for _, row in schedule.iterrows():
         round_number = normalize_position(row.get("RoundNumber"))
@@ -305,6 +322,7 @@ def ingest(season: int, sessions: list[str], cutoff: date, output_dir: Path, cac
         "season": season,
         "cutoff_date": cutoff.isoformat(),
         "sessions_requested": sessions,
+        "calendar": calendar_payload,
         "events": events_payload,
     }
 

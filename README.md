@@ -171,6 +171,8 @@ Race config:
 
 Signals contract:
 - See `knowledge/processed/README.md`.
+- AI extraction instructions:
+  - See `knowledge/processed/AI_EXTRACTION_GUIDE.md`.
 
 ## Determinism Rules
 
@@ -195,3 +197,4 @@ Note:
 
 - Operations runbook: `RUNBOOK.md`
 - Processed signals schema and examples: `knowledge/processed/README.md`
+- External AI extraction guide: `knowledge/processed/AI_EXTRACTION_GUIDE.md`

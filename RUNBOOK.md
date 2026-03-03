@@ -38,6 +38,7 @@ On push:
 - Keep values within allowed ranges (see schema doc).
 
 Schema details: `knowledge/processed/README.md`.
+AI extraction prompt and formatting guide: `knowledge/processed/AI_EXTRACTION_GUIDE.md`.
 
 ## 3. Race-Week Procedure
 

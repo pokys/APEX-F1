@@ -1,5 +1,5 @@
 {
-  "inputs_hash": "dedf291166e78e87d0f9c0cbabad6ec10f188241c151049c209f5f6c8319acf0",
+  "inputs_hash": "f0c992dde37d21ee1141e27c4c3208d31d4b6e34d326dba33b0300cd88bfbea1",
   "season": 2025,
   "source_features": "data/processed/features_season_2025.json",
   "teams": [
@@ -16,10 +16,10 @@
       "components": {
         "qualifying_gap_proxy": 31.252037,
         "sector_dominance": 54.203905,
-        "upgrades_impact": 61.0
+        "upgrades_impact": 45.0
       },
       "team": "Aston Martin",
-      "team_rating": 45.914393
+      "team_rating": 41.114393
     },
     {
       "components": {

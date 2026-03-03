@@ -277,8 +277,8 @@
       "qualifying_avg_position": 13.166667,
       "race_avg_position": 12.765957,
       "signal_count": 2,
-      "signal_reliability_concern": 0.660143,
-      "signal_upgrade_score": 0.0,
+      "signal_reliability_concern": 0.45,
+      "signal_upgrade_score": 0.2,
       "starts": 47,
       "team": "Aston Martin"
     },

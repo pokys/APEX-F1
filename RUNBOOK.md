@@ -81,6 +81,8 @@ python pipeline/validate_outputs.py --log-level INFO
 
 Poznámka:
 - Web report teď má přepínač scénářů `Dry/Wet`.
+- Web report má i přepínač seznamu `Top 10/All Drivers` (na mobilu je default `Top 10`).
+- V horní části reportu jsou insight karty pro rychlé čtení.
 - `prediction.json` zůstává kvůli kompatibilitě (alias dry scénáře).
 
 ## 4. Chování na startu nové sezony

@@ -1,0 +1,439 @@
+#!/usr/bin/env python3
+"""
+Update deterministic model ratings from processed features and signals.
+
+Inputs:
+- data/processed/features_season_<year>.json
+- knowledge/processed/*.json
+
+Outputs:
+- models/driver_ratings.json
+- models/team_ratings.json
+- models/strategy_scores.json
+- models/reliability_scores.json
+"""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import logging
+import math
+import statistics
+import sys
+from pathlib import Path
+from typing import Any
+
+
+LOGGER = logging.getLogger("update_ratings")
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Update deterministic rating JSON files.")
+    parser.add_argument(
+        "--season",
+        type=int,
+        default=None,
+        help="Season year. If omitted, inferred from latest features file.",
+    )
+    parser.add_argument(
+        "--features-input",
+        default="data/processed",
+        help="Features file path or directory containing features_season_*.json.",
+    )
+    parser.add_argument(
+        "--signals-dir",
+        default="knowledge/processed",
+        help="Directory with processed signal JSON files.",
+    )
+    parser.add_argument(
+        "--models-dir",
+        default="models",
+        help="Directory to write model JSON files.",
+    )
+    parser.add_argument(
+        "--allow-missing-features",
+        action="store_true",
+        help="Exit 0 when features file is missing.",
+    )
+    parser.add_argument(
+        "--log-level",
+        default="INFO",
+        choices=["DEBUG", "INFO", "WARNING", "ERROR"],
+        help="Logging verbosity.",
+    )
+    return parser.parse_args()
+
+
+def clamp(value: float, lo: float, hi: float) -> float:
+    return max(lo, min(hi, value))
+
+
+def safe_float(value: Any) -> float | None:
+    if value is None:
+        return None
+    if isinstance(value, (int, float)):
+        f = float(value)
+        if math.isnan(f) or math.isinf(f):
+            return None
+        return f
+    text = str(value).strip()
+    if not text:
+        return None
+    try:
+        f = float(text)
+    except ValueError:
+        return None
+    if math.isnan(f) or math.isinf(f):
+        return None
+    return f
+
+
+def slug(value: str | None) -> str:
+    if not value:
+        return ""
+    return "".join(ch.lower() if ch.isalnum() else "-" for ch in value).strip("-")
+
+
+def stable_hash_json(value: Any) -> str:
+    raw = json.dumps(value, sort_keys=True, ensure_ascii=True, separators=(",", ":")).encode("utf-8")
+    return hashlib.sha256(raw).hexdigest()
+
+
+def load_json(path: Path) -> Any:
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def choose_features_file(features_input: Path, season: int | None) -> Path:
+    if features_input.is_file():
+        return features_input
+
+    if not features_input.exists():
+        raise FileNotFoundError(f"Features path does not exist: {features_input}")
+
+    if season is not None:
+        candidate = features_input / f"features_season_{season}.json"
+        if not candidate.exists():
+            raise FileNotFoundError(f"Features file not found: {candidate}")
+        return candidate
+
+    candidates = sorted(features_input.glob("features_season_*.json"))
+    if not candidates:
+        raise FileNotFoundError(f"No features files in {features_input}")
+    return candidates[-1]
+
+
+def normalize_signals(raw: Any) -> list[dict[str, Any]]:
+    if isinstance(raw, list):
+        return [x for x in raw if isinstance(x, dict)]
+    if isinstance(raw, dict):
+        signals = raw.get("signals")
+        if isinstance(signals, list):
+            return [x for x in signals if isinstance(x, dict)]
+        return [raw]
+    return []
+
+
+def load_signals(signals_dir: Path) -> list[dict[str, Any]]:
+    if not signals_dir.exists():
+        return []
+    signals: list[dict[str, Any]] = []
+    for file_path in sorted(signals_dir.glob("*.json")):
+        try:
+            raw = load_json(file_path)
+        except json.JSONDecodeError as exc:
+            LOGGER.warning("Skipping invalid signal JSON %s: %s", file_path, exc)
+            continue
+        signals.extend(normalize_signals(raw))
+    return signals
+
+
+def aggregate_optional_signal_indexes(signals: list[dict[str, Any]]) -> tuple[dict[str, float], dict[str, float], dict[str, float]]:
+    # Team wet index, team safety-car index, team penalty index.
+    wet_acc: dict[str, list[float]] = {}
+    safety_acc: dict[str, list[float]] = {}
+    penalty_acc: dict[str, list[float]] = {}
+
+    for signal in signals:
+        team_key = slug(str(signal.get("team") or ""))
+        if not team_key:
+            continue
+
+        wet = safe_float(signal.get("wet_performance_index"))
+        if wet is not None:
+            wet_acc.setdefault(team_key, []).append(clamp(wet, 0.0, 1.0))
+
+        safety = safe_float(signal.get("safety_car_reaction"))
+        if safety is not None:
+            safety_acc.setdefault(team_key, []).append(clamp(safety, 0.0, 1.0))
+
+        penalty = safe_float(signal.get("new_component_penalty"))
+        if penalty is not None:
+            penalty_acc.setdefault(team_key, []).append(clamp(penalty, 0.0, 1.0))
+
+    def avg_map(acc: dict[str, list[float]]) -> dict[str, float]:
+        out: dict[str, float] = {}
+        for key in sorted(acc.keys()):
+            out[key] = round(statistics.fmean(acc[key]), 6)
+        return out
+
+    return avg_map(wet_acc), avg_map(safety_acc), avg_map(penalty_acc)
+
+
+def compute_driver_ratings(features: dict[str, Any], wet_by_team: dict[str, float]) -> dict[str, Any]:
+    rows = features.get("drivers", [])
+    if not isinstance(rows, list):
+        rows = []
+
+    # Teammate deltas based on average race position.
+    by_team: dict[str, list[tuple[str, float]]] = {}
+    for row in rows:
+        if not isinstance(row, dict):
+            continue
+        team_key = slug(str(row.get("team") or ""))
+        driver_name = str(row.get("driver") or "")
+        race_avg = safe_float(row.get("race_avg_position"))
+        if not team_key or not driver_name or race_avg is None:
+            continue
+        by_team.setdefault(team_key, []).append((driver_name, race_avg))
+
+    teammate_delta: dict[str, float] = {}
+    for team_key, pairs in by_team.items():
+        if len(pairs) < 2:
+            for driver_name, _ in pairs:
+                teammate_delta[driver_name] = 0.0
+            continue
+        team_mean = statistics.fmean(v for _, v in pairs)
+        for driver_name, race_avg in pairs:
+            # Positive delta means better (lower position number than teammate average).
+            teammate_delta[driver_name] = round(team_mean - race_avg, 6)
+
+    payload_rows: list[dict[str, Any]] = []
+    for row in sorted((x for x in rows if isinstance(x, dict)), key=lambda r: str(r.get("driver") or "").lower()):
+        driver_name = str(row.get("driver") or "")
+        team_name = str(row.get("team") or "")
+        team_key = slug(team_name)
+        if not driver_name or not team_name:
+            continue
+
+        race_avg = safe_float(row.get("race_avg_position"))
+        q_avg = safe_float(row.get("qualifying_avg_position"))
+        dnf_rate = safe_float(row.get("dnf_rate"))
+        signal_conf = safe_float(row.get("signal_driver_confidence_delta")) or 0.0
+
+        teammate_component = 50.0 + 22.0 * clamp(teammate_delta.get(driver_name, 0.0), -2.0, 2.0)
+        consistency_component = 75.0 - 40.0 * clamp((dnf_rate if dnf_rate is not None else 0.15), 0.0, 1.0)
+        wet_index = wet_by_team.get(team_key, 0.5)
+        wet_component = 35.0 + 30.0 * clamp(wet_index, 0.0, 1.0)
+        qualifying_component = 80.0 - 2.8 * clamp((q_avg if q_avg is not None else 12.0), 1.0, 20.0)
+
+        # Small bounded manual-signal adjustment.
+        signal_component = 5.0 * clamp(signal_conf, -1.0, 1.0)
+
+        rating = (
+            0.35 * teammate_component
+            + 0.25 * consistency_component
+            + 0.20 * wet_component
+            + 0.20 * qualifying_component
+            + signal_component
+        )
+        rating = round(clamp(rating, 0.0, 100.0), 6)
+
+        payload_rows.append(
+            {
+                "driver": driver_name,
+                "team": team_name,
+                "driver_rating": rating,
+                "components": {
+                    "teammate_delta_performance": round(teammate_component, 6),
+                    "consistency": round(consistency_component, 6),
+                    "wet_performance_index": round(wet_component, 6),
+                    "qualifying_pace": round(qualifying_component, 6),
+                },
+            }
+        )
+
+    return {"drivers": payload_rows}
+
+
+def compute_team_ratings(features: dict[str, Any]) -> dict[str, Any]:
+    rows = features.get("teams", [])
+    if not isinstance(rows, list):
+        rows = []
+
+    q_values = [
+        safe_float(row.get("qualifying_avg_position"))
+        for row in rows
+        if isinstance(row, dict) and safe_float(row.get("qualifying_avg_position")) is not None
+    ]
+    field_q_mean = statistics.fmean(q_values) if q_values else 10.5
+
+    payload_rows: list[dict[str, Any]] = []
+    for row in sorted((x for x in rows if isinstance(x, dict)), key=lambda r: str(r.get("team") or "").lower()):
+        team_name = str(row.get("team") or "")
+        if not team_name:
+            continue
+
+        q_avg = safe_float(row.get("qualifying_avg_position"))
+        race_avg = safe_float(row.get("race_avg_position"))
+        upgrade_score = safe_float(row.get("signal_upgrade_score"))
+
+        q_gap_proxy = 50.0 + 7.0 * clamp(field_q_mean - (q_avg if q_avg is not None else field_q_mean), -6.0, 6.0)
+        sector_dominance = 52.0 + 5.5 * clamp((q_avg if q_avg is not None else 12.0) - (race_avg if race_avg is not None else 12.0), -6.0, 6.0)
+        upgrades_impact = 45.0 + 16.0 * clamp((upgrade_score if upgrade_score is not None else 1.0), 0.0, 3.0)
+
+        rating = 0.45 * q_gap_proxy + 0.25 * sector_dominance + 0.30 * upgrades_impact
+        rating = round(clamp(rating, 0.0, 100.0), 6)
+
+        payload_rows.append(
+            {
+                "team": team_name,
+                "team_rating": rating,
+                "components": {
+                    "qualifying_gap_proxy": round(q_gap_proxy, 6),
+                    "sector_dominance": round(sector_dominance, 6),
+                    "upgrades_impact": round(upgrades_impact, 6),
+                },
+            }
+        )
+
+    return {"teams": payload_rows}
+
+
+def compute_strategy_scores(features: dict[str, Any], safety_by_team: dict[str, float]) -> dict[str, Any]:
+    rows = features.get("teams", [])
+    if not isinstance(rows, list):
+        rows = []
+
+    payload_rows: list[dict[str, Any]] = []
+    for row in sorted((x for x in rows if isinstance(x, dict)), key=lambda r: str(r.get("team") or "").lower()):
+        team_name = str(row.get("team") or "")
+        team_key = slug(team_name)
+        if not team_name:
+            continue
+
+        q_avg = safe_float(row.get("qualifying_avg_position"))
+        race_avg = safe_float(row.get("race_avg_position"))
+        starts = safe_float(row.get("starts")) or 0.0
+        points = safe_float(row.get("points_total")) or 0.0
+
+        # Proxy: if race avg is better than quali avg, strategy execution likely helped.
+        delta = (q_avg if q_avg is not None else 12.0) - (race_avg if race_avg is not None else 12.0)
+        pit_stop_perf = 50.0 + 8.0 * clamp(delta, -5.0, 5.0)
+        strategic_history = 40.0 + 4.0 * clamp((points / max(starts, 1.0)), 0.0, 20.0)
+        safety_reaction = 40.0 + 40.0 * clamp(safety_by_team.get(team_key, 0.5), 0.0, 1.0)
+
+        score = 0.35 * pit_stop_perf + 0.40 * strategic_history + 0.25 * safety_reaction
+        score = round(clamp(score, 0.0, 100.0), 6)
+
+        payload_rows.append(
+            {
+                "team": team_name,
+                "strategy_score": score,
+                "components": {
+                    "pit_stop_performance": round(pit_stop_perf, 6),
+                    "strategic_success_history": round(strategic_history, 6),
+                    "safety_car_reactions": round(safety_reaction, 6),
+                },
+            }
+        )
+
+    return {"teams": payload_rows}
+
+
+def compute_reliability_scores(features: dict[str, Any], penalties_by_team: dict[str, float]) -> dict[str, Any]:
+    rows = features.get("teams", [])
+    if not isinstance(rows, list):
+        rows = []
+
+    payload_rows: list[dict[str, Any]] = []
+    for row in sorted((x for x in rows if isinstance(x, dict)), key=lambda r: str(r.get("team") or "").lower()):
+        team_name = str(row.get("team") or "")
+        team_key = slug(team_name)
+        if not team_name:
+            continue
+
+        dnf_rate = safe_float(row.get("dnf_rate"))
+        signal_rel = safe_float(row.get("signal_reliability_concern"))
+        penalty_idx = penalties_by_team.get(team_key, 0.0)
+
+        dnf_component = 85.0 - 70.0 * clamp((dnf_rate if dnf_rate is not None else 0.1), 0.0, 1.0)
+        pu_component = 80.0 - 55.0 * clamp((signal_rel if signal_rel is not None else 0.2), 0.0, 1.0)
+        penalty_component = 85.0 - 45.0 * clamp(penalty_idx, 0.0, 1.0)
+
+        score = 0.45 * dnf_component + 0.35 * pu_component + 0.20 * penalty_component
+        score = round(clamp(score, 0.0, 100.0), 6)
+
+        payload_rows.append(
+            {
+                "team": team_name,
+                "reliability_score": score,
+                "components": {
+                    "dnf_history": round(dnf_component, 6),
+                    "power_unit_reliability": round(pu_component, 6),
+                    "new_component_penalties": round(penalty_component, 6),
+                },
+            }
+        )
+
+    return {"teams": payload_rows}
+
+
+def write_json(path: Path, payload: Any) -> None:
+    path.write_text(json.dumps(payload, indent=2, sort_keys=True, ensure_ascii=True) + "\n", encoding="utf-8")
+
+
+def main() -> int:
+    args = parse_args()
+    logging.basicConfig(
+        level=getattr(logging, args.log_level),
+        format="%(asctime)s | %(levelname)s | %(message)s",
+    )
+
+    try:
+        features_path = choose_features_file(Path(args.features_input), args.season)
+    except FileNotFoundError as exc:
+        if args.allow_missing_features:
+            LOGGER.warning("Skipping ratings update: %s", exc)
+            return 0
+        LOGGER.error("update_ratings failed: %s", exc)
+        return 1
+
+    try:
+        features = load_json(features_path)
+        season = int(features.get("season"))
+        if args.season is not None and args.season != season:
+            raise ValueError(f"Requested season {args.season}, but features contain season {season}.")
+
+        signals = load_signals(Path(args.signals_dir))
+        wet_by_team, safety_by_team, penalties_by_team = aggregate_optional_signal_indexes(signals)
+
+        drivers = compute_driver_ratings(features, wet_by_team)
+        teams = compute_team_ratings(features)
+        strategy = compute_strategy_scores(features, safety_by_team)
+        reliability = compute_reliability_scores(features, penalties_by_team)
+
+        metadata = {
+            "season": season,
+            "source_features": features_path.as_posix(),
+            "inputs_hash": stable_hash_json({"features": features, "signals": signals}),
+        }
+
+        models_dir = Path(args.models_dir)
+        models_dir.mkdir(parents=True, exist_ok=True)
+
+        write_json(models_dir / "driver_ratings.json", {**metadata, **drivers})
+        write_json(models_dir / "team_ratings.json", {**metadata, **teams})
+        write_json(models_dir / "strategy_scores.json", {**metadata, **strategy})
+        write_json(models_dir / "reliability_scores.json", {**metadata, **reliability})
+    except Exception as exc:
+        LOGGER.error("update_ratings failed: %s", exc)
+        return 1
+
+    LOGGER.info("Updated rating files in %s", Path(args.models_dir))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

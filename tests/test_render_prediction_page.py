@@ -32,6 +32,7 @@ def test_render_page_contains_race_and_driver_rows(tmp_path: Path) -> None:
     assert "PIA" in rendered
     assert "Simulations: 6000" in rendered
     assert "Seed: 202601" in rendered
+    assert "mobile-list" in rendered
 
 
 def test_render_page_contains_dry_wet_toggle_when_second_payload_provided() -> None:

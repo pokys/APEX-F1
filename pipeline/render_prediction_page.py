@@ -105,12 +105,34 @@ def scenario_block_html(rows: list[dict[str, Any]], scenario_key: str, scenario_
         ]
     )
 
+    mobile_rows = "\n".join(
+        [
+            (
+                f'<article class="driver-mobile-card">'
+                f'<div class="driver-mobile-head">'
+                f'<h4>{html.escape(row["name"])}</h4>'
+                f'<span class="driver-mobile-finish">Exp. finish: {row["expected_finish"]:.3f}</span>'
+                f"</div>"
+                f'<div class="mobile-metric">'
+                f'<p class="mobile-label">Win: {row["win_probability"] * 100:.3f}%</p>'
+                f'<div class="bar"><span style="width:{row["win_probability"] * 100:.3f}%"></span></div>'
+                f"</div>"
+                f'<div class="mobile-metric">'
+                f'<p class="mobile-label">Podium: {row["podium_probability"] * 100:.3f}%</p>'
+                f'<div class="bar podium"><span style="width:{row["podium_probability"] * 100:.3f}%"></span></div>'
+                f"</div>"
+                f"</article>"
+            )
+            for row in rows
+        ]
+    )
+
     active_attr = " is-active" if active else ""
     return (
         f'<section class="scenario-panel{active_attr}" data-scenario="{scenario_key}">'
         f'<div class="scenario-title">Scenario: {html.escape(scenario_label)}</div>'
         f'<section class="podium">{podium_cards}</section>'
-        f'<section class="table-wrap">'
+        f'<section class="table-wrap desktop-only">'
         f"<table>"
         f"<thead>"
         f"<tr><th>Driver</th><th>Win Probability</th><th>Podium Probability</th><th>Expected Finish</th></tr>"
@@ -118,6 +140,7 @@ def scenario_block_html(rows: list[dict[str, Any]], scenario_key: str, scenario_
         f"<tbody>{table_rows}</tbody>"
         f"</table>"
         f"</section>"
+        f'<section class="mobile-list">{mobile_rows}</section>'
         f"</section>"
     )
 
@@ -296,6 +319,12 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
         border-radius: 16px;
         overflow: hidden;
       }}
+      .desktop-only {{
+        display: block;
+      }}
+      .mobile-list {{
+        display: none;
+      }}
       table {{
         width: 100%;
         border-collapse: collapse;
@@ -339,10 +368,51 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
       td.finish {{
         font-family: "IBM Plex Mono", monospace;
         font-weight: 500;
+        white-space: nowrap;
       }}
-      @media (max-width: 900px) {{
+      .driver-mobile-card {{
+        background: linear-gradient(160deg, #122033 0%, #0f1b2a 100%);
+        border: 1px solid var(--grid);
+        border-radius: 14px;
+        padding: 12px;
+      }}
+      .driver-mobile-head {{
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 10px;
+      }}
+      .driver-mobile-head h4 {{
+        margin: 0;
+        font-size: 1.25rem;
+        letter-spacing: 0.02em;
+      }}
+      .driver-mobile-finish {{
+        color: var(--ink);
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.9rem;
+        white-space: nowrap;
+      }}
+      .mobile-metric {{
+        margin-top: 10px;
+      }}
+      .mobile-label {{
+        margin: 0 0 6px 0;
+        color: var(--muted);
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.84rem;
+      }}
+      @media (max-width: 980px) {{
         .podium {{
           grid-template-columns: 1fr;
+        }}
+        .desktop-only {{
+          display: none;
+        }}
+        .mobile-list {{
+          display: grid;
+          gap: 10px;
+          margin-top: 16px;
         }}
       }}
     </style>

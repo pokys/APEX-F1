@@ -219,6 +219,17 @@ def simulate_single_race(
     return finish_positions
 
 
+def temperature_scale_distribution(prob_map: dict[str, float], temperature: float) -> dict[str, float]:
+    eps = 1e-12
+    power = 1.0 / max(temperature, eps)
+    scaled = {k: max(v, eps) ** power for k, v in prob_map.items()}
+    total = sum(scaled.values())
+    if total <= 0:
+        uniform = 1.0 / max(len(prob_map), 1)
+        return {k: uniform for k in prob_map}
+    return {k: v / total for k, v in scaled.items()}
+
+
 def run_simulation(entries: list[dict[str, Any]], config: dict[str, Any]) -> dict[str, Any]:
     if not entries:
         raise ValueError("No drivers available for simulation. Run update_ratings first.")
@@ -234,6 +245,7 @@ def run_simulation(entries: list[dict[str, Any]], config: dict[str, Any]) -> dic
     tyre_degradation_factor = clamp(safe_float(track.get("tyre_degradation_factor"), 0.5), 0.0, 1.0)
     qualifying_noise = clamp(safe_float(track.get("qualifying_noise"), 2.6), 0.2, 8.0)
     race_noise = clamp(safe_float(track.get("race_noise"), 3.8), 0.5, 12.0)
+    win_temperature = clamp(safe_float(config.get("win_temperature"), 1.0), 0.6, 1.8)
 
     rng = random.Random(seed)
     driver_names = [entry["name"] for entry in entries]
@@ -261,12 +273,15 @@ def run_simulation(entries: list[dict[str, Any]], config: dict[str, Any]) -> dic
             if finish <= 3:
                 podium_count[name] += 1
 
+    raw_win_prob = {name: win_count[name] / simulations for name in driver_names}
+    calibrated_win_prob = temperature_scale_distribution(raw_win_prob, temperature=win_temperature)
+
     rows: list[dict[str, Any]] = []
     for name in driver_names:
         rows.append(
             {
                 "name": name,
-                "win_probability": round(win_count[name] / simulations, 6),
+                "win_probability": round(calibrated_win_prob[name], 6),
                 "podium_probability": round(podium_count[name] / simulations, 6),
                 "expected_finish": round(finish_sum[name] / simulations, 6),
             }
@@ -291,6 +306,7 @@ def run_simulation(entries: list[dict[str, Any]], config: dict[str, Any]) -> dic
             "weather": str(config.get("weather") or "dry"),
             "safety_car_probability": round(safety_car_probability, 6),
             "overtaking_difficulty": round(overtaking_difficulty, 6),
+            "win_temperature": round(win_temperature, 6),
         },
         "drivers": rows,
     }

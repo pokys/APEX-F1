@@ -98,6 +98,13 @@ jobs:
           ARGS+=(--season "$TARGET_SEASON")
           python pipeline/update_ratings.py "${ARGS[@]}" --allow-missing-features --log-level INFO
 
+      - name: Apply backtest calibration
+        env:
+          SEASON: ${{ github.event.inputs.season }}
+        run: |
+          TARGET_SEASON="${SEASON:-$(date -u +%Y)}"
+          python pipeline/apply_backtest_calibration.py --season "$TARGET_SEASON" --race-config config/race_config.json --allow-missing-report --log-level INFO
+
       - name: Simulate race
         run: |
           python pipeline/simulate_race.py --allow-missing-models --log-level INFO

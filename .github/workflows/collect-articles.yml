@@ -1,0 +1,54 @@
+name: Collect F1 Articles
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "15 */6 * * *"
+  push:
+    paths:
+      - "pipeline/collect_articles.py"
+      - "knowledge/feeds.yaml"
+      - ".github/workflows/collect-articles.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Collect articles
+        run: |
+          python pipeline/collect_articles.py \
+            --feeds knowledge/feeds.yaml \
+            --inbox knowledge/inbox/articles.md \
+            --log-level INFO
+
+      - name: Commit changes
+        run: |
+          if git diff --quiet -- knowledge/inbox/articles.md; then
+            echo "No article inbox changes."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add knowledge/inbox/articles.md
+          git commit -m "Update F1 article inbox"
+          git push
+

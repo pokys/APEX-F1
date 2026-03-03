@@ -13,7 +13,6 @@ from __future__ import annotations
 import argparse
 import json
 import logging
-import math
 import sys
 from pathlib import Path
 from typing import Any
@@ -24,7 +23,7 @@ LOGGER = logging.getLogger("validate_outputs")
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Validate generated pipeline artifacts.")
-    parser.add_argument("--season", type=int, required=True, help="Season to validate (e.g. 2025).")
+    parser.add_argument("--season", type=int, required=False, default=None, help="Season to validate (e.g. 2025).")
     parser.add_argument("--raw-dir", default="data/raw/fastf1", help="FastF1 raw directory.")
     parser.add_argument("--processed-dir", default="data/processed", help="Processed data directory.")
     parser.add_argument("--models-dir", default="models", help="Models directory.")
@@ -109,9 +108,6 @@ def main() -> int:
         format="%(asctime)s | %(levelname)s | %(message)s",
     )
 
-    season = args.season
-    raw_path = Path(args.raw_dir) / f"season_{season}.json"
-    features_path = Path(args.processed_dir) / f"features_season_{season}.json"
     driver_path = Path(args.models_dir) / "driver_ratings.json"
     team_path = Path(args.models_dir) / "team_ratings.json"
     strategy_path = Path(args.models_dir) / "strategy_scores.json"
@@ -119,13 +115,20 @@ def main() -> int:
     prediction_path = Path(args.prediction)
 
     try:
-        assert_exists(raw_path)
-        assert_exists(features_path)
         assert_exists(driver_path)
         assert_exists(team_path)
         assert_exists(strategy_path)
         assert_exists(reliability_path)
         assert_exists(prediction_path)
+
+        season = args.season
+        if season is None:
+            season = int(load_json(driver_path).get("season"))
+
+        raw_path = Path(args.raw_dir) / f"season_{season}.json"
+        features_path = Path(args.processed_dir) / f"features_season_{season}.json"
+        assert_exists(raw_path)
+        assert_exists(features_path)
 
         validate_model_file(driver_path, season, "drivers")
         validate_model_file(team_path, season, "teams")

@@ -16,6 +16,7 @@ import argparse
 import json
 import logging
 import math
+import re
 import statistics
 import sys
 from pathlib import Path
@@ -32,6 +33,7 @@ SOURCE_CREDIBILITY = {
     "autosport": 0.85,
 }
 DEFAULT_SOURCE_CREDIBILITY = 0.70
+SEASON_FILE_RE = re.compile(r"^season_(\d{4})\.json$")
 
 
 def parse_args() -> argparse.Namespace:
@@ -110,6 +112,36 @@ def is_race_finish(status: str | None) -> bool:
     return text.startswith("finished") or text.startswith("+")
 
 
+def season_from_snapshot_path(path: Path) -> int | None:
+    match = SEASON_FILE_RE.match(path.name)
+    if not match:
+        return None
+    return int(match.group(1))
+
+
+def snapshot_has_results(path: Path) -> bool:
+    try:
+        payload = load_json(path)
+    except Exception:
+        return False
+    events = payload.get("events")
+    if not isinstance(events, list):
+        return False
+    for event in events:
+        if not isinstance(event, dict):
+            continue
+        sessions = event.get("sessions")
+        if not isinstance(sessions, list):
+            continue
+        for session in sessions:
+            if not isinstance(session, dict):
+                continue
+            results = session.get("results")
+            if isinstance(results, list) and len(results) > 0:
+                return True
+    return False
+
+
 def choose_fastf1_snapshot(fastf1_input: Path, season: int | None) -> Path:
     if fastf1_input.is_file():
         return fastf1_input
@@ -117,16 +149,42 @@ def choose_fastf1_snapshot(fastf1_input: Path, season: int | None) -> Path:
     if not fastf1_input.exists():
         raise FileNotFoundError(f"FastF1 input path does not exist: {fastf1_input}")
 
+    candidates = sorted(fastf1_input.glob("season_*.json"))
+    if not candidates:
+        raise FileNotFoundError(f"No FastF1 snapshots found in: {fastf1_input}")
+
     if season is not None:
         expected = fastf1_input / f"season_{season}.json"
         if not expected.exists():
             raise FileNotFoundError(f"FastF1 snapshot not found: {expected}")
+        if snapshot_has_results(expected):
+            return expected
+
+        fallback_candidates = sorted(
+            (p for p in candidates if (season_from_snapshot_path(p) or 0) < season),
+            key=lambda p: season_from_snapshot_path(p) or -1,
+            reverse=True,
+        )
+        for path in fallback_candidates:
+            if snapshot_has_results(path):
+                LOGGER.warning(
+                    "Requested season %s has no completed sessions; falling back to season %s snapshot %s",
+                    season,
+                    season_from_snapshot_path(path),
+                    path,
+                )
+                return path
         return expected
 
-    candidates = sorted(fastf1_input.glob("season_*.json"))
-    if not candidates:
-        raise FileNotFoundError(f"No FastF1 snapshots found in: {fastf1_input}")
-    return candidates[-1]
+    by_season_desc = sorted(
+        candidates,
+        key=lambda p: season_from_snapshot_path(p) or -1,
+        reverse=True,
+    )
+    for path in by_season_desc:
+        if snapshot_has_results(path):
+            return path
+    return by_season_desc[0]
 
 
 def normalize_signals(raw: Any) -> list[dict[str, Any]]:
@@ -410,7 +468,11 @@ def main() -> int:
         fastf1_snapshot = load_json(fastf1_path)
         season = int(fastf1_snapshot.get("season"))
         if args.season is not None and season != args.season:
-            raise ValueError(f"Requested season {args.season}, but snapshot season is {season}.")
+            LOGGER.warning(
+                "Feature build used season %s snapshot for requested season %s due to missing completed-session data.",
+                season,
+                args.season,
+            )
 
         signals, signal_files = collect_signals(Path(args.signals_dir))
         features = build_features(fastf1_snapshot, signals)

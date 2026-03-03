@@ -20,6 +20,7 @@ import hashlib
 import json
 import logging
 import math
+import re
 import statistics
 import sys
 from pathlib import Path
@@ -27,6 +28,7 @@ from typing import Any
 
 
 LOGGER = logging.getLogger("update_ratings")
+FEATURE_FILE_RE = re.compile(r"^features_season_(\d{4})\.json$")
 
 
 def parse_args() -> argparse.Namespace:
@@ -105,6 +107,22 @@ def load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def season_from_features_path(path: Path) -> int | None:
+    match = FEATURE_FILE_RE.match(path.name)
+    if not match:
+        return None
+    return int(match.group(1))
+
+
+def features_has_driver_rows(path: Path) -> bool:
+    try:
+        payload = load_json(path)
+    except Exception:
+        return False
+    rows = payload.get("drivers")
+    return isinstance(rows, list) and len(rows) > 0
+
+
 def choose_features_file(features_input: Path, season: int | None) -> Path:
     if features_input.is_file():
         return features_input
@@ -112,16 +130,42 @@ def choose_features_file(features_input: Path, season: int | None) -> Path:
     if not features_input.exists():
         raise FileNotFoundError(f"Features path does not exist: {features_input}")
 
-    if season is not None:
-        candidate = features_input / f"features_season_{season}.json"
-        if not candidate.exists():
-            raise FileNotFoundError(f"Features file not found: {candidate}")
-        return candidate
-
     candidates = sorted(features_input.glob("features_season_*.json"))
     if not candidates:
         raise FileNotFoundError(f"No features files in {features_input}")
-    return candidates[-1]
+
+    if season is not None:
+        candidate = features_input / f"features_season_{season}.json"
+        if candidate.exists() and features_has_driver_rows(candidate):
+            return candidate
+
+        fallback_candidates = sorted(
+            (p for p in candidates if (season_from_features_path(p) or 0) < season),
+            key=lambda p: season_from_features_path(p) or -1,
+            reverse=True,
+        )
+        for path in fallback_candidates:
+            if features_has_driver_rows(path):
+                LOGGER.warning(
+                    "Requested season %s features have no driver rows; falling back to season %s features %s",
+                    season,
+                    season_from_features_path(path),
+                    path,
+                )
+                return path
+        if candidate.exists():
+            return candidate
+        raise FileNotFoundError(f"Features file not found for season {season} and no fallback with driver rows.")
+
+    by_season_desc = sorted(
+        candidates,
+        key=lambda p: season_from_features_path(p) or -1,
+        reverse=True,
+    )
+    for path in by_season_desc:
+        if features_has_driver_rows(path):
+            return path
+    return by_season_desc[0]
 
 
 def normalize_signals(raw: Any) -> list[dict[str, Any]]:
@@ -404,7 +448,18 @@ def main() -> int:
         features = load_json(features_path)
         season = int(features.get("season"))
         if args.season is not None and args.season != season:
-            raise ValueError(f"Requested season {args.season}, but features contain season {season}.")
+            LOGGER.warning(
+                "Ratings update used features season %s for requested season %s due to missing current-season data.",
+                season,
+                args.season,
+            )
+
+        rows = features.get("drivers")
+        if not isinstance(rows, list) or len(rows) == 0:
+            if args.allow_missing_features:
+                LOGGER.warning("Skipping ratings update: features file has no driver rows (%s)", features_path)
+                return 0
+            raise ValueError(f"Features file has no driver rows: {features_path}")
 
         signals = load_signals(Path(args.signals_dir))
         wet_by_team, safety_by_team, penalties_by_team = aggregate_optional_signal_indexes(signals)

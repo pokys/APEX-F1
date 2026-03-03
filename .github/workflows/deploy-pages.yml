@@ -8,6 +8,8 @@ on:
     paths:
       - "outputs/prediction_report.html"
       - "outputs/prediction.json"
+      - "outputs/prediction_dry.json"
+      - "outputs/prediction_wet.json"
       - "config/race_config.json"
       - ".github/workflows/deploy-pages.yml"
 
@@ -44,6 +46,12 @@ jobs:
 
           if [ -f outputs/prediction.json ]; then
             cp outputs/prediction.json _site/prediction.json
+          fi
+          if [ -f outputs/prediction_dry.json ]; then
+            cp outputs/prediction_dry.json _site/prediction_dry.json
+          fi
+          if [ -f outputs/prediction_wet.json ]; then
+            cp outputs/prediction_wet.json _site/prediction_wet.json
           fi
 
           if [ -f config/race_config.json ]; then

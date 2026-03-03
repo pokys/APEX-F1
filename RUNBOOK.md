@@ -71,11 +71,17 @@ python pipeline/apply_backtest_calibration.py --season 2026 --allow-missing-repo
 5. Simulace + publikace + validace:
 
 ```bash
-python pipeline/simulate_race.py --allow-missing-models --log-level INFO
+python pipeline/simulate_weather_scenarios.py --allow-missing-models --log-level INFO
+python pipeline/publish_prediction.py --input outputs/prediction_dry.json --output outputs/prediction_dry.json --allow-missing-input --log-level INFO
+python pipeline/publish_prediction.py --input outputs/prediction_wet.json --output outputs/prediction_wet.json --allow-missing-input --log-level INFO
 python pipeline/publish_prediction.py --allow-missing-input --log-level INFO
-python pipeline/render_prediction_page.py --prediction outputs/prediction.json --race-config config/race_config.json --output outputs/prediction_report.html --allow-missing-input --log-level INFO
+python pipeline/render_prediction_page.py --prediction outputs/prediction.json --prediction-dry outputs/prediction_dry.json --prediction-wet outputs/prediction_wet.json --race-config config/race_config.json --output outputs/prediction_report.html --allow-missing-input --log-level INFO
 python pipeline/validate_outputs.py --log-level INFO
 ```
+
+Poznámka:
+- Web report teď má přepínač scénářů `Dry/Wet`.
+- `prediction.json` zůstává kvůli kompatibilitě (alias dry scénáře).
 
 ## 4. Chování na startu nové sezony
 

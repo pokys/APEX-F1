@@ -62,8 +62,38 @@
         padding: 6px 10px;
         background: #0d1722;
       }
-      .podium {
+      .scenario-toggle {
+        margin-top: 8px;
+        display: flex;
+        gap: 8px;
+      }
+      .toggle-btn {
+        border: 1px solid var(--grid);
+        border-radius: 999px;
+        background: #10202f;
+        color: var(--muted);
+        padding: 8px 14px;
+        font-family: "IBM Plex Mono", monospace;
+        cursor: pointer;
+      }
+      .toggle-btn.is-active {
+        color: #03161f;
+        background: linear-gradient(90deg, var(--accent), #6ff5ef);
+        border-color: #64d8d1;
+      }
+      .scenario-panel {
+        display: none;
+      }
+      .scenario-panel.is-active {
+        display: block;
+      }
+      .scenario-title {
         margin-top: 16px;
+        color: var(--muted);
+        font-family: "IBM Plex Mono", monospace;
+      }
+      .podium {
+        margin-top: 12px;
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 12px;
@@ -153,50 +183,75 @@
         <h1>APEX-F1 Prediction | Australian Grand Prix</h1>
         <div class="meta">
           <span class="chip">Race date: 2026-03-08</span>
-          <span class="chip">Weather: dry</span>
           <span class="chip">Simulations: 6000</span>
           <span class="chip">Seed: 202601</span>
           <span class="chip">Safety car p: 0.380</span>
           <span class="chip">Overtake difficulty: 0.620</span>
           <span class="chip">Generated: 2026-03-03T00:00:00Z</span>
         </div>
+        <div class="scenario-toggle"><button class="toggle-btn is-active" data-target="dry" type="button">Dry</button><button class="toggle-btn" data-target="wet" type="button">Wet</button></div>
       </section>
-      <section class="podium"><article class="podium-card"><p class="rank">P1</p><h3>RUS</h3><p class="metric">Win: 31.71%</p><p class="metric">Podium: 75.60%</p><p class="metric">Exp. finish: 5.063</p></article>
-<article class="podium-card"><p class="rank">P2</p><h3>VER</h3><p class="metric">Win: 28.37%</p><p class="metric">Podium: 72.82%</p><p class="metric">Exp. finish: 5.485</p></article>
-<article class="podium-card"><p class="rank">P3</p><h3>PIA</h3><p class="metric">Win: 14.76%</p><p class="metric">Podium: 52.88%</p><p class="metric">Exp. finish: 5.969</p></article></section>
-      <section class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Driver</th>
-              <th>Win Probability</th>
-              <th>Podium Probability</th>
-              <th>Expected Finish</th>
-            </tr>
-          </thead>
-          <tbody><tr><td class="driver">RUS</td><td><div class="bar"><span style="width:31.712%"></span></div><small>31.712%</small></td><td><div class="bar podium"><span style="width:75.600%"></span></div><small>75.600%</small></td><td class="finish">5.063</td></tr>
-<tr><td class="driver">VER</td><td><div class="bar"><span style="width:28.373%"></span></div><small>28.373%</small></td><td><div class="bar podium"><span style="width:72.817%"></span></div><small>72.817%</small></td><td class="finish">5.485</td></tr>
-<tr><td class="driver">PIA</td><td><div class="bar"><span style="width:14.757%"></span></div><small>14.757%</small></td><td><div class="bar podium"><span style="width:52.883%"></span></div><small>52.883%</small></td><td class="finish">5.969</td></tr>
-<tr><td class="driver">NOR</td><td><div class="bar"><span style="width:13.238%"></span></div><small>13.238%</small></td><td><div class="bar podium"><span style="width:49.850%"></span></div><small>49.850%</small></td><td class="finish">6.078</td></tr>
-<tr><td class="driver">LEC</td><td><div class="bar"><span style="width:9.790%"></span></div><small>9.790%</small></td><td><div class="bar podium"><span style="width:39.467%"></span></div><small>39.467%</small></td><td class="finish">6.520</td></tr>
-<tr><td class="driver">HAM</td><td><div class="bar"><span style="width:0.381%"></span></div><small>0.381%</small></td><td><div class="bar podium"><span style="width:3.033%"></span></div><small>3.033%</small></td><td class="finish">9.571</td></tr>
-<tr><td class="driver">BEA</td><td><div class="bar"><span style="width:0.381%"></span></div><small>0.381%</small></td><td><div class="bar podium"><span style="width:0.783%"></span></div><small>0.783%</small></td><td class="finish">11.518</td></tr>
-<tr><td class="driver">HAD</td><td><div class="bar"><span style="width:0.381%"></span></div><small>0.381%</small></td><td><div class="bar podium"><span style="width:0.783%"></span></div><small>0.783%</small></td><td class="finish">11.633</td></tr>
-<tr><td class="driver">ALB</td><td><div class="bar"><span style="width:0.247%"></span></div><small>0.247%</small></td><td><div class="bar podium"><span style="width:1.717%"></span></div><small>1.717%</small></td><td class="finish">10.847</td></tr>
-<tr><td class="driver">ANT</td><td><div class="bar"><span style="width:0.247%"></span></div><small>0.247%</small></td><td><div class="bar podium"><span style="width:0.417%"></span></div><small>0.417%</small></td><td class="finish">11.991</td></tr>
-<tr><td class="driver">ALO</td><td><div class="bar"><span style="width:0.247%"></span></div><small>0.247%</small></td><td><div class="bar podium"><span style="width:1.250%"></span></div><small>1.250%</small></td><td class="finish">12.085</td></tr>
-<tr><td class="driver">HUL</td><td><div class="bar"><span style="width:0.247%"></span></div><small>0.247%</small></td><td><div class="bar podium"><span style="width:0.433%"></span></div><small>0.433%</small></td><td class="finish">12.596</td></tr>
-<tr><td class="driver">GAS</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.417%"></span></div><small>0.417%</small></td><td class="finish">13.203</td></tr>
-<tr><td class="driver">SAI</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.150%"></span></div><small>0.150%</small></td><td class="finish">13.374</td></tr>
-<tr><td class="driver">TSU</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.200%"></span></div><small>0.200%</small></td><td class="finish">13.559</td></tr>
-<tr><td class="driver">OCO</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.067%"></span></div><small>0.067%</small></td><td class="finish">13.722</td></tr>
-<tr><td class="driver">LAW</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.100%"></span></div><small>0.100%</small></td><td class="finish">13.836</td></tr>
-<tr><td class="driver">BOR</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.017%"></span></div><small>0.017%</small></td><td class="finish">15.833</td></tr>
-<tr><td class="driver">DOO</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.000%"></span></div><small>0.000%</small></td><td class="finish">16.853</td></tr>
-<tr><td class="driver">STR</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.017%"></span></div><small>0.017%</small></td><td class="finish">16.881</td></tr>
-<tr><td class="driver">COL</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.000%"></span></div><small>0.000%</small></td><td class="finish">16.950</td></tr></tbody>
-        </table>
-      </section>
+      <section class="scenario-panel is-active" data-scenario="dry"><div class="scenario-title">Scenario: Dry</div><section class="podium"><article class="podium-card"><p class="rank">P1</p><h3>RUS</h3><p class="metric">Win: 31.67%</p><p class="metric">Podium: 75.53%</p><p class="metric">Exp. finish: 5.065</p></article>
+<article class="podium-card"><p class="rank">P2</p><h3>VER</h3><p class="metric">Win: 28.35%</p><p class="metric">Podium: 72.87%</p><p class="metric">Exp. finish: 5.485</p></article>
+<article class="podium-card"><p class="rank">P3</p><h3>PIA</h3><p class="metric">Win: 14.72%</p><p class="metric">Podium: 52.85%</p><p class="metric">Exp. finish: 5.971</p></article></section><section class="table-wrap"><table><thead><tr><th>Driver</th><th>Win Probability</th><th>Podium Probability</th><th>Expected Finish</th></tr></thead><tbody><tr><td class="driver">RUS</td><td><div class="bar"><span style="width:31.672%"></span></div><small>31.672%</small></td><td><div class="bar podium"><span style="width:75.533%"></span></div><small>75.533%</small></td><td class="finish">5.065</td></tr>
+<tr><td class="driver">VER</td><td><div class="bar"><span style="width:28.354%"></span></div><small>28.354%</small></td><td><div class="bar podium"><span style="width:72.867%"></span></div><small>72.867%</small></td><td class="finish">5.485</td></tr>
+<tr><td class="driver">PIA</td><td><div class="bar"><span style="width:14.715%"></span></div><small>14.715%</small></td><td><div class="bar podium"><span style="width:52.850%"></span></div><small>52.850%</small></td><td class="finish">5.971</td></tr>
+<tr><td class="driver">NOR</td><td><div class="bar"><span style="width:13.225%"></span></div><small>13.225%</small></td><td><div class="bar podium"><span style="width:49.850%"></span></div><small>49.850%</small></td><td class="finish">6.081</td></tr>
+<tr><td class="driver">LEC</td><td><div class="bar"><span style="width:9.797%"></span></div><small>9.797%</small></td><td><div class="bar podium"><span style="width:39.367%"></span></div><small>39.367%</small></td><td class="finish">6.522</td></tr>
+<tr><td class="driver">ALO</td><td><div class="bar"><span style="width:0.490%"></span></div><small>0.490%</small></td><td><div class="bar podium"><span style="width:1.417%"></span></div><small>1.417%</small></td><td class="finish">11.623</td></tr>
+<tr><td class="driver">BEA</td><td><div class="bar"><span style="width:0.380%"></span></div><small>0.380%</small></td><td><div class="bar podium"><span style="width:0.767%"></span></div><small>0.767%</small></td><td class="finish">11.546</td></tr>
+<tr><td class="driver">HAD</td><td><div class="bar"><span style="width:0.380%"></span></div><small>0.380%</small></td><td><div class="bar podium"><span style="width:0.783%"></span></div><small>0.783%</small></td><td class="finish">11.657</td></tr>
+<tr><td class="driver">HAM</td><td><div class="bar"><span style="width:0.247%"></span></div><small>0.247%</small></td><td><div class="bar podium"><span style="width:3.033%"></span></div><small>3.033%</small></td><td class="finish">9.592</td></tr>
+<tr><td class="driver">ALB</td><td><div class="bar"><span style="width:0.247%"></span></div><small>0.247%</small></td><td><div class="bar podium"><span style="width:1.733%"></span></div><small>1.733%</small></td><td class="finish">10.876</td></tr>
+<tr><td class="driver">ANT</td><td><div class="bar"><span style="width:0.247%"></span></div><small>0.247%</small></td><td><div class="bar podium"><span style="width:0.433%"></span></div><small>0.433%</small></td><td class="finish">12.023</td></tr>
+<tr><td class="driver">HUL</td><td><div class="bar"><span style="width:0.247%"></span></div><small>0.247%</small></td><td><div class="bar podium"><span style="width:0.417%"></span></div><small>0.417%</small></td><td class="finish">12.622</td></tr>
+<tr><td class="driver">GAS</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.417%"></span></div><small>0.417%</small></td><td class="finish">13.234</td></tr>
+<tr><td class="driver">SAI</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.150%"></span></div><small>0.150%</small></td><td class="finish">13.405</td></tr>
+<tr><td class="driver">TSU</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.183%"></span></div><small>0.183%</small></td><td class="finish">13.593</td></tr>
+<tr><td class="driver">OCO</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.067%"></span></div><small>0.067%</small></td><td class="finish">13.753</td></tr>
+<tr><td class="driver">LAW</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.100%"></span></div><small>0.100%</small></td><td class="finish">13.874</td></tr>
+<tr><td class="driver">BOR</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.017%"></span></div><small>0.017%</small></td><td class="finish">15.874</td></tr>
+<tr><td class="driver">STR</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.017%"></span></div><small>0.017%</small></td><td class="finish">16.646</td></tr>
+<tr><td class="driver">DOO</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.000%"></span></div><small>0.000%</small></td><td class="finish">16.892</td></tr>
+<tr><td class="driver">COL</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.000%"></span></div><small>0.000%</small></td><td class="finish">16.992</td></tr></tbody></table></section></section><section class="scenario-panel" data-scenario="wet"><div class="scenario-title">Scenario: Wet</div><section class="podium"><article class="podium-card"><p class="rank">P1</p><h3>RUS</h3><p class="metric">Win: 31.44%</p><p class="metric">Podium: 76.38%</p><p class="metric">Exp. finish: 5.065</p></article>
+<article class="podium-card"><p class="rank">P2</p><h3>VER</h3><p class="metric">Win: 28.60%</p><p class="metric">Podium: 73.10%</p><p class="metric">Exp. finish: 5.314</p></article>
+<article class="podium-card"><p class="rank">P3</p><h3>PIA</h3><p class="metric">Win: 14.11%</p><p class="metric">Podium: 52.52%</p><p class="metric">Exp. finish: 5.943</p></article></section><section class="table-wrap"><table><thead><tr><th>Driver</th><th>Win Probability</th><th>Podium Probability</th><th>Expected Finish</th></tr></thead><tbody><tr><td class="driver">RUS</td><td><div class="bar"><span style="width:31.439%"></span></div><small>31.439%</small></td><td><div class="bar podium"><span style="width:76.383%"></span></div><small>76.383%</small></td><td class="finish">5.065</td></tr>
+<tr><td class="driver">VER</td><td><div class="bar"><span style="width:28.599%"></span></div><small>28.599%</small></td><td><div class="bar podium"><span style="width:73.100%"></span></div><small>73.100%</small></td><td class="finish">5.314</td></tr>
+<tr><td class="driver">PIA</td><td><div class="bar"><span style="width:14.106%"></span></div><small>14.106%</small></td><td><div class="bar podium"><span style="width:52.517%"></span></div><small>52.517%</small></td><td class="finish">5.943</td></tr>
+<tr><td class="driver">NOR</td><td><div class="bar"><span style="width:13.236%"></span></div><small>13.236%</small></td><td><div class="bar podium"><span style="width:49.983%"></span></div><small>49.983%</small></td><td class="finish">6.024</td></tr>
+<tr><td class="driver">LEC</td><td><div class="bar"><span style="width:10.109%"></span></div><small>10.109%</small></td><td><div class="bar podium"><span style="width:38.233%"></span></div><small>38.233%</small></td><td class="finish">6.614</td></tr>
+<tr><td class="driver">HAM</td><td><div class="bar"><span style="width:0.902%"></span></div><small>0.902%</small></td><td><div class="bar podium"><span style="width:3.417%"></span></div><small>3.417%</small></td><td class="finish">9.623</td></tr>
+<tr><td class="driver">ALB</td><td><div class="bar"><span style="width:0.379%"></span></div><small>0.379%</small></td><td><div class="bar podium"><span style="width:1.517%"></span></div><small>1.517%</small></td><td class="finish">10.726</td></tr>
+<tr><td class="driver">BEA</td><td><div class="bar"><span style="width:0.246%"></span></div><small>0.246%</small></td><td><div class="bar podium"><span style="width:0.917%"></span></div><small>0.917%</small></td><td class="finish">11.445</td></tr>
+<tr><td class="driver">ALO</td><td><div class="bar"><span style="width:0.246%"></span></div><small>0.246%</small></td><td><div class="bar podium"><span style="width:1.400%"></span></div><small>1.400%</small></td><td class="finish">11.596</td></tr>
+<tr><td class="driver">HAD</td><td><div class="bar"><span style="width:0.246%"></span></div><small>0.246%</small></td><td><div class="bar podium"><span style="width:0.800%"></span></div><small>0.800%</small></td><td class="finish">11.652</td></tr>
+<tr><td class="driver">HUL</td><td><div class="bar"><span style="width:0.246%"></span></div><small>0.246%</small></td><td><div class="bar podium"><span style="width:0.400%"></span></div><small>0.400%</small></td><td class="finish">12.628</td></tr>
+<tr><td class="driver">TSU</td><td><div class="bar"><span style="width:0.246%"></span></div><small>0.246%</small></td><td><div class="bar podium"><span style="width:0.246%"></span></div><small>0.246%</small></td><td class="finish">13.713</td></tr>
+<tr><td class="driver">ANT</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.467%"></span></div><small>0.467%</small></td><td class="finish">12.027</td></tr>
+<tr><td class="driver">GAS</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.267%"></span></div><small>0.267%</small></td><td class="finish">13.255</td></tr>
+<tr><td class="driver">SAI</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.250%"></span></div><small>0.250%</small></td><td class="finish">13.351</td></tr>
+<tr><td class="driver">LAW</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.133%"></span></div><small>0.133%</small></td><td class="finish">13.706</td></tr>
+<tr><td class="driver">OCO</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.067%"></span></div><small>0.067%</small></td><td class="finish">13.806</td></tr>
+<tr><td class="driver">BOR</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.017%"></span></div><small>0.017%</small></td><td class="finish">15.932</td></tr>
+<tr><td class="driver">STR</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.000%"></span></div><small>0.000%</small></td><td class="finish">16.722</td></tr>
+<tr><td class="driver">DOO</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.000%"></span></div><small>0.000%</small></td><td class="finish">16.929</td></tr>
+<tr><td class="driver">COL</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.000%"></span></div><small>0.000%</small></td><td class="finish">17.019</td></tr></tbody></table></section></section>
     </main>
+
+    <script>
+      const buttons = Array.from(document.querySelectorAll('.toggle-btn'));
+      const panels = Array.from(document.querySelectorAll('.scenario-panel'));
+      for (const button of buttons) {
+        button.addEventListener('click', () => {
+          const target = button.dataset.target;
+          for (const other of buttons) {
+            other.classList.toggle('is-active', other === button);
+          }
+          for (const panel of panels) {
+            panel.classList.toggle('is-active', panel.dataset.scenario === target);
+          }
+        });
+      }
+    </script>
   </body>
 </html>

@@ -19,7 +19,9 @@ LOGGER = logging.getLogger("render_prediction_page")
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Render prediction overview HTML.")
-    parser.add_argument("--prediction", default="outputs/prediction.json", help="Prediction JSON input path.")
+    parser.add_argument("--prediction", default="outputs/prediction.json", help="Single prediction JSON input path.")
+    parser.add_argument("--prediction-dry", default="outputs/prediction_dry.json", help="Dry scenario prediction JSON input path.")
+    parser.add_argument("--prediction-wet", default="outputs/prediction_wet.json", help="Wet scenario prediction JSON input path.")
     parser.add_argument("--race-config", default="config/race_config.json", help="Race config JSON input path.")
     parser.add_argument("--output", default="outputs/prediction_report.html", help="Rendered HTML output path.")
     parser.add_argument("--allow-missing-input", action="store_true", help="Exit 0 if prediction input is missing.")
@@ -45,7 +47,7 @@ def to_float(value: Any, default: float = 0.0) -> float:
         return default
 
 
-def render_page(prediction: dict[str, Any], race_config: dict[str, Any]) -> str:
+def parse_prediction_rows(prediction: dict[str, Any]) -> list[dict[str, Any]]:
     drivers = prediction.get("drivers")
     if not isinstance(drivers, list) or not drivers:
         raise ValueError("Prediction JSON missing non-empty 'drivers' list.")
@@ -65,18 +67,13 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any]) -> str:
                 "expected_finish": max(1.0, to_float(raw.get("expected_finish"), 99.0)),
             }
         )
+
     rows.sort(key=lambda x: (-x["win_probability"], x["expected_finish"], x["name"].lower()))
+    return rows
+
+
+def scenario_block_html(rows: list[dict[str, Any]], scenario_key: str, scenario_label: str, active: bool) -> str:
     top3 = rows[:3]
-
-    race_name = html.escape(str(prediction.get("race") or race_config.get("race") or "Next GP"))
-    generated_at = html.escape(str(prediction.get("generated_at") or race_config.get("generated_at") or ""))
-    race_date = html.escape(str(race_config.get("race_date") or ""))
-    weather = html.escape(str(race_config.get("weather") or "unknown"))
-    simulations = int(to_float(race_config.get("simulations"), 0))
-    seed = int(to_float(race_config.get("seed"), 0))
-    safety_car = to_float(race_config.get("safety_car_probability"), 0.0)
-    overtake = to_float(race_config.get("overtaking_difficulty"), 0.0)
-
     podium_cards = "\n".join(
         [
             (
@@ -107,6 +104,69 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any]) -> str:
             for row in rows
         ]
     )
+
+    active_attr = " is-active" if active else ""
+    return (
+        f'<section class="scenario-panel{active_attr}" data-scenario="{scenario_key}">'
+        f'<div class="scenario-title">Scenario: {html.escape(scenario_label)}</div>'
+        f'<section class="podium">{podium_cards}</section>'
+        f'<section class="table-wrap">'
+        f"<table>"
+        f"<thead>"
+        f"<tr><th>Driver</th><th>Win Probability</th><th>Podium Probability</th><th>Expected Finish</th></tr>"
+        f"</thead>"
+        f"<tbody>{table_rows}</tbody>"
+        f"</table>"
+        f"</section>"
+        f"</section>"
+    )
+
+
+def render_page(prediction: dict[str, Any], race_config: dict[str, Any], prediction_wet: dict[str, Any] | None = None) -> str:
+    dry_rows = parse_prediction_rows(prediction)
+    wet_rows = parse_prediction_rows(prediction_wet) if isinstance(prediction_wet, dict) else None
+
+    race_name = html.escape(str(prediction.get("race") or race_config.get("race") or "Next GP"))
+    generated_at = html.escape(str(prediction.get("generated_at") or race_config.get("generated_at") or ""))
+    race_date = html.escape(str(race_config.get("race_date") or ""))
+    simulations = int(to_float(race_config.get("simulations"), 0))
+    seed = int(to_float(race_config.get("seed"), 0))
+    safety_car = to_float(race_config.get("safety_car_probability"), 0.0)
+    overtake = to_float(race_config.get("overtaking_difficulty"), 0.0)
+
+    has_toggle = wet_rows is not None
+    toggle_html = ""
+    if has_toggle:
+        toggle_html = (
+            '<div class="scenario-toggle">'
+            '<button class="toggle-btn is-active" data-target="dry" type="button">Dry</button>'
+            '<button class="toggle-btn" data-target="wet" type="button">Wet</button>'
+            "</div>"
+        )
+
+    panels_html = scenario_block_html(dry_rows, scenario_key="dry", scenario_label="Dry", active=True)
+    if wet_rows is not None:
+        panels_html += scenario_block_html(wet_rows, scenario_key="wet", scenario_label="Wet", active=False)
+
+    script_html = ""
+    if has_toggle:
+        script_html = """
+    <script>
+      const buttons = Array.from(document.querySelectorAll('.toggle-btn'));
+      const panels = Array.from(document.querySelectorAll('.scenario-panel'));
+      for (const button of buttons) {
+        button.addEventListener('click', () => {
+          const target = button.dataset.target;
+          for (const other of buttons) {
+            other.classList.toggle('is-active', other === button);
+          }
+          for (const panel of panels) {
+            panel.classList.toggle('is-active', panel.dataset.scenario === target);
+          }
+        });
+      }
+    </script>
+"""
 
     return f"""<!doctype html>
 <html lang="en">
@@ -172,8 +232,38 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any]) -> str:
         padding: 6px 10px;
         background: #0d1722;
       }}
-      .podium {{
+      .scenario-toggle {{
+        margin-top: 8px;
+        display: flex;
+        gap: 8px;
+      }}
+      .toggle-btn {{
+        border: 1px solid var(--grid);
+        border-radius: 999px;
+        background: #10202f;
+        color: var(--muted);
+        padding: 8px 14px;
+        font-family: "IBM Plex Mono", monospace;
+        cursor: pointer;
+      }}
+      .toggle-btn.is-active {{
+        color: #03161f;
+        background: linear-gradient(90deg, var(--accent), #6ff5ef);
+        border-color: #64d8d1;
+      }}
+      .scenario-panel {{
+        display: none;
+      }}
+      .scenario-panel.is-active {{
+        display: block;
+      }}
+      .scenario-title {{
         margin-top: 16px;
+        color: var(--muted);
+        font-family: "IBM Plex Mono", monospace;
+      }}
+      .podium {{
+        margin-top: 12px;
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 12px;
@@ -263,32 +353,42 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any]) -> str:
         <h1>APEX-F1 Prediction | {race_name}</h1>
         <div class="meta">
           <span class="chip">Race date: {race_date}</span>
-          <span class="chip">Weather: {weather}</span>
           <span class="chip">Simulations: {simulations}</span>
           <span class="chip">Seed: {seed}</span>
           <span class="chip">Safety car p: {safety_car:.3f}</span>
           <span class="chip">Overtake difficulty: {overtake:.3f}</span>
           <span class="chip">Generated: {generated_at}</span>
         </div>
+        {toggle_html}
       </section>
-      <section class="podium">{podium_cards}</section>
-      <section class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Driver</th>
-              <th>Win Probability</th>
-              <th>Podium Probability</th>
-              <th>Expected Finish</th>
-            </tr>
-          </thead>
-          <tbody>{table_rows}</tbody>
-        </table>
-      </section>
+      {panels_html}
     </main>
-  </body>
+{script_html}  </body>
 </html>
 """
+
+
+def load_prediction_for_render(args: argparse.Namespace) -> tuple[dict[str, Any], dict[str, Any] | None]:
+    dry_path = Path(args.prediction_dry)
+    wet_path = Path(args.prediction_wet)
+
+    if dry_path.exists() and wet_path.exists():
+        dry = load_json(dry_path)
+        wet = load_json(wet_path)
+        if not isinstance(dry, dict) or not isinstance(wet, dict):
+            raise ValueError("Dry/wet prediction input must be JSON objects.")
+        return dry, wet
+
+    single_path = Path(args.prediction)
+    if single_path.exists():
+        single = load_json(single_path)
+        if not isinstance(single, dict):
+            raise ValueError("Prediction input must be a JSON object.")
+        return single, None
+
+    raise FileNotFoundError(
+        f"Missing prediction input. Checked dry/wet ({dry_path}, {wet_path}) and single ({single_path})."
+    )
 
 
 def main() -> int:
@@ -298,18 +398,19 @@ def main() -> int:
         format="%(asctime)s | %(levelname)s | %(message)s",
     )
 
-    prediction_path = Path(args.prediction)
-    if not prediction_path.exists():
+    try:
+        prediction, prediction_wet = load_prediction_for_render(args)
+    except FileNotFoundError as exc:
         if args.allow_missing_input:
-            LOGGER.warning("Skipping render step, prediction input missing: %s", prediction_path)
+            LOGGER.warning("Skipping render step, prediction input missing: %s", exc)
             return 0
-        LOGGER.error("render_prediction_page failed, prediction input missing: %s", prediction_path)
+        LOGGER.error("render_prediction_page failed: %s", exc)
+        return 1
+    except Exception as exc:
+        LOGGER.error("render_prediction_page failed: %s", exc)
         return 1
 
     try:
-        prediction = load_json(prediction_path)
-        if not isinstance(prediction, dict):
-            raise ValueError("Prediction input must be a JSON object.")
         race_config: dict[str, Any] = {}
         race_config_path = Path(args.race_config)
         if race_config_path.exists():
@@ -317,7 +418,7 @@ def main() -> int:
             if isinstance(raw, dict):
                 race_config = raw
 
-        rendered = render_page(prediction, race_config)
+        rendered = render_page(prediction, race_config, prediction_wet=prediction_wet)
         output_path = Path(args.output)
         output_path.parent.mkdir(parents=True, exist_ok=True)
         output_path.write_text(rendered, encoding="utf-8")

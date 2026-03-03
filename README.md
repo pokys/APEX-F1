@@ -27,8 +27,9 @@ Implementované pipeline skripty:
 9. `pipeline/simulate_race.py`
 10. `pipeline/publish_prediction.py`
 11. `pipeline/render_prediction_page.py`
-12. `pipeline/validate_outputs.py`
-13. `pipeline/archive_old_signals.py`
+12. `pipeline/simulate_weather_scenarios.py`
+13. `pipeline/validate_outputs.py`
+14. `pipeline/archive_old_signals.py`
 
 ## Aktuální chování (důležité)
 
@@ -78,20 +79,26 @@ Implementované pipeline skripty:
 - Zapíše ji do `config/race_config.json`.
 
 10. `simulate_race.py`
-- Spustí deterministickou Monte Carlo simulaci.
-- Zapíše `outputs/prediction.json`.
+- Spustí deterministickou Monte Carlo simulaci pro jeden scénář.
 
-11. `publish_prediction.py`
+11. `simulate_weather_scenarios.py`
+- Spustí simulaci pro `dry` i `wet` scénář.
+- Zapíše:
+  - `outputs/prediction_dry.json`
+  - `outputs/prediction_wet.json`
+  - `outputs/prediction.json` (kompatibilní alias na dry scénář)
+
+12. `publish_prediction.py`
 - Znormalizuje finální JSON tvar výstupu.
 
-12. `render_prediction_page.py`
-- Vygeneruje HTML přehled predikce.
+13. `render_prediction_page.py`
+- Vygeneruje HTML přehled predikce s přepínačem `Dry/Wet`.
 - Zapíše `outputs/prediction_report.html`.
 
-13. `validate_outputs.py`
+14. `validate_outputs.py`
 - Ověří konzistenci výstupů (sumy pravděpodobností, sezona, formát).
 
-14. `archive_old_signals.py`
+15. `archive_old_signals.py`
 - Po odjetých závodech přesune staré signály do `knowledge/processed/archive/`.
 
 ## Lokální spuštění
@@ -113,9 +120,11 @@ python pipeline/validate_signals.py --signals-dir knowledge/processed --allow-em
 python pipeline/build_features.py --season 2026 --guardrails-config config/signal_guardrails.json --allow-missing-fastf1 --log-level INFO
 python pipeline/update_ratings.py --season 2026 --guardrails-config config/signal_guardrails.json --allow-missing-features --log-level INFO
 python pipeline/apply_backtest_calibration.py --season 2026 --allow-missing-report --race-config config/race_config.json --log-level INFO
-python pipeline/simulate_race.py --allow-missing-models --log-level INFO
+python pipeline/simulate_weather_scenarios.py --allow-missing-models --log-level INFO
+python pipeline/publish_prediction.py --input outputs/prediction_dry.json --output outputs/prediction_dry.json --allow-missing-input --log-level INFO
+python pipeline/publish_prediction.py --input outputs/prediction_wet.json --output outputs/prediction_wet.json --allow-missing-input --log-level INFO
 python pipeline/publish_prediction.py --allow-missing-input --log-level INFO
-python pipeline/render_prediction_page.py --prediction outputs/prediction.json --race-config config/race_config.json --output outputs/prediction_report.html --allow-missing-input --log-level INFO
+python pipeline/render_prediction_page.py --prediction outputs/prediction.json --prediction-dry outputs/prediction_dry.json --prediction-wet outputs/prediction_wet.json --race-config config/race_config.json --output outputs/prediction_report.html --allow-missing-input --log-level INFO
 python pipeline/validate_outputs.py --log-level INFO
 ```
 
@@ -138,11 +147,14 @@ Hlavní workflowe:
 
 Predikce:
 - `outputs/prediction.json`
+- `outputs/prediction_dry.json`
+- `outputs/prediction_wet.json`
 - Pole na jezdce: `name`, `win_probability`, `podium_probability`, `expected_finish`
 - Validace: `sum(win_probability) ~= 1.0`, `sum(podium_probability) ~= 3.0`
 
 HTML report:
 - `outputs/prediction_report.html`
+- Obsahuje přepínač scénářů `Dry` / `Wet`.
 - Veřejný URL: **https://pokys.github.io/APEX-F1/**
 
 Konfigurace závodu:

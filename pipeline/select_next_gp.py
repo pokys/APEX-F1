@@ -36,6 +36,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--race-config", default="config/race_config.json", help="Race config path.")
     parser.add_argument("--raw-dir", default="data/raw/fastf1", help="FastF1 raw snapshot directory.")
+    parser.add_argument("--profiles", default="config/track_profiles.json", help="Track profile config path.")
     parser.add_argument(
         "--log-level",
         default="INFO",
@@ -144,6 +145,71 @@ def load_existing_config(path: Path) -> dict[str, Any]:
     return merged
 
 
+def load_track_profiles(path: Path) -> dict[str, Any]:
+    default_profiles = {
+        "by_event_name": {
+            "australian grand prix": {
+                "overtaking_difficulty": 0.62,
+                "safety_car_probability": 0.38,
+                "weather": "dry",
+                "weather_modifier": 0.05,
+                "track": {
+                    "tyre_degradation_factor": 0.56,
+                    "qualifying_noise": 2.4,
+                    "race_noise": 3.6,
+                },
+            }
+        },
+        "by_country": {},
+    }
+    if not path.exists():
+        return default_profiles
+    try:
+        raw = load_json(path)
+    except Exception:
+        return default_profiles
+    if not isinstance(raw, dict):
+        return default_profiles
+
+    merged = dict(default_profiles)
+    for key in ("by_event_name", "by_country"):
+        if isinstance(raw.get(key), dict):
+            merged[key] = raw[key]
+    return merged
+
+
+def apply_track_profile(config: dict[str, Any], event: dict[str, Any], profiles: dict[str, Any]) -> str | None:
+    event_name_key = str(event.get("event_name") or "").strip().lower()
+    country_key = str(event.get("country") or "").strip().lower()
+    profile = None
+    profile_name = None
+
+    by_event = profiles.get("by_event_name", {})
+    by_country = profiles.get("by_country", {})
+    if isinstance(by_event, dict) and event_name_key in by_event and isinstance(by_event[event_name_key], dict):
+        profile = by_event[event_name_key]
+        profile_name = f"event:{event_name_key}"
+    elif isinstance(by_country, dict) and country_key in by_country and isinstance(by_country[country_key], dict):
+        profile = by_country[country_key]
+        profile_name = f"country:{country_key}"
+
+    if profile is None:
+        return None
+
+    for key in ("overtaking_difficulty", "safety_car_probability", "weather", "weather_modifier", "simulations"):
+        if key in profile:
+            config[key] = profile[key]
+
+    if isinstance(profile.get("track"), dict):
+        track = config.get("track")
+        if not isinstance(track, dict):
+            track = {}
+        track.update(profile["track"])
+        config["track"] = track
+
+    return profile_name
+
+
 def normalize_calendar_event(event: dict[str, Any], season: int) -> dict[str, Any] | None:
     if not isinstance(event, dict):
         return None
@@ -202,6 +268,8 @@ def next_event_from_calendar(calendar: list[dict[str, Any]], as_of: date) -> dic
 
 
 def next_event_for_season(season: int, as_of: date) -> dict[str, Any] | None:
+    if fastf1 is None:
+        return None
     backends = ["f1timing", "ergast"]
     for backend in backends:
         try:
@@ -236,9 +304,6 @@ def next_event_for_season(season: int, as_of: date) -> dict[str, Any] | None:
 
 
 def select_next_event(requested_season: int | None, as_of: date, raw_dir: Path) -> dict[str, Any]:
-    if fastf1 is None:
-        raise RuntimeError("fastf1 is not installed. Install dependencies from requirements.txt first.")
-
     base_season = requested_season if requested_season is not None else as_of.year
     candidate_seasons = [base_season, base_season + 1]
 
@@ -270,6 +335,7 @@ def main() -> int:
         path = Path(args.race_config)
         config = load_existing_config(path)
         event = select_next_event(args.season, as_of, raw_dir=Path(args.raw_dir))
+        profiles = load_track_profiles(Path(args.profiles))
 
         config["season"] = event["season"]
         config["next_round"] = event["round"]
@@ -280,6 +346,9 @@ def main() -> int:
         config["seed"] = int(f"{event['season']}{event['round']:02d}")
         if config.get("simulations", 0) < 5000:
             config["simulations"] = 5000
+        profile_name = apply_track_profile(config, event, profiles)
+        if profile_name:
+            config["track_profile"] = profile_name
 
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(config, indent=2, sort_keys=True, ensure_ascii=True) + "\n", encoding="utf-8")

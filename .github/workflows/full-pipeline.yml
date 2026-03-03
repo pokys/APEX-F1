@@ -21,6 +21,7 @@ on:
       - ".github/workflows/full-pipeline.yml"
       - "pipeline/*.py"
       - "config/race_config.json"
+      - "config/track_profiles.json"
       - "requirements.txt"
 
 permissions:

@@ -1,0 +1,18 @@
+{
+  "by_country": {},
+  "by_event_name": {
+    "australian grand prix": {
+      "overtaking_difficulty": 0.62,
+      "safety_car_probability": 0.38,
+      "simulations": 6000,
+      "track": {
+        "qualifying_noise": 2.4,
+        "race_noise": 3.6,
+        "tyre_degradation_factor": 0.56
+      },
+      "weather": "dry",
+      "weather_modifier": 0.05
+    }
+  }
+}
+

@@ -9,6 +9,7 @@ on:
       - "pipeline/simulate_race.py"
       - "models/*.json"
       - "config/race_config.json"
+      - "config/track_profiles.json"
       - ".github/workflows/simulate-race.yml"
 
 permissions:

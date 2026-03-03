@@ -1,18 +1,19 @@
 {
   "generated_at": "2026-03-03T00:00:00Z",
   "next_round": 1,
-  "overtaking_difficulty": 0.5,
+  "overtaking_difficulty": 0.62,
   "race": "Australian Grand Prix",
   "race_date": "2026-03-08",
-  "safety_car_probability": 0.22,
+  "safety_car_probability": 0.38,
   "season": 2026,
   "seed": 202601,
-  "simulations": 5000,
+  "simulations": 6000,
   "track": {
-    "qualifying_noise": 2.6,
-    "race_noise": 3.8,
-    "tyre_degradation_factor": 0.5
+    "qualifying_noise": 2.4,
+    "race_noise": 3.6,
+    "tyre_degradation_factor": 0.56
   },
+  "track_profile": "event:australian grand prix",
   "weather": "dry",
-  "weather_modifier": 0.0
+  "weather_modifier": 0.05
 }

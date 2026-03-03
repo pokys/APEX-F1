@@ -1,127 +1,127 @@
 {
   "drivers": [
     {
-      "expected_finish": 5.174,
+      "expected_finish": 5.065167,
       "name": "RUS",
-      "podium_probability": 0.752,
-      "win_probability": 0.3982
+      "podium_probability": 0.755667,
+      "win_probability": 0.3945
     },
     {
-      "expected_finish": 5.5328,
+      "expected_finish": 5.489833,
       "name": "VER",
-      "podium_probability": 0.7214,
-      "win_probability": 0.3302
+      "podium_probability": 0.727333,
+      "win_probability": 0.33
     },
     {
-      "expected_finish": 5.9912,
-      "name": "NOR",
-      "podium_probability": 0.5006,
-      "win_probability": 0.1064
-    },
-    {
-      "expected_finish": 6.0638,
+      "expected_finish": 5.981667,
       "name": "PIA",
-      "podium_probability": 0.5146,
-      "win_probability": 0.1014
+      "podium_probability": 0.525833,
+      "win_probability": 0.116
     },
     {
-      "expected_finish": 6.618,
+      "expected_finish": 6.091167,
+      "name": "NOR",
+      "podium_probability": 0.497167,
+      "win_probability": 0.0975
+    },
+    {
+      "expected_finish": 6.538667,
       "name": "LEC",
-      "podium_probability": 0.3942,
-      "win_probability": 0.0608
+      "podium_probability": 0.391833,
+      "win_probability": 0.059667
     },
     {
-      "expected_finish": 10.4412,
+      "expected_finish": 10.499667,
       "name": "ALO",
-      "podium_probability": 0.0252,
-      "win_probability": 0.001
+      "podium_probability": 0.024833,
+      "win_probability": 0.000833
     },
     {
-      "expected_finish": 9.7224,
+      "expected_finish": 9.668333,
       "name": "HAM",
-      "podium_probability": 0.0336,
-      "win_probability": 0.0008
+      "podium_probability": 0.029333,
+      "win_probability": 0.000333
     },
     {
-      "expected_finish": 10.7848,
-      "name": "ALB",
-      "podium_probability": 0.02,
-      "win_probability": 0.0004
-    },
-    {
-      "expected_finish": 11.749,
+      "expected_finish": 11.629833,
       "name": "BEA",
-      "podium_probability": 0.009,
-      "win_probability": 0.0004
+      "podium_probability": 0.007333,
+      "win_probability": 0.000333
     },
     {
-      "expected_finish": 11.7544,
+      "expected_finish": 11.742,
       "name": "HAD",
-      "podium_probability": 0.0098,
-      "win_probability": 0.0004
+      "podium_probability": 0.007333,
+      "win_probability": 0.000333
     },
     {
-      "expected_finish": 12.1168,
+      "expected_finish": 10.955167,
+      "name": "ALB",
+      "podium_probability": 0.016167,
+      "win_probability": 0.000167
+    },
+    {
+      "expected_finish": 12.113167,
       "name": "ANT",
-      "podium_probability": 0.0048,
-      "win_probability": 0.0
+      "podium_probability": 0.003833,
+      "win_probability": 0.000167
     },
     {
-      "expected_finish": 12.6974,
+      "expected_finish": 12.714,
       "name": "HUL",
-      "podium_probability": 0.0046,
-      "win_probability": 0.0
+      "podium_probability": 0.004333,
+      "win_probability": 0.000167
     },
     {
-      "expected_finish": 13.2272,
+      "expected_finish": 13.325167,
       "name": "GAS",
-      "podium_probability": 0.0034,
+      "podium_probability": 0.004,
       "win_probability": 0.0
     },
     {
-      "expected_finish": 13.3546,
+      "expected_finish": 13.504833,
       "name": "SAI",
-      "podium_probability": 0.0014,
+      "podium_probability": 0.001167,
       "win_probability": 0.0
     },
     {
-      "expected_finish": 13.7718,
+      "expected_finish": 13.685833,
       "name": "TSU",
-      "podium_probability": 0.0018,
+      "podium_probability": 0.001833,
       "win_probability": 0.0
     },
     {
-      "expected_finish": 13.8476,
-      "name": "LAW",
-      "podium_probability": 0.002,
-      "win_probability": 0.0
-    },
-    {
-      "expected_finish": 14.0258,
+      "expected_finish": 13.865833,
       "name": "OCO",
-      "podium_probability": 0.0012,
+      "podium_probability": 0.0005,
       "win_probability": 0.0
     },
     {
-      "expected_finish": 15.8702,
+      "expected_finish": 13.977,
+      "name": "LAW",
+      "podium_probability": 0.001,
+      "win_probability": 0.0
+    },
+    {
+      "expected_finish": 15.983167,
       "name": "BOR",
-      "podium_probability": 0.0002,
+      "podium_probability": 0.000167,
       "win_probability": 0.0
     },
     {
-      "expected_finish": 16.0304,
+      "expected_finish": 15.985,
       "name": "STR",
-      "podium_probability": 0.0002,
+      "podium_probability": 0.000333,
       "win_probability": 0.0
     },
     {
-      "expected_finish": 16.8826,
+      "expected_finish": 16.991333,
       "name": "DOO",
       "podium_probability": 0.0,
       "win_probability": 0.0
     },
     {
-      "expected_finish": 17.0882,
+      "expected_finish": 17.100833,
       "name": "COL",
       "podium_probability": 0.0,
       "win_probability": 0.0

@@ -89,6 +89,8 @@ def build_event_config(
     cfg["generated_at"] = f"{event_date}T00:00:00Z"
     cfg["seed"] = int(f"{season}{round_number:02d}")
     cfg["simulations"] = simulations
+    # Backtest recommendation is learned from raw simulation output.
+    cfg["win_temperature"] = 1.0
     profile_key = apply_track_profile(cfg, {"event_name": event_name, "country": country}, profiles)
     if profile_key:
         cfg["track_profile"] = profile_key

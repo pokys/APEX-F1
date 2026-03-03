@@ -1,4 +1,6 @@
 {
+  "calibration_season": 2025,
+  "calibration_source": "outputs/backtest/backtest_season_2025.json",
   "generated_at": "2026-03-03T00:00:00Z",
   "next_round": 1,
   "overtaking_difficulty": 0.62,
@@ -15,5 +17,6 @@
   },
   "track_profile": "event:australian grand prix",
   "weather": "dry",
-  "weather_modifier": 0.05
+  "weather_modifier": 0.05,
+  "win_temperature": 1.6
 }

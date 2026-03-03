@@ -38,6 +38,10 @@ jobs:
         run: |
           python pipeline/select_next_gp.py --season "$(date -u +%Y)" --as-of-date "$(date -u +%F)" --race-config config/race_config.json --log-level INFO
 
+      - name: Apply backtest calibration
+        run: |
+          python pipeline/apply_backtest_calibration.py --season "$(date -u +%Y)" --race-config config/race_config.json --allow-missing-report --log-level INFO
+
       - name: Simulate race
         run: |
           python pipeline/simulate_race.py --allow-missing-models --log-level INFO

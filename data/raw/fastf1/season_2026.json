@@ -1,0 +1,10 @@
+{
+  "cutoff_date": "2026-03-03",
+  "events": [],
+  "season": 2026,
+  "sessions_requested": [
+    "Q",
+    "R"
+  ],
+  "source": "fastf1"
+}

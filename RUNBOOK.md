@@ -30,6 +30,13 @@ On push:
 - `Validate Processed Signals` runs automatically.
 - Full pipeline can be triggered manually or by configured triggers.
 
+Lifecycle:
+- Active signals stay in `knowledge/processed/`.
+- After races are completed, old files are archived to `knowledge/processed/archive/` by:
+  - workflow `Archive Old Signals`, and
+  - `Full Prediction Pipeline` step `Archive old processed signals`.
+- This keeps signals temporary, while preserving history in git.
+
 ### Signal Quality Rules
 
 - Prefer technical/reporting content over gossip.

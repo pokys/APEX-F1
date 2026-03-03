@@ -1,0 +1,51 @@
+name: Simulate Race
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "50 5 * * *"
+  push:
+    paths:
+      - "pipeline/simulate_race.py"
+      - "models/*.json"
+      - "config/race_config.json"
+      - ".github/workflows/simulate-race.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  simulate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Simulate race
+        run: |
+          python pipeline/simulate_race.py --allow-missing-models --log-level INFO
+
+      - name: Publish canonical prediction
+        run: |
+          python pipeline/publish_prediction.py --allow-missing-input --log-level INFO
+
+      - name: Commit changes
+        run: |
+          if git diff --quiet -- outputs/prediction.json; then
+            echo "No prediction changes."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add outputs/prediction.json
+          git commit -m "Update race prediction"
+          git push
+

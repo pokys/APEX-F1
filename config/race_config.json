@@ -1,0 +1,17 @@
+{
+  "generated_at": "1970-01-01T00:00:00Z",
+  "overtaking_difficulty": 0.5,
+  "race": "Next GP",
+  "race_date": "1970-01-01",
+  "safety_car_probability": 0.22,
+  "seed": 20260303,
+  "simulations": 5000,
+  "track": {
+    "qualifying_noise": 2.6,
+    "race_noise": 3.8,
+    "tyre_degradation_factor": 0.5
+  },
+  "weather": "dry",
+  "weather_modifier": 0.0
+}
+

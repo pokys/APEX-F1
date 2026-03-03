@@ -1,0 +1,79 @@
+name: Ingest FastF1 Data
+
+on:
+  workflow_dispatch:
+    inputs:
+      season:
+        description: "Season year (e.g. 2026)"
+        required: false
+        type: string
+      sessions:
+        description: "Comma-separated sessions (e.g. Q,R)"
+        required: false
+        type: string
+      cutoff_date:
+        description: "Cutoff date YYYY-MM-DD"
+        required: false
+        type: string
+  schedule:
+    - cron: "40 4 * * *"
+  push:
+    paths:
+      - "pipeline/ingest_fastf1.py"
+      - "requirements.txt"
+      - ".github/workflows/ingest-fastf1.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run FastF1 ingest
+        env:
+          SEASON: ${{ github.event.inputs.season }}
+          SESSIONS: ${{ github.event.inputs.sessions }}
+          CUTOFF_DATE: ${{ github.event.inputs.cutoff_date }}
+        run: |
+          ARGS=()
+          if [ -n "$SEASON" ]; then
+            ARGS+=(--season "$SEASON")
+          fi
+          if [ -n "$SESSIONS" ]; then
+            ARGS+=(--sessions "$SESSIONS")
+          fi
+          if [ -n "$CUTOFF_DATE" ]; then
+            ARGS+=(--cutoff-date "$CUTOFF_DATE")
+          fi
+
+          python pipeline/ingest_fastf1.py "${ARGS[@]}" --log-level INFO
+
+      - name: Commit changes
+        run: |
+          if git diff --quiet -- data/raw/fastf1; then
+            echo "No FastF1 data changes."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/raw/fastf1
+          git commit -m "Update FastF1 raw data snapshot"
+          git push
+

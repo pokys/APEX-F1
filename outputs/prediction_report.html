@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Australian Grand Prix | APEX-F1 Prediction</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #0b1118;
+        --panel: #111b26cc;
+        --panel-strong: #152232;
+        --ink: #eaf3ff;
+        --muted: #9bb0c6;
+        --accent: #2ad2c9;
+        --accent-2: #ff7a45;
+        --grid: #203142;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: "Sora", "Segoe UI", sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(1200px 700px at -10% -20%, #184160 0%, transparent 60%),
+          radial-gradient(900px 600px at 120% 0%, #5a2d1f 0%, transparent 55%),
+          linear-gradient(165deg, #081019 0%, #0a141f 50%, #0d1a28 100%);
+        min-height: 100vh;
+      }
+      .wrap {
+        width: min(1100px, 95vw);
+        margin: 0 auto;
+        padding: 24px 0 36px;
+      }
+      .hero {
+        display: grid;
+        gap: 14px;
+        background: var(--panel);
+        border: 1px solid var(--grid);
+        border-radius: 18px;
+        padding: 20px;
+        backdrop-filter: blur(8px);
+      }
+      h1 {
+        margin: 0;
+        font-size: clamp(1.5rem, 3vw, 2.2rem);
+        letter-spacing: 0.02em;
+      }
+      .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .chip {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.82rem;
+        color: var(--muted);
+        border: 1px solid var(--grid);
+        border-radius: 999px;
+        padding: 6px 10px;
+        background: #0d1722;
+      }
+      .podium {
+        margin-top: 16px;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+      }
+      .podium-card {
+        background: linear-gradient(160deg, #13202e 0%, #0e1823 100%);
+        border: 1px solid var(--grid);
+        border-radius: 14px;
+        padding: 14px;
+      }
+      .rank {
+        margin: 0;
+        color: var(--accent);
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.85rem;
+      }
+      .podium-card h3 {
+        margin: 6px 0 10px;
+        font-size: 1.2rem;
+      }
+      .metric {
+        margin: 4px 0;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+      .table-wrap {
+        margin-top: 16px;
+        background: var(--panel-strong);
+        border: 1px solid var(--grid);
+        border-radius: 16px;
+        overflow: hidden;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th, td {
+        padding: 12px 14px;
+        border-bottom: 1px solid #1e3143;
+        text-align: left;
+      }
+      th {
+        color: var(--muted);
+        font-size: 0.82rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+      td { font-size: 0.92rem; }
+      td.driver { font-weight: 700; letter-spacing: 0.02em; }
+      .bar {
+        width: 100%;
+        max-width: 240px;
+        height: 8px;
+        border-radius: 999px;
+        background: #0c141d;
+        border: 1px solid #22384c;
+        overflow: hidden;
+      }
+      .bar span {
+        display: block;
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent), #6ff5ef);
+      }
+      .bar.podium span {
+        background: linear-gradient(90deg, var(--accent-2), #ffb26b);
+      }
+      small {
+        display: inline-block;
+        margin-top: 5px;
+        color: var(--muted);
+        font-family: "IBM Plex Mono", monospace;
+      }
+      td.finish {
+        font-family: "IBM Plex Mono", monospace;
+        font-weight: 500;
+      }
+      @media (max-width: 900px) {
+        .podium {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <section class="hero">
+        <h1>APEX-F1 Prediction | Australian Grand Prix</h1>
+        <div class="meta">
+          <span class="chip">Race date: 2026-03-08</span>
+          <span class="chip">Weather: dry</span>
+          <span class="chip">Simulations: 6000</span>
+          <span class="chip">Seed: 202601</span>
+          <span class="chip">Safety car p: 0.380</span>
+          <span class="chip">Overtake difficulty: 0.620</span>
+          <span class="chip">Generated: 2026-03-03T00:00:00Z</span>
+        </div>
+      </section>
+      <section class="podium"><article class="podium-card"><p class="rank">P1</p><h3>RUS</h3><p class="metric">Win: 31.64%</p><p class="metric">Podium: 75.60%</p><p class="metric">Exp. finish: 5.063</p></article>
+<article class="podium-card"><p class="rank">P2</p><h3>VER</h3><p class="metric">Win: 28.30%</p><p class="metric">Podium: 72.80%</p><p class="metric">Exp. finish: 5.487</p></article>
+<article class="podium-card"><p class="rank">P3</p><h3>PIA</h3><p class="metric">Win: 14.72%</p><p class="metric">Podium: 52.88%</p><p class="metric">Exp. finish: 5.971</p></article></section>
+      <section class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Driver</th>
+              <th>Win Probability</th>
+              <th>Podium Probability</th>
+              <th>Expected Finish</th>
+            </tr>
+          </thead>
+          <tbody><tr><td class="driver">RUS</td><td><div class="bar"><span style="width:31.644%"></span></div><small>31.644%</small></td><td><div class="bar podium"><span style="width:75.600%"></span></div><small>75.600%</small></td><td class="finish">5.063</td></tr>
+<tr><td class="driver">VER</td><td><div class="bar"><span style="width:28.303%"></span></div><small>28.303%</small></td><td><div class="bar podium"><span style="width:72.800%"></span></div><small>72.800%</small></td><td class="finish">5.487</td></tr>
+<tr><td class="driver">PIA</td><td><div class="bar"><span style="width:14.725%"></span></div><small>14.725%</small></td><td><div class="bar podium"><span style="width:52.883%"></span></div><small>52.883%</small></td><td class="finish">5.971</td></tr>
+<tr><td class="driver">NOR</td><td><div class="bar"><span style="width:13.209%"></span></div><small>13.209%</small></td><td><div class="bar podium"><span style="width:49.800%"></span></div><small>49.800%</small></td><td class="finish">6.080</td></tr>
+<tr><td class="driver">LEC</td><td><div class="bar"><span style="width:9.752%"></span></div><small>9.752%</small></td><td><div class="bar podium"><span style="width:39.433%"></span></div><small>39.433%</small></td><td class="finish">6.524</td></tr>
+<tr><td class="driver">ALO</td><td><div class="bar"><span style="width:0.489%"></span></div><small>0.489%</small></td><td><div class="bar podium"><span style="width:1.400%"></span></div><small>1.400%</small></td><td class="finish">11.624</td></tr>
+<tr><td class="driver">HAM</td><td><div class="bar"><span style="width:0.380%"></span></div><small>0.380%</small></td><td><div class="bar podium"><span style="width:3.017%"></span></div><small>3.017%</small></td><td class="finish">9.591</td></tr>
+<tr><td class="driver">BEA</td><td><div class="bar"><span style="width:0.380%"></span></div><small>0.380%</small></td><td><div class="bar podium"><span style="width:0.750%"></span></div><small>0.750%</small></td><td class="finish">11.545</td></tr>
+<tr><td class="driver">HAD</td><td><div class="bar"><span style="width:0.380%"></span></div><small>0.380%</small></td><td><div class="bar podium"><span style="width:0.783%"></span></div><small>0.783%</small></td><td class="finish">11.656</td></tr>
+<tr><td class="driver">ALB</td><td><div class="bar"><span style="width:0.246%"></span></div><small>0.246%</small></td><td><div class="bar podium"><span style="width:1.700%"></span></div><small>1.700%</small></td><td class="finish">10.875</td></tr>
+<tr><td class="driver">ANT</td><td><div class="bar"><span style="width:0.246%"></span></div><small>0.246%</small></td><td><div class="bar podium"><span style="width:0.417%"></span></div><small>0.417%</small></td><td class="finish">12.021</td></tr>
+<tr><td class="driver">HUL</td><td><div class="bar"><span style="width:0.246%"></span></div><small>0.246%</small></td><td><div class="bar podium"><span style="width:0.433%"></span></div><small>0.433%</small></td><td class="finish">12.624</td></tr>
+<tr><td class="driver">GAS</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.417%"></span></div><small>0.417%</small></td><td class="finish">13.235</td></tr>
+<tr><td class="driver">SAI</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.150%"></span></div><small>0.150%</small></td><td class="finish">13.407</td></tr>
+<tr><td class="driver">TSU</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.217%"></span></div><small>0.217%</small></td><td class="finish">13.591</td></tr>
+<tr><td class="driver">OCO</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.067%"></span></div><small>0.067%</small></td><td class="finish">13.756</td></tr>
+<tr><td class="driver">LAW</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.100%"></span></div><small>0.100%</small></td><td class="finish">13.872</td></tr>
+<tr><td class="driver">BOR</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.017%"></span></div><small>0.017%</small></td><td class="finish">15.875</td></tr>
+<tr><td class="driver">STR</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.017%"></span></div><small>0.017%</small></td><td class="finish">16.646</td></tr>
+<tr><td class="driver">DOO</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.000%"></span></div><small>0.000%</small></td><td class="finish">16.893</td></tr>
+<tr><td class="driver">COL</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.000%"></span></div><small>0.000%</small></td><td class="finish">16.991</td></tr></tbody>
+        </table>
+      </section>
+    </main>
+  </body>
+</html>

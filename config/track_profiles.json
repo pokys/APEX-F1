@@ -1,5 +1,199 @@
 {
-  "by_country": {},
+  "by_country": {
+    "australia": {
+      "overtaking_difficulty": 0.62,
+      "safety_car_probability": 0.35,
+      "track": {
+        "qualifying_noise": 2.4,
+        "race_noise": 3.6,
+        "tyre_degradation_factor": 0.56
+      },
+      "weather_modifier": 0.05
+    },
+    "austria": {
+      "overtaking_difficulty": 0.47,
+      "safety_car_probability": 0.24,
+      "track": {
+        "qualifying_noise": 2.25,
+        "race_noise": 3.3,
+        "tyre_degradation_factor": 0.48
+      }
+    },
+    "azerbaijan": {
+      "overtaking_difficulty": 0.43,
+      "safety_car_probability": 0.4,
+      "track": {
+        "qualifying_noise": 2.35,
+        "race_noise": 3.55,
+        "tyre_degradation_factor": 0.46
+      }
+    },
+    "bahrain": {
+      "overtaking_difficulty": 0.5,
+      "safety_car_probability": 0.19,
+      "track": {
+        "qualifying_noise": 2.35,
+        "race_noise": 3.45,
+        "tyre_degradation_factor": 0.67
+      }
+    },
+    "belgium": {
+      "overtaking_difficulty": 0.46,
+      "safety_car_probability": 0.27,
+      "track": {
+        "qualifying_noise": 2.3,
+        "race_noise": 3.5,
+        "tyre_degradation_factor": 0.52
+      },
+      "weather_modifier": 0.14
+    },
+    "brazil": {
+      "overtaking_difficulty": 0.52,
+      "safety_car_probability": 0.31,
+      "track": {
+        "qualifying_noise": 2.45,
+        "race_noise": 3.65,
+        "tyre_degradation_factor": 0.54
+      },
+      "weather_modifier": 0.12
+    },
+    "canada": {
+      "overtaking_difficulty": 0.48,
+      "safety_car_probability": 0.39,
+      "track": {
+        "qualifying_noise": 2.3,
+        "race_noise": 3.6,
+        "tyre_degradation_factor": 0.45
+      }
+    },
+    "china": {
+      "overtaking_difficulty": 0.5,
+      "safety_car_probability": 0.23,
+      "track": {
+        "qualifying_noise": 2.4,
+        "race_noise": 3.55,
+        "tyre_degradation_factor": 0.58
+      }
+    },
+    "hungary": {
+      "overtaking_difficulty": 0.74,
+      "safety_car_probability": 0.26,
+      "track": {
+        "qualifying_noise": 2.2,
+        "race_noise": 3.3,
+        "tyre_degradation_factor": 0.57
+      }
+    },
+    "italy": {
+      "overtaking_difficulty": 0.46,
+      "safety_car_probability": 0.24,
+      "track": {
+        "qualifying_noise": 2.3,
+        "race_noise": 3.45,
+        "tyre_degradation_factor": 0.5
+      }
+    },
+    "japan": {
+      "overtaking_difficulty": 0.63,
+      "safety_car_probability": 0.22,
+      "track": {
+        "qualifying_noise": 2.35,
+        "race_noise": 3.4,
+        "tyre_degradation_factor": 0.62
+      }
+    },
+    "mexico": {
+      "overtaking_difficulty": 0.45,
+      "safety_car_probability": 0.2,
+      "track": {
+        "qualifying_noise": 2.4,
+        "race_noise": 3.45,
+        "tyre_degradation_factor": 0.44
+      }
+    },
+    "monaco": {
+      "overtaking_difficulty": 0.92,
+      "safety_car_probability": 0.48,
+      "track": {
+        "qualifying_noise": 2.1,
+        "race_noise": 3.15,
+        "tyre_degradation_factor": 0.4
+      }
+    },
+    "netherlands": {
+      "overtaking_difficulty": 0.68,
+      "safety_car_probability": 0.3,
+      "track": {
+        "qualifying_noise": 2.25,
+        "race_noise": 3.35,
+        "tyre_degradation_factor": 0.53
+      }
+    },
+    "qatar": {
+      "overtaking_difficulty": 0.57,
+      "safety_car_probability": 0.2,
+      "track": {
+        "qualifying_noise": 2.3,
+        "race_noise": 3.4,
+        "tyre_degradation_factor": 0.7
+      }
+    },
+    "saudi arabia": {
+      "overtaking_difficulty": 0.41,
+      "safety_car_probability": 0.43,
+      "track": {
+        "qualifying_noise": 2.35,
+        "race_noise": 3.55,
+        "tyre_degradation_factor": 0.43
+      }
+    },
+    "singapore": {
+      "overtaking_difficulty": 0.79,
+      "safety_car_probability": 0.52,
+      "track": {
+        "qualifying_noise": 2.2,
+        "race_noise": 3.5,
+        "tyre_degradation_factor": 0.66
+      }
+    },
+    "spain": {
+      "overtaking_difficulty": 0.58,
+      "safety_car_probability": 0.22,
+      "track": {
+        "qualifying_noise": 2.25,
+        "race_noise": 3.35,
+        "tyre_degradation_factor": 0.61
+      }
+    },
+    "united arab emirates": {
+      "overtaking_difficulty": 0.5,
+      "safety_car_probability": 0.25,
+      "track": {
+        "qualifying_noise": 2.35,
+        "race_noise": 3.45,
+        "tyre_degradation_factor": 0.49
+      }
+    },
+    "united kingdom": {
+      "overtaking_difficulty": 0.47,
+      "safety_car_probability": 0.24,
+      "track": {
+        "qualifying_noise": 2.3,
+        "race_noise": 3.45,
+        "tyre_degradation_factor": 0.55
+      },
+      "weather_modifier": 0.12
+    },
+    "united states": {
+      "overtaking_difficulty": 0.56,
+      "safety_car_probability": 0.29,
+      "track": {
+        "qualifying_noise": 2.35,
+        "race_noise": 3.5,
+        "tyre_degradation_factor": 0.52
+      }
+    }
+  },
   "by_event_name": {
     "australian grand prix": {
       "overtaking_difficulty": 0.62,
@@ -15,4 +209,3 @@
     }
   }
 }
-

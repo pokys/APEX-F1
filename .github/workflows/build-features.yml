@@ -41,6 +41,7 @@ jobs:
           if [ -n "$SEASON" ]; then
             ARGS+=(--season "$SEASON")
           fi
+          python pipeline/validate_signals.py --signals-dir knowledge/processed --allow-empty --log-level INFO
           python pipeline/build_features.py "${ARGS[@]}" --allow-missing-fastf1 --log-level INFO
 
       - name: Commit changes

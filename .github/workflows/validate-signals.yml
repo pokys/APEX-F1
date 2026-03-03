@@ -1,0 +1,29 @@
+name: Validate Processed Signals
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "knowledge/processed/**"
+      - "pipeline/validate_signals.py"
+      - ".github/workflows/validate-signals.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate signals
+        run: |
+          python pipeline/validate_signals.py --signals-dir knowledge/processed --allow-empty --log-level INFO
+

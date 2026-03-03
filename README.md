@@ -1,227 +1,175 @@
 # APEX-F1
 
-Automated Probabilistic Execution for Formula 1 predictions.
+APEX-F1 je deterministický datový pipeline + Monte Carlo simulace pro predikce závodů Formule 1.
 
-This repository is a deterministic data pipeline + Monte Carlo simulation system.
+Důležité principy:
+- žádné LLM predikce výsledků,
+- žádný skrytý stav mimo repozitář,
+- výstup je pravděpodobnost, ne "jisté" pořadí.
 
-Important constraints:
-- No LLM-generated race predictions.
-- No hidden runtime state outside this repository.
-- Predictions are probabilities, not deterministic rankings.
+## Veřejný web predikce
 
-## What Is Implemented
+- Sdílený link: **https://pokys.github.io/APEX-F1/**
+- Publikuje se z workflow `deploy-pages.yml`.
+- Jednorázové nastavení v GitHub repozitáři: `Settings -> Pages -> Source: GitHub Actions`.
 
-Implemented pipeline components:
+## Co je hotové
+
+Implementované pipeline skripty:
 1. `pipeline/collect_articles.py`
 2. `pipeline/ingest_fastf1.py`
-3. `pipeline/build_features.py`
-4. `pipeline/update_ratings.py`
-5. `pipeline/simulate_race.py`
-6. `pipeline/publish_prediction.py`
-7. `pipeline/select_next_gp.py`
-8. `pipeline/validate_signals.py`
-9. `pipeline/validate_outputs.py`
-10. `pipeline/backtest_simulation.py`
-11. `pipeline/apply_backtest_calibration.py`
+3. `pipeline/select_next_gp.py`
+4. `pipeline/validate_signals.py`
+5. `pipeline/build_features.py`
+6. `pipeline/update_ratings.py`
+7. `pipeline/backtest_simulation.py`
+8. `pipeline/apply_backtest_calibration.py`
+9. `pipeline/simulate_race.py`
+10. `pipeline/publish_prediction.py`
+11. `pipeline/render_prediction_page.py`
+12. `pipeline/validate_outputs.py`
+13. `pipeline/archive_old_signals.py`
 
-GitHub Actions workflows are configured for independent steps and full end-to-end execution.
+## Aktuální chování (důležité)
 
-## Current Behavior (Important)
+- Další GP se vybírá automaticky podle data (`select_next_gp.py`).
+- Na startu nové sezony (např. 2026), když ještě nejsou odjeté závody, `build_features.py` a `update_ratings.py` fallbacknou na poslední kompletní sezonu (aktuálně 2025).
+- Simulace je deterministická (seed + minimálně 5000 simulací).
+- Backtest umí dopočítat kalibraci `win_temperature`, která se před simulací automaticky aplikuje.
 
-- Next GP is auto-selected by date (`select_next_gp.py`), using local snapshot first, then FastF1 schedule fallback.
-- At start of a new season (e.g. early 2026), if there are no completed race results yet, feature/rating generation falls back to the latest season with completed data (currently 2025).
-- Simulation remains deterministic with fixed seed and minimum simulation count.
-- Backtest report provides a recommended `win_temperature`, which is auto-applied before simulation.
-
-## Articles, Weather, and Signals
-
-Article pipeline:
-- Automatic: RSS collection into `knowledge/inbox/articles.md`.
-- Not automatic: semantic extraction from article text.
-- To affect prediction, article insights must be converted to structured JSON in `knowledge/processed/*.json`.
-
-Weather:
-- Current simulation uses `weather` + `weather_modifier` from `config/race_config.json` / `config/track_profiles.json`.
-- There is no automatic live local weather ingestion yet.
-
-Signal guardrails:
-- `config/signal_guardrails.json` controls:
-  - source credibility defaults
-  - confidence floor
-  - echo-decay for repeated claims
-  - bounded soft-signal caps
-
-## Repository Layout
-
-The core layout follows project specification:
-
-```text
-apex-f1/
-├── pipeline/
-├── knowledge/
-│   ├── feeds.yaml
-│   ├── inbox/articles.md
-│   └── processed/
-├── data/
-│   ├── raw/
-│   └── processed/
-├── models/
-├── outputs/
-├── config/
-├── requirements.txt
-└── .github/workflows/
-```
-
-## Pipeline Data Flow
+## Jak pipeline teče
 
 1. `collect_articles.py`
-   - Loads `knowledge/feeds.yaml`
-   - Fetches RSS feeds
-   - Deduplicates by `sha256(normalized_title + normalized_url)`
-   - Appends to `knowledge/inbox/articles.md`
+- Načte RSS feedy z `knowledge/feeds.yaml`.
+- Přidá nové články do `knowledge/inbox/articles.md`.
+- Dedup: `sha256(normalized_title + normalized_url)`.
 
 2. `ingest_fastf1.py`
-   - Pulls FastF1 schedule/session results
-   - Writes `data/raw/fastf1/season_<year>.json`
+- Načte tvrdá data z FastF1.
+- Zapíše snapshot do `data/raw/fastf1/season_<year>.json`.
 
 3. `select_next_gp.py`
-   - Resolves next upcoming GP by date
-   - Applies track profile overrides
-   - Writes `config/race_config.json`
+- Vybere nejbližší GP podle kalendáře.
+- Aplikuje profil trati z `config/track_profiles.json`.
+- Zapíše `config/race_config.json`.
 
-4. Human + external AI extraction
-   - Human reviews inbox, produces structured signals
-   - Commits JSON files into `knowledge/processed/`
+4. Human + AI extrakce signálů
+- Člověk projde inbox článků.
+- Externí AI/člověk vytvoří strukturované signály.
+- Uloží do `knowledge/processed/signals_YYYY-MM-DD.json`.
 
 5. `validate_signals.py`
-   - Schema/range checks before model pipeline
+- Ověří schéma a rozsahy hodnot.
 
 6. `build_features.py`
-   - Aggregates hard data + processed signals
-   - Writes `data/processed/features_season_<year>.json`
+- Spojí hard data + signály.
+- Zapíše `data/processed/features_season_<year>.json`.
 
 7. `update_ratings.py`
-   - Computes driver/team/strategy/reliability ratings
-   - Writes JSONs in `models/`
+- Přepočítá modely jezdců/týmů/strategie/spolehlivosti.
+- Zapíše JSON do `models/`.
 
-8. `backtest_simulation.py` (periodic)
-   - Evaluates historical performance and calibration metrics
-   - Writes `outputs/backtest/backtest_season_<year>.json`
+8. `backtest_simulation.py` (periodicky)
+- Ověří kvalitu modelu na historických datech.
+- Zapíše `outputs/backtest/backtest_season_<year>.json`.
 
 9. `apply_backtest_calibration.py`
-   - Reads backtest recommendation
-   - Writes `win_temperature` and calibration metadata into `config/race_config.json`
+- Přečte doporučenou kalibraci z backtestu.
+- Zapíše ji do `config/race_config.json`.
 
 10. `simulate_race.py`
-    - Runs deterministic Monte Carlo simulation
-    - Writes `outputs/prediction.json` (raw simulation payload)
+- Spustí deterministickou Monte Carlo simulaci.
+- Zapíše `outputs/prediction.json`.
 
 11. `publish_prediction.py`
-    - Canonicalizes output payload shape
-    - Keeps published output in `outputs/prediction.json`
+- Znormalizuje finální JSON tvar výstupu.
 
 12. `render_prediction_page.py`
-    - Builds a styled static overview page
-    - Writes `outputs/prediction_report.html`
+- Vygeneruje HTML přehled predikce.
+- Zapíše `outputs/prediction_report.html`.
 
 13. `validate_outputs.py`
-    - Validates probability invariants and artifact consistency
+- Ověří konzistenci výstupů (sumy pravděpodobností, sezona, formát).
 
-## Local Execution
+14. `archive_old_signals.py`
+- Po odjetých závodech přesune staré signály do `knowledge/processed/archive/`.
 
-Install dependencies:
+## Lokální spuštění
+
+Instalace závislostí:
 
 ```bash
 python -m pip install --upgrade pip
 pip install -r requirements.lock
 ```
 
-Run full chain manually:
+Plný běh ručně:
 
 ```bash
 python pipeline/collect_articles.py --log-level INFO
 python pipeline/ingest_fastf1.py --season 2026 --sessions Q,R --cutoff-date 2026-03-03 --log-level INFO
 python pipeline/select_next_gp.py --season 2026 --as-of-date 2026-03-03 --race-config config/race_config.json --log-level INFO
 python pipeline/validate_signals.py --signals-dir knowledge/processed --allow-empty --log-level INFO
-python pipeline/build_features.py --season 2026 --allow-missing-fastf1 --log-level INFO
-python pipeline/update_ratings.py --season 2026 --allow-missing-features --log-level INFO
+python pipeline/build_features.py --season 2026 --guardrails-config config/signal_guardrails.json --allow-missing-fastf1 --log-level INFO
+python pipeline/update_ratings.py --season 2026 --guardrails-config config/signal_guardrails.json --allow-missing-features --log-level INFO
 python pipeline/apply_backtest_calibration.py --season 2026 --allow-missing-report --race-config config/race_config.json --log-level INFO
 python pipeline/simulate_race.py --allow-missing-models --log-level INFO
 python pipeline/publish_prediction.py --allow-missing-input --log-level INFO
+python pipeline/render_prediction_page.py --prediction outputs/prediction.json --race-config config/race_config.json --output outputs/prediction_report.html --allow-missing-input --log-level INFO
 python pipeline/validate_outputs.py --log-level INFO
 ```
 
-## GitHub Actions
+## GitHub Actions workflowe
 
-Primary workflows:
-- `collect-articles.yml`: RSS ingestion to inbox (scheduled + manual)
-- `archive-signals.yml`: archive stale processed signals after completed races
-- `ingest-fastf1.yml`: hard race data snapshot
-- `build-features.yml`: features from hard data + signals
-- `update-ratings.yml`: rating model generation
-- `simulate-race.yml`: GP selection + calibration + simulation + publish
-- `archive-signals.yml`: archive stale processed signals after completed races
-- `full-pipeline.yml`: complete end-to-end pipeline
-- `validate-signals.yml`: gate for processed signal quality
-- `tests.yml`: unit tests (`pytest`)
-- `backtest.yml`: historical backtest metrics
-- `deploy-pages.yml`: publishes `outputs/prediction_report.html` as public GitHub Pages site
+Hlavní workflowe:
+- `collect-articles.yml`: sběr článků z RSS
+- `ingest-fastf1.yml`: ingest hard dat
+- `build-features.yml`: tvorba features
+- `update-ratings.yml`: přepočet modelů
+- `simulate-race.yml`: výběr GP + simulace + publish
+- `archive-signals.yml`: archivace starých signálů
+- `backtest.yml`: backtest a kalibrace
+- `full-pipeline.yml`: end-to-end běh
+- `validate-signals.yml`: validace signal JSON
+- `tests.yml`: unit testy
+- `deploy-pages.yml`: publikace HTML reportu na GitHub Pages
 
-Manual dispatch forms:
-- Inputs are optional for standard runs.
-- Running with empty fields is valid.
+## Výstupy
 
-## Outputs and Contracts
-
-Published prediction:
+Predikce:
 - `outputs/prediction.json`
-- Required top-level keys: `race`, `generated_at`, `drivers`
-- Driver keys: `name`, `win_probability`, `podium_probability`, `expected_finish`
-- Validation invariant: `sum(win_probability) ~= 1.0`, `sum(podium_probability) ~= 3.0`
+- Pole na jezdce: `name`, `win_probability`, `podium_probability`, `expected_finish`
+- Validace: `sum(win_probability) ~= 1.0`, `sum(podium_probability) ~= 3.0`
 
-Race config:
-- `config/race_config.json`
-- Includes selected event fields (`season`, `next_round`, `race`, `race_date`) and simulation parameters.
-
-Rendered prediction page:
+HTML report:
 - `outputs/prediction_report.html`
-- Static HTML overview for quick visual review on desktop/mobile.
+- Veřejný URL: **https://pokys.github.io/APEX-F1/**
 
-Public share link (GitHub Pages):
-- URL format: `https://<owner>.github.io/<repo>/`
-- For this repo: `https://pokys.github.io/APEX-F1/`
-- One-time repo setting required: `Settings -> Pages -> Source: GitHub Actions`.
+Konfigurace závodu:
+- `config/race_config.json`
+- Obsahuje vybraný závod + parametry simulace.
 
-Signals contract:
-- See `knowledge/processed/README.md`.
-- AI extraction instructions:
-  - See `knowledge/processed/AI_EXTRACTION_GUIDE.md`.
+Guardrails pro signály:
+- `config/signal_guardrails.json`
+- Řídí důvěryhodnost zdrojů, confidence floor, echo-decay a capy dopadu měkkých signálů.
 
-## Determinism Rules
+## Determinismus
 
-Deterministic design choices:
-- Stable sorting for feeds/events/drivers where applicable.
-- Seeded RNG in simulation (`seed` in race config).
-- Minimum simulation count enforced (`>= 5000` in simulation workflow).
-- Idempotent append logic for article inbox.
-- Model updates and outputs fully file-based, versioned in git.
+- Stabilní řazení feedů/událostí/jezdců.
+- Fixní seed v simulaci.
+- Min. počet simulací vynucen (`>= 5000`).
+- Idempotentní sběr článků.
+- Veškerý stav je v repozitáři (JSON + workflowy).
+- CI instaluje z `requirements.lock`.
 
-Note:
-- CI installs from `requirements.lock` for reproducible dependency resolution.
+## Omezení
 
-## Known Limitations
+- Semantická extrakce článků není automatická v CI (záměrně human-in-the-loop).
+- Není zapojené live počasí API.
+- RSS může obsahovat i méně relevantní obsah, filtr je při ruční extrakci signálů.
 
-- No automatic article semantic extraction in CI (by design; human-in-the-loop).
-- No automatic live weather forecast ingestion yet.
-- Source credibility map is static in code (`build_features.py`).
-- RSS feeds may include non-F1 or low-value stories; filtering is currently manual during signal extraction.
+## Další dokumentace
 
-Signal lifecycle note:
-- Active files in `knowledge/processed/` are intended for upcoming race influence.
-- Historical files are moved to `knowledge/processed/archive/` by the archive workflow/step.
-
-## Additional Documentation
-
-- Operations runbook: `RUNBOOK.md`
-- Processed signals schema and examples: `knowledge/processed/README.md`
-- External AI extraction guide: `knowledge/processed/AI_EXTRACTION_GUIDE.md`
+- Provozní postup: `RUNBOOK.md`
+- Schéma signálů: `knowledge/processed/README.md`
+- Prompt/kontrakt pro externí AI: `knowledge/processed/AI_EXTRACTION_GUIDE.md`

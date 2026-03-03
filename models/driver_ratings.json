@@ -1,0 +1,238 @@
+{
+  "drivers": [
+    {
+      "components": {
+        "consistency": 61.66668,
+        "qualifying_pace": 43.833332,
+        "teammate_delta_performance": 62.375,
+        "wet_performance_index": 50.0
+      },
+      "driver": "ALB",
+      "driver_rating": 56.014586,
+      "team": "Williams"
+    },
+    {
+      "components": {
+        "consistency": 63.33332,
+        "qualifying_pace": 50.95,
+        "teammate_delta_performance": 70.027172,
+        "wet_performance_index": 50.0
+      },
+      "driver": "ALO",
+      "driver_rating": 60.53284,
+      "team": "Aston Martin"
+    },
+    {
+      "components": {
+        "consistency": 65.0,
+        "qualifying_pace": 55.966668,
+        "teammate_delta_performance": 6.0,
+        "wet_performance_index": 50.0
+      },
+      "driver": "ANT",
+      "driver_rating": 39.543334,
+      "team": "Mercedes"
+    },
+    {
+      "components": {
+        "consistency": 65.0,
+        "qualifying_pace": 41.383332,
+        "teammate_delta_performance": 57.791652,
+        "wet_performance_index": 50.0
+      },
+      "driver": "BEA",
+      "driver_rating": 54.753745,
+      "team": "Haas F1 Team"
+    },
+    {
+      "components": {
+        "consistency": 55.0,
+        "qualifying_pace": 40.921738,
+        "teammate_delta_performance": 33.958348,
+        "wet_performance_index": 50.0
+      },
+      "driver": "BOR",
+      "driver_rating": 43.819769,
+      "team": "Kick Sauber"
+    },
+    {
+      "components": {
+        "consistency": 46.11112,
+        "qualifying_pace": 32.555557,
+        "teammate_delta_performance": 41.240722,
+        "wet_performance_index": 50.0
+      },
+      "driver": "COL",
+      "driver_rating": 42.473144,
+      "team": "Alpine"
+    },
+    {
+      "components": {
+        "consistency": 55.0,
+        "qualifying_pace": 36.6,
+        "teammate_delta_performance": 35.129628,
+        "wet_performance_index": 50.0
+      },
+      "driver": "DOO",
+      "driver_rating": 43.36537,
+      "team": "Alpine"
+    },
+    {
+      "components": {
+        "consistency": 53.33332,
+        "qualifying_pace": 42.433332,
+        "teammate_delta_performance": 73.629628,
+        "wet_performance_index": 50.0
+      },
+      "driver": "GAS",
+      "driver_rating": 57.590366,
+      "team": "Alpine"
+    },
+    {
+      "components": {
+        "consistency": 56.66668,
+        "qualifying_pace": 52.933332,
+        "teammate_delta_performance": 58.708326,
+        "wet_performance_index": 50.0
+      },
+      "driver": "HAD",
+      "driver_rating": 55.301251,
+      "team": "Racing Bulls"
+    },
+    {
+      "components": {
+        "consistency": 68.33332,
+        "qualifying_pace": 54.683332,
+        "teammate_delta_performance": 30.75,
+        "wet_performance_index": 50.0
+      },
+      "driver": "HAM",
+      "driver_rating": 48.782496,
+      "team": "Ferrari"
+    },
+    {
+      "components": {
+        "consistency": 56.66668,
+        "qualifying_pace": 38.35,
+        "teammate_delta_performance": 66.041652,
+        "wet_performance_index": 50.0
+      },
+      "driver": "HUL",
+      "driver_rating": 54.951248,
+      "team": "Kick Sauber"
+    },
+    {
+      "components": {
+        "consistency": 60.0,
+        "qualifying_pace": 44.883332,
+        "teammate_delta_performance": 6.0,
+        "wet_performance_index": 50.0
+      },
+      "driver": "LAW",
+      "driver_rating": 36.076666,
+      "team": "Red Bull Racing"
+    },
+    {
+      "components": {
+        "consistency": 70.0,
+        "qualifying_pace": 64.716668,
+        "teammate_delta_performance": 69.25,
+        "wet_performance_index": 50.0
+      },
+      "driver": "LEC",
+      "driver_rating": 64.680834,
+      "team": "Ferrari"
+    },
+    {
+      "components": {
+        "consistency": 70.0,
+        "qualifying_pace": 71.716668,
+        "teammate_delta_performance": 49.541652,
+        "wet_performance_index": 50.0
+      },
+      "driver": "NOR",
+      "driver_rating": 59.182912,
+      "team": "McLaren"
+    },
+    {
+      "components": {
+        "consistency": 61.66668,
+        "qualifying_pace": 37.65,
+        "teammate_delta_performance": 42.208348,
+        "wet_performance_index": 50.0
+      },
+      "driver": "OCO",
+      "driver_rating": 47.719592,
+      "team": "Haas F1 Team"
+    },
+    {
+      "components": {
+        "consistency": 71.66668,
+        "qualifying_pace": 71.483332,
+        "teammate_delta_performance": 50.458348,
+        "wet_performance_index": 50.0
+      },
+      "driver": "PIA",
+      "driver_rating": 59.873758,
+      "team": "McLaren"
+    },
+    {
+      "components": {
+        "consistency": 73.33332,
+        "qualifying_pace": 67.75,
+        "teammate_delta_performance": 94.0,
+        "wet_performance_index": 50.0
+      },
+      "driver": "RUS",
+      "driver_rating": 74.78333,
+      "team": "Mercedes"
+    },
+    {
+      "components": {
+        "consistency": 60.0,
+        "qualifying_pace": 49.2,
+        "teammate_delta_performance": 37.625,
+        "wet_performance_index": 50.0
+      },
+      "driver": "SAI",
+      "driver_rating": 48.00875,
+      "team": "Williams"
+    },
+    {
+      "components": {
+        "consistency": 55.86956,
+        "qualifying_pace": 35.316668,
+        "teammate_delta_performance": 29.972828,
+        "wet_performance_index": 50.0
+      },
+      "driver": "STR",
+      "driver_rating": 41.521213,
+      "team": "Aston Martin"
+    },
+    {
+      "components": {
+        "consistency": 61.66668,
+        "qualifying_pace": 44.766668,
+        "teammate_delta_performance": 41.291674,
+        "wet_performance_index": 50.0
+      },
+      "driver": "TSU",
+      "driver_rating": 48.822089,
+      "team": "Racing Bulls"
+    },
+    {
+      "components": {
+        "consistency": 73.33332,
+        "qualifying_pace": 70.2,
+        "teammate_delta_performance": 94.0,
+        "wet_performance_index": 50.0
+      },
+      "driver": "VER",
+      "driver_rating": 75.27333,
+      "team": "Red Bull Racing"
+    }
+  ],
+  "inputs_hash": "45d1748f990a8a61cf6e1aad52ee1e0a8a4c2807676fda25cdb0cd354d8eaba7",
+  "season": 2025,
+  "source_features": "data/processed/features_season_2025.json"
+}

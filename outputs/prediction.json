@@ -4,73 +4,73 @@
       "expected_finish": 5.065167,
       "name": "RUS",
       "podium_probability": 0.755667,
-      "win_probability": 0.3945
+      "win_probability": 0.315961
     },
     {
       "expected_finish": 5.489833,
       "name": "VER",
       "podium_probability": 0.727333,
-      "win_probability": 0.33
+      "win_probability": 0.282602
     },
     {
       "expected_finish": 5.981667,
       "name": "PIA",
       "podium_probability": 0.525833,
-      "win_probability": 0.116
+      "win_probability": 0.147025
     },
     {
       "expected_finish": 6.091167,
       "name": "NOR",
       "podium_probability": 0.497167,
-      "win_probability": 0.0975
+      "win_probability": 0.131896
     },
     {
       "expected_finish": 6.538667,
       "name": "LEC",
       "podium_probability": 0.391833,
-      "win_probability": 0.059667
+      "win_probability": 0.097037
     },
     {
       "expected_finish": 10.499667,
       "name": "ALO",
       "podium_probability": 0.024833,
-      "win_probability": 0.000833
+      "win_probability": 0.006724
     },
     {
       "expected_finish": 9.668333,
       "name": "HAM",
       "podium_probability": 0.029333,
-      "win_probability": 0.000333
+      "win_probability": 0.003792
     },
     {
       "expected_finish": 11.629833,
       "name": "BEA",
       "podium_probability": 0.007333,
-      "win_probability": 0.000333
+      "win_probability": 0.003792
     },
     {
       "expected_finish": 11.742,
       "name": "HAD",
       "podium_probability": 0.007333,
-      "win_probability": 0.000333
+      "win_probability": 0.003792
     },
     {
       "expected_finish": 10.955167,
       "name": "ALB",
       "podium_probability": 0.016167,
-      "win_probability": 0.000167
+      "win_probability": 0.002459
     },
     {
       "expected_finish": 12.113167,
       "name": "ANT",
       "podium_probability": 0.003833,
-      "win_probability": 0.000167
+      "win_probability": 0.002459
     },
     {
       "expected_finish": 12.714,
       "name": "HUL",
       "podium_probability": 0.004333,
-      "win_probability": 0.000167
+      "win_probability": 0.002459
     },
     {
       "expected_finish": 13.325167,

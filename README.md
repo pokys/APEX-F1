@@ -155,6 +155,8 @@ Predikce:
 HTML report:
 - `outputs/prediction_report.html`
 - Obsahuje přepínač scénářů `Dry` / `Wet`.
+- Obsahuje přepínač zobrazení `Top 10` / `All Drivers` (na mobilu default `Top 10`).
+- Obsahuje přehledové karty (lídr na výhru, lídr na podium, a při `Dry/Wet` i největší weather swing).
 - Veřejný URL: **https://pokys.github.io/APEX-F1/**
 
 Konfigurace závodu:

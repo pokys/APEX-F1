@@ -72,6 +72,61 @@ def parse_prediction_rows(prediction: dict[str, Any]) -> list[dict[str, Any]]:
     return rows
 
 
+def build_insights_html(dry_rows: list[dict[str, Any]], wet_rows: list[dict[str, Any]] | None) -> str:
+    if not dry_rows:
+        return ""
+
+    win_leader = dry_rows[0]
+    podium_leader = max(dry_rows, key=lambda row: row["podium_probability"])
+    cards = [
+        (
+            "Most likely winner",
+            win_leader["name"],
+            f'{win_leader["win_probability"] * 100:.2f}% win chance',
+        ),
+        (
+            "Most likely podium",
+            podium_leader["name"],
+            f'{podium_leader["podium_probability"] * 100:.2f}% podium chance',
+        ),
+    ]
+
+    if wet_rows:
+        wet_by_name = {row["name"]: row for row in wet_rows}
+        biggest_swing: tuple[str, float] | None = None
+        for row in dry_rows:
+            wet_row = wet_by_name.get(row["name"])
+            if wet_row is None:
+                continue
+            delta = wet_row["win_probability"] - row["win_probability"]
+            if biggest_swing is None or abs(delta) > abs(biggest_swing[1]):
+                biggest_swing = (row["name"], delta)
+
+        if biggest_swing is not None:
+            direction = "up" if biggest_swing[1] >= 0 else "down"
+            cards.append(
+                (
+                    "Biggest wet swing",
+                    biggest_swing[0],
+                    f'{direction} {abs(biggest_swing[1]) * 100:.2f} pp vs dry',
+                )
+            )
+
+    rendered_cards = "\n".join(
+        [
+            (
+                '<article class="insight-card">'
+                f'<p class="insight-kicker">{html.escape(card[0])}</p>'
+                f'<h3 class="insight-value">{html.escape(card[1])}</h3>'
+                f'<p class="insight-sub">{html.escape(card[2])}</p>'
+                "</article>"
+            )
+            for card in cards
+        ]
+    )
+    return f'<section class="insights">{rendered_cards}</section>'
+
+
 def scenario_block_html(rows: list[dict[str, Any]], scenario_key: str, scenario_label: str, active: bool) -> str:
     top3 = rows[:3]
     podium_cards = "\n".join(
@@ -92,7 +147,7 @@ def scenario_block_html(rows: list[dict[str, Any]], scenario_key: str, scenario_
     table_rows = "\n".join(
         [
             (
-                f"<tr>"
+                f"<tr class=\"driver-item\" data-rank=\"{idx}\">"
                 f"<td class=\"driver\">{html.escape(row['name'])}</td>"
                 f"<td><div class=\"bar\"><span style=\"width:{row['win_probability'] * 100:.3f}%\"></span></div>"
                 f"<small>{row['win_probability'] * 100:.3f}%</small></td>"
@@ -101,14 +156,14 @@ def scenario_block_html(rows: list[dict[str, Any]], scenario_key: str, scenario_
                 f"<td class=\"finish\">{row['expected_finish']:.3f}</td>"
                 f"</tr>"
             )
-            for row in rows
+            for idx, row in enumerate(rows, start=1)
         ]
     )
 
     mobile_rows = "\n".join(
         [
             (
-                f'<article class="driver-mobile-card">'
+                f'<article class="driver-mobile-card driver-item" data-rank="{idx}">'
                 f'<div class="driver-mobile-head">'
                 f'<h4>{html.escape(row["name"])}</h4>'
                 f'<span class="driver-mobile-finish">Exp. finish: {row["expected_finish"]:.3f}</span>'
@@ -123,7 +178,7 @@ def scenario_block_html(rows: list[dict[str, Any]], scenario_key: str, scenario_
                 f"</div>"
                 f"</article>"
             )
-            for row in rows
+            for idx, row in enumerate(rows, start=1)
         ]
     )
 
@@ -148,6 +203,7 @@ def scenario_block_html(rows: list[dict[str, Any]], scenario_key: str, scenario_
 def render_page(prediction: dict[str, Any], race_config: dict[str, Any], prediction_wet: dict[str, Any] | None = None) -> str:
     dry_rows = parse_prediction_rows(prediction)
     wet_rows = parse_prediction_rows(prediction_wet) if isinstance(prediction_wet, dict) else None
+    insights_html = build_insights_html(dry_rows, wet_rows)
 
     race_name = html.escape(str(prediction.get("race") or race_config.get("race") or "Next GP"))
     generated_at = html.escape(str(prediction.get("generated_at") or race_config.get("generated_at") or ""))
@@ -166,6 +222,13 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
             '<button class="toggle-btn" data-target="wet" type="button">Wet</button>'
             "</div>"
         )
+
+    list_toggle_html = (
+        '<div class="list-toggle">'
+        '<button class="visibility-btn" data-show="top10" type="button">Top 10</button>'
+        '<button class="visibility-btn" data-show="all" type="button">All Drivers</button>'
+        "</div>"
+    )
 
     panels_html = scenario_block_html(dry_rows, scenario_key="dry", scenario_label="Dry", active=True)
     if wet_rows is not None:
@@ -188,6 +251,27 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
           }
         });
       }
+    </script>
+"""
+    script_html += """
+    <script>
+      const visibilityButtons = Array.from(document.querySelectorAll('.visibility-btn'));
+      const driverItems = () => Array.from(document.querySelectorAll('.driver-item'));
+      function applyVisibility(mode) {
+        const showTop10 = mode === 'top10';
+        for (const item of driverItems()) {
+          const rank = Number(item.dataset.rank || '999');
+          item.classList.toggle('is-hidden', showTop10 && rank > 10);
+        }
+        for (const button of visibilityButtons) {
+          button.classList.toggle('is-active', button.dataset.show === mode);
+        }
+      }
+      for (const button of visibilityButtons) {
+        button.addEventListener('click', () => applyVisibility(button.dataset.show || 'all'));
+      }
+      const mobile = window.matchMedia('(max-width: 980px)').matches;
+      applyVisibility(mobile ? 'top10' : 'all');
     </script>
 """
 
@@ -274,6 +358,25 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
         background: linear-gradient(90deg, var(--accent), #6ff5ef);
         border-color: #64d8d1;
       }}
+      .list-toggle {{
+        margin-top: 10px;
+        display: flex;
+        gap: 8px;
+      }}
+      .visibility-btn {{
+        border: 1px solid var(--grid);
+        border-radius: 999px;
+        background: #122233;
+        color: var(--muted);
+        padding: 8px 14px;
+        font-family: "IBM Plex Mono", monospace;
+        cursor: pointer;
+      }}
+      .visibility-btn.is-active {{
+        color: #08121a;
+        background: linear-gradient(90deg, #ff9f4a, #ffd69a);
+        border-color: #f1b770;
+      }}
       .scenario-panel {{
         display: none;
       }}
@@ -284,6 +387,35 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
         margin-top: 16px;
         color: var(--muted);
         font-family: "IBM Plex Mono", monospace;
+      }}
+      .insights {{
+        margin-top: 16px;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+      }}
+      .insight-card {{
+        background: linear-gradient(160deg, #142335 0%, #102030 100%);
+        border: 1px solid var(--grid);
+        border-radius: 14px;
+        padding: 12px 14px;
+      }}
+      .insight-kicker {{
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.78rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }}
+      .insight-value {{
+        margin: 6px 0;
+        font-size: 1.22rem;
+      }}
+      .insight-sub {{
+        margin: 0;
+        color: var(--muted);
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.84rem;
       }}
       .podium {{
         margin-top: 12px;
@@ -311,6 +443,18 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
         margin: 4px 0;
         color: var(--muted);
         font-size: 0.92rem;
+      }}
+      details {{
+        margin-top: 2px;
+        padding: 8px 10px;
+        border: 1px solid var(--grid);
+        border-radius: 12px;
+        background: #0f1a27;
+      }}
+      summary {{
+        cursor: pointer;
+        font-size: 0.9rem;
+        color: var(--ink);
       }}
       .table-wrap {{
         margin-top: 16px;
@@ -370,6 +514,9 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
         font-weight: 500;
         white-space: nowrap;
       }}
+      .is-hidden {{
+        display: none !important;
+      }}
       .driver-mobile-card {{
         background: linear-gradient(160deg, #122033 0%, #0f1b2a 100%);
         border: 1px solid var(--grid);
@@ -403,6 +550,9 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
         font-size: 0.84rem;
       }}
       @media (max-width: 980px) {{
+        .insights {{
+          grid-template-columns: 1fr;
+        }}
         .podium {{
           grid-template-columns: 1fr;
         }}
@@ -430,7 +580,17 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
           <span class="chip">Generated: {generated_at}</span>
         </div>
         {toggle_html}
+        {list_toggle_html}
+        <section>
+          <details>
+            <summary>How to read this page</summary>
+            <p class="metric">Win probability = chance to win this GP in simulation.</p>
+            <p class="metric">Podium probability = chance to finish P1-P3.</p>
+            <p class="metric">Expected finish = average finishing position across all simulation runs.</p>
+          </details>
+        </section>
       </section>
+      {insights_html}
       {panels_html}
     </main>
 {script_html}  </body>

@@ -33,6 +33,10 @@ def test_render_page_contains_race_and_driver_rows(tmp_path: Path) -> None:
     assert "Simulations: 6000" in rendered
     assert "Seed: 202601" in rendered
     assert "mobile-list" in rendered
+    assert "Top 10" in rendered
+    assert "All Drivers" in rendered
+    assert "How to read this page" in rendered
+    assert "Most likely winner" in rendered
 
 
 def test_render_page_contains_dry_wet_toggle_when_second_payload_provided() -> None:
@@ -68,3 +72,4 @@ def test_render_page_contains_dry_wet_toggle_when_second_payload_provided() -> N
     assert "Wet" in rendered
     assert "Scenario: Dry" in rendered
     assert "Scenario: Wet" in rendered
+    assert "Biggest wet swing" in rendered

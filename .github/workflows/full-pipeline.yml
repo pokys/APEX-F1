@@ -55,10 +55,9 @@ jobs:
           SESSIONS: ${{ github.event.inputs.sessions }}
           CUTOFF_DATE: ${{ github.event.inputs.cutoff_date }}
         run: |
+          TARGET_SEASON="${SEASON:-2025}"
           ARGS=()
-          if [ -n "$SEASON" ]; then
-            ARGS+=(--season "$SEASON")
-          fi
+          ARGS+=(--season "$TARGET_SEASON")
           if [ -n "$SESSIONS" ]; then
             ARGS+=(--sessions "$SESSIONS")
           fi
@@ -71,20 +70,18 @@ jobs:
         env:
           SEASON: ${{ github.event.inputs.season }}
         run: |
+          TARGET_SEASON="${SEASON:-2025}"
           ARGS=()
-          if [ -n "$SEASON" ]; then
-            ARGS+=(--season "$SEASON")
-          fi
+          ARGS+=(--season "$TARGET_SEASON")
           python pipeline/build_features.py "${ARGS[@]}" --allow-missing-fastf1 --log-level INFO
 
       - name: Update ratings
         env:
           SEASON: ${{ github.event.inputs.season }}
         run: |
+          TARGET_SEASON="${SEASON:-2025}"
           ARGS=()
-          if [ -n "$SEASON" ]; then
-            ARGS+=(--season "$SEASON")
-          fi
+          ARGS+=(--season "$TARGET_SEASON")
           python pipeline/update_ratings.py "${ARGS[@]}" --allow-missing-features --log-level INFO
 
       - name: Simulate race
@@ -94,6 +91,13 @@ jobs:
       - name: Publish prediction
         run: |
           python pipeline/publish_prediction.py --allow-missing-input --log-level INFO
+
+      - name: Validate outputs
+        env:
+          SEASON: ${{ github.event.inputs.season }}
+        run: |
+          TARGET_SEASON="${SEASON:-2025}"
+          python pipeline/validate_outputs.py --season "$TARGET_SEASON" --log-level INFO
 
       - name: Commit changes
         run: |

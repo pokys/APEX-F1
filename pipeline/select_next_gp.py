@@ -53,6 +53,15 @@ def parse_iso_date(raw: str) -> date:
         raise ValueError(f"Invalid --as-of-date '{raw}' (expected YYYY-MM-DD).") from exc
 
 
+def utc_iso_timestamp(now: datetime | None = None) -> str:
+    current = now if now is not None else datetime.now(timezone.utc)
+    if current.tzinfo is None:
+        current = current.replace(tzinfo=timezone.utc)
+    else:
+        current = current.astimezone(timezone.utc)
+    return current.replace(microsecond=0).isoformat().replace("+00:00", "Z")
+
+
 def is_na_like(value: Any) -> bool:
     if value is None:
         return True
@@ -341,7 +350,7 @@ def main() -> int:
         config["next_round"] = event["round"]
         config["race"] = event["event_name"]
         config["race_date"] = event["event_date"]
-        config["generated_at"] = f"{as_of.isoformat()}T00:00:00Z"
+        config["generated_at"] = utc_iso_timestamp()
         # Stable race-specific seed to keep deterministic simulation per selected GP.
         config["seed"] = int(f"{event['season']}{event['round']:02d}")
         if config.get("simulations", 0) < 5000:

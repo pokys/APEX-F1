@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from datetime import date
+from datetime import date, datetime
 
-from pipeline.select_next_gp import apply_track_profile, next_event_from_calendar
+from pipeline.select_next_gp import apply_track_profile, next_event_from_calendar, utc_iso_timestamp
 
 
 def test_next_event_from_calendar_selects_first_future_event() -> None:
@@ -39,3 +39,8 @@ def test_apply_track_profile_applies_event_profile() -> None:
     assert config["overtaking_difficulty"] == 0.62
     assert config["safety_car_probability"] == 0.38
     assert config["track"]["qualifying_noise"] == 2.4
+
+
+def test_utc_iso_timestamp_keeps_seconds_and_z_suffix() -> None:
+    text = utc_iso_timestamp(datetime.fromisoformat("2026-03-03T22:31:45+00:00"))
+    assert text == "2026-03-03T22:31:45Z"

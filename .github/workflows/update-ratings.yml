@@ -45,14 +45,13 @@ jobs:
 
       - name: Commit changes
         run: |
-          if git diff --quiet -- models; then
+          if [ -z "$(git status --porcelain -- models)" ]; then
             echo "No model rating changes."
             exit 0
           fi
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add models
+          git add -- models
           git commit -m "Update model ratings"
           git push
-

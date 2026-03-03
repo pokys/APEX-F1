@@ -11,8 +11,14 @@ Normal automated operation:
 - `Update Ratings` runs daily.
 - `Simulate Race` runs daily.
 - `Backtest Simulation` runs weekly.
+- `Deploy Prediction Page` runs when `outputs/prediction_report.html` changes on `main`.
 
 `Full Prediction Pipeline` can be used as one-shot end-to-end run.
+
+Public page:
+- `https://pokys.github.io/APEX-F1/`
+- One-time setup in GitHub repository:
+  - `Settings -> Pages -> Source: GitHub Actions`
 
 ## 2. Human-in-the-Loop Signals
 

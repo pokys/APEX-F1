@@ -66,14 +66,13 @@ jobs:
 
       - name: Commit changes
         run: |
-          if git diff --quiet -- data/raw/fastf1; then
+          if [ -z "$(git status --porcelain -- data/raw/fastf1)" ]; then
             echo "No FastF1 data changes."
             exit 0
           fi
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/raw/fastf1
+          git add -- data/raw/fastf1
           git commit -m "Update FastF1 raw data snapshot"
           git push
-

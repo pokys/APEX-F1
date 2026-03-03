@@ -55,7 +55,7 @@ jobs:
           SESSIONS: ${{ github.event.inputs.sessions }}
           CUTOFF_DATE: ${{ github.event.inputs.cutoff_date }}
         run: |
-          TARGET_SEASON="${SEASON:-2025}"
+          TARGET_SEASON="${SEASON:-$(date -u +%Y)}"
           ARGS=()
           ARGS+=(--season "$TARGET_SEASON")
           if [ -n "$SESSIONS" ]; then
@@ -66,11 +66,20 @@ jobs:
           fi
           python pipeline/ingest_fastf1.py "${ARGS[@]}" --log-level INFO
 
+      - name: Select next GP config
+        env:
+          SEASON: ${{ github.event.inputs.season }}
+          CUTOFF_DATE: ${{ github.event.inputs.cutoff_date }}
+        run: |
+          TARGET_SEASON="${SEASON:-$(date -u +%Y)}"
+          AS_OF_DATE="${CUTOFF_DATE:-$(date -u +%F)}"
+          python pipeline/select_next_gp.py --season "$TARGET_SEASON" --as-of-date "$AS_OF_DATE" --race-config config/race_config.json --log-level INFO
+
       - name: Build features
         env:
           SEASON: ${{ github.event.inputs.season }}
         run: |
-          TARGET_SEASON="${SEASON:-2025}"
+          TARGET_SEASON="${SEASON:-$(date -u +%Y)}"
           ARGS=()
           ARGS+=(--season "$TARGET_SEASON")
           python pipeline/build_features.py "${ARGS[@]}" --allow-missing-fastf1 --log-level INFO
@@ -79,7 +88,7 @@ jobs:
         env:
           SEASON: ${{ github.event.inputs.season }}
         run: |
-          TARGET_SEASON="${SEASON:-2025}"
+          TARGET_SEASON="${SEASON:-$(date -u +%Y)}"
           ARGS=()
           ARGS+=(--season "$TARGET_SEASON")
           python pipeline/update_ratings.py "${ARGS[@]}" --allow-missing-features --log-level INFO
@@ -93,21 +102,18 @@ jobs:
           python pipeline/publish_prediction.py --allow-missing-input --log-level INFO
 
       - name: Validate outputs
-        env:
-          SEASON: ${{ github.event.inputs.season }}
         run: |
-          TARGET_SEASON="${SEASON:-2025}"
-          python pipeline/validate_outputs.py --season "$TARGET_SEASON" --log-level INFO
+          python pipeline/validate_outputs.py --log-level INFO
 
       - name: Commit changes
         run: |
-          if [ -z "$(git status --porcelain -- knowledge/inbox/articles.md data/raw/fastf1 data/processed models outputs/prediction.json)" ]; then
+          if [ -z "$(git status --porcelain -- knowledge/inbox/articles.md data/raw/fastf1 data/processed models outputs/prediction.json config/race_config.json)" ]; then
             echo "No pipeline output changes."
             exit 0
           fi
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- knowledge/inbox/articles.md data/raw/fastf1 data/processed models outputs/prediction.json
+          git add -- knowledge/inbox/articles.md data/raw/fastf1 data/processed models outputs/prediction.json config/race_config.json
           git commit -m "Run full F1 prediction pipeline"
           git push

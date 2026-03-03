@@ -77,6 +77,7 @@ python pipeline/apply_backtest_calibration.py --season 2026 --allow-missing-repo
 ```bash
 python pipeline/simulate_race.py --allow-missing-models --log-level INFO
 python pipeline/publish_prediction.py --allow-missing-input --log-level INFO
+python pipeline/render_prediction_page.py --prediction outputs/prediction.json --race-config config/race_config.json --output outputs/prediction_report.html --allow-missing-input --log-level INFO
 python pipeline/validate_outputs.py --log-level INFO
 ```
 
@@ -105,12 +106,11 @@ How to adjust manually:
 Current state:
 - RSS links are ingested automatically.
 - Semantic extraction into signals is manual.
-- Source credibility map is hardcoded in `pipeline/build_features.py`:
-  - `the-race`: 0.90
-  - `racefans`: 0.86
-  - `motorsport`: 0.86
-  - `autosport`: 0.85
-  - default unknown source: 0.70
+- Source credibility and soft-signal guardrails are configurable in `config/signal_guardrails.json`:
+  - source credibility map + default credibility
+  - confidence floor
+  - echo-decay for repeated claims
+  - cap limits on soft-signal deltas
 
 Implication:
 - Soft data has bounded impact through weighting and aggregation.

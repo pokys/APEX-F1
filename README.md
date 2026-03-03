@@ -44,6 +44,13 @@ Weather:
 - Current simulation uses `weather` + `weather_modifier` from `config/race_config.json` / `config/track_profiles.json`.
 - There is no automatic live local weather ingestion yet.
 
+Signal guardrails:
+- `config/signal_guardrails.json` controls:
+  - source credibility defaults
+  - confidence floor
+  - echo-decay for repeated claims
+  - bounded soft-signal caps
+
 ## Repository Layout
 
 The core layout follows project specification:
@@ -113,7 +120,11 @@ apex-f1/
     - Canonicalizes output payload shape
     - Keeps published output in `outputs/prediction.json`
 
-12. `validate_outputs.py`
+12. `render_prediction_page.py`
+    - Builds a styled static overview page
+    - Writes `outputs/prediction_report.html`
+
+13. `validate_outputs.py`
     - Validates probability invariants and artifact consistency
 
 ## Local Execution
@@ -122,7 +133,7 @@ Install dependencies:
 
 ```bash
 python -m pip install --upgrade pip
-pip install -r requirements.txt
+pip install -r requirements.lock
 ```
 
 Run full chain manually:
@@ -149,6 +160,7 @@ Primary workflows:
 - `build-features.yml`: features from hard data + signals
 - `update-ratings.yml`: rating model generation
 - `simulate-race.yml`: GP selection + calibration + simulation + publish
+- `archive-signals.yml`: archive stale processed signals after completed races
 - `full-pipeline.yml`: complete end-to-end pipeline
 - `validate-signals.yml`: gate for processed signal quality
 - `tests.yml`: unit tests (`pytest`)
@@ -170,6 +182,10 @@ Race config:
 - `config/race_config.json`
 - Includes selected event fields (`season`, `next_round`, `race`, `race_date`) and simulation parameters.
 
+Rendered prediction page:
+- `outputs/prediction_report.html`
+- Static HTML overview for quick visual review on desktop/mobile.
+
 Signals contract:
 - See `knowledge/processed/README.md`.
 - AI extraction instructions:
@@ -185,7 +201,7 @@ Deterministic design choices:
 - Model updates and outputs fully file-based, versioned in git.
 
 Note:
-- Dependency versions are currently bounded, not fully locked (pin/lock can be added later for stronger long-term reproducibility).
+- CI installs from `requirements.lock` for reproducible dependency resolution.
 
 ## Known Limitations
 

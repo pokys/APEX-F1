@@ -96,23 +96,47 @@ def parse_iso_date(raw: str) -> date:
         raise ValueError(f"Invalid --cutoff-date '{raw}' (expected YYYY-MM-DD).") from exc
 
 
-def to_utc_date(value: Any) -> date | None:
+def is_na_like(value: Any) -> bool:
     if value is None:
+        return True
+    if isinstance(value, float) and math.isnan(value):
+        return True
+    try:
+        if value != value:
+            return True
+    except Exception:
+        pass
+    text = str(value).strip().lower()
+    return text in {"", "nan", "nat", "none"}
+
+
+def to_utc_date(value: Any) -> date | None:
+    if is_na_like(value):
         return None
 
     candidate = value
     if hasattr(candidate, "to_pydatetime"):
-        candidate = candidate.to_pydatetime()
+        try:
+            candidate = candidate.to_pydatetime()
+        except Exception:
+            return None
+        if is_na_like(candidate):
+            return None
     elif hasattr(candidate, "item"):
         try:
             candidate = candidate.item()
         except Exception:
             pass
+        if is_na_like(candidate):
+            return None
 
     if isinstance(candidate, datetime):
-        if candidate.tzinfo is None:
-            candidate = candidate.replace(tzinfo=timezone.utc)
-        return candidate.astimezone(timezone.utc).date()
+        try:
+            if candidate.tzinfo is None:
+                candidate = candidate.replace(tzinfo=timezone.utc)
+            return candidate.astimezone(timezone.utc).date()
+        except Exception:
+            return None
     if isinstance(candidate, date):
         return candidate
     if isinstance(candidate, str):
@@ -127,7 +151,7 @@ def to_utc_date(value: Any) -> date | None:
 
 
 def to_json_scalar(value: Any) -> Any:
-    if value is None:
+    if is_na_like(value):
         return None
     if isinstance(value, (str, bool, int)):
         return value
@@ -141,12 +165,17 @@ def to_json_scalar(value: Any) -> Any:
             value = value.item()
         except Exception:
             return str(value)
+        if is_na_like(value):
+            return None
         return to_json_scalar(value)
 
     if isinstance(value, datetime):
-        if value.tzinfo is None:
-            value = value.replace(tzinfo=timezone.utc)
-        return value.astimezone(timezone.utc).isoformat()
+        try:
+            if value.tzinfo is None:
+                value = value.replace(tzinfo=timezone.utc)
+            return value.astimezone(timezone.utc).isoformat()
+        except Exception:
+            return None
     if isinstance(value, date):
         return value.isoformat()
 
@@ -159,7 +188,7 @@ def normalize_position(value: Any) -> int | None:
         return None
     try:
         return int(float(str(scalar)))
-    except ValueError:
+    except (TypeError, ValueError):
         return None
 
 

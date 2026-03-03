@@ -21,6 +21,7 @@ import argparse
 import json
 import logging
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -74,6 +75,15 @@ def write_json(path: Path, payload: dict[str, Any]) -> None:
     )
 
 
+def utc_iso_timestamp(now: datetime | None = None) -> str:
+    current = now if now is not None else datetime.now(timezone.utc)
+    if current.tzinfo is None:
+        current = current.replace(tzinfo=timezone.utc)
+    else:
+        current = current.astimezone(timezone.utc)
+    return current.replace(microsecond=0).isoformat().replace("+00:00", "Z")
+
+
 def make_scenario_config(base: dict[str, Any], weather: str, modifier: float, seed_offset: int) -> dict[str, Any]:
     cfg = json.loads(json.dumps(base))
     cfg["weather"] = weather
@@ -115,18 +125,22 @@ def main() -> int:
         if not entries:
             raise ValueError("No drivers available for simulation. Run update_ratings first.")
 
+        generated_at = utc_iso_timestamp()
+
         dry_config = make_scenario_config(
             base=base_config,
             weather="dry",
             modifier=args.dry_weather_modifier,
             seed_offset=0,
         )
+        dry_config["generated_at"] = generated_at
         wet_config = make_scenario_config(
             base=base_config,
             weather="wet",
             modifier=args.wet_weather_modifier,
             seed_offset=args.wet_seed_offset,
         )
+        wet_config["generated_at"] = generated_at
 
         dry_prediction = run_simulation(entries, dry_config)
         wet_prediction = run_simulation(entries, wet_config)

@@ -165,6 +165,7 @@ Primary workflows:
 - `validate-signals.yml`: gate for processed signal quality
 - `tests.yml`: unit tests (`pytest`)
 - `backtest.yml`: historical backtest metrics
+- `deploy-pages.yml`: publishes `outputs/prediction_report.html` as public GitHub Pages site
 
 Manual dispatch forms:
 - Inputs are optional for standard runs.
@@ -185,6 +186,11 @@ Race config:
 Rendered prediction page:
 - `outputs/prediction_report.html`
 - Static HTML overview for quick visual review on desktop/mobile.
+
+Public share link (GitHub Pages):
+- URL format: `https://<owner>.github.io/<repo>/`
+- For this repo: `https://pokys.github.io/APEX-F1/`
+- One-time repo setting required: `Settings -> Pages -> Source: GitHub Actions`.
 
 Signals contract:
 - See `knowledge/processed/README.md`.

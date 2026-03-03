@@ -144,6 +144,7 @@ python pipeline/validate_outputs.py --log-level INFO
 
 Primary workflows:
 - `collect-articles.yml`: RSS ingestion to inbox (scheduled + manual)
+- `archive-signals.yml`: archive stale processed signals after completed races
 - `ingest-fastf1.yml`: hard race data snapshot
 - `build-features.yml`: features from hard data + signals
 - `update-ratings.yml`: rating model generation
@@ -192,6 +193,10 @@ Note:
 - No automatic live weather forecast ingestion yet.
 - Source credibility map is static in code (`build_features.py`).
 - RSS feeds may include non-F1 or low-value stories; filtering is currently manual during signal extraction.
+
+Signal lifecycle note:
+- Active files in `knowledge/processed/` are intended for upcoming race influence.
+- Historical files are moved to `knowledge/processed/archive/` by the archive workflow/step.
 
 ## Additional Documentation
 

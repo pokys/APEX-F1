@@ -1,0 +1,75 @@
+name: Archive Old Signals
+
+on:
+  workflow_dispatch:
+    inputs:
+      season:
+        description: "Season year (optional)"
+        required: false
+        type: string
+      as_of_date:
+        description: "Reference date YYYY-MM-DD (optional)"
+        required: false
+        type: string
+  schedule:
+    - cron: "5 1 * * *"
+  push:
+    paths:
+      - "pipeline/archive_old_signals.py"
+      - ".github/workflows/archive-signals.yml"
+      - "data/raw/fastf1/**"
+
+permissions:
+  contents: write
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Archive old signals
+        env:
+          SEASON: ${{ github.event.inputs.season }}
+          AS_OF_DATE: ${{ github.event.inputs.as_of_date }}
+        run: |
+          ARGS=()
+          if [ -n "$SEASON" ]; then
+            ARGS+=(--season "$SEASON")
+          fi
+          if [ -n "$AS_OF_DATE" ]; then
+            ARGS+=(--as-of-date "$AS_OF_DATE")
+          fi
+          python pipeline/archive_old_signals.py "${ARGS[@]}" --allow-missing-calendar --log-level INFO
+
+      - name: Commit changes
+        run: |
+          if [ -z "$(git status --porcelain -- knowledge/processed)" ]; then
+            echo "No signal archive changes."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- knowledge/processed
+          git commit -m "Archive stale processed signals"
+          for attempt in 1 2 3; do
+            if git push; then
+              exit 0
+            fi
+            if [ "$attempt" -lt 3 ]; then
+              echo "git push failed (attempt $attempt), retrying after rebase..."
+              git pull --rebase || true
+              sleep $((attempt * 7))
+            fi
+          done
+          echo "git push failed after 3 attempts."
+          exit 1

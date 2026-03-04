@@ -172,3 +172,4 @@
 
 ## 2026-03-04
 - [ ] Round-up: ‘Okay to start at the back but we can’t stay there’ says Bottas, and more | Formula 1 (https://www.racefans.net/2026/03/04/round-up-4th-march-2026/)
+- [ ] F1 suspends curfew rules for Australian GP due to travel disruption | Formula 1 (https://www.racefans.net/2026/03/04/f1-suspends-curfew-rules-for-australian-gp-due-to-travel-disruption/)

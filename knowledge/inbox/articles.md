@@ -169,3 +169,6 @@
 - [ ] Will first race for new rules disprove the doom-mongers? Australian GP talking points | Formula 1 (https://www.racefans.net/2026/03/03/will-first-race-for-new-rules-disprove-the-doom-mongers-australian-gp-talking-points/)
 - [ ] Yamaha must handle its brutal new MotoGP reality better (https://www.the-race.com/motogp/yamaha-must-handle-brutal-new-motogp-reality-better/)
 - [ ] Straight mode, superclipping, compression ratio: F1 2026 terminology (https://www.motorsport.com/f1/news/f1-2026-terminology/10801818/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+
+## 2026-03-04
+- [ ] Round-up: ‘Okay to start at the back but we can’t stay there’ says Bottas, and more | Formula 1 (https://www.racefans.net/2026/03/04/round-up-4th-march-2026/)

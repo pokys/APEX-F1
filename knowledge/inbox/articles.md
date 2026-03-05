@@ -196,3 +196,12 @@
 - [ ] Sky Sports F1 confirms 2026 broadcast team as Danica Patrick drops off line-up (https://www.motorsport.com/f1/news/sky-sports-f1-confirms-2026-broadcast-team-as-danica-patrick-drops-off-line-up/10802009/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] The four leading F1 prospects on the 2026 F2 grid (https://www.the-race.com/formula-1/who-are-the-future-f1-drivers-on-this-f2-grid/)
 - [ ] Why Cadillac's already impressing F1 rivals (https://www.the-race.com/formula-1/cadillac-impressing-rivals-f1-2026-debut-upset/)
+
+## 2026-03-05
+- [ ] Aston Martin F1 drivers limited to 25 laps to avoid nerve damage (https://www.autosport.com/f1/news/aston-martin-f1-drivers-limited-to-25-laps-to-avoid-nerve-damage/10802052/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Aston Martin F1 drivers limited to 25 laps to avoid nerve damage (https://www.motorsport.com/f1/news/aston-martin-f1-drivers-limited-to-25-laps-to-avoid-nerve-damage/10802034/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Everything we learned from extraordinary Newey/Honda briefing (https://www.the-race.com/formula-1/everything-we-learned-from-extraordinary-newey-honda-briefing/)
+- [ ] Franco Colapinto responds to intense Flavio Briatore meeting shown in "Drive to Survive" (https://www.motorsport.com/f1/news/franco-colapinto-responds-to-intense-flavio-briatore-meeting-shown-in-drive-to-survive-/10802047/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Just 25 laps in Melbourne? The key questions behind Aston Martin and Honda’s F1 crisis (https://www.autosport.com/f1/news/just-25-laps-in-melbourne-the-key-questions-behind-aston-martin-and-hondas-f1-crisis/10802054/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Round-up: F1’s 2026 rules “won’t make a difference” for casual fans says Wolff, and more | RaceFans Round-up (https://www.racefans.net/2026/03/05/round-up-5th-march-2026/)
+- [ ] Why Aston Martin will limit Australian GP stint lengths (https://www.the-race.com/formula-1/alonso-stroll-at-risk-of-permanent-nerve-damage-from-aston-martin-vibrations/)

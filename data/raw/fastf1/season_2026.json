@@ -1,6 +1,15 @@
 {
-  "calendar": [],
-  "cutoff_date": "2026-03-05",
+  "calendar": [
+    {
+      "country": "Australia",
+      "event_date": "2026-03-08",
+      "event_name": "Australian Grand Prix",
+      "location": "Melbourne",
+      "official_event_name": "FORMULA 1 QATAR AIRWAYS AUSTRALIAN GRAND PRIX 2026",
+      "round": 1
+    }
+  ],
+  "cutoff_date": "2026-03-06",
   "events": [],
   "season": 2026,
   "sessions_requested": [

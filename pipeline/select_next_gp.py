@@ -332,6 +332,69 @@ def select_next_event(requested_season: int | None, as_of: date, raw_dir: Path) 
     )
 
 
+def extract_fixed_grid(raw_dir: Path, season: int, event_name: str) -> list[str] | None:
+    path = raw_dir / f"season_{season}.json"
+    if not path.exists():
+        return None
+    try:
+        payload = load_json(path)
+    except Exception:
+        return None
+    if not isinstance(payload, dict):
+        return None
+    events = payload.get("events")
+    if not isinstance(events, list):
+        return None
+
+    target_event = None
+    event_name_lower = event_name.strip().lower()
+    for event in events:
+        if not isinstance(event, dict):
+            continue
+        if str(event.get("event_name") or "").strip().lower() == event_name_lower:
+            target_event = event
+            break
+
+    if not target_event:
+        return None
+
+    sessions = target_event.get("sessions")
+    if not isinstance(sessions, list):
+        return None
+
+    qualifying_results = None
+    for session in sessions:
+        if not isinstance(session, dict):
+            continue
+        if str(session.get("session_code") or "").upper() == "Q":
+            results = session.get("results")
+            if isinstance(results, list) and len(results) > 0:
+                qualifying_results = results
+                break
+
+    if not qualifying_results:
+        return None
+
+    # Sort results by position and extract driver abbreviations
+    scored: list[tuple[int, str]] = []
+    for res in qualifying_results:
+        if not isinstance(res, dict):
+            continue
+        try:
+            pos = int(float(res.get("position")))
+            name = str(res.get("abbreviation") or res.get("full_name") or "").strip()
+            if name:
+                scored.append((pos, name))
+        except (TypeError, ValueError):
+            continue
+
+    if not scored:
+        return None
+
+    scored.sort()
+    return [name for _, name in scored]
+
+
 def main() -> int:
     args = parse_args()
     logging.basicConfig(
@@ -358,6 +421,14 @@ def main() -> int:
         profile_name = apply_track_profile(config, event, profiles)
         if profile_name:
             config["track_profile"] = profile_name
+
+        # NEW: Try to extract fixed grid if qualifying has happened
+        fixed_grid = extract_fixed_grid(Path(args.raw_dir), event["season"], event["event_name"])
+        if fixed_grid:
+            config["fixed_grid"] = fixed_grid
+            LOGGER.info("Detected qualifying results for %s. Applying fixed grid.", event["event_name"])
+        elif "fixed_grid" in config:
+            del config["fixed_grid"]
 
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(config, indent=2, sort_keys=True, ensure_ascii=True) + "\n", encoding="utf-8")

@@ -253,8 +253,14 @@ def run_simulation(entries: list[dict[str, Any]], config: dict[str, Any]) -> dic
     win_count = {name: 0 for name in driver_names}
     podium_count = {name: 0 for name in driver_names}
 
+    fixed_grid_config = config.get("fixed_grid")
+
     for _ in range(simulations):
-        grid = simulate_qualifying(entries, rng, qualifying_noise=qualifying_noise)
+        if isinstance(fixed_grid_config, list) and len(fixed_grid_config) > 0:
+            grid = fixed_grid_config
+        else:
+            grid = simulate_qualifying(entries, rng, qualifying_noise=qualifying_noise)
+
         race_positions = simulate_single_race(
             entries=entries,
             grid_order=grid,

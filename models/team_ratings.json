@@ -23,24 +23,6 @@
     },
     {
       "components": {
-        "qualifying_gap_proxy": 50.0,
-        "sector_dominance": 52.0,
-        "upgrades_impact": 61.0
-      },
-      "team": "Audi",
-      "team_rating": 61.1
-    },
-    {
-      "components": {
-        "qualifying_gap_proxy": 50.0,
-        "sector_dominance": 52.0,
-        "upgrades_impact": 61.0
-      },
-      "team": "Cadillac",
-      "team_rating": 61.1
-    },
-    {
-      "components": {
         "qualifying_gap_proxy": 72.668706,
         "sector_dominance": 49.9375,
         "upgrades_impact": 61.0
@@ -56,6 +38,15 @@
       },
       "team": "Haas F1 Team",
       "team_rating": 44.474356
+    },
+    {
+      "components": {
+        "qualifying_gap_proxy": 22.439982,
+        "sector_dominance": 56.975845,
+        "upgrades_impact": 61.0
+      },
+      "team": "Kick Sauber",
+      "team_rating": 42.641953
     },
     {
       "components": {

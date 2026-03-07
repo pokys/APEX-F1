@@ -4,79 +4,79 @@
       "expected_finish": 5.2135,
       "name": "RUS",
       "podium_probability": 0.739167,
-      "win_probability": 0.298907
+      "win_probability": 0.343964
     },
     {
       "expected_finish": 6.472333,
       "name": "VER",
       "podium_probability": 0.541833,
-      "win_probability": 0.17413
+      "win_probability": 0.181299
     },
     {
       "expected_finish": 6.546333,
       "name": "PIA",
       "podium_probability": 0.449,
-      "win_probability": 0.13249
+      "win_probability": 0.131137
     },
     {
       "expected_finish": 6.813,
       "name": "NOR",
       "podium_probability": 0.418,
-      "win_probability": 0.125379
+      "win_probability": 0.122837
     },
     {
       "expected_finish": 7.627167,
       "name": "LEC",
       "podium_probability": 0.321333,
-      "win_probability": 0.094153
+      "win_probability": 0.087479
     },
     {
       "expected_finish": 8.953167,
       "name": "BOT",
       "podium_probability": 0.166167,
-      "win_probability": 0.05146
+      "win_probability": 0.042752
     },
     {
       "expected_finish": 8.882333,
       "name": "PER",
       "podium_probability": 0.1685,
-      "win_probability": 0.04816
+      "win_probability": 0.039522
     },
     {
       "expected_finish": 10.541333,
       "name": "LIN",
       "podium_probability": 0.069833,
-      "win_probability": 0.025898
+      "win_probability": 0.018947
     },
     {
       "expected_finish": 9.918667,
       "name": "HAD",
       "podium_probability": 0.0765,
-      "win_probability": 0.023704
+      "win_probability": 0.017059
     },
     {
       "expected_finish": 11.839,
       "name": "HUL",
       "podium_probability": 0.021167,
-      "win_probability": 0.011767
+      "win_probability": 0.007438
     },
     {
       "expected_finish": 11.609333,
       "name": "HAM",
       "podium_probability": 0.015333,
-      "win_probability": 0.006637
+      "win_probability": 0.003773
     },
     {
       "expected_finish": 13.353667,
       "name": "ALB",
       "podium_probability": 0.0055,
-      "win_probability": 0.005151
+      "win_probability": 0.002794
     },
     {
       "expected_finish": 13.855667,
       "name": "BEA",
       "podium_probability": 0.002167,
-      "win_probability": 0.002166
+      "win_probability": 0.001001
     },
     {
       "expected_finish": 13.572167,
@@ -133,6 +133,6 @@
       "win_probability": 0.0
     }
   ],
-  "generated_at": "2026-03-07T16:51:33Z",
+  "generated_at": "2026-03-07T17:09:13Z",
   "race": "Australian Grand Prix"
 }

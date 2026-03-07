@@ -38,6 +38,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--strategy-scores", default="models/strategy_scores.json", help="Strategy scores JSON path.")
     parser.add_argument("--reliability-scores", default="models/reliability_scores.json", help="Reliability scores JSON path.")
     parser.add_argument("--race-config", default="config/race_config.json", help="Optional race config JSON path.")
+    parser.add_argument("--fixed-grid", default=None, help="Comma-separated driver abbreviations for starting grid (overrides config).")
     parser.add_argument("--output", default="outputs/prediction.json", help="Prediction output JSON path.")
     parser.add_argument("--allow-missing-models", action="store_true", help="Exit 0 when model files are missing.")
     parser.add_argument(
@@ -172,7 +173,7 @@ def simulate_single_race(
 
     for entry in entries:
         name = entry["name"]
-        grid_pos = grid_index[name]
+        grid_pos = grid_index.get(name, size)
         grid_factor = (size - grid_pos) / max(size - 1, 1)
 
         base_pace = (
@@ -345,6 +346,10 @@ def main() -> int:
         strategy_scores = load_json(Path(args.strategy_scores))
         reliability_scores = load_json(Path(args.reliability_scores))
         race_config = load_or_default_config(Path(args.race_config))
+
+        # CLI --fixed-grid overrides config["fixed_grid"]
+        if args.fixed_grid:
+            race_config["fixed_grid"] = [x.strip().upper() for x in args.fixed_grid.split(",") if x.strip()]
 
         entries = build_entries(driver_ratings, team_ratings, strategy_scores, reliability_scores)
         prediction = run_simulation(entries, race_config)

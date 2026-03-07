@@ -53,7 +53,18 @@
       },
       "driver": "BOR",
       "driver_rating": 43.819769,
-      "team": "Kick Sauber"
+      "team": "Audi"
+    },
+    {
+      "components": {
+        "consistency": 69.0,
+        "qualifying_pace": 46.4,
+        "teammate_delta_performance": 50.0,
+        "wet_performance_index": 50.0
+      },
+      "driver": "BOT",
+      "driver_rating": 68.0,
+      "team": "Cadillac"
     },
     {
       "components": {
@@ -64,17 +75,6 @@
       },
       "driver": "COL",
       "driver_rating": 42.473144,
-      "team": "Alpine"
-    },
-    {
-      "components": {
-        "consistency": 55.0,
-        "qualifying_pace": 36.6,
-        "teammate_delta_performance": 35.129628,
-        "wet_performance_index": 50.0
-      },
-      "driver": "DOO",
-      "driver_rating": 43.36537,
       "team": "Alpine"
     },
     {
@@ -97,7 +97,7 @@
       },
       "driver": "HAD",
       "driver_rating": 55.301251,
-      "team": "Racing Bulls"
+      "team": "Red Bull Racing"
     },
     {
       "components": {
@@ -119,7 +119,7 @@
       },
       "driver": "HUL",
       "driver_rating": 54.951248,
-      "team": "Kick Sauber"
+      "team": "Audi"
     },
     {
       "components": {
@@ -130,7 +130,7 @@
       },
       "driver": "LAW",
       "driver_rating": 36.076666,
-      "team": "Red Bull Racing"
+      "team": "Racing Bulls"
     },
     {
       "components": {
@@ -142,6 +142,17 @@
       "driver": "LEC",
       "driver_rating": 64.680834,
       "team": "Ferrari"
+    },
+    {
+      "components": {
+        "consistency": 69.0,
+        "qualifying_pace": 46.4,
+        "teammate_delta_performance": 50.0,
+        "wet_performance_index": 50.0
+      },
+      "driver": "LIN",
+      "driver_rating": 68.0,
+      "team": "Racing Bulls"
     },
     {
       "components": {
@@ -164,6 +175,17 @@
       "driver": "OCO",
       "driver_rating": 47.719592,
       "team": "Haas F1 Team"
+    },
+    {
+      "components": {
+        "consistency": 69.0,
+        "qualifying_pace": 46.4,
+        "teammate_delta_performance": 50.0,
+        "wet_performance_index": 50.0
+      },
+      "driver": "PER",
+      "driver_rating": 68.0,
+      "team": "Cadillac"
     },
     {
       "components": {
@@ -208,17 +230,6 @@
       "driver": "STR",
       "driver_rating": 41.521213,
       "team": "Aston Martin"
-    },
-    {
-      "components": {
-        "consistency": 61.66668,
-        "qualifying_pace": 44.766668,
-        "teammate_delta_performance": 41.291674,
-        "wet_performance_index": 50.0
-      },
-      "driver": "TSU",
-      "driver_rating": 48.822089,
-      "team": "Racing Bulls"
     },
     {
       "components": {

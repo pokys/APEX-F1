@@ -1,5 +1,4 @@
 {
-  "deterministic_run_id": "c1bb658be5e1f9d40e58",
   "drivers": [
     {
       "expected_finish": 5.2135,
@@ -134,14 +133,6 @@
       "win_probability": 0.0
     }
   ],
-  "generated_at": "2026-03-07T16:50:41Z",
-  "race": "Australian Grand Prix",
-  "simulation": {
-    "overtaking_difficulty": 0.62,
-    "safety_car_probability": 0.38,
-    "seed": 202702,
-    "simulations": 6000,
-    "weather": "wet",
-    "win_temperature": 1.6
-  }
+  "generated_at": "2026-03-07T16:51:33Z",
+  "race": "Australian Grand Prix"
 }

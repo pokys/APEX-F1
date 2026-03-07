@@ -23,24 +23,6 @@
     },
     {
       "components": {
-        "dnf_history": 78.0,
-        "new_component_penalties": 85.0,
-        "power_unit_reliability": 69.0
-      },
-      "reliability_score": 70.0,
-      "team": "Audi"
-    },
-    {
-      "components": {
-        "dnf_history": 78.0,
-        "new_component_penalties": 85.0,
-        "power_unit_reliability": 69.0
-      },
-      "reliability_score": 70.0,
-      "team": "Cadillac"
-    },
-    {
-      "components": {
         "dnf_history": 74.79169,
         "new_component_penalties": 85.0,
         "power_unit_reliability": 69.0
@@ -56,6 +38,15 @@
       },
       "reliability_score": 70.21249,
       "team": "Haas F1 Team"
+    },
+    {
+      "components": {
+        "dnf_history": 51.45831,
+        "new_component_penalties": 85.0,
+        "power_unit_reliability": 69.0
+      },
+      "reliability_score": 64.30624,
+      "team": "Kick Sauber"
     },
     {
       "components": {

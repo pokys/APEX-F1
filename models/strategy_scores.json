@@ -23,24 +23,6 @@
     },
     {
       "components": {
-        "pit_stop_performance": 50.0,
-        "safety_car_reactions": 60.0,
-        "strategic_success_history": 40.0
-      },
-      "strategy_score": 50.0,
-      "team": "Audi"
-    },
-    {
-      "components": {
-        "pit_stop_performance": 50.0,
-        "safety_car_reactions": 60.0,
-        "strategic_success_history": 40.0
-      },
-      "strategy_score": 50.0,
-      "team": "Cadillac"
-    },
-    {
-      "components": {
         "pit_stop_performance": 47.0,
         "safety_car_reactions": 60.0,
         "strategic_success_history": 70.0
@@ -56,6 +38,15 @@
       },
       "strategy_score": 57.408333,
       "team": "Haas F1 Team"
+    },
+    {
+      "components": {
+        "pit_stop_performance": 57.237592,
+        "safety_car_reactions": 60.0,
+        "strategic_success_history": 45.833333
+      },
+      "strategy_score": 53.366491,
+      "team": "Kick Sauber"
     },
     {
       "components": {

@@ -346,10 +346,41 @@ def aggregate_optional_signal_indexes(signals: list[dict[str, Any]], guardrails:
     )
 
 
-def compute_driver_ratings(features: dict[str, Any], wet_by_team: dict[str, float]) -> dict[str, Any]:
+def load_current_entry_list(raw_dir: Path, season: int) -> tuple[dict[str, str], list[str]]:
+    # Returns (driver_to_team_map, list_of_active_teams)
+    path = raw_dir / f"season_{season}.json"
+    if not path.exists():
+        return {}, []
+    try:
+        payload = load_json(path)
+    except Exception:
+        return {}, []
+
+    mapping: dict[str, str] = {}
+    teams: set[str] = set()
+
+    # Prefer data from completed events/sessions if available
+    events = payload.get("events", [])
+    for event in events:
+        for session in event.get("sessions", []):
+            for res in session.get("results", []):
+                d = str(res.get("abbreviation") or "").strip().upper()
+                t = str(res.get("team_name") or "").strip()
+                if d and t:
+                    mapping[d] = t
+                    teams.add(t)
+
+    # Fallback to calendar if no sessions yet (though less reliable for driver names)
+    return mapping, sorted(list(teams))
+
+
+def compute_driver_ratings(features: dict[str, Any], wet_by_team: dict[str, float], active_drivers: dict[str, str]) -> dict[str, Any]:
     rows = features.get("drivers", [])
     if not isinstance(rows, list):
         rows = []
+
+    # Map existing feature data for quick lookup
+    feature_map = {str(row.get("driver") or "").strip().upper(): row for row in rows if isinstance(row, dict)}
 
     # Teammate deltas based on average race position.
     by_team: dict[str, list[tuple[str, float]]] = {}
@@ -357,7 +388,8 @@ def compute_driver_ratings(features: dict[str, Any], wet_by_team: dict[str, floa
         if not isinstance(row, dict):
             continue
         team_key = slug(str(row.get("team") or ""))
-        driver_name = str(row.get("driver") or "")
+        driver_name = str(row.get("driver") or "").strip().upper()
+        # Only include in teammate delta calculation if they are in the feature set
         race_avg = safe_float(row.get("race_avg_position"))
         if not team_key or not driver_name or race_avg is None:
             continue
@@ -371,38 +403,41 @@ def compute_driver_ratings(features: dict[str, Any], wet_by_team: dict[str, floa
             continue
         team_mean = statistics.fmean(v for _, v in pairs)
         for driver_name, race_avg in pairs:
-            # Positive delta means better (lower position number than teammate average).
             teammate_delta[driver_name] = round(team_mean - race_avg, 6)
 
     payload_rows: list[dict[str, Any]] = []
-    for row in sorted((x for x in rows if isinstance(x, dict)), key=lambda r: str(r.get("driver") or "").lower()):
-        driver_name = str(row.get("driver") or "")
-        team_name = str(row.get("team") or "")
+    # Use active_drivers as the master list
+    for driver_name, team_name in sorted(active_drivers.items()):
         team_key = slug(team_name)
-        if not driver_name or not team_name:
-            continue
+        row = feature_map.get(driver_name, {})
 
         race_avg = safe_float(row.get("race_avg_position"))
         q_avg = safe_float(row.get("qualifying_avg_position"))
         dnf_rate = safe_float(row.get("dnf_rate"))
         signal_conf = safe_float(row.get("signal_driver_confidence_delta")) or 0.0
 
-        teammate_component = 50.0 + 22.0 * clamp(teammate_delta.get(driver_name, 0.0), -2.0, 2.0)
+        # Baseline for rookies or missing data
+        t_delta = teammate_delta.get(driver_name, 0.0)
+        teammate_component = 50.0 + 22.0 * clamp(t_delta, -2.0, 2.0)
         consistency_component = 75.0 - 40.0 * clamp((dnf_rate if dnf_rate is not None else 0.15), 0.0, 1.0)
         wet_index = wet_by_team.get(team_key, 0.5)
         wet_component = 35.0 + 30.0 * clamp(wet_index, 0.0, 1.0)
         qualifying_component = 80.0 - 2.8 * clamp((q_avg if q_avg is not None else 12.0), 1.0, 20.0)
 
-        # Small bounded manual-signal adjustment.
-        signal_component = 5.0 * clamp(signal_conf, -1.0, 1.0)
+        # Small adjustment for rookies to not be absolute last if they show promise in signals
+        if driver_name not in feature_map:
+             # Default rookie rating baseline
+             rating = 68.0 + 5.0 * clamp(signal_conf, -1.0, 1.0)
+        else:
+            signal_component = 5.0 * clamp(signal_conf, -1.0, 1.0)
+            rating = (
+                0.35 * teammate_component
+                + 0.25 * consistency_component
+                + 0.20 * wet_component
+                + 0.20 * qualifying_component
+                + signal_component
+            )
 
-        rating = (
-            0.35 * teammate_component
-            + 0.25 * consistency_component
-            + 0.20 * wet_component
-            + 0.20 * qualifying_component
-            + signal_component
-        )
         rating = round(clamp(rating, 0.0, 100.0), 6)
 
         payload_rows.append(
@@ -422,10 +457,12 @@ def compute_driver_ratings(features: dict[str, Any], wet_by_team: dict[str, floa
     return {"drivers": payload_rows}
 
 
-def compute_team_ratings(features: dict[str, Any]) -> dict[str, Any]:
+def compute_team_ratings(features: dict[str, Any], active_teams: list[str]) -> dict[str, Any]:
     rows = features.get("teams", [])
     if not isinstance(rows, list):
         rows = []
+
+    feature_map = {str(row.get("team") or "").strip(): row for row in rows if isinstance(row, dict)}
 
     q_values = [
         safe_float(row.get("qualifying_avg_position"))
@@ -435,10 +472,8 @@ def compute_team_ratings(features: dict[str, Any]) -> dict[str, Any]:
     field_q_mean = statistics.fmean(q_values) if q_values else 10.5
 
     payload_rows: list[dict[str, Any]] = []
-    for row in sorted((x for x in rows if isinstance(x, dict)), key=lambda r: str(r.get("team") or "").lower()):
-        team_name = str(row.get("team") or "")
-        if not team_name:
-            continue
+    for team_name in sorted(active_teams):
+        row = feature_map.get(team_name, {})
 
         q_avg = safe_float(row.get("qualifying_avg_position"))
         race_avg = safe_float(row.get("race_avg_position"))
@@ -448,7 +483,12 @@ def compute_team_ratings(features: dict[str, Any]) -> dict[str, Any]:
         sector_dominance = 52.0 + 5.5 * clamp((q_avg if q_avg is not None else 12.0) - (race_avg if race_avg is not None else 12.0), -6.0, 6.0)
         upgrades_impact = 45.0 + 16.0 * clamp((upgrade_score if upgrade_score is not None else 1.0), 0.0, 3.0)
 
-        rating = 0.45 * q_gap_proxy + 0.25 * sector_dominance + 0.30 * upgrades_impact
+        if team_name not in feature_map:
+            # Baseline for new teams (e.g. Cadillac)
+            rating = 55.0 + upgrades_impact * 0.1
+        else:
+            rating = 0.45 * q_gap_proxy + 0.25 * sector_dominance + 0.30 * upgrades_impact
+
         rating = round(clamp(rating, 0.0, 100.0), 6)
 
         payload_rows.append(
@@ -466,30 +506,33 @@ def compute_team_ratings(features: dict[str, Any]) -> dict[str, Any]:
     return {"teams": payload_rows}
 
 
-def compute_strategy_scores(features: dict[str, Any], safety_by_team: dict[str, float]) -> dict[str, Any]:
+def compute_strategy_scores(features: dict[str, Any], safety_by_team: dict[str, float], active_teams: list[str]) -> dict[str, Any]:
     rows = features.get("teams", [])
     if not isinstance(rows, list):
         rows = []
 
+    feature_map = {str(row.get("team") or "").strip(): row for row in rows if isinstance(row, dict)}
+
     payload_rows: list[dict[str, Any]] = []
-    for row in sorted((x for x in rows if isinstance(x, dict)), key=lambda r: str(r.get("team") or "").lower()):
-        team_name = str(row.get("team") or "")
+    for team_name in sorted(active_teams):
         team_key = slug(team_name)
-        if not team_name:
-            continue
+        row = feature_map.get(team_name, {})
 
         q_avg = safe_float(row.get("qualifying_avg_position"))
         race_avg = safe_float(row.get("race_avg_position"))
         starts = safe_float(row.get("starts")) or 0.0
         points = safe_float(row.get("points_total")) or 0.0
 
-        # Proxy: if race avg is better than quali avg, strategy execution likely helped.
         delta = (q_avg if q_avg is not None else 12.0) - (race_avg if race_avg is not None else 12.0)
         pit_stop_perf = 50.0 + 8.0 * clamp(delta, -5.0, 5.0)
         strategic_history = 40.0 + 4.0 * clamp((points / max(starts, 1.0)), 0.0, 20.0)
         safety_reaction = 40.0 + 40.0 * clamp(safety_by_team.get(team_key, 0.5), 0.0, 1.0)
 
-        score = 0.35 * pit_stop_perf + 0.40 * strategic_history + 0.25 * safety_reaction
+        if team_name not in feature_map:
+            score = 50.0 + 10.0 * clamp(safety_by_team.get(team_key, 0.5) - 0.5, -0.5, 0.5)
+        else:
+            score = 0.35 * pit_stop_perf + 0.40 * strategic_history + 0.25 * safety_reaction
+
         score = round(clamp(score, 0.0, 100.0), 6)
 
         payload_rows.append(
@@ -507,17 +550,17 @@ def compute_strategy_scores(features: dict[str, Any], safety_by_team: dict[str, 
     return {"teams": payload_rows}
 
 
-def compute_reliability_scores(features: dict[str, Any], penalties_by_team: dict[str, float]) -> dict[str, Any]:
+def compute_reliability_scores(features: dict[str, Any], penalties_by_team: dict[str, float], active_teams: list[str]) -> dict[str, Any]:
     rows = features.get("teams", [])
     if not isinstance(rows, list):
         rows = []
 
+    feature_map = {str(row.get("team") or "").strip(): row for row in rows if isinstance(row, dict)}
+
     payload_rows: list[dict[str, Any]] = []
-    for row in sorted((x for x in rows if isinstance(x, dict)), key=lambda r: str(r.get("team") or "").lower()):
-        team_name = str(row.get("team") or "")
+    for team_name in sorted(active_teams):
         team_key = slug(team_name)
-        if not team_name:
-            continue
+        row = feature_map.get(team_name, {})
 
         dnf_rate = safe_float(row.get("dnf_rate"))
         signal_rel = safe_float(row.get("signal_reliability_concern"))
@@ -527,7 +570,11 @@ def compute_reliability_scores(features: dict[str, Any], penalties_by_team: dict
         pu_component = 80.0 - 55.0 * clamp((signal_rel if signal_rel is not None else 0.2), 0.0, 1.0)
         penalty_component = 85.0 - 45.0 * clamp(penalty_idx, 0.0, 1.0)
 
-        score = 0.45 * dnf_component + 0.35 * pu_component + 0.20 * penalty_component
+        if team_name not in feature_map:
+            score = 70.0 - 20.0 * clamp(penalty_idx, 0.0, 1.0)
+        else:
+            score = 0.45 * dnf_component + 0.35 * pu_component + 0.20 * penalty_component
+
         score = round(clamp(score, 0.0, 100.0), 6)
 
         payload_rows.append(
@@ -568,28 +615,32 @@ def main() -> int:
     try:
         features = load_json(features_path)
         season = int(features.get("season"))
-        if args.season is not None and args.season != season:
+        target_season = args.season if args.season is not None else season
+
+        if target_season != season:
             LOGGER.warning(
                 "Ratings update used features season %s for requested season %s due to missing current-season data.",
                 season,
-                args.season,
+                target_season,
             )
 
-        rows = features.get("drivers")
-        if not isinstance(rows, list) or len(rows) == 0:
-            if args.allow_missing_features:
-                LOGGER.warning("Skipping ratings update: features file has no driver rows (%s)", features_path)
-                return 0
-            raise ValueError(f"Features file has no driver rows: {features_path}")
+        # Load master list of active drivers/teams from the current season snapshot
+        active_drivers, active_teams = load_current_entry_list(Path("data/raw/fastf1"), target_season)
+        
+        # If no active data found for current season, fallback to features list (old behavior)
+        if not active_drivers:
+            LOGGER.warning("No active entry list found for season %s. Falling back to feature-based list.", target_season)
+            active_drivers = {str(row.get("driver") or ""): str(row.get("team") or "") for row in features.get("drivers", []) if isinstance(row, dict)}
+            active_teams = sorted(list(set(active_drivers.values())))
 
         signals = load_signals(Path(args.signals_dir))
         guardrails = load_signal_guardrails(Path(args.guardrails_config))
         wet_by_team, safety_by_team, penalties_by_team = aggregate_optional_signal_indexes(signals, guardrails=guardrails)
 
-        drivers = compute_driver_ratings(features, wet_by_team)
-        teams = compute_team_ratings(features)
-        strategy = compute_strategy_scores(features, safety_by_team)
-        reliability = compute_reliability_scores(features, penalties_by_team)
+        drivers = compute_driver_ratings(features, wet_by_team, active_drivers)
+        teams = compute_team_ratings(features, active_teams)
+        strategy = compute_strategy_scores(features, safety_by_team, active_teams)
+        reliability = compute_reliability_scores(features, penalties_by_team, active_teams)
 
         metadata = {
             "season": season,

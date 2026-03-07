@@ -292,10 +292,6 @@ def ingest(season: int, sessions: list[str], cutoff: date, output_dir: Path, cac
         if round_number is None:
             continue
 
-        event_date = to_utc_date(row.get("EventDate"))
-        if event_date and event_date > cutoff:
-            continue
-
         sessions_payload: list[dict[str, Any]] = []
         for session_code in sessions:
             loaded = load_session(season, round_number, session_code, cutoff=cutoff)

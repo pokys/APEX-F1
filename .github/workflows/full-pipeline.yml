@@ -15,6 +15,10 @@ on:
         description: "Cutoff YYYY-MM-DD (optional)"
         required: false
         type: string
+      fixed_grid:
+        description: "Comma-separated driver abbreviations (e.g. VER,RUS,LEC). Overrides auto-detection."
+        required: false
+        type: string
   push:
     paths:
       - "knowledge/processed/**"
@@ -117,8 +121,14 @@ jobs:
           python pipeline/apply_backtest_calibration.py --season "$TARGET_SEASON" --race-config config/race_config.json --allow-missing-report --log-level INFO
 
       - name: Simulate dry and wet scenarios
+        env:
+          FIXED_GRID: ${{ github.event.inputs.fixed_grid }}
         run: |
-          python pipeline/simulate_weather_scenarios.py --allow-missing-models --log-level INFO
+          ARGS=()
+          if [ -n "$FIXED_GRID" ]; then
+            ARGS+=(--fixed-grid "$FIXED_GRID")
+          fi
+          python pipeline/simulate_weather_scenarios.py "${ARGS[@]}" --allow-missing-models --log-level INFO
 
       - name: Publish prediction
         run: |

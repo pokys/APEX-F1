@@ -47,6 +47,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--strategy-scores", default="models/strategy_scores.json", help="Strategy scores JSON path.")
     parser.add_argument("--reliability-scores", default="models/reliability_scores.json", help="Reliability scores JSON path.")
     parser.add_argument("--race-config", default="config/race_config.json", help="Race config JSON path.")
+    parser.add_argument("--fixed-grid", default=None, help="Comma-separated driver abbreviations for starting grid (overrides config).")
     parser.add_argument("--output-dry", default="outputs/prediction_dry.json", help="Dry scenario output path.")
     parser.add_argument("--output-wet", default="outputs/prediction_wet.json", help="Wet scenario output path.")
     parser.add_argument(
@@ -120,6 +121,10 @@ def main() -> int:
         strategy_scores = load_json(Path(args.strategy_scores))
         reliability_scores = load_json(Path(args.reliability_scores))
         base_config = load_or_default_config(Path(args.race_config))
+
+        # CLI --fixed-grid overrides config["fixed_grid"]
+        if args.fixed_grid:
+            base_config["fixed_grid"] = [x.strip().upper() for x in args.fixed_grid.split(",") if x.strip()]
 
         entries = build_entries(driver_ratings, team_ratings, strategy_scores, reliability_scores)
         if not entries:

@@ -306,3 +306,11 @@
 - [ ] Moto2 forced to revise standings after scoring error (https://www.the-race.com/motogp/moto2-forced-to-revise-standings-after-scoring-error/)
 - [ ] Race our experts! Motorsport.com's F1 Fantasy league returns (https://www.motorsport.com/f1/news/race-our-experts-motorsportcoms-f1-fantasy-league-returns/10802645/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Why Aston Martin and Honda went public with how dire its F1 2026 situation is (https://www.motorsport.com/f1/news/aston-martin-honda-f1-2026-situation/10802636/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+
+## 2026-03-07
+- [ ] Australian GP's main active aero zone scrapped hours before FP3 (https://www.the-race.com/formula-1/f1-australian-gp-active-aero-zone-scrapped-before-fp3/)
+- [ ] FIA reverses Australian GP straight mode change after pushback (https://www.autosport.com/f1/news/fia-to-revert-australian-gp-straight-mode-change-after-f1-team-pushback/10802800/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] FIA to revert Australian GP straight mode change after F1 team pushback (https://www.motorsport.com/f1/news/fia-to-revert-australian-gp-straight-mode-change-after-f1-team-pushback/10802784/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Lewis Hamilton leaves fans in stitches after revealing cow named Max: "Not on my bingo card" (https://www.motorsport.com/f1/news/lewis-hamilton-leaves-fans-in-stitches-after-revealing-cow-named-max-not-on-my-bingo-card/10802812/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Round-up: F1’s Bahrain and Jeddah races ‘likely to be cancelled’, and more | RaceFans Round-up (https://www.racefans.net/2026/03/07/round-up-7th-march-2026/)
+- [ ] Team/driver revolt forces FIA into late straight mode U-turn (https://www.the-race.com/formula-1/f1-team-driver-revolt-straight-mode-u-turn-australian-gp/)

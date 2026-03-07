@@ -1,5 +1,4 @@
 {
-  "deterministic_run_id": "7484103dd7f7afcc9cc1",
   "drivers": [
     {
       "expected_finish": 5.160833,
@@ -82,7 +81,7 @@
     {
       "expected_finish": 14.838167,
       "name": "BOR",
-      "podium_probability": 0.0005,
+      "podium_probability": 0.002194,
       "win_probability": 0.002194
     },
     {
@@ -134,14 +133,6 @@
       "win_probability": 0.0
     }
   ],
-  "generated_at": "2026-03-07T16:50:41Z",
-  "race": "Australian Grand Prix",
-  "simulation": {
-    "overtaking_difficulty": 0.62,
-    "safety_car_probability": 0.38,
-    "seed": 202601,
-    "simulations": 6000,
-    "weather": "dry",
-    "win_temperature": 1.6
-  }
+  "generated_at": "2026-03-07T16:51:33Z",
+  "race": "Australian Grand Prix"
 }

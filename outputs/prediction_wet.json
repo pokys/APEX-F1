@@ -1,132 +1,132 @@
 {
   "drivers": [
     {
-      "expected_finish": 5.065167,
+      "expected_finish": 5.149667,
       "name": "RUS",
-      "podium_probability": 0.763833,
-      "win_probability": 0.314394
+      "podium_probability": 0.765,
+      "win_probability": 0.347767
     },
     {
-      "expected_finish": 5.3135,
+      "expected_finish": 5.884,
       "name": "VER",
-      "podium_probability": 0.731,
-      "win_probability": 0.285986
+      "podium_probability": 0.633167,
+      "win_probability": 0.216646
     },
     {
-      "expected_finish": 5.943333,
+      "expected_finish": 5.837667,
       "name": "PIA",
-      "podium_probability": 0.525167,
-      "win_probability": 0.141056
+      "podium_probability": 0.550833,
+      "win_probability": 0.163432
     },
     {
-      "expected_finish": 6.023833,
+      "expected_finish": 5.856667,
       "name": "NOR",
-      "podium_probability": 0.499833,
-      "win_probability": 0.132362
+      "podium_probability": 0.520333,
+      "win_probability": 0.147178
     },
     {
-      "expected_finish": 6.613833,
+      "expected_finish": 6.482,
       "name": "LEC",
-      "podium_probability": 0.382333,
-      "win_probability": 0.101086
+      "podium_probability": 0.419167,
+      "win_probability": 0.107973
     },
     {
-      "expected_finish": 9.6225,
+      "expected_finish": 9.55,
       "name": "HAM",
-      "podium_probability": 0.034167,
-      "win_probability": 0.009023
+      "podium_probability": 0.037667,
+      "win_probability": 0.005855
     },
     {
-      "expected_finish": 10.725667,
-      "name": "ALB",
-      "podium_probability": 0.015167,
-      "win_probability": 0.003794
-    },
-    {
-      "expected_finish": 11.445333,
-      "name": "BEA",
-      "podium_probability": 0.009167,
-      "win_probability": 0.00246
-    },
-    {
-      "expected_finish": 11.596333,
+      "expected_finish": 11.8855,
       "name": "ALO",
-      "podium_probability": 0.014,
-      "win_probability": 0.00246
+      "podium_probability": 0.012667,
+      "win_probability": 0.004891
     },
     {
-      "expected_finish": 11.651833,
-      "name": "HAD",
-      "podium_probability": 0.008,
-      "win_probability": 0.00246
+      "expected_finish": 11.167667,
+      "name": "ALB",
+      "podium_probability": 0.013167,
+      "win_probability": 0.003796
     },
     {
-      "expected_finish": 12.628333,
+      "expected_finish": 12.586333,
       "name": "HUL",
-      "podium_probability": 0.004,
-      "win_probability": 0.00246
+      "podium_probability": 0.0035,
+      "win_probability": 0.002462
     },
     {
-      "expected_finish": 13.713167,
-      "name": "TSU",
-      "podium_probability": 0.00246,
-      "win_probability": 0.00246
-    },
-    {
-      "expected_finish": 12.027167,
+      "expected_finish": 11.170833,
       "name": "ANT",
-      "podium_probability": 0.004667,
+      "podium_probability": 0.011333,
       "win_probability": 0.0
     },
     {
-      "expected_finish": 13.255333,
-      "name": "GAS",
-      "podium_probability": 0.002667,
+      "expected_finish": 11.2745,
+      "name": "HAD",
+      "podium_probability": 0.0145,
       "win_probability": 0.0
     },
     {
-      "expected_finish": 13.350667,
-      "name": "SAI",
-      "podium_probability": 0.0025,
+      "expected_finish": 11.703333,
+      "name": "BEA",
+      "podium_probability": 0.0095,
       "win_probability": 0.0
     },
     {
-      "expected_finish": 13.705833,
+      "expected_finish": 13.224667,
       "name": "LAW",
+      "podium_probability": 0.0015,
+      "win_probability": 0.0
+    },
+    {
+      "expected_finish": 13.290667,
+      "name": "GAS",
+      "podium_probability": 0.003,
+      "win_probability": 0.0
+    },
+    {
+      "expected_finish": 13.553167,
+      "name": "OCO",
       "podium_probability": 0.001333,
       "win_probability": 0.0
     },
     {
-      "expected_finish": 13.805667,
-      "name": "OCO",
-      "podium_probability": 0.000667,
+      "expected_finish": 13.8585,
+      "name": "SAI",
+      "podium_probability": 0.001167,
       "win_probability": 0.0
     },
     {
-      "expected_finish": 15.9325,
+      "expected_finish": 14.146833,
+      "name": "TSU",
+      "podium_probability": 0.002,
+      "win_probability": 0.0
+    },
+    {
+      "expected_finish": 15.4945,
       "name": "BOR",
       "podium_probability": 0.000167,
       "win_probability": 0.0
     },
     {
-      "expected_finish": 16.722,
+      "expected_finish": 16.731,
       "name": "STR",
       "podium_probability": 0.0,
       "win_probability": 0.0
     },
     {
-      "expected_finish": 16.929333,
-      "name": "DOO",
+      "expected_finish": 16.991333,
+      "name": "COL",
       "podium_probability": 0.0,
       "win_probability": 0.0
     },
     {
-      "expected_finish": 17.018667,
-      "name": "COL",
+      "expected_finish": 17.0995,
+      "name": "DOO",
       "podium_probability": 0.0,
       "win_probability": 0.0
     }
   ],
-  "generated_at": "2026-03-07T16:10:43Z",
+  "generated_at": "2026-03-07T16:38:57Z",
   "race": "Australian Grand Prix"
 }

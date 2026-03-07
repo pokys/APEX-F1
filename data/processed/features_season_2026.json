@@ -1,0 +1,10 @@
+{
+  "drivers": [],
+  "fastf1_snapshot": "data/raw/fastf1/season_2026.json",
+  "season": 2026,
+  "signals_files": [
+    "knowledge/processed/signals_2026-03-03.json"
+  ],
+  "source": "build_features",
+  "teams": []
+}

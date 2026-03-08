@@ -16,23 +16,28 @@ from typing import Any
 
 LOGGER = logging.getLogger("render_prediction_page")
 
+# Expanded and more robust team color mapping for 2026
 TEAM_COLORS = {
-    "red bull racing": "#3671C6",
+    "red bull": "#3671C6",
     "mercedes": "#27F4D2",
     "ferrari": "#E80020",
     "mclaren": "#FF8000",
     "aston martin": "#229971",
     "alpine": "#0093CC",
     "williams": "#64C4FF",
-    "haas f1 team": "#B6BABD",
+    "haas": "#B6BABD",
     "racing bulls": "#6692FF",
+    "rb": "#6692FF",
     "audi": "#52E252",
+    "sauber": "#52E252",
     "cadillac": "#FFD700",
+    "andretti": "#FFD700",
     "default": "#9bb0c6"
 }
 
 def get_team_color(team_name: str) -> str:
     cleaned = str(team_name).lower().strip()
+    # Try exact matches or key phrases
     for key, color in TEAM_COLORS.items():
         if key in cleaned:
             return color
@@ -77,7 +82,6 @@ def parse_prediction_rows(prediction: dict[str, Any]) -> list[dict[str, Any]]:
 def build_insights_html(dry_rows: list[dict[str, Any]], wet_rows: list[dict[str, Any]] | None, race_config: dict[str, Any]) -> str:
     if not dry_rows: return ""
     
-    # Load source summary
     source_info = "FastF1 Data + AI Signals"
     try:
         ratings_path = Path("models/driver_ratings.json")
@@ -94,9 +98,6 @@ def build_insights_html(dry_rows: list[dict[str, Any]], wet_rows: list[dict[str,
         prediction_target, confidence_label, status_class = "SATURDAY QUALIFYING", "Estimated", "status-low"
         source_details = "Predicting Q positions"
 
-    # Analytics: Biggest Mover (if grid info exists)
-    # Note: Simplified for now since we don't always have initial grid in features
-    
     cards = [
         (f"Objective: {prediction_target}", confidence_label, source_details, status_class),
         ("Primary Data Source", source_info, "FastF1 Hard Data + AI Signals", ""),
@@ -188,6 +189,7 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
     
     current_gp = str(race_config.get("race") or "Next GP")
     location = str(race_config.get("location") or "Circuit")
+    gen_at = str(prediction.get("generated_at") or race_config.get("generated_at") or "Unknown")
     
     insights_html = build_insights_html(dry_rows, wet_rows, race_config)
     panels_html = scenario_block_html(dry_rows, "dry", "Dry", True)
@@ -201,6 +203,19 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
             <button class="toggle-btn is-active" data-target="dry">Dry</button>
             <button class="toggle-btn" data-target="wet">Wet</button>
         </div>"""
+
+    # System facts for debug section
+    system_facts = {
+        "Season": race_config.get("season"),
+        "Round": race_config.get("next_round"),
+        "Simulations": race_config.get("simulations"),
+        "Seed": race_config.get("seed"),
+        "Grid Source": race_config.get("grid_source"),
+        "Safety Car P": race_config.get("safety_car_probability"),
+        "Overtake Diff": race_config.get("overtaking_difficulty"),
+        "Generated At": gen_at
+    }
+    debug_rows = "".join([f"<div><span>{k}:</span><code>{v}</code></div>" for k,v in system_facts.items()])
 
     return f"""<!doctype html>
 <html lang="en">
@@ -218,7 +233,7 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
             margin: 0; font-family: 'Sora', sans-serif; background: var(--bg); color: var(--ink); line-height: 1.5;
             background-image: radial-gradient(circle at 50% -20%, #161b22 0%, var(--bg) 80%);
         }}
-        .app {{ max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }}
+        .app {{ max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; padding-bottom: 5rem; }}
         header {{ margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem; }}
         .header-main h1 {{ margin: 0; font-size: 2.5rem; font-weight: 800; letter-spacing: -0.02em; color: #fff; }}
         .header-main p {{ margin: 0.5rem 0 0; color: var(--muted); font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; }}
@@ -272,6 +287,13 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
         .scenario-header {{ margin-bottom: 1rem; }}
         .scenario-tag {{ background: var(--grid); color: #fff; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }}
 
+        footer {{ margin-top: 4rem; border-top: 1px solid var(--grid); padding-top: 2rem; display: flex; flex-direction: column; align-items: center; gap: 1rem; }}
+        .debug-toggle {{ background: transparent; border: 1px solid var(--grid); color: var(--muted); padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; }}
+        .debug-panel {{ display: none; background: #000; border: 1px solid var(--grid); padding: 1rem; border-radius: 8px; width: 100%; max-width: 600px; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; }}
+        .debug-panel.is-active {{ display: block; }}
+        .debug-panel div {{ display: flex; justify-content: space-between; padding: 0.25rem 0; border-bottom: 1px solid #111; }}
+        .debug-panel div span {{ color: var(--muted); }}
+
         @media (max-width: 800px) {{
             .podium-grid {{ grid-template-columns: 1fr; }}
             .podium-card.is-hero {{ order: -1; }}
@@ -291,6 +313,12 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
         </header>
         {insights_html}
         {panels_html}
+        <footer>
+            <button class="debug-toggle" onclick="document.getElementById('debug').classList.toggle('is-active')">SYSTEM_TRACE.LOG</button>
+            <div id="debug" class="debug-panel">
+                {debug_rows}
+            </div>
+        </footer>
     </div>
     <script>
         document.querySelectorAll('.toggle-btn').forEach(btn => {{

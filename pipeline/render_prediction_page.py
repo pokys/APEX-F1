@@ -77,38 +77,39 @@ def build_insights_html(dry_rows: list[dict[str, Any]], wet_rows: list[dict[str,
         return ""
 
     win_leader = dry_rows[0]
-    podium_leader = max(dry_rows, key=lambda row: row["podium_probability"])
     
     # Confidence & Source Detection
     grid_source = str(race_config.get("grid_source") or "simulation").lower()
     if grid_source == "qualifying":
+        prediction_target = "RACE"
         confidence_label = "High Confidence"
-        source_label = "Real Qualifying Results Detected"
+        source_label = "Qualifying Results Verified"
         status_class = "status-high"
-        source_details = "Using actual 2026 starting grid"
+        source_details = "Predicting race outcome based on actual starting grid"
     else:
+        prediction_target = "QUALIFYING"
         confidence_label = "Estimated"
-        source_label = "Simulated Grid (Pre-Qualifying)"
+        source_label = "Pre-Qualifying Simulation"
         status_class = "status-low"
-        source_details = "Grid predicted from historical performance"
+        source_details = "Predicting qualifying performance from historical pace"
 
     cards = [
         (
-            f"Prediction Mode ({confidence_label})",
+            f"Current Objective: {prediction_target}",
             source_label,
             source_details,
             status_class
         ),
         (
-            "Primary Data Sources",
-            "Multi-source Fusion",
-            "FastF1 Hard Data + AI News Signals",
+            "Track: " + str(race_config.get("race") or "Next GP").replace(" Grand Prix", ""),
+            str(race_config.get("location") or "Circuit"),
+            f"Overtake Difficulty: {int((1.0 - race_config.get('overtaking_difficulty', 0.5)) * 100)}% | Tyre Wear: {int(race_config.get('track', {}).get('tyre_degradation_factor', 0.5) * 100)}%",
             ""
         ),
         (
             "Most likely winner",
             win_leader["name"],
-            f'{win_leader["win_probability"] * 100:.2f}% win chance',
+            f'{win_leader["win_probability"] * 100:.2f}% chance',
             ""
         ),
     ]
@@ -125,12 +126,12 @@ def build_insights_html(dry_rows: list[dict[str, Any]], wet_rows: list[dict[str,
                 biggest_swing = (row["name"], delta)
 
         if biggest_swing is not None:
-            direction = "up" if biggest_swing[1] >= 0 else "down"
+            direction = "benefits most" if biggest_swing[1] >= 0 else "struggles most"
             cards.append(
                 (
-                    "Biggest wet swing",
+                    "Rain Specialist",
                     biggest_swing[0],
-                    f'{direction} {abs(biggest_swing[1]) * 100:.2f} pp vs dry',
+                    f'{direction} from wet conditions',
                     ""
                 )
             )
@@ -179,7 +180,7 @@ def scenario_block_html(rows: list[dict[str, Any]], scenario_key: str, scenario_
                 f"<td class=\"finish\">{row['expected_finish']:.3f}</td>"
                 f"</tr>"
             )
-            for idx, row in enumerate(rows[3:], start=4)
+            for idx, row in enumerate(rows, start=1)
         ]
     )
 
@@ -201,7 +202,7 @@ def scenario_block_html(rows: list[dict[str, Any]], scenario_key: str, scenario_
                 f"</div>"
                 f"</article>"
             )
-            for idx, row in enumerate(rows[3:], start=4)
+            for idx, row in enumerate(rows, start=1)
         ]
     )
 
@@ -223,12 +224,36 @@ def scenario_block_html(rows: list[dict[str, Any]], scenario_key: str, scenario_
     )
 
 
+def load_prediction_for_render(args: argparse.Namespace) -> tuple[dict[str, Any], dict[str, Any] | None]:
+    dry_path = Path(args.prediction_dry)
+    wet_path = Path(args.prediction_wet)
+
+    if dry_path.exists() and wet_path.exists():
+        dry = load_json(dry_path)
+        wet = load_json(wet_path)
+        if not isinstance(dry, dict) or not isinstance(wet, dict):
+            raise ValueError("Dry/wet prediction input must be JSON objects.")
+        return dry, wet
+
+    single_path = Path(args.prediction)
+    if single_path.exists():
+        single = load_json(single_path)
+        if not isinstance(single, dict):
+            raise ValueError("Prediction input must be a JSON object.")
+        return single, None
+
+    raise FileNotFoundError(
+        f"Missing prediction input. Checked dry/wet ({dry_path}, {wet_path}) and single ({single_path})."
+    )
+
+
 def render_page(prediction: dict[str, Any], race_config: dict[str, Any], prediction_wet: dict[str, Any] | None = None) -> str:
     dry_rows = parse_prediction_rows(prediction)
     wet_rows = parse_prediction_rows(prediction_wet) if isinstance(prediction_wet, dict) else None
     insights_html = build_insights_html(dry_rows, wet_rows, race_config)
 
-    race_name = html.escape(str(prediction.get("race") or race_config.get("race") or "Next GP"))
+    current_gp_name = str(race_config.get("race") or "Next GP")
+    race_name = html.escape(current_gp_name)
     generated_at = html.escape(str(prediction.get("generated_at") or race_config.get("generated_at") or ""))
     race_date = html.escape(str(race_config.get("race_date") or ""))
     simulations = int(to_float(race_config.get("simulations"), 0))
@@ -293,8 +318,9 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
       for (const button of visibilityButtons) {
         button.addEventListener('click', () => applyVisibility(button.dataset.show || 'all'));
       }
-      const mobile = window.matchMedia('(max-width: 980px)').matches;
-      applyVisibility(mobile ? 'top10' : 'all');
+      
+      // Default to 'all' on load
+      applyVisibility('all');
     </script>
 """
 
@@ -494,13 +520,7 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
         border-radius: 16px;
         overflow: hidden;
       }}
-      .desktop-only {{
-        display: block;
-      }}
-      .mobile-list {{
-        display: none;
-      }}
-      table {{
+       table {{
         width: 100%;
         border-collapse: collapse;
       }}
@@ -587,13 +607,18 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
         .podium {{
           grid-template-columns: 1fr;
         }}
-        .desktop-only {{
+        .table-wrap.desktop-only {{
           display: none;
         }}
         .mobile-list {{
           display: grid;
           gap: 10px;
           margin-top: 16px;
+        }}
+      }}
+      @media (min-width: 981px) {{
+        .mobile-list {{
+          display: none;
         }}
       }}
     </style>
@@ -627,29 +652,6 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
 {script_html}  </body>
 </html>
 """
-
-
-def load_prediction_for_render(args: argparse.Namespace) -> tuple[dict[str, Any], dict[str, Any] | None]:
-    dry_path = Path(args.prediction_dry)
-    wet_path = Path(args.prediction_wet)
-
-    if dry_path.exists() and wet_path.exists():
-        dry = load_json(dry_path)
-        wet = load_json(wet_path)
-        if not isinstance(dry, dict) or not isinstance(wet, dict):
-            raise ValueError("Dry/wet prediction input must be JSON objects.")
-        return dry, wet
-
-    single_path = Path(args.prediction)
-    if single_path.exists():
-        single = load_json(single_path)
-        if not isinstance(single, dict):
-            raise ValueError("Prediction input must be a JSON object.")
-        return single, None
-
-    raise FileNotFoundError(
-        f"Missing prediction input. Checked dry/wet ({dry_path}, {wet_path}) and single ({single_path})."
-    )
 
 
 def main() -> int:

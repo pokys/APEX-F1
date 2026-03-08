@@ -71,22 +71,33 @@ def normalize_prediction(payload: dict[str, Any]) -> dict[str, Any]:
         podium = max(podium, win)
         expected_finish = max(1.0, safe_float(row.get("expected_finish"), 99.0))
 
-        normalized_drivers.append(
-            {
-                "name": name,
-                "win_probability": round(win, 6),
-                "podium_probability": round(podium, 6),
-                "expected_finish": round(expected_finish, 6),
-            }
-        )
+        # SYSTEMIC FIX: Preserve analytical fields
+        driver_entry = {
+            "name": name,
+            "team": str(row.get("team") or "Unknown"),
+            "win_probability": round(win, 6),
+            "podium_probability": round(podium, 6),
+            "expected_finish": round(expected_finish, 6),
+        }
+        # Optional shares for Skill vs Machinery breakdown
+        if "driver_share" in row: driver_entry["driver_share"] = row["driver_share"]
+        if "team_share" in row: driver_entry["team_share"] = row["team_share"]
+
+        normalized_drivers.append(driver_entry)
 
     normalized_drivers.sort(key=lambda x: (-x["win_probability"], x["expected_finish"], x["name"].lower()))
 
-    return {
+    # SYSTEMIC FIX: Preserve integrity and simulation metadata
+    out = {
         "race": str(payload.get("race") or "Next GP"),
         "generated_at": str(payload.get("generated_at") or "1970-01-01T00:00:00Z"),
         "drivers": normalized_drivers,
     }
+    if "integrity" in payload: out["integrity"] = payload["integrity"]
+    if "simulation" in payload: out["simulation"] = payload["simulation"]
+    if "deterministic_run_id" in payload: out["deterministic_run_id"] = payload["deterministic_run_id"]
+    
+    return out
 
 
 def main() -> int:

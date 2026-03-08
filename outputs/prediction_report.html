@@ -42,6 +42,8 @@
         .podium-card .rank { font-weight: 800; color: var(--team-color); font-size: 0.9rem; margin: 0; font-family: 'JetBrains Mono', monospace; }
         .podium-header h3 { margin: 0.5rem 0 0.25rem; font-size: 1.5rem; color: #fff; }
         .team-tag { font-size: 0.75rem; color: var(--muted); font-weight: 600; text-transform: uppercase; }
+        .podium-breakdown { margin-top: 0.5rem; display: flex; gap: 0.5rem; }
+        .share-badge { background: var(--grid); padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.65rem; font-family: 'JetBrains Mono', monospace; color: var(--ink); }
         .podium-metrics { display: flex; gap: 1.5rem; margin: 1.5rem 0; }
         .p-metric span { display: block; font-size: 0.7rem; color: var(--muted); text-transform: uppercase; font-weight: 700; }
         .p-metric strong { font-size: 1.2rem; color: #fff; font-family: 'JetBrains Mono', monospace; }
@@ -59,7 +61,9 @@
         .driver-row:hover { background: #161b22; border-left-color: var(--team-color); }
         .td-rank { font-family: 'JetBrains Mono', monospace; color: var(--muted); font-weight: 500; }
         .td-driver strong { display: block; color: #fff; font-size: 1rem; }
+        .td-meta { display: flex; align-items: center; gap: 0.75rem; margin-top: 0.25rem; }
         .td-driver small { font-size: 0.75rem; color: var(--muted); }
+        .mini-share { font-size: 0.65rem; font-family: 'JetBrains Mono', monospace; color: var(--muted); background: #000; padding: 0.1rem 0.4rem; border-radius: 3px; }
         .bar-wrap { display: flex; align-items: center; gap: 1rem; }
         .bar-main, .bar-podium { height: 6px; flex: 1; background: var(--grid); border-radius: 3px; overflow: hidden; min-width: 80px; }
         .bar-main span { display: block; height: 100%; background: linear-gradient(90deg, var(--accent), #fff); }
@@ -101,7 +105,7 @@
             <button class="toggle-btn" data-target="wet">Wet</button>
         </div>
         </header>
-        <section class="insights"><article class="insight-card status-low"><div class="insight-header"><p class="insight-kicker">Objective: SATURDAY QUALIFYING</p></div><h3 class="insight-value">Estimated</h3><p class="insight-sub">Predicting Q positions</p></article><article class="insight-card "><div class="insight-header"><p class="insight-kicker">Primary Data Source</p></div><h3 class="insight-value">Blended Data: 20% Season 2026, 80% Season 2025</h3><p class="insight-sub">FastF1 Hard Data + AI Signals</p></article><article class="insight-card "><div class="insight-header"><p class="insight-kicker">Track Context</p></div><h3 class="insight-value">Chinese</h3><p class="insight-sub">Overtake Difficulty: 50% | Wear: 57%</p></article></section>
+        <section class="insights"><article class="insight-card status-low"><div class="insight-header"><p class="insight-kicker">Objective: SATURDAY QUALIFYING</p></div><h3 class="insight-value">Estimated</h3><p class="insight-sub">Predicting Q positions</p></article><article class="insight-card "><div class="insight-header"><p class="insight-kicker">Primary Data Source</p></div><h3 class="insight-value">Blended Data: 20% Season 2026, 80% Season 2025</h3><p class="insight-sub">FastF1 Hard Data + AI Signals</p></article><article class="insight-card "><div class="insight-header"><p class="insight-kicker">Track Context</p></div><h3 class="insight-value">Chinese</h3><p class="insight-sub">Overtaking: 50% | Wear: 57%</p></article></section>
         
     <section class="scenario-panel is-active" data-scenario="dry">
         <div class="scenario-header">
@@ -116,6 +120,10 @@
                 <h3>NOR</h3>
                 <span class="team-tag">McLaren</span>
             </div>
+            <div class="podium-breakdown">
+                <span class="share-badge" title="Driver Contribution">W: 51%</span>
+                <span class="share-badge" title="Car Contribution">E: 49%</span>
+            </div>
             <div class="podium-metrics">
                 <div class="p-metric"><span>Win</span><strong>30.2%</strong></div>
                 <div class="p-metric"><span>Podium</span><strong>76.9%</strong></div>
@@ -129,6 +137,10 @@
                 <h3>RUS</h3>
                 <span class="team-tag">Mercedes</span>
             </div>
+            <div class="podium-breakdown">
+                <span class="share-badge" title="Driver Contribution">W: 52%</span>
+                <span class="share-badge" title="Car Contribution">E: 48%</span>
+            </div>
             <div class="podium-metrics">
                 <div class="p-metric"><span>Win</span><strong>40.6%</strong></div>
                 <div class="p-metric"><span>Podium</span><strong>80.0%</strong></div>
@@ -141,6 +153,10 @@
             <div class="podium-header">
                 <h3>VER</h3>
                 <span class="team-tag">Red Bull Racing</span>
+            </div>
+            <div class="podium-breakdown">
+                <span class="share-badge" title="Driver Contribution">W: 54%</span>
+                <span class="share-badge" title="Car Contribution">E: 46%</span>
             </div>
             <div class="podium-metrics">
                 <div class="p-metric"><span>Win</span><strong>20.1%</strong></div>
@@ -159,7 +175,13 @@
                     <tbody>
         <tr class="driver-row" style="--team-color: #27F4D2">
             <td class="td-rank">1</td>
-            <td class="td-driver"><strong>RUS</strong><small>Mercedes</small></td>
+            <td class="td-driver">
+                <strong>RUS</strong>
+                <div class="td-meta">
+                    <small>Mercedes</small>
+                    <span class="mini-share">W:52% E:48%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:40.59%"></span></div>
@@ -176,7 +198,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #FF8000">
             <td class="td-rank">2</td>
-            <td class="td-driver"><strong>NOR</strong><small>McLaren</small></td>
+            <td class="td-driver">
+                <strong>NOR</strong>
+                <div class="td-meta">
+                    <small>McLaren</small>
+                    <span class="mini-share">W:51% E:49%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:30.18%"></span></div>
@@ -193,7 +221,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #3671C6">
             <td class="td-rank">3</td>
-            <td class="td-driver"><strong>VER</strong><small>Red Bull Racing</small></td>
+            <td class="td-driver">
+                <strong>VER</strong>
+                <div class="td-meta">
+                    <small>Red Bull Racing</small>
+                    <span class="mini-share">W:54% E:46%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:20.10%"></span></div>
@@ -210,7 +244,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #E80020">
             <td class="td-rank">4</td>
-            <td class="td-driver"><strong>LEC</strong><small>Ferrari</small></td>
+            <td class="td-driver">
+                <strong>LEC</strong>
+                <div class="td-meta">
+                    <small>Ferrari</small>
+                    <span class="mini-share">W:49% E:51%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:7.55%"></span></div>
@@ -227,7 +267,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #E80020">
             <td class="td-rank">5</td>
-            <td class="td-driver"><strong>HAM</strong><small>Ferrari</small></td>
+            <td class="td-driver">
+                <strong>HAM</strong>
+                <div class="td-meta">
+                    <small>Ferrari</small>
+                    <span class="mini-share">W:43% E:57%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:0.52%"></span></div>
@@ -244,7 +290,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #6692FF">
             <td class="td-rank">6</td>
-            <td class="td-driver"><strong>LIN</strong><small>Racing Bulls</small></td>
+            <td class="td-driver">
+                <strong>LIN</strong>
+                <div class="td-meta">
+                    <small>Racing Bulls</small>
+                    <span class="mini-share">W:54% E:46%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:0.49%"></span></div>
@@ -261,7 +313,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #FF8000">
             <td class="td-rank">7</td>
-            <td class="td-driver"><strong>PIA</strong><small>McLaren</small></td>
+            <td class="td-driver">
+                <strong>PIA</strong>
+                <div class="td-meta">
+                    <small>McLaren</small>
+                    <span class="mini-share">W:40% E:60%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:0.26%"></span></div>
@@ -278,7 +336,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #64C4FF">
             <td class="td-rank">8</td>
-            <td class="td-driver"><strong>ALB</strong><small>Williams</small></td>
+            <td class="td-driver">
+                <strong>ALB</strong>
+                <div class="td-meta">
+                    <small>Williams</small>
+                    <span class="mini-share">W:53% E:47%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:0.14%"></span></div>
@@ -295,7 +359,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #27F4D2">
             <td class="td-rank">9</td>
-            <td class="td-driver"><strong>ANT</strong><small>Mercedes</small></td>
+            <td class="td-driver">
+                <strong>ANT</strong>
+                <div class="td-meta">
+                    <small>Mercedes</small>
+                    <span class="mini-share">W:37% E:63%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:0.06%"></span></div>
@@ -312,7 +382,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #B6BABD">
             <td class="td-rank">10</td>
-            <td class="td-driver"><strong>BEA</strong><small>Haas F1 Team</small></td>
+            <td class="td-driver">
+                <strong>BEA</strong>
+                <div class="td-meta">
+                    <small>Haas F1 Team</small>
+                    <span class="mini-share">W:54% E:46%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:0.06%"></span></div>
@@ -329,7 +405,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #229971">
             <td class="td-rank">11</td>
-            <td class="td-driver"><strong>ALO</strong><small>Aston Martin</small></td>
+            <td class="td-driver">
+                <strong>ALO</strong>
+                <div class="td-meta">
+                    <small>Aston Martin</small>
+                    <span class="mini-share">W:56% E:44%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:0.06%"></span></div>
@@ -346,7 +428,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #0093CC">
             <td class="td-rank">12</td>
-            <td class="td-driver"><strong>GAS</strong><small>Alpine</small></td>
+            <td class="td-driver">
+                <strong>GAS</strong>
+                <div class="td-meta">
+                    <small>Alpine</small>
+                    <span class="mini-share">W:59% E:41%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:0.00%"></span></div>
@@ -363,7 +451,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #3671C6">
             <td class="td-rank">13</td>
-            <td class="td-driver"><strong>HAD</strong><small>Red Bull Racing</small></td>
+            <td class="td-driver">
+                <strong>HAD</strong>
+                <div class="td-meta">
+                    <small>Red Bull Racing</small>
+                    <span class="mini-share">W:37% E:63%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:0.00%"></span></div>
@@ -380,7 +474,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #64C4FF">
             <td class="td-rank">14</td>
-            <td class="td-driver"><strong>SAI</strong><small>Williams</small></td>
+            <td class="td-driver">
+                <strong>SAI</strong>
+                <div class="td-meta">
+                    <small>Williams</small>
+                    <span class="mini-share">W:48% E:52%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:0.00%"></span></div>
@@ -397,7 +497,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #B6BABD">
             <td class="td-rank">15</td>
-            <td class="td-driver"><strong>OCO</strong><small>Haas F1 Team</small></td>
+            <td class="td-driver">
+                <strong>OCO</strong>
+                <div class="td-meta">
+                    <small>Haas F1 Team</small>
+                    <span class="mini-share">W:48% E:52%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:0.00%"></span></div>
@@ -414,7 +520,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #52E252">
             <td class="td-rank">16</td>
-            <td class="td-driver"><strong>BOR</strong><small>Audi</small></td>
+            <td class="td-driver">
+                <strong>BOR</strong>
+                <div class="td-meta">
+                    <small>Audi</small>
+                    <span class="mini-share">W:53% E:47%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:0.00%"></span></div>
@@ -431,7 +543,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #FFD700">
             <td class="td-rank">17</td>
-            <td class="td-driver"><strong>PER</strong><small>Cadillac</small></td>
+            <td class="td-driver">
+                <strong>PER</strong>
+                <div class="td-meta">
+                    <small>Cadillac</small>
+                    <span class="mini-share">W:60% E:40%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:0.00%"></span></div>
@@ -448,7 +566,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #229971">
             <td class="td-rank">18</td>
-            <td class="td-driver"><strong>STR</strong><small>Aston Martin</small></td>
+            <td class="td-driver">
+                <strong>STR</strong>
+                <div class="td-meta">
+                    <small>Aston Martin</small>
+                    <span class="mini-share">W:49% E:51%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:0.00%"></span></div>
@@ -465,7 +589,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #6692FF">
             <td class="td-rank">19</td>
-            <td class="td-driver"><strong>LAW</strong><small>Racing Bulls</small></td>
+            <td class="td-driver">
+                <strong>LAW</strong>
+                <div class="td-meta">
+                    <small>Racing Bulls</small>
+                    <span class="mini-share">W:41% E:59%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:0.00%"></span></div>
@@ -482,7 +612,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #0093CC">
             <td class="td-rank">20</td>
-            <td class="td-driver"><strong>COL</strong><small>Alpine</small></td>
+            <td class="td-driver">
+                <strong>COL</strong>
+                <div class="td-meta">
+                    <small>Alpine</small>
+                    <span class="mini-share">W:50% E:50%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:0.00%"></span></div>
@@ -499,7 +635,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #52E252">
             <td class="td-rank">21</td>
-            <td class="td-driver"><strong>HUL</strong><small>Audi</small></td>
+            <td class="td-driver">
+                <strong>HUL</strong>
+                <div class="td-meta">
+                    <small>Audi</small>
+                    <span class="mini-share">W:47% E:53%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:0.00%"></span></div>
@@ -516,7 +658,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #FFD700">
             <td class="td-rank">22</td>
-            <td class="td-driver"><strong>BOT</strong><small>Cadillac</small></td>
+            <td class="td-driver">
+                <strong>BOT</strong>
+                <div class="td-meta">
+                    <small>Cadillac</small>
+                    <span class="mini-share">W:45% E:55%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:0.00%"></span></div>
@@ -548,6 +696,10 @@
                 <h3>NOR</h3>
                 <span class="team-tag">McLaren</span>
             </div>
+            <div class="podium-breakdown">
+                <span class="share-badge" title="Driver Contribution">W: 51%</span>
+                <span class="share-badge" title="Car Contribution">E: 49%</span>
+            </div>
             <div class="podium-metrics">
                 <div class="p-metric"><span>Win</span><strong>29.9%</strong></div>
                 <div class="p-metric"><span>Podium</span><strong>76.4%</strong></div>
@@ -561,6 +713,10 @@
                 <h3>RUS</h3>
                 <span class="team-tag">Mercedes</span>
             </div>
+            <div class="podium-breakdown">
+                <span class="share-badge" title="Driver Contribution">W: 52%</span>
+                <span class="share-badge" title="Car Contribution">E: 48%</span>
+            </div>
             <div class="podium-metrics">
                 <div class="p-metric"><span>Win</span><strong>40.1%</strong></div>
                 <div class="p-metric"><span>Podium</span><strong>80.5%</strong></div>
@@ -573,6 +729,10 @@
             <div class="podium-header">
                 <h3>VER</h3>
                 <span class="team-tag">Red Bull Racing</span>
+            </div>
+            <div class="podium-breakdown">
+                <span class="share-badge" title="Driver Contribution">W: 54%</span>
+                <span class="share-badge" title="Car Contribution">E: 46%</span>
             </div>
             <div class="podium-metrics">
                 <div class="p-metric"><span>Win</span><strong>21.2%</strong></div>
@@ -591,7 +751,13 @@
                     <tbody>
         <tr class="driver-row" style="--team-color: #27F4D2">
             <td class="td-rank">1</td>
-            <td class="td-driver"><strong>RUS</strong><small>Mercedes</small></td>
+            <td class="td-driver">
+                <strong>RUS</strong>
+                <div class="td-meta">
+                    <small>Mercedes</small>
+                    <span class="mini-share">W:52% E:48%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:40.14%"></span></div>
@@ -608,7 +774,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #FF8000">
             <td class="td-rank">2</td>
-            <td class="td-driver"><strong>NOR</strong><small>McLaren</small></td>
+            <td class="td-driver">
+                <strong>NOR</strong>
+                <div class="td-meta">
+                    <small>McLaren</small>
+                    <span class="mini-share">W:51% E:49%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:29.92%"></span></div>
@@ -625,7 +797,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #3671C6">
             <td class="td-rank">3</td>
-            <td class="td-driver"><strong>VER</strong><small>Red Bull Racing</small></td>
+            <td class="td-driver">
+                <strong>VER</strong>
+                <div class="td-meta">
+                    <small>Red Bull Racing</small>
+                    <span class="mini-share">W:54% E:46%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:21.23%"></span></div>
@@ -642,7 +820,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #E80020">
             <td class="td-rank">4</td>
-            <td class="td-driver"><strong>LEC</strong><small>Ferrari</small></td>
+            <td class="td-driver">
+                <strong>LEC</strong>
+                <div class="td-meta">
+                    <small>Ferrari</small>
+                    <span class="mini-share">W:49% E:51%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:7.33%"></span></div>
@@ -659,7 +843,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #6692FF">
             <td class="td-rank">5</td>
-            <td class="td-driver"><strong>LIN</strong><small>Racing Bulls</small></td>
+            <td class="td-driver">
+                <strong>LIN</strong>
+                <div class="td-meta">
+                    <small>Racing Bulls</small>
+                    <span class="mini-share">W:54% E:46%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:0.73%"></span></div>
@@ -676,7 +866,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #E80020">
             <td class="td-rank">6</td>
-            <td class="td-driver"><strong>HAM</strong><small>Ferrari</small></td>
+            <td class="td-driver">
+                <strong>HAM</strong>
+                <div class="td-meta">
+                    <small>Ferrari</small>
+                    <span class="mini-share">W:43% E:57%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:0.26%"></span></div>
@@ -693,7 +889,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #FF8000">
             <td class="td-rank">7</td>
-            <td class="td-driver"><strong>PIA</strong><small>McLaren</small></td>
+            <td class="td-driver">
+                <strong>PIA</strong>
+                <div class="td-meta">
+                    <small>McLaren</small>
+                    <span class="mini-share">W:40% E:60%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:0.26%"></span></div>
@@ -710,7 +912,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #B6BABD">
             <td class="td-rank">8</td>
-            <td class="td-driver"><strong>BEA</strong><small>Haas F1 Team</small></td>
+            <td class="td-driver">
+                <strong>BEA</strong>
+                <div class="td-meta">
+                    <small>Haas F1 Team</small>
+                    <span class="mini-share">W:54% E:46%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:0.14%"></span></div>
@@ -727,7 +935,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #27F4D2">
             <td class="td-rank">9</td>
-            <td class="td-driver"><strong>ANT</strong><small>Mercedes</small></td>
+            <td class="td-driver">
+                <strong>ANT</strong>
+                <div class="td-meta">
+                    <small>Mercedes</small>
+                    <span class="mini-share">W:37% E:63%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:0.00%"></span></div>
@@ -744,7 +958,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #64C4FF">
             <td class="td-rank">10</td>
-            <td class="td-driver"><strong>ALB</strong><small>Williams</small></td>
+            <td class="td-driver">
+                <strong>ALB</strong>
+                <div class="td-meta">
+                    <small>Williams</small>
+                    <span class="mini-share">W:53% E:47%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:0.00%"></span></div>
@@ -761,7 +981,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #0093CC">
             <td class="td-rank">11</td>
-            <td class="td-driver"><strong>GAS</strong><small>Alpine</small></td>
+            <td class="td-driver">
+                <strong>GAS</strong>
+                <div class="td-meta">
+                    <small>Alpine</small>
+                    <span class="mini-share">W:59% E:41%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:0.00%"></span></div>
@@ -778,7 +1004,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #229971">
             <td class="td-rank">12</td>
-            <td class="td-driver"><strong>ALO</strong><small>Aston Martin</small></td>
+            <td class="td-driver">
+                <strong>ALO</strong>
+                <div class="td-meta">
+                    <small>Aston Martin</small>
+                    <span class="mini-share">W:56% E:44%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:0.00%"></span></div>
@@ -795,7 +1027,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #3671C6">
             <td class="td-rank">13</td>
-            <td class="td-driver"><strong>HAD</strong><small>Red Bull Racing</small></td>
+            <td class="td-driver">
+                <strong>HAD</strong>
+                <div class="td-meta">
+                    <small>Red Bull Racing</small>
+                    <span class="mini-share">W:37% E:63%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:0.00%"></span></div>
@@ -812,7 +1050,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #64C4FF">
             <td class="td-rank">14</td>
-            <td class="td-driver"><strong>SAI</strong><small>Williams</small></td>
+            <td class="td-driver">
+                <strong>SAI</strong>
+                <div class="td-meta">
+                    <small>Williams</small>
+                    <span class="mini-share">W:48% E:52%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:0.00%"></span></div>
@@ -829,7 +1073,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #B6BABD">
             <td class="td-rank">15</td>
-            <td class="td-driver"><strong>OCO</strong><small>Haas F1 Team</small></td>
+            <td class="td-driver">
+                <strong>OCO</strong>
+                <div class="td-meta">
+                    <small>Haas F1 Team</small>
+                    <span class="mini-share">W:48% E:52%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:0.00%"></span></div>
@@ -846,7 +1096,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #52E252">
             <td class="td-rank">16</td>
-            <td class="td-driver"><strong>BOR</strong><small>Audi</small></td>
+            <td class="td-driver">
+                <strong>BOR</strong>
+                <div class="td-meta">
+                    <small>Audi</small>
+                    <span class="mini-share">W:53% E:47%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:0.00%"></span></div>
@@ -863,7 +1119,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #FFD700">
             <td class="td-rank">17</td>
-            <td class="td-driver"><strong>PER</strong><small>Cadillac</small></td>
+            <td class="td-driver">
+                <strong>PER</strong>
+                <div class="td-meta">
+                    <small>Cadillac</small>
+                    <span class="mini-share">W:60% E:40%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:0.00%"></span></div>
@@ -880,7 +1142,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #229971">
             <td class="td-rank">18</td>
-            <td class="td-driver"><strong>STR</strong><small>Aston Martin</small></td>
+            <td class="td-driver">
+                <strong>STR</strong>
+                <div class="td-meta">
+                    <small>Aston Martin</small>
+                    <span class="mini-share">W:49% E:51%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:0.00%"></span></div>
@@ -897,7 +1165,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #6692FF">
             <td class="td-rank">19</td>
-            <td class="td-driver"><strong>LAW</strong><small>Racing Bulls</small></td>
+            <td class="td-driver">
+                <strong>LAW</strong>
+                <div class="td-meta">
+                    <small>Racing Bulls</small>
+                    <span class="mini-share">W:41% E:59%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:0.00%"></span></div>
@@ -914,7 +1188,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #0093CC">
             <td class="td-rank">20</td>
-            <td class="td-driver"><strong>COL</strong><small>Alpine</small></td>
+            <td class="td-driver">
+                <strong>COL</strong>
+                <div class="td-meta">
+                    <small>Alpine</small>
+                    <span class="mini-share">W:50% E:50%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:0.00%"></span></div>
@@ -931,7 +1211,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #52E252">
             <td class="td-rank">21</td>
-            <td class="td-driver"><strong>HUL</strong><small>Audi</small></td>
+            <td class="td-driver">
+                <strong>HUL</strong>
+                <div class="td-meta">
+                    <small>Audi</small>
+                    <span class="mini-share">W:47% E:53%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:0.00%"></span></div>
@@ -948,7 +1234,13 @@
         </tr>
         <tr class="driver-row" style="--team-color: #FFD700">
             <td class="td-rank">22</td>
-            <td class="td-driver"><strong>BOT</strong><small>Cadillac</small></td>
+            <td class="td-driver">
+                <strong>BOT</strong>
+                <div class="td-meta">
+                    <small>Cadillac</small>
+                    <span class="mini-share">W:45% E:55%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:0.00%"></span></div>
@@ -970,7 +1262,7 @@
         <footer>
             <button class="debug-toggle" onclick="document.getElementById('debug').classList.toggle('is-active')">SYSTEM_TRACE.LOG</button>
             <div id="debug" class="debug-panel">
-                <div><span>Season:</span><code>2026</code></div><div><span>Round:</span><code>2</code></div><div><span>Simulations:</span><code>6000</code></div><div><span>Seed:</span><code>202602</code></div><div><span>Grid Source:</span><code>simulation</code></div><div><span>Safety Car P:</span><code>0.23</code></div><div><span>Overtake Diff:</span><code>0.5</code></div><div><span>Generated At:</span><code>2026-03-08T20:46:31Z</code></div>
+                <div><span>Season:</span><code>2026</code></div><div><span>Round:</span><code>2</code></div><div><span>Simulations:</span><code>6000</code></div><div><span>Seed:</span><code>202602</code></div><div><span>Grid Source:</span><code>simulation</code></div><div><span>Safety Car P:</span><code>0.23</code></div><div><span>Overtake Diff:</span><code>0.5</code></div><div><span>Generated At:</span><code>2026-03-08T20:53:12Z</code></div>
             </div>
         </footer>
     </div>

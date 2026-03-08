@@ -16,7 +16,7 @@ from typing import Any
 
 LOGGER = logging.getLogger("render_prediction_page")
 
-# Expanded and more robust team color mapping for 2026
+# Robust team color mapping
 TEAM_COLORS = {
     "red bull": "#3671C6",
     "mercedes": "#27F4D2",
@@ -37,7 +37,6 @@ TEAM_COLORS = {
 
 def get_team_color(team_name: str) -> str:
     cleaned = str(team_name).lower().strip()
-    # Try exact matches or key phrases
     for key, color in TEAM_COLORS.items():
         if key in cleaned:
             return color
@@ -102,7 +101,7 @@ def build_insights_html(dry_rows: list[dict[str, Any]], wet_rows: list[dict[str,
         (f"Objective: {prediction_target}", confidence_label, source_details, status_class),
         ("Primary Data Source", source_info, "FastF1 Hard Data + AI Signals", ""),
         ("Track Context", str(race_config.get("race") or "GP").replace(" Grand Prix", ""), 
-         f"Overtaking: {int((1.0 - race_config.get('overtaking_difficulty', 0.5)) * 100)}% | Wear: {int(race_config.get('track', {}).get('tyre_degradation_factor', 0.5) * 100)}%", "")
+         f"Overtake Difficulty: {int((1.0 - race_config.get('overtaking_difficulty', 0.5)) * 100)}% | Wear: {int(race_config.get('track', {}).get('tyre_degradation_factor', 0.5) * 100)}%", "")
     ]
 
     rendered_cards = "".join([
@@ -207,7 +206,6 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
             <button class="toggle-btn" data-target="wet">Wet</button>
         </div>"""
 
-    # System facts for debug section
     system_facts = {
         "Season": race_config.get("season"),
         "Round": race_config.get("next_round"),
@@ -342,16 +340,22 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
 </body>
 </html>"""
 
+def load_prediction_for_render(args: argparse.Namespace) -> tuple[dict[str, Any], dict[str, Any] | None]:
+    dry_path = Path(args.prediction_dry)
+    wet_path = Path(args.prediction_wet)
+    if dry_path.exists() and wet_path.exists():
+        return load_json(dry_path), load_json(wet_path)
+    single_path = Path(args.prediction)
+    if single_path.exists():
+        return load_json(single_path), None
+    raise FileNotFoundError("No prediction input found.")
+
 def main() -> int:
     args = parse_args()
     logging.basicConfig(level=getattr(logging, args.log_level), format="%(asctime)s | %(message)s")
     try:
         race_config = load_json(Path(args.race_config))
-        prediction = load_json(Path(args.prediction))
-        prediction_wet = None
-        if Path(args.prediction_wet).exists():
-            prediction_wet = load_json(Path(args.prediction_wet))
-        
+        prediction, prediction_wet = load_prediction_for_render(args)
         html_content = render_page(prediction, race_config, prediction_wet)
         Path(args.output).write_text(html_content, encoding="utf-8")
         LOGGER.info("Rendered improved dashboard: %s", args.output)

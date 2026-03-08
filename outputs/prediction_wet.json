@@ -1,5 +1,5 @@
 {
-  "deterministic_run_id": "ff4605d0e3a1c1efec4d",
+  "deterministic_run_id": "bec30360ce782daa4549",
   "drivers": [
     {
       "driver_share": 51.6,
@@ -200,14 +200,15 @@
       "win_probability": 0.0
     }
   ],
-  "generated_at": "2026-03-08T21:06:15Z",
+  "generated_at": "2026-03-08T21:11:07Z",
   "integrity": {
     "driver_ratings_hash": "6be1ed3084f1",
-    "race_config_hash": "60659fd1dc40",
+    "race_config_hash": "93d7e70dd07b",
     "team_ratings_hash": "10936af82a2e"
   },
   "race": "Chinese Grand Prix",
   "simulation": {
+    "available_sessions": [],
     "grid_source": "simulation",
     "overtaking_difficulty": 0.5,
     "safety_car_probability": 0.23,

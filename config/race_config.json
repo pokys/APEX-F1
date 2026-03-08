@@ -1,8 +1,10 @@
 {
+  "available_sessions": [],
   "calibration_season": 2025,
   "calibration_source": "outputs/backtest/backtest_season_2025.json",
-  "generated_at": "2026-03-08T21:06:14Z",
+  "generated_at": "2026-03-08T21:11:07Z",
   "grid_source": "simulation",
+  "location": "Shanghai",
   "next_round": 2,
   "overtaking_difficulty": 0.5,
   "race": "Chinese Grand Prix",

@@ -4,135 +4,135 @@
       "expected_finish": 9.998833,
       "name": "RUS",
       "podium_probability": 0.388833,
-      "win_probability": 0.142774
+      "win_probability": 0.157153
     },
     {
       "expected_finish": 10.069333,
       "name": "ANT",
       "podium_probability": 0.377167,
-      "win_probability": 0.134101
+      "win_probability": 0.146454
     },
     {
       "expected_finish": 10.446167,
       "name": "HAD",
       "podium_probability": 0.34,
-      "win_probability": 0.118603
+      "win_probability": 0.127556
     },
     {
       "expected_finish": 11.224667,
       "name": "LEC",
       "podium_probability": 0.257,
-      "win_probability": 0.084226
+      "win_probability": 0.08679
     },
     {
       "expected_finish": 11.268333,
       "name": "PIA",
       "podium_probability": 0.228333,
-      "win_probability": 0.071713
+      "win_probability": 0.072426
     },
     {
       "expected_finish": 11.417,
       "name": "NOR",
       "podium_probability": 0.212667,
-      "win_probability": 0.066871
+      "win_probability": 0.066947
     },
     {
       "expected_finish": 11.775833,
       "name": "HAM",
       "podium_probability": 0.192167,
-      "win_probability": 0.064212
+      "win_probability": 0.06396
     },
     {
       "expected_finish": 12.364167,
       "name": "LAW",
       "podium_probability": 0.126667,
-      "win_probability": 0.039111
+      "win_probability": 0.036617
     },
     {
       "expected_finish": 13.043333,
       "name": "VER",
       "podium_probability": 0.0975,
-      "win_probability": 0.032378
+      "win_probability": 0.029605
     },
     {
       "expected_finish": 12.872667,
       "name": "LIN",
       "podium_probability": 0.108667,
-      "win_probability": 0.032053
+      "win_probability": 0.029272
     },
     {
       "expected_finish": 13.048333,
       "name": "BOR",
       "podium_probability": 0.097,
-      "win_probability": 0.03008
+      "win_probability": 0.027252
     },
     {
       "expected_finish": 13.231667,
       "name": "HUL",
       "podium_probability": 0.093,
-      "win_probability": 0.029076
+      "win_probability": 0.026232
     },
     {
       "expected_finish": 13.522333,
       "name": "BEA",
       "podium_probability": 0.0765,
-      "win_probability": 0.024575
+      "win_probability": 0.02171
     },
     {
       "expected_finish": 13.750667,
       "name": "OCO",
       "podium_probability": 0.066667,
-      "win_probability": 0.018791
+      "win_probability": 0.016052
     },
     {
       "expected_finish": 14.123667,
       "name": "ALB",
       "podium_probability": 0.049833,
-      "win_probability": 0.018595
+      "win_probability": 0.015864
     },
     {
       "expected_finish": 13.971667,
       "name": "GAS",
       "podium_probability": 0.052833,
-      "win_probability": 0.017601
+      "win_probability": 0.014913
     },
     {
       "expected_finish": 14.188833,
       "name": "SAI",
       "podium_probability": 0.0465,
-      "win_probability": 0.014707
+      "win_probability": 0.012184
     },
     {
       "expected_finish": 14.405167,
       "name": "BOT",
       "podium_probability": 0.041333,
-      "win_probability": 0.013624
+      "win_probability": 0.01118
     },
     {
       "expected_finish": 14.224,
       "name": "PER",
       "podium_probability": 0.042833,
-      "win_probability": 0.013404
+      "win_probability": 0.010977
     },
     {
       "expected_finish": 14.896,
       "name": "STR",
       "podium_probability": 0.0405,
-      "win_probability": 0.012961
+      "win_probability": 0.010569
     },
     {
       "expected_finish": 14.582167,
       "name": "COL",
       "podium_probability": 0.037167,
-      "win_probability": 0.011362
+      "win_probability": 0.009115
     },
     {
       "expected_finish": 15.2325,
       "name": "ALO",
       "podium_probability": 0.026833,
-      "win_probability": 0.009182
+      "win_probability": 0.007172
     }
   ],
-  "generated_at": "2026-03-08T10:01:56Z",
+  "generated_at": "2026-03-08T10:03:05Z",
   "race": "Australian Grand Prix"
 }

@@ -2,7 +2,7 @@
   "available_sessions": [],
   "calibration_season": 2025,
   "calibration_source": "outputs/backtest/backtest_season_2025.json",
-  "generated_at": "2026-03-08T21:11:45Z",
+  "generated_at": "2026-03-08T22:27:47Z",
   "grid_source": "simulation",
   "location": "Shanghai",
   "next_round": 2,

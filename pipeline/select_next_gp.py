@@ -433,6 +433,29 @@ def extract_fixed_grid(raw_dir: Path, season: int, event_name: str) -> list[str]
     return [name for _, name in scored]
 
 
+def get_available_sessions(raw_dir: Path, season: int, event_name: str) -> list[str]:
+    path = raw_dir / f"season_{season}.json"
+    if not path.exists():
+        return []
+    try:
+        payload = load_json(path)
+    except Exception:
+        return []
+    
+    available = []
+    events = payload.get("events", [])
+    event_name_lower = event_name.strip().lower()
+    for event in events:
+        if str(event.get("event_name") or "").strip().lower() == event_name_lower:
+            for session in event.get("sessions", []):
+                results = session.get("results", [])
+                if results and len(results) > 0:
+                    code = str(session.get("session_code") or "").upper()
+                    if code:
+                        available.append(code)
+    return available
+
+
 def main() -> int:
     args = parse_args()
     logging.basicConfig(
@@ -450,8 +473,13 @@ def main() -> int:
         config["season"] = event["season"]
         config["next_round"] = event["round"]
         config["race"] = event["event_name"]
+        config["location"] = event.get("location", "")
         config["race_date"] = event["event_date"]
         config["generated_at"] = utc_iso_timestamp()
+        
+        # Track available sessions for debug info
+        config["available_sessions"] = get_available_sessions(Path(args.raw_dir), event["season"], event["event_name"])
+
         # Stable race-specific seed to keep deterministic simulation per selected GP.
         config["seed"] = int(f"{event['season']}{event['round']:02d}")
         if config.get("simulations", 0) < 5000:

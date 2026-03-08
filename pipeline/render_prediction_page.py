@@ -229,6 +229,7 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
     system_facts = {
         "Snapshot Date": gen_at,
         "Current Race": current_gp,
+        "Session Data Online": ", ".join(sim_meta.get("available_sessions", [])) or "None",
         "Data Strategy": source_summary,
         "Active AI Signals": signal_count,
         "Simulation Runs": sim_meta.get("simulations", "N/A"),

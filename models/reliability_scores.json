@@ -1,5 +1,5 @@
 {
-  "inputs_hash": "ed362cebdd8e532e1ec52216663b2508b0dbc849d6db84ee5b6150c852166f8e",
+  "inputs_hash": "b179a835712f3ae93e40344cb56f13eef526aac3d128b6a57529b0f4b4dc38a0",
   "season": 2026,
   "source_features": "data/processed/features_season_2026.json",
   "teams": [
@@ -41,11 +41,11 @@
     },
     {
       "components": {
-        "dnf_history": 15.0,
+        "dnf_history": 85.0,
         "new_component_penalties": 85.0,
         "power_unit_reliability": 69.0
       },
-      "reliability_score": 47.9,
+      "reliability_score": 79.4,
       "team": "Ferrari"
     },
     {
@@ -59,20 +59,20 @@
     },
     {
       "components": {
-        "dnf_history": 15.0,
+        "dnf_history": 50.0,
         "new_component_penalties": 85.0,
         "power_unit_reliability": 69.0
       },
-      "reliability_score": 47.9,
+      "reliability_score": 63.65,
       "team": "McLaren"
     },
     {
       "components": {
-        "dnf_history": 15.0,
+        "dnf_history": 85.0,
         "new_component_penalties": 85.0,
         "power_unit_reliability": 69.0
       },
-      "reliability_score": 47.9,
+      "reliability_score": 79.4,
       "team": "Mercedes"
     },
     {
@@ -86,11 +86,11 @@
     },
     {
       "components": {
-        "dnf_history": 15.0,
+        "dnf_history": 50.0,
         "new_component_penalties": 85.0,
         "power_unit_reliability": 69.0
       },
-      "reliability_score": 47.9,
+      "reliability_score": 63.65,
       "team": "Red Bull Racing"
     },
     {

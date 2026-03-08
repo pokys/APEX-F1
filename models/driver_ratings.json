@@ -4,246 +4,246 @@
       "components": {
         "consistency": 35.0,
         "qualifying_pace": 38.0,
-        "teammate_delta_performance": 50.0,
+        "teammate_delta_performance": 83.0,
         "wet_performance_index": 50.0
       },
       "driver": "ALB",
-      "driver_rating": 43.85,
+      "driver_rating": 55.4,
       "team": "Williams"
     },
     {
       "components": {
         "consistency": 35.0,
         "qualifying_pace": 32.4,
-        "teammate_delta_performance": 50.0,
+        "teammate_delta_performance": 39.0,
         "wet_performance_index": 50.0
       },
       "driver": "ALO",
-      "driver_rating": 42.73,
+      "driver_rating": 38.88,
       "team": "Aston Martin"
     },
     {
       "components": {
-        "consistency": 35.0,
+        "consistency": 75.0,
         "qualifying_pace": 74.4,
-        "teammate_delta_performance": 50.0,
+        "teammate_delta_performance": 39.0,
         "wet_performance_index": 50.0
       },
       "driver": "ANT",
-      "driver_rating": 51.13,
+      "driver_rating": 57.28,
       "team": "Mercedes"
     },
     {
       "components": {
         "consistency": 35.0,
         "qualifying_pace": 46.4,
-        "teammate_delta_performance": 50.0,
+        "teammate_delta_performance": 94.0,
         "wet_performance_index": 50.0
       },
       "driver": "BEA",
-      "driver_rating": 45.53,
+      "driver_rating": 60.93,
       "team": "Haas F1 Team"
     },
     {
       "components": {
         "consistency": 35.0,
         "qualifying_pace": 52.0,
-        "teammate_delta_performance": 50.0,
+        "teammate_delta_performance": 94.0,
         "wet_performance_index": 50.0
       },
       "driver": "BOR",
-      "driver_rating": 46.65,
+      "driver_rating": 62.05,
       "team": "Audi"
     },
     {
       "components": {
         "consistency": 35.0,
         "qualifying_pace": 26.8,
-        "teammate_delta_performance": 50.0,
+        "teammate_delta_performance": 17.0,
         "wet_performance_index": 50.0
       },
       "driver": "BOT",
-      "driver_rating": 41.61,
+      "driver_rating": 30.06,
       "team": "Cadillac"
     },
     {
       "components": {
         "consistency": 35.0,
         "qualifying_pace": 35.2,
-        "teammate_delta_performance": 50.0,
+        "teammate_delta_performance": 6.0,
         "wet_performance_index": 50.0
       },
       "driver": "COL",
-      "driver_rating": 43.29,
+      "driver_rating": 27.89,
       "team": "Alpine"
     },
     {
       "components": {
         "consistency": 35.0,
         "qualifying_pace": 40.8,
-        "teammate_delta_performance": 50.0,
+        "teammate_delta_performance": 94.0,
         "wet_performance_index": 50.0
       },
       "driver": "GAS",
-      "driver_rating": 44.41,
+      "driver_rating": 59.81,
       "team": "Alpine"
     },
     {
       "components": {
         "consistency": 35.0,
         "qualifying_pace": 71.6,
-        "teammate_delta_performance": 50.0,
+        "teammate_delta_performance": 6.0,
         "wet_performance_index": 50.0
       },
       "driver": "HAD",
-      "driver_rating": 50.57,
+      "driver_rating": 35.17,
       "team": "Red Bull Racing"
     },
     {
       "components": {
-        "consistency": 35.0,
+        "consistency": 75.0,
         "qualifying_pace": 60.4,
-        "teammate_delta_performance": 50.0,
+        "teammate_delta_performance": 39.0,
         "wet_performance_index": 50.0
       },
       "driver": "HAM",
-      "driver_rating": 48.33,
+      "driver_rating": 54.48,
       "team": "Ferrari"
     },
     {
       "components": {
         "consistency": 35.0,
         "qualifying_pace": 49.2,
-        "teammate_delta_performance": 50.0,
+        "teammate_delta_performance": 6.0,
         "wet_performance_index": 50.0
       },
       "driver": "HUL",
-      "driver_rating": 46.09,
+      "driver_rating": 30.69,
       "team": "Audi"
     },
     {
       "components": {
         "consistency": 35.0,
         "qualifying_pace": 57.6,
-        "teammate_delta_performance": 50.0,
+        "teammate_delta_performance": 6.0,
         "wet_performance_index": 50.0
       },
       "driver": "LAW",
-      "driver_rating": 47.77,
+      "driver_rating": 32.37,
       "team": "Racing Bulls"
     },
     {
       "components": {
-        "consistency": 35.0,
+        "consistency": 75.0,
         "qualifying_pace": 68.8,
-        "teammate_delta_performance": 50.0,
+        "teammate_delta_performance": 61.0,
         "wet_performance_index": 50.0
       },
       "driver": "LEC",
-      "driver_rating": 50.01,
+      "driver_rating": 63.86,
       "team": "Ferrari"
     },
     {
       "components": {
         "consistency": 35.0,
         "qualifying_pace": 54.8,
-        "teammate_delta_performance": 50.0,
+        "teammate_delta_performance": 94.0,
         "wet_performance_index": 50.0
       },
       "driver": "LIN",
-      "driver_rating": 47.21,
+      "driver_rating": 62.61,
       "team": "Racing Bulls"
     },
     {
       "components": {
-        "consistency": 35.0,
+        "consistency": 75.0,
         "qualifying_pace": 63.2,
-        "teammate_delta_performance": 50.0,
+        "teammate_delta_performance": 94.0,
         "wet_performance_index": 50.0
       },
       "driver": "NOR",
-      "driver_rating": 48.89,
+      "driver_rating": 74.29,
       "team": "McLaren"
     },
     {
       "components": {
         "consistency": 35.0,
         "qualifying_pace": 43.6,
-        "teammate_delta_performance": 50.0,
+        "teammate_delta_performance": 6.0,
         "wet_performance_index": 50.0
       },
       "driver": "OCO",
-      "driver_rating": 44.97,
+      "driver_rating": 29.57,
       "team": "Haas F1 Team"
     },
     {
       "components": {
         "consistency": 35.0,
         "qualifying_pace": 29.6,
-        "teammate_delta_performance": 50.0,
+        "teammate_delta_performance": 83.0,
         "wet_performance_index": 50.0
       },
       "driver": "PER",
-      "driver_rating": 42.17,
+      "driver_rating": 53.72,
       "team": "Cadillac"
     },
     {
       "components": {
         "consistency": 35.0,
         "qualifying_pace": 66.0,
-        "teammate_delta_performance": 50.0,
+        "teammate_delta_performance": 6.0,
         "wet_performance_index": 50.0
       },
       "driver": "PIA",
-      "driver_rating": 49.45,
+      "driver_rating": 34.05,
       "team": "McLaren"
     },
     {
       "components": {
-        "consistency": 35.0,
+        "consistency": 75.0,
         "qualifying_pace": 77.2,
-        "teammate_delta_performance": 50.0,
+        "teammate_delta_performance": 61.0,
         "wet_performance_index": 50.0
       },
       "driver": "RUS",
-      "driver_rating": 51.69,
+      "driver_rating": 65.54,
       "team": "Mercedes"
     },
     {
       "components": {
         "consistency": 35.0,
         "qualifying_pace": 46.4,
-        "teammate_delta_performance": 50.0,
+        "teammate_delta_performance": 17.0,
         "wet_performance_index": 50.0
       },
       "driver": "SAI",
-      "driver_rating": 45.53,
+      "driver_rating": 33.98,
       "team": "Williams"
     },
     {
       "components": {
         "consistency": 35.0,
         "qualifying_pace": 46.4,
-        "teammate_delta_performance": 50.0,
+        "teammate_delta_performance": 61.0,
         "wet_performance_index": 50.0
       },
       "driver": "STR",
-      "driver_rating": 45.53,
+      "driver_rating": 49.38,
       "team": "Aston Martin"
     },
     {
       "components": {
-        "consistency": 35.0,
+        "consistency": 75.0,
         "qualifying_pace": 46.4,
-        "teammate_delta_performance": 50.0,
+        "teammate_delta_performance": 94.0,
         "wet_performance_index": 50.0
       },
       "driver": "VER",
-      "driver_rating": 45.53,
+      "driver_rating": 70.93,
       "team": "Red Bull Racing"
     }
   ],
-  "inputs_hash": "ed362cebdd8e532e1ec52216663b2508b0dbc849d6db84ee5b6150c852166f8e",
+  "inputs_hash": "b179a835712f3ae93e40344cb56f13eef526aac3d128b6a57529b0f4b4dc38a0",
   "season": 2026,
   "source_features": "data/processed/features_season_2026.json"
 }

@@ -22,7 +22,7 @@
     "PER",
     "BOT"
   ],
-  "generated_at": "2026-03-08T10:01:56Z",
+  "generated_at": "2026-03-08T10:03:04Z",
   "grid_source": "qualifying",
   "next_round": 1,
   "overtaking_difficulty": 0.62,
@@ -40,5 +40,5 @@
   "track_profile": "event:australian grand prix",
   "weather": "dry",
   "weather_modifier": 0.05,
-  "win_temperature": 1.35
+  "win_temperature": 1.2
 }

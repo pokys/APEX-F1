@@ -1,5 +1,5 @@
 {
-  "inputs_hash": "ed362cebdd8e532e1ec52216663b2508b0dbc849d6db84ee5b6150c852166f8e",
+  "inputs_hash": "b179a835712f3ae93e40344cb56f13eef526aac3d128b6a57529b0f4b4dc38a0",
   "season": 2026,
   "source_features": "data/processed/features_season_2026.json",
   "teams": [
@@ -15,47 +15,47 @@
     {
       "components": {
         "qualifying_gap_proxy": 8.0,
-        "sector_dominance": 79.5,
+        "sector_dominance": 49.25,
         "upgrades_impact": 61.0
       },
       "team": "Aston Martin",
-      "team_rating": 41.775
+      "team_rating": 34.2125
     },
     {
       "components": {
         "qualifying_gap_proxy": 48.090909,
-        "sector_dominance": 43.75,
+        "sector_dominance": 24.5,
         "upgrades_impact": 61.0
       },
       "team": "Audi",
-      "team_rating": 50.878409
+      "team_rating": 46.065909
     },
     {
       "components": {
         "qualifying_gap_proxy": 8.0,
-        "sector_dominance": 85.0,
+        "sector_dominance": 57.5,
         "upgrades_impact": 61.0
       },
       "team": "Cadillac",
-      "team_rating": 43.15
+      "team_rating": 36.275
     },
     {
       "components": {
         "qualifying_gap_proxy": 83.090909,
-        "sector_dominance": 19.0,
+        "sector_dominance": 63.0,
         "upgrades_impact": 61.0
       },
       "team": "Ferrari",
-      "team_rating": 60.440909
+      "team_rating": 71.440909
     },
     {
       "components": {
         "qualifying_gap_proxy": 34.090909,
-        "sector_dominance": 54.75,
+        "sector_dominance": 71.25,
         "upgrades_impact": 61.0
       },
       "team": "Haas F1 Team",
-      "team_rating": 47.328409
+      "team_rating": 51.453409
     },
     {
       "components": {
@@ -69,20 +69,20 @@
     {
       "components": {
         "qualifying_gap_proxy": 92.0,
-        "sector_dominance": 19.0,
+        "sector_dominance": 52.0,
         "upgrades_impact": 61.0
       },
       "team": "Mercedes",
-      "team_rating": 64.45
+      "team_rating": 72.7
     },
     {
       "components": {
         "qualifying_gap_proxy": 62.090909,
-        "sector_dominance": 32.75,
+        "sector_dominance": 41.0,
         "upgrades_impact": 61.0
       },
       "team": "Racing Bulls",
-      "team_rating": 54.428409
+      "team_rating": 56.490909
     },
     {
       "components": {
@@ -96,11 +96,11 @@
     {
       "components": {
         "qualifying_gap_proxy": 16.590909,
-        "sector_dominance": 68.5,
+        "sector_dominance": 60.25,
         "upgrades_impact": 61.0
       },
       "team": "Williams",
-      "team_rating": 42.890909
+      "team_rating": 40.828409
     }
   ]
 }

@@ -596,6 +596,51 @@ def write_json(path: Path, payload: Any) -> None:
     path.write_text(json.dumps(payload, indent=2, sort_keys=True, ensure_ascii=True) + "\n", encoding="utf-8")
 
 
+def blend_features(current: dict[str, Any], previous: dict[str, Any], current_weight: float) -> dict[str, Any]:
+    # Blends driver and team features between two seasons based on weight (0.0 to 1.0)
+    prev_weight = 1.0 - current_weight
+    
+    def blend_list(curr_list: list[dict[str, Any]], prev_list: list[dict[str, Any]], key_field: str) -> list[dict[str, Any]]:
+        curr_map = {row[key_field]: row for row in curr_list if isinstance(row, dict) and key_field in row}
+        prev_map = {row[key_field]: row for row in prev_list if isinstance(row, dict) and key_field in row}
+        
+        all_keys = set(curr_map.keys()) | set(prev_map.keys())
+        blended: list[dict[str, Any]] = []
+        
+        # Numeric fields to blend
+        numeric_fields = [
+            "race_avg_position", "qualifying_avg_position", "dnf_rate", 
+            "points_per_start", "points_total", "starts"
+        ]
+        
+        for k in all_keys:
+            c = curr_map.get(k, {})
+            p = prev_map.get(k, {})
+            
+            # Start with current data as base (handles team names, etc.)
+            row = dict(c) if c else dict(p)
+            
+            for field in numeric_fields:
+                cv = safe_float(c.get(field))
+                pv = safe_float(p.get(field))
+                
+                if cv is not None and pv is not None:
+                    row[field] = (cv * current_weight) + (pv * prev_weight)
+                elif cv is not None:
+                    row[field] = cv
+                elif pv is not None:
+                    row[field] = pv
+            
+            blended.append(row)
+        return blended
+
+    return {
+        "season": current.get("season"),
+        "drivers": blend_list(current.get("drivers", []), previous.get("drivers", []), "driver"),
+        "teams": blend_list(current.get("teams", []), previous.get("teams", []), "team")
+    }
+
+
 def main() -> int:
     args = parse_args()
     logging.basicConfig(
@@ -617,12 +662,27 @@ def main() -> int:
         season = int(features.get("season"))
         target_season = args.season if args.season is not None else season
 
-        if target_season != season:
-            LOGGER.warning(
-                "Ratings update used features season %s for requested season %s due to missing current-season data.",
-                season,
-                target_season,
-            )
+        # SYSTEMIC FIX: Early season blending
+        source_summary = f"Season {season} data"
+        # 1. Determine how many races were finished in current season
+        max_starts = 0
+        for dr in features.get("drivers", []):
+            max_starts = max(max_starts, safe_float(dr.get("starts")) or 0)
+        
+        # 2. If it's early (e.g. < 5 races), try to load previous season for blending
+        if 0 < max_starts < 5 and target_season == season:
+            prev_season = season - 1
+            prev_path = Path(args.features_input) / f"features_season_{prev_season}.json"
+            if prev_path.exists():
+                previous_features = load_json(prev_path)
+                # Blending weight: 1 race = 0.2, 2 races = 0.4, ... 5+ races = 1.0
+                weight = min(1.0, max_starts * 0.2)
+                LOGGER.info("Blending features: season %s (weight %.1f) + season %s (weight %.1f)", 
+                            season, weight, prev_season, 1.0 - weight)
+                features = blend_features(features, previous_features, weight)
+                source_summary = f"Blended Data: {int(weight*100)}% Season {season}, {int((1-weight)*100)}% Season {prev_season}"
+        elif max_starts >= 5:
+            source_summary = f"Full Season {season} Data"
 
         # Load master list of active drivers/teams from the current season snapshot
         active_drivers, active_teams = load_current_entry_list(Path("data/raw/fastf1"), target_season)
@@ -645,6 +705,7 @@ def main() -> int:
         metadata = {
             "season": season,
             "source_features": features_path.as_posix(),
+            "source_summary": source_summary,
             "inputs_hash": stable_hash_json({"features": features, "signals": signals}),
         }
 

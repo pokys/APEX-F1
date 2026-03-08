@@ -85,28 +85,30 @@ def build_insights_html(dry_rows: list[dict[str, Any]], wet_rows: list[dict[str,
         confidence_label = "High Confidence"
         source_label = "Real Qualifying Results Detected"
         status_class = "status-high"
+        source_details = "Using actual 2026 starting grid"
     else:
         confidence_label = "Estimated"
         source_label = "Simulated Grid (Pre-Qualifying)"
         status_class = "status-low"
+        source_details = "Grid predicted from historical performance"
 
     cards = [
         (
             f"Prediction Mode ({confidence_label})",
             source_label,
-            "Based on historical data & signals" if grid_source != "qualifying" else "Using fixed 2026 grid positions",
+            source_details,
             status_class
+        ),
+        (
+            "Primary Data Sources",
+            "Multi-source Fusion",
+            "FastF1 Hard Data + AI News Signals",
+            ""
         ),
         (
             "Most likely winner",
             win_leader["name"],
             f'{win_leader["win_probability"] * 100:.2f}% win chance',
-            ""
-        ),
-        (
-            "Most likely podium",
-            podium_leader["name"],
-            f'{podium_leader["podium_probability"] * 100:.2f}% podium chance',
             ""
         ),
     ]

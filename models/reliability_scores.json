@@ -1,5 +1,5 @@
 {
-  "inputs_hash": "f703a95a411c43742b390f9f3a784d20e56733442e368c2314f78f2b1dffcaa9",
+  "inputs_hash": "ed362cebdd8e532e1ec52216663b2508b0dbc849d6db84ee5b6150c852166f8e",
   "season": 2026,
   "source_features": "data/processed/features_season_2026.json",
   "teams": [
@@ -15,10 +15,10 @@
     {
       "components": {
         "dnf_history": 15.0,
-        "new_component_penalties": 71.046805,
-        "power_unit_reliability": 55.25
+        "new_component_penalties": 85.0,
+        "power_unit_reliability": 69.0
       },
-      "reliability_score": 40.296861,
+      "reliability_score": 47.9,
       "team": "Aston Martin"
     },
     {

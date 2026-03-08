@@ -1,455 +1,965 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Chinese Grand Prix | APEX-F1 Prediction</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<head>
+    <meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Chinese Grand Prix | APEX-F1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
     <style>
-      :root {
-        --bg: #0b1118;
-        --panel: #111b26cc;
-        --panel-strong: #152232;
-        --ink: #eaf3ff;
-        --muted: #9bb0c6;
-        --accent: #2ad2c9;
-        --accent-2: #ff7a45;
-        --grid: #203142;
-        --success: #4ade80;
-        --warning: #fbbf24;
-      }
-      * { box-sizing: border-box; }
-      body {
-        margin: 0;
-        font-family: "Sora", "Segoe UI", sans-serif;
-        color: var(--ink);
-        background:
-          radial-gradient(1200px 700px at -10% -20%, #184160 0%, transparent 60%),
-          radial-gradient(900px 600px at 120% 0%, #5a2d1f 0%, transparent 55%),
-          linear-gradient(165deg, #081019 0%, #0a141f 50%, #0d1a28 100%);
-        min-height: 100vh;
-      }
-      .wrap {
-        width: min(1100px, 95vw);
-        margin: 0 auto;
-        padding: 24px 0 36px;
-      }
-      .hero {
-        display: grid;
-        gap: 14px;
-        background: var(--panel);
-        border: 1px solid var(--grid);
-        border-radius: 18px;
-        padding: 20px;
-        backdrop-filter: blur(8px);
-      }
-      h1 {
-        margin: 0;
-        font-size: clamp(1.5rem, 3vw, 2.2rem);
-        letter-spacing: 0.02em;
-      }
-      .meta {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-      }
-      .chip {
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 0.82rem;
-        color: var(--muted);
-        border: 1px solid var(--grid);
-        border-radius: 999px;
-        padding: 6px 10px;
-        background: #0d1722;
-      }
-      .scenario-toggle {
-        margin-top: 8px;
-        display: flex;
-        gap: 8px;
-      }
-      .toggle-btn {
-        border: 1px solid var(--grid);
-        border-radius: 999px;
-        background: #10202f;
-        color: var(--muted);
-        padding: 8px 14px;
-        font-family: "IBM Plex Mono", monospace;
-        cursor: pointer;
-      }
-      .toggle-btn.is-active {
-        color: #03161f;
-        background: linear-gradient(90deg, var(--accent), #6ff5ef);
-        border-color: #64d8d1;
-      }
-      .list-toggle {
-        margin-top: 10px;
-        display: flex;
-        gap: 8px;
-      }
-      .visibility-btn {
-        border: 1px solid var(--grid);
-        border-radius: 999px;
-        background: #122233;
-        color: var(--muted);
-        padding: 8px 14px;
-        font-family: "IBM Plex Mono", monospace;
-        cursor: pointer;
-      }
-      .visibility-btn.is-active {
-        color: #08121a;
-        background: linear-gradient(90deg, #ff9f4a, #ffd69a);
-        border-color: #f1b770;
-      }
-      .scenario-panel {
-        display: none;
-      }
-      .scenario-panel.is-active {
-        display: block;
-      }
-      .scenario-title {
-        margin-top: 16px;
-        color: var(--muted);
-        font-family: "IBM Plex Mono", monospace;
-      }
-      .insights {
-        margin-top: 16px;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 12px;
-      }
-      .insight-card {
-        background: linear-gradient(160deg, #142335 0%, #102030 100%);
-        border: 1px solid var(--grid);
-        border-radius: 14px;
-        padding: 12px 14px;
-      }
-      .insight-card.status-high {
-        border-left: 4px solid var(--success);
-      }
-      .insight-card.status-low {
-        border-left: 4px solid var(--warning);
-      }
-      .insight-kicker {
-        margin: 0;
-        color: var(--muted);
-        font-size: 0.78rem;
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
-      }
-      .insight-value {
-        margin: 6px 0;
-        font-size: 1.22rem;
-      }
-      .insight-sub {
-        margin: 0;
-        color: var(--muted);
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 0.84rem;
-      }
-      .podium {
-        margin-top: 12px;
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 12px;
-      }
-      .podium-card {
-        background: linear-gradient(160deg, #13202e 0%, #0e1823 100%);
-        border: 1px solid var(--grid);
-        border-radius: 14px;
-        padding: 14px;
-      }
-      .rank {
-        margin: 0;
-        color: var(--accent);
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 0.85rem;
-      }
-      .podium-card h3 {
-        margin: 6px 0 10px;
-        font-size: 1.2rem;
-      }
-      .metric {
-        margin: 4px 0;
-        color: var(--muted);
-        font-size: 0.92rem;
-      }
-      details {
-        margin-top: 2px;
-        padding: 8px 10px;
-        border: 1px solid var(--grid);
-        border-radius: 12px;
-        background: #0f1a27;
-      }
-      summary {
-        cursor: pointer;
-        font-size: 0.9rem;
-        color: var(--ink);
-      }
-      .table-wrap {
-        margin-top: 16px;
-        background: var(--panel-strong);
-        border: 1px solid var(--grid);
-        border-radius: 16px;
-        overflow: hidden;
-      }
-       table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-      th, td {
-        padding: 12px 14px;
-        border-bottom: 1px solid #1e3143;
-        text-align: left;
-      }
-      th {
-        color: var(--muted);
-        font-size: 0.82rem;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-      }
-      td { font-size: 0.92rem; }
-      td.driver { font-weight: 700; letter-spacing: 0.02em; }
-      .bar {
-        width: 100%;
-        max-width: 240px;
-        height: 8px;
-        border-radius: 999px;
-        background: #0c141d;
-        border: 1px solid #22384c;
-        overflow: hidden;
-      }
-      .bar span {
-        display: block;
-        height: 100%;
-        background: linear-gradient(90deg, var(--accent), #6ff5ef);
-      }
-      .bar.podium span {
-        background: linear-gradient(90deg, var(--accent-2), #ffb26b);
-      }
-      small {
-        display: inline-block;
-        margin-top: 5px;
-        color: var(--muted);
-        font-family: "IBM Plex Mono", monospace;
-      }
-      td.finish {
-        font-family: "IBM Plex Mono", monospace;
-        font-weight: 500;
-        white-space: nowrap;
-      }
-      .is-hidden {
-        display: none !important;
-      }
-      .driver-mobile-card {
-        background: linear-gradient(160deg, #122033 0%, #0f1b2a 100%);
-        border: 1px solid var(--grid);
-        border-radius: 14px;
-        padding: 12px;
-      }
-      .driver-mobile-head {
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-        gap: 10px;
-      }
-      .driver-mobile-head h4 {
-        margin: 0;
-        font-size: 1.25rem;
-        letter-spacing: 0.02em;
-      }
-      .driver-mobile-finish {
-        color: var(--ink);
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 0.9rem;
-        white-space: nowrap;
-      }
-      .mobile-metric {
-        margin-top: 10px;
-      }
-      .mobile-label {
-        margin: 0 0 6px 0;
-        color: var(--muted);
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 0.84rem;
-      }
-      @media (max-width: 980px) {
-        .insights {
-          grid-template-columns: 1fr;
+        :root {
+            --bg: #06090f; --panel: #0d1117; --grid: #21262d; --ink: #c9d1d9; --muted: #8b949e;
+            --accent: #2ad2c9; --success: #238636; --warning: #d29922; --danger: #da3633;
         }
-        .podium {
-          grid-template-columns: 1fr;
+        * { box-sizing: border-box; }
+        body {
+            margin: 0; font-family: 'Sora', sans-serif; background: var(--bg); color: var(--ink); line-height: 1.5;
+            background-image: radial-gradient(circle at 50% -20%, #161b22 0%, var(--bg) 80%);
         }
-        .table-wrap.desktop-only {
-          display: none;
+        .app { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
+        header { margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem; }
+        .header-main h1 { margin: 0; font-size: 2.5rem; font-weight: 800; letter-spacing: -0.02em; color: #fff; }
+        .header-main p { margin: 0.5rem 0 0; color: var(--muted); font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; }
+        
+        .insights { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+        .insight-card { background: var(--panel); border: 1px solid var(--grid); padding: 1.5rem; border-radius: 12px; }
+        .insight-card.status-high { border-top: 3px solid var(--success); }
+        .insight-card.status-low { border-top: 3px solid var(--warning); }
+        .insight-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+        .insight-kicker { margin: 0; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--muted); letter-spacing: 0.05em; }
+        .insight-value { margin: 0; font-size: 1.25rem; color: #fff; }
+        .insight-sub { margin: 0.25rem 0 0; font-size: 0.85rem; color: var(--muted); }
+        
+        .pulse { width: 8px; height: 8px; background: var(--success); border-radius: 50%; box-shadow: 0 0 0 rgba(35, 134, 54, 0.4); animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(35, 134, 54, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(35, 134, 54, 0); } 100% { box-shadow: 0 0 0 0 rgba(35, 134, 54, 0); } }
+
+        .dashboard-toggles { display: flex; gap: 0.5rem; background: var(--panel); padding: 0.25rem; border-radius: 8px; border: 1px solid var(--grid); }
+        .toggle-btn { background: transparent; border: none; color: var(--muted); padding: 0.5rem 1.25rem; border-radius: 6px; cursor: pointer; font-weight: 600; transition: 0.2s; }
+        .toggle-btn.is-active { background: var(--grid); color: #fff; }
+
+        .podium-grid { display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 1rem; align-items: end; margin-bottom: 2rem; }
+        .podium-card { background: var(--panel); border: 1px solid var(--grid); padding: 1.5rem; border-radius: 16px; position: relative; border-left: 4px solid var(--team-color); transition: transform 0.3s; }
+        .podium-card:hover { transform: translateY(-5px); }
+        .podium-card.is-hero { padding: 2rem 1.5rem; border-bottom: 4px solid var(--team-color); }
+        .podium-card .rank { font-weight: 800; color: var(--team-color); font-size: 0.9rem; margin: 0; font-family: 'JetBrains Mono', monospace; }
+        .podium-header h3 { margin: 0.5rem 0 0.25rem; font-size: 1.5rem; color: #fff; }
+        .team-tag { font-size: 0.75rem; color: var(--muted); font-weight: 600; text-transform: uppercase; }
+        .podium-metrics { display: flex; gap: 1.5rem; margin: 1.5rem 0; }
+        .p-metric span { display: block; font-size: 0.7rem; color: var(--muted); text-transform: uppercase; font-weight: 700; }
+        .p-metric strong { font-size: 1.2rem; color: #fff; font-family: 'JetBrains Mono', monospace; }
+        .bar-lite { height: 4px; background: var(--grid); border-radius: 2px; overflow: hidden; }
+        .bar-lite span { display: block; height: 100%; background: var(--team-color); }
+
+        .table-container { background: var(--panel); border: 1px solid var(--grid); border-radius: 12px; overflow: hidden; }
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; padding: 1rem; font-size: 0.75rem; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--grid); }
+        td { padding: 1rem; border-bottom: 1px solid var(--grid); }
+        .driver-row { border-left: 4px solid transparent; transition: 0.2s; }
+        .driver-row:hover { background: #161b22; border-left-color: var(--team-color); }
+        .td-rank { font-family: 'JetBrains Mono', monospace; color: var(--muted); font-weight: 500; }
+        .td-driver strong { display: block; color: #fff; font-size: 1rem; }
+        .td-driver small { font-size: 0.75rem; color: var(--muted); }
+        .bar-wrap { display: flex; align-items: center; gap: 1rem; }
+        .bar-main, .bar-podium { height: 6px; flex: 1; background: var(--grid); border-radius: 3px; overflow: hidden; min-width: 80px; }
+        .bar-main span { display: block; height: 100%; background: linear-gradient(90deg, var(--accent), #fff); }
+        .bar-podium span { display: block; height: 100%; background: var(--team-color); opacity: 0.8; }
+        code { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--ink); }
+
+        .scenario-panel { display: none; }
+        .scenario-panel.is-active { display: block; }
+        .scenario-header { margin-bottom: 1rem; }
+        .scenario-tag { background: var(--grid); color: #fff; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+
+        @media (max-width: 800px) {
+            .podium-grid { grid-template-columns: 1fr; }
+            .podium-card.is-hero { order: -1; }
+            header { flex-direction: column; align-items: flex-start; }
         }
-        .mobile-list {
-          display: grid;
-          gap: 10px;
-          margin-top: 16px;
-        }
-      }
-      @media (min-width: 981px) {
-        .mobile-list {
-          display: none;
-        }
-      }
     </style>
-  </head>
-  <body>
-    <main class="wrap">
-      <section class="hero">
-        <h1>APEX-F1 Prediction | Chinese Grand Prix</h1>
-        <div class="meta">
-          <span class="chip">Race date: 2026-03-15</span>
-          <span class="chip">Simulations: 6000</span>
-          <span class="chip">Seed: 202602</span>
-          <span class="chip">Safety car p: 0.230</span>
-          <span class="chip">Overtake difficulty: 0.500</span>
-          <span class="chip">Generated: 2026-03-08T20:22:03Z</span>
+</head>
+<body>
+    <div class="app">
+        <header>
+            <div class="header-main">
+                <p>APEX-F1 // INTELLIGENCE</p>
+                <h1>Chinese Grand Prix</h1>
+                <p>Circuit &bull; 2026-03-15</p>
+            </div>
+            
+        <div class="dashboard-toggles">
+            <button class="toggle-btn is-active" data-target="dry">Dry</button>
+            <button class="toggle-btn" data-target="wet">Wet</button>
         </div>
-        <div class="scenario-toggle"><button class="toggle-btn is-active" data-target="dry" type="button">Dry</button><button class="toggle-btn" data-target="wet" type="button">Wet</button></div>
-        <div class="list-toggle"><button class="visibility-btn" data-show="top10" type="button">Top 10</button><button class="visibility-btn" data-show="all" type="button">All Drivers</button></div>
-        <section>
-          <details>
-            <summary>How to read this page</summary>
-            <p class="metric">Win probability = chance to win this GP in simulation.</p>
-            <p class="metric">Podium probability = chance to finish P1-P3.</p>
-            <p class="metric">Expected finish = average finishing position across all simulation runs.</p>
-          </details>
-        </section>
-      </section>
-      <section class="insights"><article class="insight-card status-low"><p class="insight-kicker">Objective: SATURDAY QUALIFYING</p><h3 class="insight-value">Pre-Qualifying Simulation</h3><p class="insight-sub">Predicting qualifying performance from historical pace</p></article>
-<article class="insight-card "><p class="insight-kicker">Primary Data Source</p><h3 class="insight-value">Blended Data: 20% Season 2026, 80% Season 2025</h3><p class="insight-sub">FastF1 Hard Data + AI News Signals</p></article>
-<article class="insight-card "><p class="insight-kicker">Track: Chinese</p><h3 class="insight-value">Circuit</h3><p class="insight-sub">Overtake Difficulty: 50% | Tyre Wear: 57%</p></article>
-<article class="insight-card "><p class="insight-kicker">Rain Specialist</p><h3 class="insight-value">VER</h3><p class="insight-sub">benefits most from wet conditions</p></article></section>
-      <section class="scenario-panel is-active" data-scenario="dry"><div class="scenario-title">Scenario: Dry</div><section class="podium"><article class="podium-card"><p class="rank">P1</p><h3>RUS</h3><p class="metric">Win: 40.59%</p><p class="metric">Podium: 80.02%</p><p class="metric">Exp. finish: 5.086</p></article>
-<article class="podium-card"><p class="rank">P2</p><h3>NOR</h3><p class="metric">Win: 30.18%</p><p class="metric">Podium: 76.90%</p><p class="metric">Exp. finish: 5.394</p></article>
-<article class="podium-card"><p class="rank">P3</p><h3>VER</h3><p class="metric">Win: 20.10%</p><p class="metric">Podium: 69.60%</p><p class="metric">Exp. finish: 6.058</p></article></section><section class="table-wrap desktop-only"><table><thead><tr><th>Driver</th><th>Win Probability</th><th>Podium Probability</th><th>Expected Finish</th></tr></thead><tbody><tr class="driver-item" data-rank="1"><td class="driver">RUS</td><td><div class="bar"><span style="width:40.592%"></span></div><small>40.592%</small></td><td><div class="bar podium"><span style="width:80.017%"></span></div><small>80.017%</small></td><td class="finish">5.086</td></tr>
-<tr class="driver-item" data-rank="2"><td class="driver">NOR</td><td><div class="bar"><span style="width:30.180%"></span></div><small>30.180%</small></td><td><div class="bar podium"><span style="width:76.900%"></span></div><small>76.900%</small></td><td class="finish">5.394</td></tr>
-<tr class="driver-item" data-rank="3"><td class="driver">VER</td><td><div class="bar"><span style="width:20.103%"></span></div><small>20.103%</small></td><td><div class="bar podium"><span style="width:69.600%"></span></div><small>69.600%</small></td><td class="finish">6.058</td></tr>
-<tr class="driver-item" data-rank="4"><td class="driver">LEC</td><td><div class="bar"><span style="width:7.553%"></span></div><small>7.553%</small></td><td><div class="bar podium"><span style="width:46.683%"></span></div><small>46.683%</small></td><td class="finish">6.305</td></tr>
-<tr class="driver-item" data-rank="5"><td class="driver">HAM</td><td><div class="bar"><span style="width:0.517%"></span></div><small>0.517%</small></td><td><div class="bar podium"><span style="width:6.717%"></span></div><small>6.717%</small></td><td class="finish">9.128</td></tr>
-<tr class="driver-item" data-rank="6"><td class="driver">LIN</td><td><div class="bar"><span style="width:0.486%"></span></div><small>0.486%</small></td><td><div class="bar podium"><span style="width:6.583%"></span></div><small>6.583%</small></td><td class="finish">10.107</td></tr>
-<tr class="driver-item" data-rank="7"><td class="driver">PIA</td><td><div class="bar"><span style="width:0.255%"></span></div><small>0.255%</small></td><td><div class="bar podium"><span style="width:5.400%"></span></div><small>5.400%</small></td><td class="finish">9.527</td></tr>
-<tr class="driver-item" data-rank="8"><td class="driver">ALB</td><td><div class="bar"><span style="width:0.143%"></span></div><small>0.143%</small></td><td><div class="bar podium"><span style="width:2.100%"></span></div><small>2.100%</small></td><td class="finish">11.421</td></tr>
-<tr class="driver-item" data-rank="9"><td class="driver">ANT</td><td><div class="bar"><span style="width:0.057%"></span></div><small>0.057%</small></td><td><div class="bar podium"><span style="width:1.467%"></span></div><small>1.467%</small></td><td class="finish">10.717</td></tr>
-<tr class="driver-item" data-rank="10"><td class="driver">BEA</td><td><div class="bar"><span style="width:0.057%"></span></div><small>0.057%</small></td><td><div class="bar podium"><span style="width:2.067%"></span></div><small>2.067%</small></td><td class="finish">11.238</td></tr>
-<tr class="driver-item" data-rank="11"><td class="driver">ALO</td><td><div class="bar"><span style="width:0.057%"></span></div><small>0.057%</small></td><td><div class="bar podium"><span style="width:0.800%"></span></div><small>0.800%</small></td><td class="finish">12.360</td></tr>
-<tr class="driver-item" data-rank="12"><td class="driver">GAS</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:1.183%"></span></div><small>1.183%</small></td><td class="finish">12.430</td></tr>
-<tr class="driver-item" data-rank="13"><td class="driver">HAD</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.083%"></span></div><small>0.083%</small></td><td class="finish">14.171</td></tr>
-<tr class="driver-item" data-rank="14"><td class="driver">SAI</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.083%"></span></div><small>0.083%</small></td><td class="finish">14.512</td></tr>
-<tr class="driver-item" data-rank="15"><td class="driver">OCO</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.083%"></span></div><small>0.083%</small></td><td class="finish">14.575</td></tr>
-<tr class="driver-item" data-rank="16"><td class="driver">BOR</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.150%"></span></div><small>0.150%</small></td><td class="finish">14.868</td></tr>
-<tr class="driver-item" data-rank="17"><td class="driver">PER</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.050%"></span></div><small>0.050%</small></td><td class="finish">15.437</td></tr>
-<tr class="driver-item" data-rank="18"><td class="driver">STR</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.017%"></span></div><small>0.017%</small></td><td class="finish">15.951</td></tr>
-<tr class="driver-item" data-rank="19"><td class="driver">LAW</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.000%"></span></div><small>0.000%</small></td><td class="finish">16.520</td></tr>
-<tr class="driver-item" data-rank="20"><td class="driver">COL</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.000%"></span></div><small>0.000%</small></td><td class="finish">16.948</td></tr>
-<tr class="driver-item" data-rank="21"><td class="driver">HUL</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.017%"></span></div><small>0.017%</small></td><td class="finish">17.459</td></tr>
-<tr class="driver-item" data-rank="22"><td class="driver">BOT</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.000%"></span></div><small>0.000%</small></td><td class="finish">18.940</td></tr></tbody></table></section><section class="mobile-list"><article class="driver-mobile-card driver-item" data-rank="1"><div class="driver-mobile-head"><h4>RUS</h4><span class="driver-mobile-finish">Exp. finish: 5.086</span></div><div class="mobile-metric"><p class="mobile-label">Win: 40.592%</p><div class="bar"><span style="width:40.592%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 80.017%</p><div class="bar podium"><span style="width:80.017%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="2"><div class="driver-mobile-head"><h4>NOR</h4><span class="driver-mobile-finish">Exp. finish: 5.394</span></div><div class="mobile-metric"><p class="mobile-label">Win: 30.180%</p><div class="bar"><span style="width:30.180%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 76.900%</p><div class="bar podium"><span style="width:76.900%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="3"><div class="driver-mobile-head"><h4>VER</h4><span class="driver-mobile-finish">Exp. finish: 6.058</span></div><div class="mobile-metric"><p class="mobile-label">Win: 20.103%</p><div class="bar"><span style="width:20.103%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 69.600%</p><div class="bar podium"><span style="width:69.600%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="4"><div class="driver-mobile-head"><h4>LEC</h4><span class="driver-mobile-finish">Exp. finish: 6.305</span></div><div class="mobile-metric"><p class="mobile-label">Win: 7.553%</p><div class="bar"><span style="width:7.553%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 46.683%</p><div class="bar podium"><span style="width:46.683%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="5"><div class="driver-mobile-head"><h4>HAM</h4><span class="driver-mobile-finish">Exp. finish: 9.128</span></div><div class="mobile-metric"><p class="mobile-label">Win: 0.517%</p><div class="bar"><span style="width:0.517%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 6.717%</p><div class="bar podium"><span style="width:6.717%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="6"><div class="driver-mobile-head"><h4>LIN</h4><span class="driver-mobile-finish">Exp. finish: 10.107</span></div><div class="mobile-metric"><p class="mobile-label">Win: 0.486%</p><div class="bar"><span style="width:0.486%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 6.583%</p><div class="bar podium"><span style="width:6.583%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="7"><div class="driver-mobile-head"><h4>PIA</h4><span class="driver-mobile-finish">Exp. finish: 9.527</span></div><div class="mobile-metric"><p class="mobile-label">Win: 0.255%</p><div class="bar"><span style="width:0.255%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 5.400%</p><div class="bar podium"><span style="width:5.400%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="8"><div class="driver-mobile-head"><h4>ALB</h4><span class="driver-mobile-finish">Exp. finish: 11.421</span></div><div class="mobile-metric"><p class="mobile-label">Win: 0.143%</p><div class="bar"><span style="width:0.143%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 2.100%</p><div class="bar podium"><span style="width:2.100%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="9"><div class="driver-mobile-head"><h4>ANT</h4><span class="driver-mobile-finish">Exp. finish: 10.717</span></div><div class="mobile-metric"><p class="mobile-label">Win: 0.057%</p><div class="bar"><span style="width:0.057%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 1.467%</p><div class="bar podium"><span style="width:1.467%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="10"><div class="driver-mobile-head"><h4>BEA</h4><span class="driver-mobile-finish">Exp. finish: 11.238</span></div><div class="mobile-metric"><p class="mobile-label">Win: 0.057%</p><div class="bar"><span style="width:0.057%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 2.067%</p><div class="bar podium"><span style="width:2.067%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="11"><div class="driver-mobile-head"><h4>ALO</h4><span class="driver-mobile-finish">Exp. finish: 12.360</span></div><div class="mobile-metric"><p class="mobile-label">Win: 0.057%</p><div class="bar"><span style="width:0.057%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 0.800%</p><div class="bar podium"><span style="width:0.800%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="12"><div class="driver-mobile-head"><h4>GAS</h4><span class="driver-mobile-finish">Exp. finish: 12.430</span></div><div class="mobile-metric"><p class="mobile-label">Win: 0.000%</p><div class="bar"><span style="width:0.000%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 1.183%</p><div class="bar podium"><span style="width:1.183%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="13"><div class="driver-mobile-head"><h4>HAD</h4><span class="driver-mobile-finish">Exp. finish: 14.171</span></div><div class="mobile-metric"><p class="mobile-label">Win: 0.000%</p><div class="bar"><span style="width:0.000%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 0.083%</p><div class="bar podium"><span style="width:0.083%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="14"><div class="driver-mobile-head"><h4>SAI</h4><span class="driver-mobile-finish">Exp. finish: 14.512</span></div><div class="mobile-metric"><p class="mobile-label">Win: 0.000%</p><div class="bar"><span style="width:0.000%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 0.083%</p><div class="bar podium"><span style="width:0.083%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="15"><div class="driver-mobile-head"><h4>OCO</h4><span class="driver-mobile-finish">Exp. finish: 14.575</span></div><div class="mobile-metric"><p class="mobile-label">Win: 0.000%</p><div class="bar"><span style="width:0.000%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 0.083%</p><div class="bar podium"><span style="width:0.083%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="16"><div class="driver-mobile-head"><h4>BOR</h4><span class="driver-mobile-finish">Exp. finish: 14.868</span></div><div class="mobile-metric"><p class="mobile-label">Win: 0.000%</p><div class="bar"><span style="width:0.000%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 0.150%</p><div class="bar podium"><span style="width:0.150%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="17"><div class="driver-mobile-head"><h4>PER</h4><span class="driver-mobile-finish">Exp. finish: 15.437</span></div><div class="mobile-metric"><p class="mobile-label">Win: 0.000%</p><div class="bar"><span style="width:0.000%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 0.050%</p><div class="bar podium"><span style="width:0.050%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="18"><div class="driver-mobile-head"><h4>STR</h4><span class="driver-mobile-finish">Exp. finish: 15.951</span></div><div class="mobile-metric"><p class="mobile-label">Win: 0.000%</p><div class="bar"><span style="width:0.000%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 0.017%</p><div class="bar podium"><span style="width:0.017%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="19"><div class="driver-mobile-head"><h4>LAW</h4><span class="driver-mobile-finish">Exp. finish: 16.520</span></div><div class="mobile-metric"><p class="mobile-label">Win: 0.000%</p><div class="bar"><span style="width:0.000%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 0.000%</p><div class="bar podium"><span style="width:0.000%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="20"><div class="driver-mobile-head"><h4>COL</h4><span class="driver-mobile-finish">Exp. finish: 16.948</span></div><div class="mobile-metric"><p class="mobile-label">Win: 0.000%</p><div class="bar"><span style="width:0.000%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 0.000%</p><div class="bar podium"><span style="width:0.000%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="21"><div class="driver-mobile-head"><h4>HUL</h4><span class="driver-mobile-finish">Exp. finish: 17.459</span></div><div class="mobile-metric"><p class="mobile-label">Win: 0.000%</p><div class="bar"><span style="width:0.000%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 0.017%</p><div class="bar podium"><span style="width:0.017%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="22"><div class="driver-mobile-head"><h4>BOT</h4><span class="driver-mobile-finish">Exp. finish: 18.940</span></div><div class="mobile-metric"><p class="mobile-label">Win: 0.000%</p><div class="bar"><span style="width:0.000%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 0.000%</p><div class="bar podium"><span style="width:0.000%"></span></div></div></article></section></section><section class="scenario-panel" data-scenario="wet"><div class="scenario-title">Scenario: Wet</div><section class="podium"><article class="podium-card"><p class="rank">P1</p><h3>RUS</h3><p class="metric">Win: 40.14%</p><p class="metric">Podium: 80.50%</p><p class="metric">Exp. finish: 5.001</p></article>
-<article class="podium-card"><p class="rank">P2</p><h3>NOR</h3><p class="metric">Win: 29.92%</p><p class="metric">Podium: 76.45%</p><p class="metric">Exp. finish: 5.440</p></article>
-<article class="podium-card"><p class="rank">P3</p><h3>VER</h3><p class="metric">Win: 21.23%</p><p class="metric">Podium: 70.50%</p><p class="metric">Exp. finish: 6.023</p></article></section><section class="table-wrap desktop-only"><table><thead><tr><th>Driver</th><th>Win Probability</th><th>Podium Probability</th><th>Expected Finish</th></tr></thead><tbody><tr class="driver-item" data-rank="1"><td class="driver">RUS</td><td><div class="bar"><span style="width:40.144%"></span></div><small>40.144%</small></td><td><div class="bar podium"><span style="width:80.500%"></span></div><small>80.500%</small></td><td class="finish">5.001</td></tr>
-<tr class="driver-item" data-rank="2"><td class="driver">NOR</td><td><div class="bar"><span style="width:29.924%"></span></div><small>29.924%</small></td><td><div class="bar podium"><span style="width:76.450%"></span></div><small>76.450%</small></td><td class="finish">5.440</td></tr>
-<tr class="driver-item" data-rank="3"><td class="driver">VER</td><td><div class="bar"><span style="width:21.227%"></span></div><small>21.227%</small></td><td><div class="bar podium"><span style="width:70.500%"></span></div><small>70.500%</small></td><td class="finish">6.023</td></tr>
-<tr class="driver-item" data-rank="4"><td class="driver">LEC</td><td><div class="bar"><span style="width:7.326%"></span></div><small>7.326%</small></td><td><div class="bar podium"><span style="width:45.717%"></span></div><small>45.717%</small></td><td class="finish">6.343</td></tr>
-<tr class="driver-item" data-rank="5"><td class="driver">LIN</td><td><div class="bar"><span style="width:0.725%"></span></div><small>0.725%</small></td><td><div class="bar podium"><span style="width:7.450%"></span></div><small>7.450%</small></td><td class="finish">9.881</td></tr>
-<tr class="driver-item" data-rank="6"><td class="driver">HAM</td><td><div class="bar"><span style="width:0.255%"></span></div><small>0.255%</small></td><td><div class="bar podium"><span style="width:6.350%"></span></div><small>6.350%</small></td><td class="finish">8.990</td></tr>
-<tr class="driver-item" data-rank="7"><td class="driver">PIA</td><td><div class="bar"><span style="width:0.255%"></span></div><small>0.255%</small></td><td><div class="bar podium"><span style="width:5.533%"></span></div><small>5.533%</small></td><td class="finish">9.277</td></tr>
-<tr class="driver-item" data-rank="8"><td class="driver">BEA</td><td><div class="bar"><span style="width:0.143%"></span></div><small>0.143%</small></td><td><div class="bar podium"><span style="width:2.117%"></span></div><small>2.117%</small></td><td class="finish">11.300</td></tr>
-<tr class="driver-item" data-rank="9"><td class="driver">ANT</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:1.333%"></span></div><small>1.333%</small></td><td class="finish">10.837</td></tr>
-<tr class="driver-item" data-rank="10"><td class="driver">ALB</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:1.450%"></span></div><small>1.450%</small></td><td class="finish">11.567</td></tr>
-<tr class="driver-item" data-rank="11"><td class="driver">GAS</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:1.267%"></span></div><small>1.267%</small></td><td class="finish">12.441</td></tr>
-<tr class="driver-item" data-rank="12"><td class="driver">ALO</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.867%"></span></div><small>0.867%</small></td><td class="finish">12.604</td></tr>
-<tr class="driver-item" data-rank="13"><td class="driver">HAD</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.050%"></span></div><small>0.050%</small></td><td class="finish">14.060</td></tr>
-<tr class="driver-item" data-rank="14"><td class="driver">SAI</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.017%"></span></div><small>0.017%</small></td><td class="finish">14.520</td></tr>
-<tr class="driver-item" data-rank="15"><td class="driver">OCO</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.050%"></span></div><small>0.050%</small></td><td class="finish">14.607</td></tr>
-<tr class="driver-item" data-rank="16"><td class="driver">BOR</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.250%"></span></div><small>0.250%</small></td><td class="finish">14.885</td></tr>
-<tr class="driver-item" data-rank="17"><td class="driver">PER</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.100%"></span></div><small>0.100%</small></td><td class="finish">15.599</td></tr>
-<tr class="driver-item" data-rank="18"><td class="driver">STR</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.000%"></span></div><small>0.000%</small></td><td class="finish">16.037</td></tr>
-<tr class="driver-item" data-rank="19"><td class="driver">LAW</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.000%"></span></div><small>0.000%</small></td><td class="finish">16.434</td></tr>
-<tr class="driver-item" data-rank="20"><td class="driver">COL</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.000%"></span></div><small>0.000%</small></td><td class="finish">16.926</td></tr>
-<tr class="driver-item" data-rank="21"><td class="driver">HUL</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.000%"></span></div><small>0.000%</small></td><td class="finish">17.332</td></tr>
-<tr class="driver-item" data-rank="22"><td class="driver">BOT</td><td><div class="bar"><span style="width:0.000%"></span></div><small>0.000%</small></td><td><div class="bar podium"><span style="width:0.000%"></span></div><small>0.000%</small></td><td class="finish">18.996</td></tr></tbody></table></section><section class="mobile-list"><article class="driver-mobile-card driver-item" data-rank="1"><div class="driver-mobile-head"><h4>RUS</h4><span class="driver-mobile-finish">Exp. finish: 5.001</span></div><div class="mobile-metric"><p class="mobile-label">Win: 40.144%</p><div class="bar"><span style="width:40.144%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 80.500%</p><div class="bar podium"><span style="width:80.500%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="2"><div class="driver-mobile-head"><h4>NOR</h4><span class="driver-mobile-finish">Exp. finish: 5.440</span></div><div class="mobile-metric"><p class="mobile-label">Win: 29.924%</p><div class="bar"><span style="width:29.924%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 76.450%</p><div class="bar podium"><span style="width:76.450%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="3"><div class="driver-mobile-head"><h4>VER</h4><span class="driver-mobile-finish">Exp. finish: 6.023</span></div><div class="mobile-metric"><p class="mobile-label">Win: 21.227%</p><div class="bar"><span style="width:21.227%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 70.500%</p><div class="bar podium"><span style="width:70.500%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="4"><div class="driver-mobile-head"><h4>LEC</h4><span class="driver-mobile-finish">Exp. finish: 6.343</span></div><div class="mobile-metric"><p class="mobile-label">Win: 7.326%</p><div class="bar"><span style="width:7.326%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 45.717%</p><div class="bar podium"><span style="width:45.717%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="5"><div class="driver-mobile-head"><h4>LIN</h4><span class="driver-mobile-finish">Exp. finish: 9.881</span></div><div class="mobile-metric"><p class="mobile-label">Win: 0.725%</p><div class="bar"><span style="width:0.725%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 7.450%</p><div class="bar podium"><span style="width:7.450%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="6"><div class="driver-mobile-head"><h4>HAM</h4><span class="driver-mobile-finish">Exp. finish: 8.990</span></div><div class="mobile-metric"><p class="mobile-label">Win: 0.255%</p><div class="bar"><span style="width:0.255%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 6.350%</p><div class="bar podium"><span style="width:6.350%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="7"><div class="driver-mobile-head"><h4>PIA</h4><span class="driver-mobile-finish">Exp. finish: 9.277</span></div><div class="mobile-metric"><p class="mobile-label">Win: 0.255%</p><div class="bar"><span style="width:0.255%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 5.533%</p><div class="bar podium"><span style="width:5.533%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="8"><div class="driver-mobile-head"><h4>BEA</h4><span class="driver-mobile-finish">Exp. finish: 11.300</span></div><div class="mobile-metric"><p class="mobile-label">Win: 0.143%</p><div class="bar"><span style="width:0.143%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 2.117%</p><div class="bar podium"><span style="width:2.117%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="9"><div class="driver-mobile-head"><h4>ANT</h4><span class="driver-mobile-finish">Exp. finish: 10.837</span></div><div class="mobile-metric"><p class="mobile-label">Win: 0.000%</p><div class="bar"><span style="width:0.000%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 1.333%</p><div class="bar podium"><span style="width:1.333%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="10"><div class="driver-mobile-head"><h4>ALB</h4><span class="driver-mobile-finish">Exp. finish: 11.567</span></div><div class="mobile-metric"><p class="mobile-label">Win: 0.000%</p><div class="bar"><span style="width:0.000%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 1.450%</p><div class="bar podium"><span style="width:1.450%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="11"><div class="driver-mobile-head"><h4>GAS</h4><span class="driver-mobile-finish">Exp. finish: 12.441</span></div><div class="mobile-metric"><p class="mobile-label">Win: 0.000%</p><div class="bar"><span style="width:0.000%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 1.267%</p><div class="bar podium"><span style="width:1.267%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="12"><div class="driver-mobile-head"><h4>ALO</h4><span class="driver-mobile-finish">Exp. finish: 12.604</span></div><div class="mobile-metric"><p class="mobile-label">Win: 0.000%</p><div class="bar"><span style="width:0.000%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 0.867%</p><div class="bar podium"><span style="width:0.867%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="13"><div class="driver-mobile-head"><h4>HAD</h4><span class="driver-mobile-finish">Exp. finish: 14.060</span></div><div class="mobile-metric"><p class="mobile-label">Win: 0.000%</p><div class="bar"><span style="width:0.000%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 0.050%</p><div class="bar podium"><span style="width:0.050%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="14"><div class="driver-mobile-head"><h4>SAI</h4><span class="driver-mobile-finish">Exp. finish: 14.520</span></div><div class="mobile-metric"><p class="mobile-label">Win: 0.000%</p><div class="bar"><span style="width:0.000%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 0.017%</p><div class="bar podium"><span style="width:0.017%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="15"><div class="driver-mobile-head"><h4>OCO</h4><span class="driver-mobile-finish">Exp. finish: 14.607</span></div><div class="mobile-metric"><p class="mobile-label">Win: 0.000%</p><div class="bar"><span style="width:0.000%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 0.050%</p><div class="bar podium"><span style="width:0.050%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="16"><div class="driver-mobile-head"><h4>BOR</h4><span class="driver-mobile-finish">Exp. finish: 14.885</span></div><div class="mobile-metric"><p class="mobile-label">Win: 0.000%</p><div class="bar"><span style="width:0.000%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 0.250%</p><div class="bar podium"><span style="width:0.250%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="17"><div class="driver-mobile-head"><h4>PER</h4><span class="driver-mobile-finish">Exp. finish: 15.599</span></div><div class="mobile-metric"><p class="mobile-label">Win: 0.000%</p><div class="bar"><span style="width:0.000%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 0.100%</p><div class="bar podium"><span style="width:0.100%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="18"><div class="driver-mobile-head"><h4>STR</h4><span class="driver-mobile-finish">Exp. finish: 16.037</span></div><div class="mobile-metric"><p class="mobile-label">Win: 0.000%</p><div class="bar"><span style="width:0.000%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 0.000%</p><div class="bar podium"><span style="width:0.000%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="19"><div class="driver-mobile-head"><h4>LAW</h4><span class="driver-mobile-finish">Exp. finish: 16.434</span></div><div class="mobile-metric"><p class="mobile-label">Win: 0.000%</p><div class="bar"><span style="width:0.000%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 0.000%</p><div class="bar podium"><span style="width:0.000%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="20"><div class="driver-mobile-head"><h4>COL</h4><span class="driver-mobile-finish">Exp. finish: 16.926</span></div><div class="mobile-metric"><p class="mobile-label">Win: 0.000%</p><div class="bar"><span style="width:0.000%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 0.000%</p><div class="bar podium"><span style="width:0.000%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="21"><div class="driver-mobile-head"><h4>HUL</h4><span class="driver-mobile-finish">Exp. finish: 17.332</span></div><div class="mobile-metric"><p class="mobile-label">Win: 0.000%</p><div class="bar"><span style="width:0.000%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 0.000%</p><div class="bar podium"><span style="width:0.000%"></span></div></div></article>
-<article class="driver-mobile-card driver-item" data-rank="22"><div class="driver-mobile-head"><h4>BOT</h4><span class="driver-mobile-finish">Exp. finish: 18.996</span></div><div class="mobile-metric"><p class="mobile-label">Win: 0.000%</p><div class="bar"><span style="width:0.000%"></span></div></div><div class="mobile-metric"><p class="mobile-label">Podium: 0.000%</p><div class="bar podium"><span style="width:0.000%"></span></div></div></article></section></section>
-    </main>
-
+        </header>
+        <section class="insights"><article class="insight-card status-low"><div class="insight-header"><p class="insight-kicker">Objective: SATURDAY QUALIFYING</p></div><h3 class="insight-value">Estimated</h3><p class="insight-sub">Predicting Q positions</p></article><article class="insight-card "><div class="insight-header"><p class="insight-kicker">Primary Data Source</p></div><h3 class="insight-value">Blended Data: 20% Season 2026, 80% Season 2025</h3><p class="insight-sub">FastF1 Hard Data + AI Signals</p></article><article class="insight-card "><div class="insight-header"><p class="insight-kicker">Track Context</p></div><h3 class="insight-value">Chinese</h3><p class="insight-sub">Overtaking: 50% | Wear: 57%</p></article></section>
+        
+    <section class="scenario-panel is-active" data-scenario="dry">
+        <div class="scenario-header">
+            <span class="scenario-tag">Dry Analysis</span>
+        </div>
+        
+    <section class="podium-grid">
+        
+        <article class="podium-card" style="--team-color: #9bb0c6">
+            <p class="rank">P2</p>
+            <div class="podium-header">
+                <h3>NOR</h3>
+                <span class="team-tag">Unknown</span>
+            </div>
+            <div class="podium-metrics">
+                <div class="p-metric"><span>Win</span><strong>30.2%</strong></div>
+                <div class="p-metric"><span>Podium</span><strong>76.9%</strong></div>
+            </div>
+            <div class="bar-lite"><span style="width:30.2%"></span></div>
+        </article>
+        
+        <article class="podium-card is-hero" style="--team-color: #9bb0c6">
+            <p class="rank">P1</p>
+            <div class="podium-header">
+                <h3>RUS</h3>
+                <span class="team-tag">Unknown</span>
+            </div>
+            <div class="podium-metrics">
+                <div class="p-metric"><span>Win</span><strong>40.6%</strong></div>
+                <div class="p-metric"><span>Podium</span><strong>80.0%</strong></div>
+            </div>
+            <div class="bar-lite"><span style="width:40.6%"></span></div>
+        </article>
+        
+        <article class="podium-card" style="--team-color: #9bb0c6">
+            <p class="rank">P3</p>
+            <div class="podium-header">
+                <h3>VER</h3>
+                <span class="team-tag">Unknown</span>
+            </div>
+            <div class="podium-metrics">
+                <div class="p-metric"><span>Win</span><strong>20.1%</strong></div>
+                <div class="p-metric"><span>Podium</span><strong>69.6%</strong></div>
+            </div>
+            <div class="bar-lite"><span style="width:20.1%"></span></div>
+        </article>
+    </section>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr><th>#</th><th>Driver</th><th>Win Prob.</th><th>Podium Prob.</th><th>Exp. Finish</th></tr>
+                </thead>
+                <tbody>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">1</td>
+            <td class="td-driver"><strong>RUS</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:40.59%"></span></div>
+                    <code>40.59%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:80.02%"></span></div>
+                    <code>80.02%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>5.09</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">2</td>
+            <td class="td-driver"><strong>NOR</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:30.18%"></span></div>
+                    <code>30.18%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:76.90%"></span></div>
+                    <code>76.90%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>5.39</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">3</td>
+            <td class="td-driver"><strong>VER</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:20.10%"></span></div>
+                    <code>20.10%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:69.60%"></span></div>
+                    <code>69.60%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>6.06</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">4</td>
+            <td class="td-driver"><strong>LEC</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:7.55%"></span></div>
+                    <code>7.55%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:46.68%"></span></div>
+                    <code>46.68%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>6.30</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">5</td>
+            <td class="td-driver"><strong>HAM</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:0.52%"></span></div>
+                    <code>0.52%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:6.72%"></span></div>
+                    <code>6.72%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>9.13</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">6</td>
+            <td class="td-driver"><strong>LIN</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:0.49%"></span></div>
+                    <code>0.49%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:6.58%"></span></div>
+                    <code>6.58%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>10.11</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">7</td>
+            <td class="td-driver"><strong>PIA</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:0.26%"></span></div>
+                    <code>0.26%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:5.40%"></span></div>
+                    <code>5.40%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>9.53</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">8</td>
+            <td class="td-driver"><strong>ALB</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:0.14%"></span></div>
+                    <code>0.14%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:2.10%"></span></div>
+                    <code>2.10%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>11.42</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">9</td>
+            <td class="td-driver"><strong>ANT</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:0.06%"></span></div>
+                    <code>0.06%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:1.47%"></span></div>
+                    <code>1.47%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>10.72</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">10</td>
+            <td class="td-driver"><strong>BEA</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:0.06%"></span></div>
+                    <code>0.06%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:2.07%"></span></div>
+                    <code>2.07%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>11.24</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">11</td>
+            <td class="td-driver"><strong>ALO</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:0.06%"></span></div>
+                    <code>0.06%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:0.80%"></span></div>
+                    <code>0.80%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>12.36</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">12</td>
+            <td class="td-driver"><strong>GAS</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:0.00%"></span></div>
+                    <code>0.00%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:1.18%"></span></div>
+                    <code>1.18%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>12.43</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">13</td>
+            <td class="td-driver"><strong>HAD</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:0.00%"></span></div>
+                    <code>0.00%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:0.08%"></span></div>
+                    <code>0.08%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>14.17</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">14</td>
+            <td class="td-driver"><strong>SAI</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:0.00%"></span></div>
+                    <code>0.00%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:0.08%"></span></div>
+                    <code>0.08%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>14.51</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">15</td>
+            <td class="td-driver"><strong>OCO</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:0.00%"></span></div>
+                    <code>0.00%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:0.08%"></span></div>
+                    <code>0.08%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>14.58</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">16</td>
+            <td class="td-driver"><strong>BOR</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:0.00%"></span></div>
+                    <code>0.00%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:0.15%"></span></div>
+                    <code>0.15%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>14.87</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">17</td>
+            <td class="td-driver"><strong>PER</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:0.00%"></span></div>
+                    <code>0.00%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:0.05%"></span></div>
+                    <code>0.05%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>15.44</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">18</td>
+            <td class="td-driver"><strong>STR</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:0.00%"></span></div>
+                    <code>0.00%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:0.02%"></span></div>
+                    <code>0.02%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>15.95</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">19</td>
+            <td class="td-driver"><strong>LAW</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:0.00%"></span></div>
+                    <code>0.00%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:0.00%"></span></div>
+                    <code>0.00%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>16.52</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">20</td>
+            <td class="td-driver"><strong>COL</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:0.00%"></span></div>
+                    <code>0.00%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:0.00%"></span></div>
+                    <code>0.00%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>16.95</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">21</td>
+            <td class="td-driver"><strong>HUL</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:0.00%"></span></div>
+                    <code>0.00%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:0.02%"></span></div>
+                    <code>0.02%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>17.46</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">22</td>
+            <td class="td-driver"><strong>BOT</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:0.00%"></span></div>
+                    <code>0.00%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:0.00%"></span></div>
+                    <code>0.00%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>18.94</code></td>
+        </tr></tbody>
+            </table>
+        </div>
+    </section>
+    <section class="scenario-panel" data-scenario="wet">
+        <div class="scenario-header">
+            <span class="scenario-tag">Wet Analysis</span>
+        </div>
+        
+    <section class="podium-grid">
+        
+        <article class="podium-card" style="--team-color: #9bb0c6">
+            <p class="rank">P2</p>
+            <div class="podium-header">
+                <h3>NOR</h3>
+                <span class="team-tag">Unknown</span>
+            </div>
+            <div class="podium-metrics">
+                <div class="p-metric"><span>Win</span><strong>29.9%</strong></div>
+                <div class="p-metric"><span>Podium</span><strong>76.4%</strong></div>
+            </div>
+            <div class="bar-lite"><span style="width:29.9%"></span></div>
+        </article>
+        
+        <article class="podium-card is-hero" style="--team-color: #9bb0c6">
+            <p class="rank">P1</p>
+            <div class="podium-header">
+                <h3>RUS</h3>
+                <span class="team-tag">Unknown</span>
+            </div>
+            <div class="podium-metrics">
+                <div class="p-metric"><span>Win</span><strong>40.1%</strong></div>
+                <div class="p-metric"><span>Podium</span><strong>80.5%</strong></div>
+            </div>
+            <div class="bar-lite"><span style="width:40.1%"></span></div>
+        </article>
+        
+        <article class="podium-card" style="--team-color: #9bb0c6">
+            <p class="rank">P3</p>
+            <div class="podium-header">
+                <h3>VER</h3>
+                <span class="team-tag">Unknown</span>
+            </div>
+            <div class="podium-metrics">
+                <div class="p-metric"><span>Win</span><strong>21.2%</strong></div>
+                <div class="p-metric"><span>Podium</span><strong>70.5%</strong></div>
+            </div>
+            <div class="bar-lite"><span style="width:21.2%"></span></div>
+        </article>
+    </section>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr><th>#</th><th>Driver</th><th>Win Prob.</th><th>Podium Prob.</th><th>Exp. Finish</th></tr>
+                </thead>
+                <tbody>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">1</td>
+            <td class="td-driver"><strong>RUS</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:40.14%"></span></div>
+                    <code>40.14%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:80.50%"></span></div>
+                    <code>80.50%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>5.00</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">2</td>
+            <td class="td-driver"><strong>NOR</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:29.92%"></span></div>
+                    <code>29.92%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:76.45%"></span></div>
+                    <code>76.45%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>5.44</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">3</td>
+            <td class="td-driver"><strong>VER</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:21.23%"></span></div>
+                    <code>21.23%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:70.50%"></span></div>
+                    <code>70.50%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>6.02</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">4</td>
+            <td class="td-driver"><strong>LEC</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:7.33%"></span></div>
+                    <code>7.33%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:45.72%"></span></div>
+                    <code>45.72%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>6.34</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">5</td>
+            <td class="td-driver"><strong>LIN</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:0.73%"></span></div>
+                    <code>0.73%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:7.45%"></span></div>
+                    <code>7.45%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>9.88</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">6</td>
+            <td class="td-driver"><strong>HAM</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:0.26%"></span></div>
+                    <code>0.26%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:6.35%"></span></div>
+                    <code>6.35%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>8.99</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">7</td>
+            <td class="td-driver"><strong>PIA</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:0.26%"></span></div>
+                    <code>0.26%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:5.53%"></span></div>
+                    <code>5.53%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>9.28</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">8</td>
+            <td class="td-driver"><strong>BEA</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:0.14%"></span></div>
+                    <code>0.14%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:2.12%"></span></div>
+                    <code>2.12%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>11.30</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">9</td>
+            <td class="td-driver"><strong>ANT</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:0.00%"></span></div>
+                    <code>0.00%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:1.33%"></span></div>
+                    <code>1.33%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>10.84</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">10</td>
+            <td class="td-driver"><strong>ALB</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:0.00%"></span></div>
+                    <code>0.00%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:1.45%"></span></div>
+                    <code>1.45%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>11.57</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">11</td>
+            <td class="td-driver"><strong>GAS</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:0.00%"></span></div>
+                    <code>0.00%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:1.27%"></span></div>
+                    <code>1.27%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>12.44</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">12</td>
+            <td class="td-driver"><strong>ALO</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:0.00%"></span></div>
+                    <code>0.00%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:0.87%"></span></div>
+                    <code>0.87%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>12.60</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">13</td>
+            <td class="td-driver"><strong>HAD</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:0.00%"></span></div>
+                    <code>0.00%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:0.05%"></span></div>
+                    <code>0.05%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>14.06</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">14</td>
+            <td class="td-driver"><strong>SAI</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:0.00%"></span></div>
+                    <code>0.00%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:0.02%"></span></div>
+                    <code>0.02%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>14.52</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">15</td>
+            <td class="td-driver"><strong>OCO</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:0.00%"></span></div>
+                    <code>0.00%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:0.05%"></span></div>
+                    <code>0.05%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>14.61</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">16</td>
+            <td class="td-driver"><strong>BOR</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:0.00%"></span></div>
+                    <code>0.00%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:0.25%"></span></div>
+                    <code>0.25%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>14.88</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">17</td>
+            <td class="td-driver"><strong>PER</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:0.00%"></span></div>
+                    <code>0.00%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:0.10%"></span></div>
+                    <code>0.10%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>15.60</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">18</td>
+            <td class="td-driver"><strong>STR</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:0.00%"></span></div>
+                    <code>0.00%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:0.00%"></span></div>
+                    <code>0.00%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>16.04</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">19</td>
+            <td class="td-driver"><strong>LAW</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:0.00%"></span></div>
+                    <code>0.00%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:0.00%"></span></div>
+                    <code>0.00%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>16.43</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">20</td>
+            <td class="td-driver"><strong>COL</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:0.00%"></span></div>
+                    <code>0.00%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:0.00%"></span></div>
+                    <code>0.00%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>16.93</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">21</td>
+            <td class="td-driver"><strong>HUL</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:0.00%"></span></div>
+                    <code>0.00%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:0.00%"></span></div>
+                    <code>0.00%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>17.33</code></td>
+        </tr>
+        <tr class="driver-row" style="--team-color: #9bb0c6">
+            <td class="td-rank">22</td>
+            <td class="td-driver"><strong>BOT</strong><small>Unknown</small></td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-main"><span style="width:0.00%"></span></div>
+                    <code>0.00%</code>
+                </div>
+            </td>
+            <td class="td-prob">
+                <div class="bar-wrap">
+                    <div class="bar-podium"><span style="width:0.00%"></span></div>
+                    <code>0.00%</code>
+                </div>
+            </td>
+            <td class="td-finish"><code>19.00</code></td>
+        </tr></tbody>
+            </table>
+        </div>
+    </section>
+    </div>
     <script>
-      const buttons = Array.from(document.querySelectorAll('.toggle-btn'));
-      const panels = Array.from(document.querySelectorAll('.scenario-panel'));
-      for (const button of buttons) {
-        button.addEventListener('click', () => {
-          const target = button.dataset.target;
-          for (const other of buttons) {
-            other.classList.toggle('is-active', other === button);
-          }
-          for (const panel of panels) {
-            panel.classList.toggle('is-active', panel.dataset.scenario === target);
-          }
+        document.querySelectorAll('.toggle-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('is-active'));
+                btn.classList.add('is-active');
+                document.querySelectorAll('.scenario-panel').forEach(p => {
+                    p.classList.toggle('is-active', p.dataset.scenario === btn.dataset.target);
+                });
+            });
         });
-      }
     </script>
-
-    <script>
-      const visibilityButtons = Array.from(document.querySelectorAll('.visibility-btn'));
-      const driverItems = () => Array.from(document.querySelectorAll('.driver-item'));
-      function applyVisibility(mode) {
-        const showTop10 = mode === 'top10';
-        for (const item of driverItems()) {
-          const rank = Number(item.dataset.rank || '999');
-          item.classList.toggle('is-hidden', showTop10 && rank > 10);
-        }
-        for (const button of visibilityButtons) {
-          button.classList.toggle('is-active', button.dataset.show === mode);
-        }
-      }
-      for (const button of visibilityButtons) {
-        button.addEventListener('click', () => applyVisibility(button.dataset.show || 'all'));
-      }
-      
-      // Default to 'all' on load
-      applyVisibility('all');
-    </script>
-  </body>
+</body>
 </html>

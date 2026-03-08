@@ -373,3 +373,8 @@
 - [ ] Cadillac’s main weakness revealed after Q1 exit on F1 debut (https://www.motorsport.com/f1/news/cadillacs-main-weakness-revealed-after-double-q1-exit-on-f1-debut/10803065/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Defendant ordered to pay £250,000 legal fees in Felipe Massa F1 title case (https://www.motorsport.com/f1/news/defendant-ordered-to-pay-250000-legal-fees-in-felipe-massa-f1-title-case/10803106/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] F1 Australian GP: Sunday race schedule, weather, and how to watch (https://www.motorsport.com/f1/news/f1-australian-gp-sunday-race-schedule-weather-and-how-to-watch/10802751/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Aston Martin warned of “massive penalties” as Fernando Alonso and Lance Stroll futures questioned (https://www.motorsport.com/f1/news/aston-martin-warned-of-massive-penalties-as-fernando-alonso-and-lance-stroll-futures-questioned/10803173/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Juan Pablo Montoya reveals the key reason Lewis Hamilton must outperform Charles Leclerc (https://www.motorsport.com/f1/news/juan-pablo-montoya-reveals-the-key-reason-lewis-hamilton-must-outperform-charles-leclerc/10802901/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+
+## 2026-03-08
+- [ ] Round-up: F1’s new cars are the “worst” admits Norris, and more | Formula 1 (https://www.racefans.net/2026/03/08/round-up-8th-march-2026/)

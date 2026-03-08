@@ -283,11 +283,15 @@ def run_simulation(entries: list[dict[str, Any]], config: dict[str, Any]) -> dic
     raw_win_prob = {name: win_count[name] / simulations for name in driver_names}
     calibrated_win_prob = temperature_scale_distribution(raw_win_prob, temperature=win_temperature)
 
+    # Map driver names back to their teams for the output
+    driver_to_team = {entry["name"]: entry["team"] for entry in entries}
+
     rows: list[dict[str, Any]] = []
     for name in driver_names:
         rows.append(
             {
                 "name": name,
+                "team": driver_to_team.get(name, "Unknown"),
                 "win_probability": round(calibrated_win_prob[name], 6),
                 "podium_probability": round(podium_count[name] / simulations, 6),
                 "expected_finish": round(finish_sum[name] / simulations, 6),

@@ -1,5 +1,4 @@
 {
-  "deterministic_run_id": "f607d4c4d53da03d3555",
   "drivers": [
     {
       "expected_finish": 4.780333,
@@ -134,15 +133,6 @@
       "win_probability": 0.0
     }
   ],
-  "generated_at": "2026-03-08T20:10:21Z",
-  "race": "Chinese Grand Prix",
-  "simulation": {
-    "grid_source": "simulation",
-    "overtaking_difficulty": 0.5,
-    "safety_car_probability": 0.23,
-    "seed": 202602,
-    "simulations": 6000,
-    "weather": "dry",
-    "win_temperature": 1.2
-  }
+  "generated_at": "2026-03-08T20:10:57Z",
+  "race": "Chinese Grand Prix"
 }

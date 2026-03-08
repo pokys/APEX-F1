@@ -1,7 +1,7 @@
 {
   "calibration_season": 2025,
   "calibration_source": "outputs/backtest/backtest_season_2025.json",
-  "generated_at": "2026-03-08T20:10:14Z",
+  "generated_at": "2026-03-08T20:10:57Z",
   "grid_source": "simulation",
   "next_round": 2,
   "overtaking_difficulty": 0.5,

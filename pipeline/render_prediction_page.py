@@ -174,12 +174,15 @@ def scenario_block_html(rows: list[dict[str, Any]], scenario_key: str, scenario_
         </div>
         {podium_html}
         <div class="table-container">
-            <table>
-                <thead>
-                    <tr><th>#</th><th>Driver</th><th>Win Prob.</th><th>Podium Prob.</th><th>Exp. Finish</th></tr>
-                </thead>
-                <tbody>{table_rows}</tbody>
-            </table>
+            <div class="table-scroll-hint">Scroll horizontally to see more &rarr;</div>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr><th>#</th><th>Driver</th><th>Win Prob.</th><th>Podium Prob.</th><th>Exp. Finish</th></tr>
+                    </thead>
+                    <tbody>{table_rows}</tbody>
+                </table>
+            </div>
         </div>
     </section>"""
 
@@ -267,8 +270,11 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
         .bar-lite {{ height: 4px; background: var(--grid); border-radius: 2px; overflow: hidden; }}
         .bar-lite span {{ display: block; height: 100%; background: var(--team-color); }}
 
-        .table-container {{ background: var(--panel); border: 1px solid var(--grid); border-radius: 12px; overflow: hidden; }}
-        table {{ width: 100%; border-collapse: collapse; }}
+        .table-container {{ background: var(--panel); border: 1px solid var(--grid); border-radius: 12px; overflow: hidden; position: relative; }}
+        .table-wrapper {{ overflow-x: auto; -webkit-overflow-scrolling: touch; }}
+        .table-scroll-hint {{ display: none; padding: 0.5rem 1rem; font-size: 0.7rem; color: var(--warning); background: #1a1a00; border-bottom: 1px solid var(--grid); font-family: 'JetBrains Mono', monospace; }}
+        
+        table {{ width: 100%; border-collapse: collapse; min-width: 600px; }}
         th {{ text-align: left; padding: 1rem; font-size: 0.75rem; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--grid); }}
         td {{ padding: 1rem; border-bottom: 1px solid var(--grid); }}
         .driver-row {{ border-left: 4px solid transparent; transition: 0.2s; }}
@@ -298,6 +304,8 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
             .podium-grid {{ grid-template-columns: 1fr; }}
             .podium-card.is-hero {{ order: -1; }}
             header {{ flex-direction: column; align-items: flex-start; }}
+            .header-main h1 {{ font-size: 1.8rem; }}
+            .table-scroll-hint {{ display: block; }}
         }}
     </style>
 </head>

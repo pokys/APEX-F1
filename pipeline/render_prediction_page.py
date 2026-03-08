@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Render a high-end analytics dashboard for F1 predictions with Skill vs Machinery breakdown.
+Render a high-end analytics dashboard for F1 predictions with System Integrity Trace.
 """
 
 from __future__ import annotations
@@ -16,7 +16,6 @@ from typing import Any
 
 LOGGER = logging.getLogger("render_prediction_page")
 
-# Robust team color mapping
 TEAM_COLORS = {
     "red bull": "#3671C6",
     "mercedes": "#27F4D2",
@@ -103,7 +102,7 @@ def build_insights_html(dry_rows: list[dict[str, Any]], wet_rows: list[dict[str,
         (f"Objective: {prediction_target}", confidence_label, source_details, status_class),
         ("Primary Data Source", source_info, "FastF1 Hard Data + AI Signals", ""),
         ("Track Context", str(race_config.get("race") or "GP").replace(" Grand Prix", ""), 
-         f"Overtaking: {int((1.0 - race_config.get('overtaking_difficulty', 0.5)) * 100)}% | Wear: {int(race_config.get('track', {}).get('tyre_degradation_factor', 0.5) * 100)}%", "")
+         f"Overtake Difficulty: {int((1.0 - race_config.get('overtaking_difficulty', 0.5)) * 100)}% | Wear: {int(race_config.get('track', {}).get('tyre_degradation_factor', 0.5) * 100)}%", "")
     ]
 
     rendered_cards = "".join([
@@ -205,6 +204,41 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
     location = str(race_config.get("location") or "Circuit")
     gen_at = str(prediction.get("generated_at") or race_config.get("generated_at") or "Unknown")
     
+    # Advanced System Integrity Info
+    integrity = prediction.get("integrity", {})
+    sim_meta = prediction.get("simulation", {})
+    
+    source_summary = "Unknown"
+    signal_count = 0
+    try:
+        ratings_path = Path("models/driver_ratings.json")
+        if ratings_path.exists():
+            rd = load_json(ratings_path)
+            source_summary = rd.get("source_summary", "Standard")
+        
+        signals_dir = Path("knowledge/processed")
+        if signals_dir.exists():
+            for f in signals_dir.glob("*.json"):
+                try:
+                    sig_data = load_json(f)
+                    if isinstance(sig_data, list): signal_count += len(sig_data)
+                    elif isinstance(sig_data, dict): signal_count += len(sig_data.get("signals", [1]))
+                except: pass
+    except: pass
+
+    system_facts = {
+        "Snapshot Date": gen_at,
+        "Current Race": current_gp,
+        "Data Strategy": source_summary,
+        "Active AI Signals": signal_count,
+        "Simulation Runs": sim_meta.get("simulations", "N/A"),
+        "Grid Integrity": sim_meta.get("grid_source", "N/A"),
+        "Driver Model Hash": integrity.get("driver_ratings_hash", "N/A"),
+        "Config Hash": integrity.get("race_config_hash", "N/A"),
+        "Run ID": prediction.get("deterministic_run_id", "N/A")
+    }
+    debug_rows = "".join([f"<div><span>{k}:</span><code>{v}</code></div>" for k,v in system_facts.items()])
+
     insights_html = build_insights_html(dry_rows, wet_rows, race_config)
     panels_html = scenario_block_html(dry_rows, "dry", "Dry", True)
     if wet_rows:
@@ -217,18 +251,6 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
             <button class="toggle-btn is-active" data-target="dry">Dry</button>
             <button class="toggle-btn" data-target="wet">Wet</button>
         </div>"""
-
-    system_facts = {
-        "Season": race_config.get("season"),
-        "Round": race_config.get("next_round"),
-        "Simulations": race_config.get("simulations"),
-        "Seed": race_config.get("seed"),
-        "Grid Source": race_config.get("grid_source"),
-        "Safety Car P": race_config.get("safety_car_probability"),
-        "Overtake Diff": race_config.get("overtaking_difficulty"),
-        "Generated At": gen_at
-    }
-    debug_rows = "".join([f"<div><span>{k}:</span><code>{v}</code></div>" for k,v in system_facts.items()])
 
     return f"""<!doctype html>
 <html lang="en">
@@ -374,7 +396,7 @@ def main() -> int:
         prediction, prediction_wet = load_prediction_for_render(args)
         html_content = render_page(prediction, race_config, prediction_wet)
         Path(args.output).write_text(html_content, encoding="utf-8")
-        LOGGER.info("Rendered improved dashboard: %s", args.output)
+        LOGGER.info("Rendered improved dashboard with Trace Log: %s", args.output)
     except Exception as exc:
         LOGGER.error("Render failed: %s", exc)
         return 1

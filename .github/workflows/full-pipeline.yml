@@ -2,7 +2,10 @@ name: Full Prediction Pipeline
 
 on:
   schedule:
-    - cron: "0 6,18 * * *"
+    # Race Weekend Mode: Every hour from Thursday to Sunday
+    - cron: "0 * * * 4,5,6,0"
+    # Weekday Mode: Every 4 hours from Monday to Wednesday
+    - cron: "0 */4 * * 1,2,3"
   workflow_dispatch:
     inputs:
       season:

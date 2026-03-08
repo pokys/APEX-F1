@@ -231,7 +231,7 @@ def temperature_scale_distribution(prob_map: dict[str, float], temperature: floa
     return {k: v / total for k, v in scaled.items()}
 
 
-def run_simulation(entries: list[dict[str, Any]], config: dict[str, Any]) -> dict[str, Any]:
+def run_simulation(entries: list[dict[str, Any]], config: dict[str, Any], driver_ratings: dict[str, Any], team_ratings: dict[str, Any]) -> dict[str, Any]:
     if not entries:
         raise ValueError("No drivers available for simulation. Run update_ratings first.")
 
@@ -321,6 +321,11 @@ def run_simulation(entries: list[dict[str, Any]], config: dict[str, Any]) -> dic
                 "config": config,
             }
         )[:20],
+        "integrity": {
+            "driver_ratings_hash": stable_hash_json(driver_ratings)[:12],
+            "team_ratings_hash": stable_hash_json(team_ratings)[:12],
+            "race_config_hash": stable_hash_json(config)[:12],
+        },
         "simulation": {
             "seed": seed,
             "simulations": simulations,
@@ -367,7 +372,7 @@ def main() -> int:
             race_config["fixed_grid"] = [x.strip().upper() for x in args.fixed_grid.split(",") if x.strip()]
 
         entries = build_entries(driver_ratings, team_ratings, strategy_scores, reliability_scores)
-        prediction = run_simulation(entries, race_config)
+        prediction = run_simulation(entries, race_config, driver_ratings, team_ratings)
 
         output_path = Path(args.output)
         output_path.parent.mkdir(parents=True, exist_ok=True)

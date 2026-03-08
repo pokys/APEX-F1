@@ -147,8 +147,8 @@ def main() -> int:
         )
         wet_config["generated_at"] = generated_at
 
-        dry_prediction = run_simulation(entries, dry_config)
-        wet_prediction = run_simulation(entries, wet_config)
+        dry_prediction = run_simulation(entries, dry_config, driver_ratings, team_ratings)
+        wet_prediction = run_simulation(entries, wet_config, driver_ratings, team_ratings)
     except Exception as exc:
         LOGGER.error("simulate_weather_scenarios failed: %s", exc)
         return 1

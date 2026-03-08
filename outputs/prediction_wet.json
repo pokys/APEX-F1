@@ -1,5 +1,5 @@
 {
-  "deterministic_run_id": "9149cf9f348f02e0e476",
+  "deterministic_run_id": "ef60f0c2fac80b27659b",
   "drivers": [
     {
       "driver_rating": 75.2,
@@ -244,7 +244,12 @@
       "win_probability": 0.0
     }
   ],
-  "generated_at": "2026-03-08T20:56:19Z",
+  "generated_at": "2026-03-08T21:01:22Z",
+  "integrity": {
+    "driver_ratings_hash": "143a9f6613cc",
+    "race_config_hash": "db844596c1ba",
+    "team_ratings_hash": "6e7816365d37"
+  },
   "race": "Chinese Grand Prix",
   "simulation": {
     "grid_source": "simulation",

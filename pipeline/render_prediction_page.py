@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Render a high-end analytics dashboard for F1 predictions.
+Render a high-end analytics dashboard for F1 predictions with Skill vs Machinery breakdown.
 """
 
 from __future__ import annotations
@@ -74,6 +74,8 @@ def parse_prediction_rows(prediction: dict[str, Any]) -> list[dict[str, Any]]:
             "win_probability": max(0.0, min(1.0, to_float(raw.get("win_probability"), 0.0))),
             "podium_probability": max(0.0, min(1.0, to_float(raw.get("podium_probability"), 0.0))),
             "expected_finish": max(1.0, to_float(raw.get("expected_finish"), 99.0)),
+            "driver_share": to_float(raw.get("driver_share"), 50.0),
+            "team_share": to_float(raw.get("team_share"), 50.0),
         })
     rows.sort(key=lambda x: (-x["win_probability"], x["expected_finish"], x["name"].lower()))
     return rows
@@ -101,7 +103,7 @@ def build_insights_html(dry_rows: list[dict[str, Any]], wet_rows: list[dict[str,
         (f"Objective: {prediction_target}", confidence_label, source_details, status_class),
         ("Primary Data Source", source_info, "FastF1 Hard Data + AI Signals", ""),
         ("Track Context", str(race_config.get("race") or "GP").replace(" Grand Prix", ""), 
-         f"Overtake Difficulty: {int((1.0 - race_config.get('overtaking_difficulty', 0.5)) * 100)}% | Wear: {int(race_config.get('track', {}).get('tyre_degradation_factor', 0.5) * 100)}%", "")
+         f"Overtaking: {int((1.0 - race_config.get('overtaking_difficulty', 0.5)) * 100)}% | Wear: {int(race_config.get('track', {}).get('tyre_degradation_factor', 0.5) * 100)}%", "")
     ]
 
     rendered_cards = "".join([
@@ -129,6 +131,10 @@ def scenario_block_html(rows: list[dict[str, Any]], scenario_key: str, scenario_
                 <h3>{html.escape(row['name'])}</h3>
                 <span class="team-tag">{html.escape(row['team'])}</span>
             </div>
+            <div class="podium-breakdown">
+                <span class="share-badge" title="Driver Contribution">W: {row['driver_share']:.0f}%</span>
+                <span class="share-badge" title="Car Contribution">E: {row['team_share']:.0f}%</span>
+            </div>
             <div class="podium-metrics">
                 <div class="p-metric"><span>Win</span><strong>{row['win_probability']*100:.1f}%</strong></div>
                 <div class="p-metric"><span>Podium</span><strong>{row['podium_probability']*100:.1f}%</strong></div>
@@ -149,7 +155,13 @@ def scenario_block_html(rows: list[dict[str, Any]], scenario_key: str, scenario_
         table_rows += f"""
         <tr class="driver-row" style="--team-color: {color}">
             <td class="td-rank">{idx}</td>
-            <td class="td-driver"><strong>{html.escape(row['name'])}</strong><small>{html.escape(row['team'])}</small></td>
+            <td class="td-driver">
+                <strong>{html.escape(row['name'])}</strong>
+                <div class="td-meta">
+                    <small>{html.escape(row['team'])}</small>
+                    <span class="mini-share">W:{row['driver_share']:.0f}% E:{row['team_share']:.0f}%</span>
+                </div>
+            </td>
             <td class="td-prob">
                 <div class="bar-wrap">
                     <div class="bar-main"><span style="width:{row['win_probability']*100:.2f}%"></span></div>
@@ -262,6 +274,8 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
         .podium-card .rank {{ font-weight: 800; color: var(--team-color); font-size: 0.9rem; margin: 0; font-family: 'JetBrains Mono', monospace; }}
         .podium-header h3 {{ margin: 0.5rem 0 0.25rem; font-size: 1.5rem; color: #fff; }}
         .team-tag {{ font-size: 0.75rem; color: var(--muted); font-weight: 600; text-transform: uppercase; }}
+        .podium-breakdown {{ margin-top: 0.5rem; display: flex; gap: 0.5rem; }}
+        .share-badge {{ background: var(--grid); padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.65rem; font-family: 'JetBrains Mono', monospace; color: var(--ink); }}
         .podium-metrics {{ display: flex; gap: 1.5rem; margin: 1.5rem 0; }}
         .p-metric span {{ display: block; font-size: 0.7rem; color: var(--muted); text-transform: uppercase; font-weight: 700; }}
         .p-metric strong {{ font-size: 1.2rem; color: #fff; font-family: 'JetBrains Mono', monospace; }}
@@ -279,7 +293,9 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
         .driver-row:hover {{ background: #161b22; border-left-color: var(--team-color); }}
         .td-rank {{ font-family: 'JetBrains Mono', monospace; color: var(--muted); font-weight: 500; }}
         .td-driver strong {{ display: block; color: #fff; font-size: 1rem; }}
+        .td-meta {{ display: flex; align-items: center; gap: 0.75rem; margin-top: 0.25rem; }}
         .td-driver small {{ font-size: 0.75rem; color: var(--muted); }}
+        .mini-share {{ font-size: 0.65rem; font-family: 'JetBrains Mono', monospace; color: var(--muted); background: #000; padding: 0.1rem 0.4rem; border-radius: 3px; }}
         .bar-wrap {{ display: flex; align-items: center; gap: 1rem; }}
         .bar-main, .bar-podium {{ height: 6px; flex: 1; background: var(--grid); border-radius: 3px; overflow: hidden; min-width: 80px; }}
         .bar-main span {{ display: block; height: 100%; background: linear-gradient(90deg, var(--accent), #fff); }}

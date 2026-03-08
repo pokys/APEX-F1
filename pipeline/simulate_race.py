@@ -283,15 +283,25 @@ def run_simulation(entries: list[dict[str, Any]], config: dict[str, Any]) -> dic
     raw_win_prob = {name: win_count[name] / simulations for name in driver_names}
     calibrated_win_prob = temperature_scale_distribution(raw_win_prob, temperature=win_temperature)
 
-    # Map driver names back to their teams for the output
-    driver_to_team = {entry["name"]: entry["team"] for entry in entries}
+    # Map driver names back to their teams and raw ratings for the output
+    driver_stats = {e["name"]: (e["team"], e["driver_rating"], e["team_rating"]) for e in entries}
 
     rows: list[dict[str, Any]] = []
     for name in driver_names:
+        team, d_rating, t_rating = driver_stats.get(name, ("Unknown", 50.0, 50.0))
+        # Systemic Skill vs Machinery ratio
+        total = d_rating + t_rating
+        d_share = (d_rating / total) * 100 if total > 0 else 50.0
+        t_share = (t_rating / total) * 100 if total > 0 else 50.0
+
         rows.append(
             {
                 "name": name,
-                "team": driver_to_team.get(name, "Unknown"),
+                "team": team,
+                "driver_rating": round(d_rating, 1),
+                "team_rating": round(t_rating, 1),
+                "driver_share": round(d_share, 1),
+                "team_share": round(t_share, 1),
                 "win_probability": round(calibrated_win_prob[name], 6),
                 "podium_probability": round(podium_count[name] / simulations, 6),
                 "expected_finish": round(finish_sum[name] / simulations, 6),

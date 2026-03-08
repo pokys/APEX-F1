@@ -78,16 +78,26 @@ def build_insights_html(dry_rows: list[dict[str, Any]], wet_rows: list[dict[str,
 
     win_leader = dry_rows[0]
     
+    # Load detailed source information from driver_ratings
+    source_info = "FastF1 Data + AI Signals"
+    try:
+        ratings_path = Path("models/driver_ratings.json")
+        if ratings_path.exists():
+            ratings_data = json.loads(ratings_path.read_text(encoding="utf-8"))
+            source_info = ratings_data.get("source_summary", source_info)
+    except Exception:
+        pass
+
     # Confidence & Source Detection
     grid_source = str(race_config.get("grid_source") or "simulation").lower()
     if grid_source == "qualifying":
-        prediction_target = "RACE"
+        prediction_target = "SUNDAY RACE"
         confidence_label = "High Confidence"
         source_label = "Qualifying Results Verified"
         status_class = "status-high"
         source_details = "Predicting race outcome based on actual starting grid"
     else:
-        prediction_target = "QUALIFYING"
+        prediction_target = "SATURDAY QUALIFYING"
         confidence_label = "Estimated"
         source_label = "Pre-Qualifying Simulation"
         status_class = "status-low"
@@ -95,21 +105,21 @@ def build_insights_html(dry_rows: list[dict[str, Any]], wet_rows: list[dict[str,
 
     cards = [
         (
-            f"Current Objective: {prediction_target}",
+            f"Objective: {prediction_target}",
             source_label,
             source_details,
             status_class
         ),
         (
-            "Track: " + str(race_config.get("race") or "Next GP").replace(" Grand Prix", ""),
-            str(race_config.get("location") or "Circuit"),
-            f"Overtake Difficulty: {int((1.0 - race_config.get('overtaking_difficulty', 0.5)) * 100)}% | Tyre Wear: {int(race_config.get('track', {}).get('tyre_degradation_factor', 0.5) * 100)}%",
+            "Primary Data Source",
+            source_info,
+            "FastF1 Hard Data + AI News Signals",
             ""
         ),
         (
-            "Most likely winner",
-            win_leader["name"],
-            f'{win_leader["win_probability"] * 100:.2f}% chance',
+            "Track: " + str(race_config.get("race") or "Next GP").replace(" Grand Prix", ""),
+            str(race_config.get("location") or "Circuit"),
+            f"Overtake Difficulty: {int((1.0 - race_config.get('overtaking_difficulty', 0.5)) * 100)}% | Tyre Wear: {int(race_config.get('track', {}).get('tyre_degradation_factor', 0.5) * 100)}%",
             ""
         ),
     ]

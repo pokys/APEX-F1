@@ -72,22 +72,42 @@ def parse_prediction_rows(prediction: dict[str, Any]) -> list[dict[str, Any]]:
     return rows
 
 
-def build_insights_html(dry_rows: list[dict[str, Any]], wet_rows: list[dict[str, Any]] | None) -> str:
+def build_insights_html(dry_rows: list[dict[str, Any]], wet_rows: list[dict[str, Any]] | None, race_config: dict[str, Any]) -> str:
     if not dry_rows:
         return ""
 
     win_leader = dry_rows[0]
     podium_leader = max(dry_rows, key=lambda row: row["podium_probability"])
+    
+    # Confidence & Source Detection
+    grid_source = str(race_config.get("grid_source") or "simulation").lower()
+    if grid_source == "qualifying":
+        confidence_label = "High Confidence"
+        source_label = "Real Qualifying Results Detected"
+        status_class = "status-high"
+    else:
+        confidence_label = "Estimated"
+        source_label = "Simulated Grid (Pre-Qualifying)"
+        status_class = "status-low"
+
     cards = [
+        (
+            f"Prediction Mode ({confidence_label})",
+            source_label,
+            "Based on historical data & signals" if grid_source != "qualifying" else "Using fixed 2026 grid positions",
+            status_class
+        ),
         (
             "Most likely winner",
             win_leader["name"],
             f'{win_leader["win_probability"] * 100:.2f}% win chance',
+            ""
         ),
         (
             "Most likely podium",
             podium_leader["name"],
             f'{podium_leader["podium_probability"] * 100:.2f}% podium chance',
+            ""
         ),
     ]
 
@@ -109,13 +129,14 @@ def build_insights_html(dry_rows: list[dict[str, Any]], wet_rows: list[dict[str,
                     "Biggest wet swing",
                     biggest_swing[0],
                     f'{direction} {abs(biggest_swing[1]) * 100:.2f} pp vs dry',
+                    ""
                 )
             )
 
     rendered_cards = "\n".join(
         [
             (
-                '<article class="insight-card">'
+                f'<article class="insight-card {card[3]}">'
                 f'<p class="insight-kicker">{html.escape(card[0])}</p>'
                 f'<h3 class="insight-value">{html.escape(card[1])}</h3>'
                 f'<p class="insight-sub">{html.escape(card[2])}</p>'
@@ -203,7 +224,7 @@ def scenario_block_html(rows: list[dict[str, Any]], scenario_key: str, scenario_
 def render_page(prediction: dict[str, Any], race_config: dict[str, Any], prediction_wet: dict[str, Any] | None = None) -> str:
     dry_rows = parse_prediction_rows(prediction)
     wet_rows = parse_prediction_rows(prediction_wet) if isinstance(prediction_wet, dict) else None
-    insights_html = build_insights_html(dry_rows, wet_rows)
+    insights_html = build_insights_html(dry_rows, wet_rows, race_config)
 
     race_name = html.escape(str(prediction.get("race") or race_config.get("race") or "Next GP"))
     generated_at = html.escape(str(prediction.get("generated_at") or race_config.get("generated_at") or ""))
@@ -294,6 +315,8 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
         --accent: #2ad2c9;
         --accent-2: #ff7a45;
         --grid: #203142;
+        --success: #4ade80;
+        --warning: #fbbf24;
       }}
       * {{ box-sizing: border-box; }}
       body {{
@@ -391,7 +414,7 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
       .insights {{
         margin-top: 16px;
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 12px;
       }}
       .insight-card {{
@@ -399,6 +422,12 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
         border: 1px solid var(--grid);
         border-radius: 14px;
         padding: 12px 14px;
+      }}
+      .insight-card.status-high {{
+        border-left: 4px solid var(--success);
+      }}
+      .insight-card.status-low {{
+        border-left: 4px solid var(--warning);
       }}
       .insight-kicker {{
         margin: 0;

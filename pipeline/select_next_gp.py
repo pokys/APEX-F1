@@ -426,9 +426,12 @@ def main() -> int:
         fixed_grid = extract_fixed_grid(Path(args.raw_dir), event["season"], event["event_name"])
         if fixed_grid:
             config["fixed_grid"] = fixed_grid
+            config["grid_source"] = "qualifying"
             LOGGER.info("Detected qualifying results for %s. Applying fixed grid.", event["event_name"])
-        elif "fixed_grid" in config:
-            del config["fixed_grid"]
+        else:
+            config["grid_source"] = "simulation"
+            if "fixed_grid" in config:
+                del config["fixed_grid"]
 
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(config, indent=2, sort_keys=True, ensure_ascii=True) + "\n", encoding="utf-8")

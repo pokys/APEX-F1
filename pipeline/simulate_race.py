@@ -311,6 +311,7 @@ def run_simulation(entries: list[dict[str, Any]], config: dict[str, Any]) -> dic
             "seed": seed,
             "simulations": simulations,
             "weather": str(config.get("weather") or "dry"),
+            "grid_source": str(config.get("grid_source") or "simulation"),
             "safety_car_probability": round(safety_car_probability, 6),
             "overtaking_difficulty": round(overtaking_difficulty, 6),
             "win_temperature": round(win_temperature, 6),

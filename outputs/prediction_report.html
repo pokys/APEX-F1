@@ -17,6 +17,8 @@
         --accent: #2ad2c9;
         --accent-2: #ff7a45;
         --grid: #203142;
+        --success: #4ade80;
+        --warning: #fbbf24;
       }
       * { box-sizing: border-box; }
       body {
@@ -114,7 +116,7 @@
       .insights {
         margin-top: 16px;
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 12px;
       }
       .insight-card {
@@ -122,6 +124,12 @@
         border: 1px solid var(--grid);
         border-radius: 14px;
         padding: 12px 14px;
+      }
+      .insight-card.status-high {
+        border-left: 4px solid var(--success);
+      }
+      .insight-card.status-low {
+        border-left: 4px solid var(--warning);
       }
       .insight-kicker {
         margin: 0;

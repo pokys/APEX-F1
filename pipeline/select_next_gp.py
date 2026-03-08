@@ -298,12 +298,12 @@ def has_race_results(raw_dir: Path, season: int, event_name: str) -> bool:
             for session in event.get("sessions", []):
                 if str(session.get("session_code") or "").upper() == "R":
                     results = session.get("results", [])
-                    # Check if at least one driver has a non-null position or points
-                    return any(res.get("position") is not None or res.get("points") is not None for res in results)
+                    # If results list is not empty, data is arriving
+                    return len(results) > 0
     return False
 
 
-def next_event_for_season(season: int, as_of: date) -> dict[str, Any] | None:
+def next_event_for_season(season: int, as_of: date, raw_dir: Path) -> dict[str, Any] | None:
     if fastf1 is None:
         return None
     backends = ["f1timing", "ergast"]
@@ -319,8 +319,19 @@ def next_event_for_season(season: int, as_of: date) -> dict[str, Any] | None:
             event_date = to_utc_date(row.get("EventDate"))
             if event_date is None:
                 continue
+            
+            event_name = str(row.get("EventName") or "Next GP")
+            
+            # Skip if date is in the past
             if event_date < as_of:
                 continue
+            
+            # If today is race day, check if we already have results
+            if event_date == as_of:
+                if has_race_results(raw_dir, season, event_name):
+                    LOGGER.info("Race results detected for today's GP (%s) via live schedule. Moving to next.", event_name)
+                    continue
+
             round_number = row.get("RoundNumber")
             try:
                 round_number = int(float(round_number))
@@ -350,7 +361,7 @@ def select_next_event(requested_season: int | None, as_of: date, raw_dir: Path) 
             LOGGER.info("Selected next GP from local snapshot calendar for season %s.", season)
             return local_event
 
-        event = next_event_for_season(season, as_of)
+        event = next_event_for_season(season, as_of, raw_dir=raw_dir)
         if event is not None:
             return event
 

@@ -1,138 +1,170 @@
 {
+  "deterministic_run_id": "3f146abf041322b3dd12",
   "drivers": [
     {
       "expected_finish": 5.001167,
       "name": "RUS",
       "podium_probability": 0.805,
+      "team": "Mercedes",
       "win_probability": 0.401438
     },
     {
       "expected_finish": 5.440167,
       "name": "NOR",
       "podium_probability": 0.7645,
+      "team": "McLaren",
       "win_probability": 0.299243
     },
     {
       "expected_finish": 6.022667,
       "name": "VER",
       "podium_probability": 0.705,
+      "team": "Red Bull Racing",
       "win_probability": 0.212272
     },
     {
       "expected_finish": 6.342667,
       "name": "LEC",
       "podium_probability": 0.457167,
+      "team": "Ferrari",
       "win_probability": 0.073259
     },
     {
       "expected_finish": 9.880667,
       "name": "LIN",
       "podium_probability": 0.0745,
+      "team": "Racing Bulls",
       "win_probability": 0.00725
     },
     {
       "expected_finish": 8.99,
       "name": "HAM",
       "podium_probability": 0.0635,
+      "team": "Ferrari",
       "win_probability": 0.002552
     },
     {
       "expected_finish": 9.2765,
       "name": "PIA",
       "podium_probability": 0.055333,
+      "team": "McLaren",
       "win_probability": 0.002552
     },
     {
       "expected_finish": 11.300333,
       "name": "BEA",
       "podium_probability": 0.021167,
+      "team": "Haas F1 Team",
       "win_probability": 0.001433
     },
     {
       "expected_finish": 10.837333,
       "name": "ANT",
       "podium_probability": 0.013333,
+      "team": "Mercedes",
       "win_probability": 0.0
     },
     {
       "expected_finish": 11.567,
       "name": "ALB",
       "podium_probability": 0.0145,
+      "team": "Williams",
       "win_probability": 0.0
     },
     {
       "expected_finish": 12.4405,
       "name": "GAS",
       "podium_probability": 0.012667,
+      "team": "Alpine",
       "win_probability": 0.0
     },
     {
       "expected_finish": 12.604167,
       "name": "ALO",
       "podium_probability": 0.008667,
+      "team": "Aston Martin",
       "win_probability": 0.0
     },
     {
       "expected_finish": 14.06,
       "name": "HAD",
       "podium_probability": 0.0005,
+      "team": "Red Bull Racing",
       "win_probability": 0.0
     },
     {
       "expected_finish": 14.520167,
       "name": "SAI",
       "podium_probability": 0.000167,
+      "team": "Williams",
       "win_probability": 0.0
     },
     {
       "expected_finish": 14.607333,
       "name": "OCO",
       "podium_probability": 0.0005,
+      "team": "Haas F1 Team",
       "win_probability": 0.0
     },
     {
       "expected_finish": 14.884667,
       "name": "BOR",
       "podium_probability": 0.0025,
+      "team": "Audi",
       "win_probability": 0.0
     },
     {
       "expected_finish": 15.599167,
       "name": "PER",
       "podium_probability": 0.001,
+      "team": "Cadillac",
       "win_probability": 0.0
     },
     {
       "expected_finish": 16.036667,
       "name": "STR",
       "podium_probability": 0.0,
+      "team": "Aston Martin",
       "win_probability": 0.0
     },
     {
       "expected_finish": 16.434167,
       "name": "LAW",
       "podium_probability": 0.0,
+      "team": "Racing Bulls",
       "win_probability": 0.0
     },
     {
       "expected_finish": 16.926,
       "name": "COL",
       "podium_probability": 0.0,
+      "team": "Alpine",
       "win_probability": 0.0
     },
     {
       "expected_finish": 17.332,
       "name": "HUL",
       "podium_probability": 0.0,
+      "team": "Audi",
       "win_probability": 0.0
     },
     {
       "expected_finish": 18.995833,
       "name": "BOT",
       "podium_probability": 0.0,
+      "team": "Cadillac",
       "win_probability": 0.0
     }
   ],
-  "generated_at": "2026-03-08T20:43:35Z",
-  "race": "Chinese Grand Prix"
+  "generated_at": "2026-03-08T20:46:31Z",
+  "race": "Chinese Grand Prix",
+  "simulation": {
+    "grid_source": "simulation",
+    "overtaking_difficulty": 0.5,
+    "safety_car_probability": 0.23,
+    "seed": 202703,
+    "simulations": 6000,
+    "weather": "wet",
+    "win_temperature": 1.2
+  }
 }

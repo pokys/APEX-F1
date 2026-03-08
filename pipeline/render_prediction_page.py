@@ -179,7 +179,7 @@ def scenario_block_html(rows: list[dict[str, Any]], scenario_key: str, scenario_
                 f"<td class=\"finish\">{row['expected_finish']:.3f}</td>"
                 f"</tr>"
             )
-            for idx, row in enumerate(rows, start=1)
+            for idx, row in enumerate(rows[3:], start=4)
         ]
     )
 
@@ -201,7 +201,7 @@ def scenario_block_html(rows: list[dict[str, Any]], scenario_key: str, scenario_
                 f"</div>"
                 f"</article>"
             )
-            for idx, row in enumerate(rows, start=1)
+            for idx, row in enumerate(rows[3:], start=4)
         ]
     )
 

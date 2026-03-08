@@ -267,9 +267,7 @@
   ],
   "fastf1_snapshot": "data/raw/fastf1/season_2026.json",
   "season": 2026,
-  "signals_files": [
-    "knowledge/processed/signals_2026-03-03.json"
-  ],
+  "signals_files": [],
   "source": "build_features",
   "teams": [
     {
@@ -288,9 +286,9 @@
       "points_total": 0.0,
       "qualifying_avg_position": 17.0,
       "race_avg_position": null,
-      "signal_count": 2,
-      "signal_reliability_concern": 0.45,
-      "signal_upgrade_score": 0.2,
+      "signal_count": 0,
+      "signal_reliability_concern": null,
+      "signal_upgrade_score": null,
       "starts": 2,
       "team": "Aston Martin"
     },

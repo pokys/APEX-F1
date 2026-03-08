@@ -1,5 +1,5 @@
 {
-  "inputs_hash": "f703a95a411c43742b390f9f3a784d20e56733442e368c2314f78f2b1dffcaa9",
+  "inputs_hash": "ed362cebdd8e532e1ec52216663b2508b0dbc849d6db84ee5b6150c852166f8e",
   "season": 2026,
   "source_features": "data/processed/features_season_2026.json",
   "teams": [
@@ -16,10 +16,10 @@
       "components": {
         "qualifying_gap_proxy": 8.0,
         "sector_dominance": 79.5,
-        "upgrades_impact": 48.2
+        "upgrades_impact": 61.0
       },
       "team": "Aston Martin",
-      "team_rating": 37.935
+      "team_rating": 41.775
     },
     {
       "components": {

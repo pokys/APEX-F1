@@ -265,15 +265,42 @@ def load_snapshot_calendar(raw_dir: Path, season: int) -> list[dict[str, Any]]:
     return normalized
 
 
-def next_event_from_calendar(calendar: list[dict[str, Any]], as_of: date) -> dict[str, Any] | None:
+def next_event_from_calendar(calendar: list[dict[str, Any]], as_of: date, raw_dir: Path) -> dict[str, Any] | None:
     for event in calendar:
         event_date = to_utc_date(event.get("event_date"))
         if event_date is None:
             continue
+        
+        # If the race is today, check if we already have race results in the raw data
+        if event_date == as_of:
+            if has_race_results(raw_dir, event["season"], event["event_name"]):
+                LOGGER.info("Race results detected for today's GP (%s). Moving to next.", event["event_name"])
+                continue
+
         if event_date < as_of:
             continue
         return event
     return None
+
+
+def has_race_results(raw_dir: Path, season: int, event_name: str) -> bool:
+    path = raw_dir / f"season_{season}.json"
+    if not path.exists():
+        return False
+    try:
+        payload = load_json(path)
+    except Exception:
+        return False
+    events = payload.get("events", [])
+    event_name_lower = event_name.strip().lower()
+    for event in events:
+        if str(event.get("event_name") or "").strip().lower() == event_name_lower:
+            for session in event.get("sessions", []):
+                if str(session.get("session_code") or "").upper() == "R":
+                    results = session.get("results", [])
+                    # Check if at least one driver has a non-null position or points
+                    return any(res.get("position") is not None or res.get("points") is not None for res in results)
+    return False
 
 
 def next_event_for_season(season: int, as_of: date) -> dict[str, Any] | None:
@@ -318,7 +345,7 @@ def select_next_event(requested_season: int | None, as_of: date, raw_dir: Path) 
 
     for season in candidate_seasons:
         local_calendar = load_snapshot_calendar(raw_dir, season=season)
-        local_event = next_event_from_calendar(local_calendar, as_of=as_of)
+        local_event = next_event_from_calendar(local_calendar, as_of=as_of, raw_dir=raw_dir)
         if local_event is not None:
             LOGGER.info("Selected next GP from local snapshot calendar for season %s.", season)
             return local_event

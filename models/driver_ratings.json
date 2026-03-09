@@ -243,7 +243,7 @@
       "team": "Red Bull Racing"
     }
   ],
-  "inputs_hash": "0b4f2c367fa9419a757875bfd320f8b13d9018a32ff198585f605cfc92c4f5e8",
+  "inputs_hash": "8b6d1134dc935064c9f5119359cce41d5bc3a8e4e53781de10ae1d1134f8d4d2",
   "season": 2026,
   "source_features": "data/processed/features_season_2026.json",
   "source_summary": "Blended Data: 20% Season 2026, 80% Season 2025"

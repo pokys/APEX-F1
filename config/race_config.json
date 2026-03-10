@@ -5,6 +5,32 @@
   "event_format": "sprint",
   "generated_at": "2026-03-10T07:57:28Z",
   "grid_source": "simulation",
+  "inputs_status": [
+    {
+      "configured_weight": 0.2,
+      "source": "fp1",
+      "source_key": "FP1",
+      "status": "missing"
+    },
+    {
+      "configured_weight": 0.1,
+      "source": "signals",
+      "source_key": "signals",
+      "status": "missing"
+    },
+    {
+      "configured_weight": 0.35,
+      "source": "history_driver",
+      "source_key": "history_driver",
+      "status": "used"
+    },
+    {
+      "configured_weight": 0.2,
+      "source": "history_team",
+      "source_key": "history_team",
+      "status": "used"
+    }
+  ],
   "inputs_used": [
     {
       "source": "history_driver",

@@ -1,10 +1,9 @@
 from __future__ import annotations
 
-from pipeline.prediction_targeting import build_inputs_manifest, select_prediction_target
 import json
 from pathlib import Path
 
-from pipeline.prediction_targeting import build_inputs_manifest, find_cached_calendar_entry, load_cached_calendar, select_prediction_target
+from pipeline.prediction_targeting import build_inputs_manifest, build_inputs_status, find_cached_calendar_entry, load_cached_calendar, select_prediction_target
 
 
 def test_select_prediction_target_standard_weekend() -> None:
@@ -61,3 +60,24 @@ def test_cached_calendar_lookup(tmp_path: Path) -> None:
     assert chinese["event_format"] == "sprint"
     assert japan is not None
     assert japan["event_format"] == "conventional"
+
+
+def test_build_inputs_status_marks_used_and_missing() -> None:
+    rows = build_inputs_status(
+        target="sprint_qualifying",
+        available_sessions=[],
+        session_weights={
+            "sprint_qualifying": {
+                "history_driver": 0.5,
+                "history_team": 0.3,
+                "fp1": 0.2,
+                "signals": 0.0,
+            }
+        },
+        active_signal_count=0,
+    )
+    by_source = {row["source"]: row for row in rows}
+    assert by_source["history_driver"]["status"] == "used"
+    assert by_source["history_team"]["status"] == "used"
+    assert by_source["fp1"]["status"] == "missing"
+    assert by_source["signals"]["status"] == "available_zero_weight"

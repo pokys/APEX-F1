@@ -178,6 +178,11 @@
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 12px;
       }
+      .input-status-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+      }
       .timeline-grid {
         display: grid;
         grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -214,6 +219,37 @@
         border: 1px solid var(--grid);
         border-radius: 16px;
         padding: 14px;
+      }
+      .status-input-card {
+        background: var(--panel);
+        border: 1px solid var(--grid);
+        border-radius: 16px;
+        padding: 14px;
+      }
+      .status-badge {
+        display: inline-block;
+        margin: 10px 0 0;
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+      .status-used .status-badge {
+        background: rgba(79, 224, 215, 0.18);
+        color: #8df7ef;
+      }
+      .status-missing .status-badge {
+        background: rgba(255, 157, 87, 0.16);
+        color: #ffbf8f;
+      }
+      .status-not_applicable .status-badge {
+        background: rgba(120, 136, 153, 0.18);
+        color: #b7c5d4;
+      }
+      .status-available_zero_weight .status-badge {
+        background: rgba(100, 196, 255, 0.16);
+        color: #9edcff;
       }
       .input-source {
         margin: 0;
@@ -331,6 +367,9 @@
         .inputs-grid {
           grid-template-columns: 1fr;
         }
+        .input-status-grid {
+          grid-template-columns: 1fr;
+        }
         .debug-grid {
           grid-template-columns: 1fr;
         }
@@ -379,7 +418,7 @@
           </article>
         </div>
         <div class="meta-strip">
-          <span class="chip">Generated: 2026-03-10T07:57:29Z</span>
+          <span class="chip">Generated: 2026-03-10T08:14:18Z</span>
         </div>
         <section class="explain-card">
           <h2>Why This Is Active Now</h2>
@@ -410,7 +449,7 @@
             </article>
             <article class="debug-card">
               <p class="debug-label">Generated</p>
-              <p class="debug-value">2026-03-10T07:57:29Z</p>
+              <p class="debug-value">2026-03-10T08:14:18Z</p>
             </article>
           </div>
         </details>
@@ -419,6 +458,9 @@
 
       <h2 class="section-title">Input Weights</h2>
       <section class="inputs-grid"><article class="input-card"><p class="input-source">history_driver</p><p class="input-key">history_driver</p><div class="input-bar"><span style="width:63.64%"></span></div><p class="input-weight">63.64%</p></article><article class="input-card"><p class="input-source">history_team</p><p class="input-key">history_team</p><div class="input-bar"><span style="width:36.36%"></span></div><p class="input-weight">36.36%</p></article></section>
+
+      <h2 class="section-title">Input Availability</h2>
+      <section class="input-status-grid"><article class="status-input-card status-missing"><p class="input-source">fp1</p><p class="input-key">FP1</p><p class="status-badge">Missing</p><p class="input-weight">Configured weight: 20.00%</p></article><article class="status-input-card status-missing"><p class="input-source">signals</p><p class="input-key">signals</p><p class="status-badge">Missing</p><p class="input-weight">Configured weight: 10.00%</p></article><article class="status-input-card status-used"><p class="input-source">history_driver</p><p class="input-key">history_driver</p><p class="status-badge">Used</p><p class="input-weight">Configured weight: 35.00%</p></article><article class="status-input-card status-used"><p class="input-source">history_team</p><p class="input-key">history_team</p><p class="status-badge">Used</p><p class="input-weight">Configured weight: 20.00%</p></article></section>
 
       <h2 class="section-title">Weekend Timeline</h2>
       <section class="timeline-grid"><article class="timeline-step timeline-upcoming"><p>FP1</p><span>upcoming</span></article><article class="timeline-step timeline-current"><p>SQ</p><span>current target</span></article><article class="timeline-step timeline-upcoming"><p>S</p><span>upcoming</span></article><article class="timeline-step timeline-upcoming"><p>Q</p><span>upcoming</span></article><article class="timeline-step timeline-upcoming"><p>R</p><span>upcoming</span></article></section>

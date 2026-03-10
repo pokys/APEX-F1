@@ -43,6 +43,7 @@ DEFAULT_SIGNAL_GUARDRAILS = {
     },
 }
 SEASON_FILE_RE = re.compile(r"^season_(\d{4})\.json$")
+PRACTICE_CODES = {"FP1", "FP2", "FP3"}
 
 
 def parse_args() -> argparse.Namespace:
@@ -247,6 +248,16 @@ def choose_fastf1_snapshot(fastf1_input: Path, season: int | None) -> Path:
     return by_season_desc[0]
 
 
+def qualifying_phase_depth(row: dict[str, Any]) -> float | None:
+    depth = 0
+    for key in ("q1", "q2", "q3"):
+        if row.get(key) is not None:
+            depth += 1
+    if depth <= 0:
+        return None
+    return depth / 3.0
+
+
 def normalize_signals(raw: Any) -> list[dict[str, Any]]:
     if isinstance(raw, list):
         return [x for x in raw if isinstance(x, dict)]
@@ -394,15 +405,59 @@ def build_features(fastf1_snapshot: dict[str, Any], signals: list[dict[str, Any]
     drivers: dict[str, dict[str, Any]] = {}
     teams: dict[str, dict[str, Any]] = {}
 
+    def ensure_driver(driver_code: str, team_name: str) -> dict[str, Any]:
+        driver_key = slug(driver_code)
+        team_key = slug(team_name)
+        return drivers.setdefault(
+            driver_key,
+            {
+                "driver": driver_code,
+                "team": team_name,
+                "team_key": team_key,
+                "race_positions": [],
+                "qualifying_positions": [],
+                "practice_positions": [],
+                "fp1_positions": [],
+                "fp2_positions": [],
+                "fp3_positions": [],
+                "sprint_qualifying_positions": [],
+                "sprint_positions": [],
+                "qualifying_phase_depths": [],
+                "sprint_qualifying_phase_depths": [],
+                "starts": 0,
+                "dnfs": 0,
+                "points_total": 0.0,
+            },
+        )
+
+    def ensure_team(team_name: str) -> dict[str, Any]:
+        team_key = slug(team_name)
+        return teams.setdefault(
+            team_key,
+            {
+                "team": team_name,
+                "race_positions": [],
+                "qualifying_positions": [],
+                "practice_positions": [],
+                "fp1_positions": [],
+                "fp2_positions": [],
+                "fp3_positions": [],
+                "sprint_qualifying_positions": [],
+                "sprint_positions": [],
+                "qualifying_phase_depths": [],
+                "sprint_qualifying_phase_depths": [],
+                "starts": 0,
+                "dnfs": 0,
+                "points_total": 0.0,
+            },
+        )
+
     for event in events:
         if not isinstance(event, dict):
             continue
         sessions = event.get("sessions", [])
         if not isinstance(sessions, list):
             continue
-
-        race_results: list[dict[str, Any]] = []
-        qualifying_results: list[dict[str, Any]] = []
 
         for session in sessions:
             if not isinstance(session, dict):
@@ -411,82 +466,55 @@ def build_features(fastf1_snapshot: dict[str, Any], signals: list[dict[str, Any]
             results = session.get("results")
             if not isinstance(results, list):
                 continue
-            if code == "R":
-                race_results = [r for r in results if isinstance(r, dict)]
-            elif code == "Q":
-                qualifying_results = [r for r in results if isinstance(r, dict)]
+            for row in results:
+                if not isinstance(row, dict):
+                    continue
+                driver_code = str(row.get("abbreviation") or row.get("full_name") or "").strip()
+                team_name = str(row.get("team_name") or "").strip()
+                if not driver_code or not team_name:
+                    continue
 
-        for row in race_results:
-            driver_code = str(row.get("abbreviation") or row.get("full_name") or "").strip()
-            team_name = str(row.get("team_name") or "").strip()
-            if not driver_code or not team_name:
-                continue
-            driver_key = slug(driver_code)
-            team_key = slug(team_name)
-            if not driver_key or not team_key:
-                continue
+                driver_state = ensure_driver(driver_code, team_name)
+                team_state = ensure_team(team_name)
+                position = to_float(row.get("position"))
+                phase_depth = qualifying_phase_depth(row)
 
-            driver_state = drivers.setdefault(
-                driver_key,
-                {
-                    "driver": driver_code,
-                    "team": team_name,
-                    "team_key": team_key,
-                    "race_positions": [],
-                    "qualifying_positions": [],
-                    "starts": 0,
-                    "dnfs": 0,
-                    "points_total": 0.0,
-                },
-            )
-
-            position = to_float(row.get("position"))
-            if position is not None:
-                driver_state["race_positions"].append(position)
-            driver_state["starts"] += 1
-            if not is_race_finish(str(row.get("status") or "")):
-                driver_state["dnfs"] += 1
-            points = to_float(row.get("points"))
-            if points is not None:
-                driver_state["points_total"] += points
-
-            team_state = teams.setdefault(
-                team_key,
-                {
-                    "team": team_name,
-                    "race_positions": [],
-                    "qualifying_positions": [],
-                    "starts": 0,
-                    "dnfs": 0,
-                    "points_total": 0.0,
-                },
-            )
-            if position is not None:
-                team_state["race_positions"].append(position)
-            team_state["starts"] += 1
-            if not is_race_finish(str(row.get("status") or "")):
-                team_state["dnfs"] += 1
-            if points is not None:
-                team_state["points_total"] += points
-
-        for row in qualifying_results:
-            driver_code = str(row.get("abbreviation") or row.get("full_name") or "").strip()
-            team_name = str(row.get("team_name") or "").strip()
-            if not driver_code or not team_name:
-                continue
-            driver_key = slug(driver_code)
-            team_key = slug(team_name)
-            if not driver_key or not team_key:
-                continue
-
-            q_pos = to_float(row.get("position"))
-            if q_pos is None:
-                continue
-
-            if driver_key in drivers:
-                drivers[driver_key]["qualifying_positions"].append(q_pos)
-            if team_key in teams:
-                teams[team_key]["qualifying_positions"].append(q_pos)
+                if code == "R":
+                    if position is not None:
+                        driver_state["race_positions"].append(position)
+                        team_state["race_positions"].append(position)
+                    driver_state["starts"] += 1
+                    team_state["starts"] += 1
+                    if not is_race_finish(str(row.get("status") or "")):
+                        driver_state["dnfs"] += 1
+                        team_state["dnfs"] += 1
+                    points = to_float(row.get("points"))
+                    if points is not None:
+                        driver_state["points_total"] += points
+                        team_state["points_total"] += points
+                elif code == "Q":
+                    if position is not None:
+                        driver_state["qualifying_positions"].append(position)
+                        team_state["qualifying_positions"].append(position)
+                    if phase_depth is not None:
+                        driver_state["qualifying_phase_depths"].append(phase_depth)
+                        team_state["qualifying_phase_depths"].append(phase_depth)
+                elif code == "SQ":
+                    if position is not None:
+                        driver_state["sprint_qualifying_positions"].append(position)
+                        team_state["sprint_qualifying_positions"].append(position)
+                    if phase_depth is not None:
+                        driver_state["sprint_qualifying_phase_depths"].append(phase_depth)
+                        team_state["sprint_qualifying_phase_depths"].append(phase_depth)
+                elif code == "S":
+                    if position is not None:
+                        driver_state["sprint_positions"].append(position)
+                        team_state["sprint_positions"].append(position)
+                elif code in PRACTICE_CODES and position is not None:
+                    driver_state["practice_positions"].append(position)
+                    team_state["practice_positions"].append(position)
+                    driver_state[f"{code.lower()}_positions"].append(position)
+                    team_state[f"{code.lower()}_positions"].append(position)
 
     team_signal_agg, driver_signal_agg = aggregate_signals(signals, guardrails=guardrails)
     caps = guardrails.get("caps", {})
@@ -522,6 +550,14 @@ def build_features(fastf1_snapshot: dict[str, Any], signals: list[dict[str, Any]
                 "race_avg_position": stable_mean(race_positions),
                 "race_form_last3": stable_mean(race_positions[-3:]),
                 "qualifying_avg_position": stable_mean(q_positions),
+                "practice_avg_position": stable_mean(state["practice_positions"]),
+                "fp1_avg_position": stable_mean(state["fp1_positions"]),
+                "fp2_avg_position": stable_mean(state["fp2_positions"]),
+                "fp3_avg_position": stable_mean(state["fp3_positions"]),
+                "sprint_qualifying_avg_position": stable_mean(state["sprint_qualifying_positions"]),
+                "sprint_avg_position": stable_mean(state["sprint_positions"]),
+                "qualifying_phase_depth": stable_mean(state["qualifying_phase_depths"]),
+                "sprint_qualifying_phase_depth": stable_mean(state["sprint_qualifying_phase_depths"]),
                 "starts": starts,
                 "dnf_rate": round(dnfs / starts, 6) if starts else None,
                 "points_total": round(state["points_total"], 6),
@@ -565,6 +601,14 @@ def build_features(fastf1_snapshot: dict[str, Any], signals: list[dict[str, Any]
                 "team": state["team"],
                 "race_avg_position": stable_mean(state["race_positions"]),
                 "qualifying_avg_position": stable_mean(state["qualifying_positions"]),
+                "practice_avg_position": stable_mean(state["practice_positions"]),
+                "fp1_avg_position": stable_mean(state["fp1_positions"]),
+                "fp2_avg_position": stable_mean(state["fp2_positions"]),
+                "fp3_avg_position": stable_mean(state["fp3_positions"]),
+                "sprint_qualifying_avg_position": stable_mean(state["sprint_qualifying_positions"]),
+                "sprint_avg_position": stable_mean(state["sprint_positions"]),
+                "qualifying_phase_depth": stable_mean(state["qualifying_phase_depths"]),
+                "sprint_qualifying_phase_depth": stable_mean(state["sprint_qualifying_phase_depths"]),
                 "starts": starts,
                 "dnf_rate": round(dnfs / starts, 6) if starts else None,
                 "points_total": round(state["points_total"], 6),

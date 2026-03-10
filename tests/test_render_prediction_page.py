@@ -34,6 +34,7 @@ def test_render_page_shows_current_target_and_inputs() -> None:
     assert "Qualifying" in rendered
     assert "Sessions Online: FP1, FP2, FP3" in rendered
     assert "Input Weights" in rendered
+    assert "Weekend Timeline" in rendered
     assert "history_driver" in rendered
     assert "Pole" in rendered
     assert "Expected Position" in rendered

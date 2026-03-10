@@ -134,6 +134,26 @@ def metric_labels(target: str) -> tuple[str, str, str]:
     return ("Win", "Podium", "Expected")
 
 
+def timeline_html(weekend_format: str, available_sessions: list[str], target_session_code: str) -> str:
+    steps = ["FP1", "SQ", "S", "Q", "R"] if weekend_format == "sprint" else ["FP1", "FP2", "FP3", "Q", "R"]
+    available = {str(code).upper() for code in available_sessions}
+    cards = []
+    for step in steps:
+        if step in available:
+            status = "done"
+            label = "completed"
+        elif step == target_session_code.upper():
+            status = "current"
+            label = "current target"
+        else:
+            status = "upcoming"
+            label = "upcoming"
+        cards.append(
+            f'<article class="timeline-step timeline-{status}"><p>{html.escape(step)}</p><span>{html.escape(label)}</span></article>'
+        )
+    return "".join(cards)
+
+
 def scenario_panel_html(prediction: dict[str, Any], scenario_key: str, scenario_label: str, active: bool) -> str:
     target = str(prediction.get("prediction_target") or "race")
     rows = parse_prediction_rows(prediction)
@@ -249,6 +269,7 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
     dry_panel = scenario_panel_html(prediction, "dry", "Dry", True)
     wet_panel = scenario_panel_html(prediction_wet, "wet", "Wet", False) if isinstance(prediction_wet, dict) else ""
     manifest_cards = manifest_html(inputs_used if isinstance(inputs_used, list) else [])
+    weekend_timeline = timeline_html(str(prediction.get("weekend_format") or race_config.get("weekend_format") or "standard"), list(available_sessions), target_session_code)
 
     target_blurb = {
         "qualifying": "System is automatically estimating the next qualifying order from history, practice data and signals.",
@@ -376,6 +397,37 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 12px;
       }}
+      .timeline-grid {{
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 12px;
+      }}
+      .timeline-step {{
+        background: var(--panel);
+        border: 1px solid var(--grid);
+        border-radius: 16px;
+        padding: 14px;
+      }}
+      .timeline-step p {{
+        margin: 0;
+        font-weight: 700;
+      }}
+      .timeline-step span {{
+        display: block;
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 0.84rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }}
+      .timeline-done {{
+        border-color: rgba(79, 224, 215, 0.55);
+        box-shadow: inset 0 0 0 1px rgba(79, 224, 215, 0.18);
+      }}
+      .timeline-current {{
+        border-color: rgba(255, 157, 87, 0.7);
+        box-shadow: inset 0 0 0 1px rgba(255, 157, 87, 0.2);
+      }}
       .input-card, .empty-card {{
         background: var(--panel);
         border: 1px solid var(--grid);
@@ -498,6 +550,9 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
         .inputs-grid {{
           grid-template-columns: 1fr;
         }}
+        .timeline-grid {{
+          grid-template-columns: 1fr 1fr;
+        }}
         .hero-grid {{
           grid-template-columns: 1fr;
         }}
@@ -512,6 +567,9 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
       }}
       @media (max-width: 640px) {{
         .status-grid {{
+          grid-template-columns: 1fr;
+        }}
+        .timeline-grid {{
           grid-template-columns: 1fr;
         }}
       }}
@@ -552,6 +610,9 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
 
       <h2 class="section-title">Input Weights</h2>
       <section class="inputs-grid">{manifest_cards}</section>
+
+      <h2 class="section-title">Weekend Timeline</h2>
+      <section class="timeline-grid">{weekend_timeline}</section>
 
       <h2 class="section-title">Predictions</h2>
       {dry_panel}

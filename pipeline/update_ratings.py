@@ -413,6 +413,10 @@ def compute_driver_ratings(features: dict[str, Any], wet_by_team: dict[str, floa
 
         race_avg = safe_float(row.get("race_avg_position"))
         q_avg = safe_float(row.get("qualifying_avg_position"))
+        practice_avg = safe_float(row.get("practice_avg_position"))
+        sprint_q_avg = safe_float(row.get("sprint_qualifying_avg_position"))
+        q_phase = safe_float(row.get("qualifying_phase_depth"))
+        sprint_q_phase = safe_float(row.get("sprint_qualifying_phase_depth"))
         dnf_rate = safe_float(row.get("dnf_rate"))
         signal_conf = safe_float(row.get("signal_driver_confidence_delta")) or 0.0
 
@@ -422,7 +426,17 @@ def compute_driver_ratings(features: dict[str, Any], wet_by_team: dict[str, floa
         consistency_component = 75.0 - 40.0 * clamp((dnf_rate if dnf_rate is not None else 0.15), 0.0, 1.0)
         wet_index = wet_by_team.get(team_key, 0.5)
         wet_component = 35.0 + 30.0 * clamp(wet_index, 0.0, 1.0)
-        qualifying_component = 80.0 - 2.8 * clamp((q_avg if q_avg is not None else 12.0), 1.0, 20.0)
+        base_quali_component = 80.0 - 2.8 * clamp((q_avg if q_avg is not None else 12.0), 1.0, 20.0)
+        practice_component = 78.0 - 2.4 * clamp((practice_avg if practice_avg is not None else 12.0), 1.0, 20.0)
+        sprint_quali_component = 78.0 - 2.6 * clamp((sprint_q_avg if sprint_q_avg is not None else (q_avg if q_avg is not None else 12.0)), 1.0, 20.0)
+        phase_score = q_phase if q_phase is not None else sprint_q_phase if sprint_q_phase is not None else 0.5
+        progression_component = 45.0 + 18.0 * clamp(phase_score, 0.0, 1.0)
+        qualifying_component = (
+            0.45 * base_quali_component
+            + 0.20 * practice_component
+            + 0.15 * sprint_quali_component
+            + 0.20 * progression_component
+        )
 
         # Small adjustment for rookies to not be absolute last if they show promise in signals
         if driver_name not in feature_map:
@@ -450,6 +464,8 @@ def compute_driver_ratings(features: dict[str, Any], wet_by_team: dict[str, floa
                     "consistency": round(consistency_component, 6),
                     "wet_performance_index": round(wet_component, 6),
                     "qualifying_pace": round(qualifying_component, 6),
+                    "weekend_practice_pace": round(practice_component, 6),
+                    "qualifying_progression": round(progression_component, 6),
                 },
             }
         )
@@ -476,18 +492,25 @@ def compute_team_ratings(features: dict[str, Any], active_teams: list[str]) -> d
         row = feature_map.get(team_name, {})
 
         q_avg = safe_float(row.get("qualifying_avg_position"))
+        practice_avg = safe_float(row.get("practice_avg_position"))
+        sprint_q_avg = safe_float(row.get("sprint_qualifying_avg_position"))
+        q_phase = safe_float(row.get("qualifying_phase_depth"))
         race_avg = safe_float(row.get("race_avg_position"))
         upgrade_score = safe_float(row.get("signal_upgrade_score"))
 
-        q_gap_proxy = 50.0 + 7.0 * clamp(field_q_mean - (q_avg if q_avg is not None else field_q_mean), -6.0, 6.0)
+        q_inputs = [value for value in (q_avg, sprint_q_avg, practice_avg) if value is not None]
+        q_reference = statistics.fmean(q_inputs) if q_inputs else field_q_mean
+        q_gap_proxy = 50.0 + 7.0 * clamp(field_q_mean - q_reference, -6.0, 6.0)
         sector_dominance = 52.0 + 5.5 * clamp((q_avg if q_avg is not None else 12.0) - (race_avg if race_avg is not None else 12.0), -6.0, 6.0)
         upgrades_impact = 45.0 + 16.0 * clamp((upgrade_score if upgrade_score is not None else 1.0), 0.0, 3.0)
+        weekend_pace_proxy = 45.0 + 20.0 * clamp(1.0 - ((practice_avg if practice_avg is not None else 12.0) / 20.0), 0.0, 1.0)
+        progression_proxy = 40.0 + 20.0 * clamp((q_phase if q_phase is not None else 0.5), 0.0, 1.0)
 
         if team_name not in feature_map:
             # Baseline for new teams (e.g. Cadillac)
             rating = 55.0 + upgrades_impact * 0.1
         else:
-            rating = 0.45 * q_gap_proxy + 0.25 * sector_dominance + 0.30 * upgrades_impact
+            rating = 0.35 * q_gap_proxy + 0.20 * sector_dominance + 0.25 * upgrades_impact + 0.10 * weekend_pace_proxy + 0.10 * progression_proxy
 
         rating = round(clamp(rating, 0.0, 100.0), 6)
 
@@ -499,6 +522,8 @@ def compute_team_ratings(features: dict[str, Any], active_teams: list[str]) -> d
                     "qualifying_gap_proxy": round(q_gap_proxy, 6),
                     "sector_dominance": round(sector_dominance, 6),
                     "upgrades_impact": round(upgrades_impact, 6),
+                    "weekend_pace_proxy": round(weekend_pace_proxy, 6),
+                    "qualifying_progression": round(progression_proxy, 6),
                 },
             }
         )
@@ -520,6 +545,8 @@ def compute_strategy_scores(features: dict[str, Any], safety_by_team: dict[str, 
 
         q_avg = safe_float(row.get("qualifying_avg_position"))
         race_avg = safe_float(row.get("race_avg_position"))
+        sprint_q_avg = safe_float(row.get("sprint_qualifying_avg_position"))
+        sprint_avg = safe_float(row.get("sprint_avg_position"))
         starts = safe_float(row.get("starts")) or 0.0
         points = safe_float(row.get("points_total")) or 0.0
 
@@ -527,11 +554,16 @@ def compute_strategy_scores(features: dict[str, Any], safety_by_team: dict[str, 
         pit_stop_perf = 50.0 + 8.0 * clamp(delta, -5.0, 5.0)
         strategic_history = 40.0 + 4.0 * clamp((points / max(starts, 1.0)), 0.0, 20.0)
         safety_reaction = 40.0 + 40.0 * clamp(safety_by_team.get(team_key, 0.5), 0.0, 1.0)
+        sprint_execution = 50.0 + 9.0 * clamp(
+            (sprint_q_avg if sprint_q_avg is not None else 12.0) - (sprint_avg if sprint_avg is not None else (race_avg if race_avg is not None else 12.0)),
+            -5.0,
+            5.0,
+        )
 
         if team_name not in feature_map:
             score = 50.0 + 10.0 * clamp(safety_by_team.get(team_key, 0.5) - 0.5, -0.5, 0.5)
         else:
-            score = 0.35 * pit_stop_perf + 0.40 * strategic_history + 0.25 * safety_reaction
+            score = 0.30 * pit_stop_perf + 0.35 * strategic_history + 0.20 * safety_reaction + 0.15 * sprint_execution
 
         score = round(clamp(score, 0.0, 100.0), 6)
 
@@ -543,6 +575,7 @@ def compute_strategy_scores(features: dict[str, Any], safety_by_team: dict[str, 
                     "pit_stop_performance": round(pit_stop_perf, 6),
                     "strategic_success_history": round(strategic_history, 6),
                     "safety_car_reactions": round(safety_reaction, 6),
+                    "sprint_execution": round(sprint_execution, 6),
                 },
             }
         )
@@ -610,7 +643,10 @@ def blend_features(current: dict[str, Any], previous: dict[str, Any], current_we
         # Numeric fields to blend
         numeric_fields = [
             "race_avg_position", "qualifying_avg_position", "dnf_rate", 
-            "points_per_start", "points_total", "starts"
+            "points_per_start", "points_total", "starts",
+            "practice_avg_position", "fp1_avg_position", "fp2_avg_position", "fp3_avg_position",
+            "sprint_qualifying_avg_position", "sprint_avg_position",
+            "qualifying_phase_depth", "sprint_qualifying_phase_depth",
         ]
         
         for k in all_keys:

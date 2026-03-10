@@ -2,7 +2,9 @@ from __future__ import annotations
 
 from datetime import date, datetime
 
-from pipeline.select_next_gp import apply_track_profile, next_event_from_calendar, utc_iso_timestamp
+from pathlib import Path
+
+from pipeline.select_next_gp import apply_track_profile, load_cached_calendar, next_event_from_calendar, utc_iso_timestamp
 
 
 def test_next_event_from_calendar_selects_first_future_event() -> None:
@@ -44,3 +46,18 @@ def test_apply_track_profile_applies_event_profile() -> None:
 def test_utc_iso_timestamp_keeps_seconds_and_z_suffix() -> None:
     text = utc_iso_timestamp(datetime.fromisoformat("2026-03-03T22:31:45+00:00"))
     assert text == "2026-03-03T22:31:45Z"
+
+
+def test_load_cached_calendar_and_pick_china(tmp_path: Path) -> None:
+    cache_dir = tmp_path / "cal"
+    cache_dir.mkdir()
+    (cache_dir / "season_2026.json").write_text(
+        '[{"season":2026,"round":1,"event_name":"Australian Grand Prix","event_date":"2026-03-08","event_format":"conventional"},'
+        '{"season":2026,"round":2,"event_name":"Chinese Grand Prix","event_date":"2026-03-15","event_format":"sprint"}]',
+        encoding="utf-8",
+    )
+    calendar = load_cached_calendar(cache_dir, 2026)
+    event = next_event_from_calendar(calendar, as_of=date(2026, 3, 10), raw_dir=tmp_path)
+    assert event is not None
+    assert event["event_name"] == "Chinese Grand Prix"
+    assert event["event_format"] == "sprint"

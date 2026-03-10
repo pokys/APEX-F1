@@ -14,6 +14,11 @@ Pipeline běží v GitHub Actions a sama:
 - vyrenderuje web,
 - nasadí veřejnou stránku přes GitHub Pages.
 
+Kalendářová vrstva má vlastní fallback:
+- live schedule fetch,
+- verzovaný cache v `data/raw/calendars/`,
+- snapshot calendar ve FastF1 raw datech.
+
 Veřejná stránka:
 - [https://pokys.github.io/APEX-F1/](https://pokys.github.io/APEX-F1/)
 
@@ -42,6 +47,8 @@ Skript zapisuje do [`config/race_config.json`](config/race_config.json):
 - `weekend_format`
 - `inputs_used`
 - `fixed_grid` a `grid_source`, pokud už existuje relevantní grid
+
+Pokud FastF1 raw snapshot ještě neobsahuje konkrétní event, skript si bere `event_format` z calendar cache. Tím pádem sprint víkendy fungují správně ještě předtím, než dorazí kompletní raw event data.
 
 ## 3. Co zobrazuje web
 

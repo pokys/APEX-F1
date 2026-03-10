@@ -24,6 +24,7 @@ except ModuleNotFoundError:
 
 
 LOGGER = logging.getLogger("select_next_gp")
+MIN_COMPLETE_CALENDAR_EVENTS = 12
 
 
 def parse_args() -> argparse.Namespace:
@@ -36,6 +37,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--race-config", default="config/race_config.json", help="Race config path.")
     parser.add_argument("--raw-dir", default="data/raw/fastf1", help="FastF1 raw snapshot directory.")
+    parser.add_argument("--calendar-cache-dir", default="data/raw/calendars", help="Normalized calendar cache directory.")
     parser.add_argument("--profiles", default="config/track_profiles.json", help="Track profile config path.")
     parser.add_argument(
         "--log-level",
@@ -266,6 +268,27 @@ def load_snapshot_calendar(raw_dir: Path, season: int) -> list[dict[str, Any]]:
     return normalized
 
 
+def load_cached_calendar(cache_dir: Path, season: int) -> list[dict[str, Any]]:
+    path = cache_dir / f"season_{season}.json"
+    if not path.exists():
+        return []
+    try:
+        payload = load_json(path)
+    except Exception:
+        return []
+    if not isinstance(payload, list):
+        return []
+    normalized = [item for item in payload if isinstance(item, dict)]
+    normalized.sort(key=lambda x: (x.get("event_date", ""), x.get("round", 0), x.get("event_name", "")))
+    return normalized
+
+
+def write_cached_calendar(cache_dir: Path, season: int, calendar: list[dict[str, Any]]) -> None:
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    path = cache_dir / f"season_{season}.json"
+    path.write_text(json.dumps(calendar, indent=2, sort_keys=True, ensure_ascii=True) + "\n", encoding="utf-8")
+
+
 def next_event_from_calendar(calendar: list[dict[str, Any]], as_of: date, raw_dir: Path) -> dict[str, Any] | None:
     for event in calendar:
         event_date = to_utc_date(event.get("event_date"))
@@ -344,6 +367,7 @@ def next_event_for_season(season: int, as_of: date, raw_dir: Path) -> dict[str, 
                 "round": round_number,
                 "event_name": str(row.get("EventName") or "Next GP"),
                 "official_event_name": str(row.get("OfficialEventName") or row.get("EventName") or "Next GP"),
+                "event_format": str(row.get("EventFormat") or ""),
                 "country": str(row.get("Country") or ""),
                 "location": str(row.get("Location") or ""),
                 "event_date": event_date.isoformat(),
@@ -351,20 +375,74 @@ def next_event_for_season(season: int, as_of: date, raw_dir: Path) -> dict[str, 
     return None
 
 
-def select_next_event(requested_season: int | None, as_of: date, raw_dir: Path) -> dict[str, Any]:
+def fetch_live_calendar(season: int) -> list[dict[str, Any]]:
+    if fastf1 is None:
+        return []
+    backends = ["f1timing", "ergast"]
+    for backend in backends:
+        try:
+            schedule = fastf1.get_event_schedule(season, include_testing=False, backend=backend)
+        except Exception as exc:
+            LOGGER.warning("Schedule fetch failed for season %s backend %s: %s", season, backend, exc)
+            continue
+        schedule = schedule.sort_values(by=["EventDate", "RoundNumber"], kind="stable")
+        normalized: list[dict[str, Any]] = []
+        for _, row in schedule.iterrows():
+            event_date = to_utc_date(row.get("EventDate"))
+            if event_date is None:
+                continue
+            round_number = row.get("RoundNumber")
+            try:
+                round_number = int(float(round_number))
+            except Exception:
+                round_number = 0
+            normalized.append(
+                {
+                    "season": season,
+                    "round": round_number,
+                    "event_name": str(row.get("EventName") or "Next GP"),
+                    "official_event_name": str(row.get("OfficialEventName") or row.get("EventName") or "Next GP"),
+                    "event_format": str(row.get("EventFormat") or ""),
+                    "country": str(row.get("Country") or ""),
+                    "location": str(row.get("Location") or ""),
+                    "event_date": event_date.isoformat(),
+                }
+            )
+        if normalized:
+            return normalized
+    return []
+
+
+def select_next_event(requested_season: int | None, as_of: date, raw_dir: Path, calendar_cache_dir: Path) -> dict[str, Any]:
     base_season = requested_season if requested_season is not None else as_of.year
     candidate_seasons = [base_season, base_season + 1]
 
     for season in candidate_seasons:
+        live_calendar = fetch_live_calendar(season)
+        if len(live_calendar) >= MIN_COMPLETE_CALENDAR_EVENTS:
+            write_cached_calendar(calendar_cache_dir, season, live_calendar)
+            live_event = next_event_from_calendar(live_calendar, as_of=as_of, raw_dir=raw_dir)
+            if live_event is not None:
+                LOGGER.info("Selected next GP from live schedule for season %s.", season)
+                return live_event
+        elif live_calendar:
+            LOGGER.warning(
+                "Ignoring incomplete live calendar for season %s with only %s events.",
+                season,
+                len(live_calendar),
+            )
+
+        cached_calendar = load_cached_calendar(calendar_cache_dir, season=season)
+        cached_event = next_event_from_calendar(cached_calendar, as_of=as_of, raw_dir=raw_dir)
+        if cached_event is not None:
+            LOGGER.info("Selected next GP from cached calendar for season %s.", season)
+            return cached_event
+
         local_calendar = load_snapshot_calendar(raw_dir, season=season)
         local_event = next_event_from_calendar(local_calendar, as_of=as_of, raw_dir=raw_dir)
         if local_event is not None:
             LOGGER.info("Selected next GP from local snapshot calendar for season %s.", season)
             return local_event
-
-        event = next_event_for_season(season, as_of, raw_dir=raw_dir)
-        if event is not None:
-            return event
 
     raise RuntimeError(
         f"No upcoming GP found for seasons {candidate_seasons} as of {as_of.isoformat()}."
@@ -468,7 +546,7 @@ def main() -> int:
         as_of = parse_iso_date(args.as_of_date)
         path = Path(args.race_config)
         config = load_existing_config(path)
-        event = select_next_event(args.season, as_of, raw_dir=Path(args.raw_dir))
+        event = select_next_event(args.season, as_of, raw_dir=Path(args.raw_dir), calendar_cache_dir=Path(args.calendar_cache_dir))
         profiles = load_track_profiles(Path(args.profiles))
 
         config["season"] = event["season"]

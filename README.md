@@ -34,6 +34,7 @@ Tato volba se zapisuje do [`config/race_config.json`](config/race_config.json) a
 
 - `FastF1`
 - historické výsledky a session snapshoty
+- verzovaný season calendar cache v `data/raw/calendars/`
 - průběžně načtené session:
   - `FP1`
   - `FP2`
@@ -93,7 +94,7 @@ Tento manifest se zapisuje do výstupu jako `inputs_used` a web ho zobrazuje př
 2. [`pipeline/ingest_fastf1.py`](pipeline/ingest_fastf1.py)
    Načte session data a vytvoří raw snapshot sezony.
 3. [`pipeline/select_next_gp.py`](pipeline/select_next_gp.py)
-   Vybere následující GP a traťový profil.
+   Vybere následující GP a traťový profil. Kalendář bere prioritně z live schedule, při výpadku z verzovaného cache v `data/raw/calendars/`.
 4. [`pipeline/select_prediction_target.py`](pipeline/select_prediction_target.py)
    Automaticky určí, zda se má predikovat `SQ`, `Sprint`, `Qualifying` nebo `Race`.
 5. [`pipeline/build_features.py`](pipeline/build_features.py)

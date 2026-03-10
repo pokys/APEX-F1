@@ -1,0 +1,31 @@
+{
+  "qualifying": {
+    "history_driver": 0.3,
+    "history_team": 0.2,
+    "fp1": 0.1,
+    "fp2": 0.15,
+    "fp3": 0.15,
+    "signals": 0.1
+  },
+  "race": {
+    "history_driver": 0.2,
+    "history_team": 0.15,
+    "qualifying": 0.35,
+    "fp2": 0.05,
+    "fp3": 0.1,
+    "signals": 0.15
+  },
+  "sprint_qualifying": {
+    "history_driver": 0.35,
+    "history_team": 0.2,
+    "fp1": 0.2,
+    "signals": 0.1
+  },
+  "sprint": {
+    "history_driver": 0.2,
+    "history_team": 0.15,
+    "sprint_qualifying": 0.4,
+    "fp1": 0.1,
+    "signals": 0.15
+  }
+}

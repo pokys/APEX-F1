@@ -1,75 +1,79 @@
 from __future__ import annotations
 
-import json
-from pathlib import Path
-
 from pipeline.render_prediction_page import render_page
 
 
-def test_render_page_contains_race_and_driver_rows(tmp_path: Path) -> None:
+def test_render_page_shows_current_target_and_inputs() -> None:
     prediction = {
         "race": "Australian Grand Prix",
-        "generated_at": "2026-03-03T00:00:00Z",
+        "generated_at": "2026-03-03T12:34:56Z",
+        "prediction_target": "qualifying",
+        "prediction_target_label": "Qualifying",
+        "target_session_code": "Q",
+        "target_output_type": "qualifying",
+        "weekend_format": "standard",
+        "inputs_used": [
+            {"source": "history_driver", "source_key": "history_driver", "weight": 0.5},
+            {"source": "fp3", "source_key": "FP3", "weight": 0.3},
+            {"source": "signals", "source_key": "signals", "weight": 0.2},
+        ],
+        "simulation": {"simulations": 6000, "available_sessions": ["FP1", "FP2", "FP3"]},
         "drivers": [
-            {"name": "RUS", "win_probability": 0.31, "podium_probability": 0.75, "expected_finish": 5.0},
-            {"name": "VER", "win_probability": 0.28, "podium_probability": 0.72, "expected_finish": 5.4},
-            {"name": "PIA", "win_probability": 0.15, "podium_probability": 0.52, "expected_finish": 6.0},
+            {"name": "RUS", "team": "Mercedes", "pole_probability": 0.31, "front_row_probability": 0.6, "top10_probability": 0.99, "expected_position": 2.1},
+            {"name": "VER", "team": "Red Bull", "pole_probability": 0.28, "front_row_probability": 0.58, "top10_probability": 0.98, "expected_position": 2.4},
+            {"name": "PIA", "team": "McLaren", "pole_probability": 0.15, "front_row_probability": 0.33, "top10_probability": 0.96, "expected_position": 4.0},
         ],
     }
     race_config = {
-        "race_date": "2026-03-08",
-        "weather": "dry",
-        "simulations": 6000,
-        "seed": 202601,
-        "safety_car_probability": 0.38,
-        "overtaking_difficulty": 0.62,
+        "signal_count": 3,
+        "grid_source": "simulation",
     }
 
     rendered = render_page(prediction, race_config)
-    assert "Australian Grand Prix" in rendered
-    assert "RUS" in rendered
-    assert "VER" in rendered
-    assert "PIA" in rendered
-    assert "Simulations: 6000" in rendered
-    assert "Seed: 202601" in rendered
-    assert "mobile-list" in rendered
-    assert "Top 10" in rendered
-    assert "All Drivers" in rendered
-    assert "How to read this page" in rendered
-    assert "Most likely winner" in rendered
+    assert "Now Predicting" in rendered
+    assert "Qualifying" in rendered
+    assert "Sessions Online: FP1, FP2, FP3" in rendered
+    assert "Input Weights" in rendered
+    assert "history_driver" in rendered
+    assert "Pole" in rendered
+    assert "Expected Position" in rendered
 
 
-def test_render_page_contains_dry_wet_toggle_when_second_payload_provided() -> None:
+def test_render_page_shows_dry_wet_toggle_for_race_predictions() -> None:
     dry_prediction = {
-        "race": "Australian Grand Prix",
-        "generated_at": "2026-03-03T00:00:00Z",
+        "race": "Chinese Grand Prix",
+        "generated_at": "2026-03-10T12:00:00Z",
+        "prediction_target": "race",
+        "prediction_target_label": "Race",
+        "target_session_code": "R",
+        "target_output_type": "race",
+        "weekend_format": "standard",
+        "simulation": {"simulations": 6000, "available_sessions": ["Q"], "grid_source": "qualifying"},
         "drivers": [
-            {"name": "RUS", "win_probability": 0.31, "podium_probability": 0.75, "expected_finish": 5.0},
-            {"name": "VER", "win_probability": 0.28, "podium_probability": 0.72, "expected_finish": 5.4},
-            {"name": "PIA", "win_probability": 0.15, "podium_probability": 0.52, "expected_finish": 6.0},
+            {"name": "RUS", "team": "Mercedes", "win_probability": 0.31, "podium_probability": 0.75, "expected_finish": 3.2},
+            {"name": "VER", "team": "Red Bull", "win_probability": 0.28, "podium_probability": 0.72, "expected_finish": 3.5},
+            {"name": "PIA", "team": "McLaren", "win_probability": 0.15, "podium_probability": 0.52, "expected_finish": 4.3},
         ],
     }
     wet_prediction = {
-        "race": "Australian Grand Prix",
-        "generated_at": "2026-03-03T00:00:00Z",
+        "race": "Chinese Grand Prix",
+        "generated_at": "2026-03-10T12:00:00Z",
+        "prediction_target": "race",
+        "prediction_target_label": "Race",
+        "target_session_code": "R",
+        "target_output_type": "race",
+        "weekend_format": "standard",
+        "simulation": {"simulations": 6000, "available_sessions": ["Q"], "grid_source": "qualifying"},
         "drivers": [
-            {"name": "VER", "win_probability": 0.33, "podium_probability": 0.74, "expected_finish": 4.8},
-            {"name": "RUS", "win_probability": 0.26, "podium_probability": 0.69, "expected_finish": 5.7},
-            {"name": "NOR", "win_probability": 0.18, "podium_probability": 0.55, "expected_finish": 5.9},
+            {"name": "VER", "team": "Red Bull", "win_probability": 0.33, "podium_probability": 0.74, "expected_finish": 3.1},
+            {"name": "RUS", "team": "Mercedes", "win_probability": 0.26, "podium_probability": 0.69, "expected_finish": 3.7},
+            {"name": "NOR", "team": "McLaren", "win_probability": 0.18, "podium_probability": 0.55, "expected_finish": 4.2},
         ],
     }
-    race_config = {
-        "race_date": "2026-03-08",
-        "weather": "dry",
-        "simulations": 6000,
-        "seed": 202601,
-        "safety_car_probability": 0.38,
-        "overtaking_difficulty": 0.62,
-    }
 
-    rendered = render_page(dry_prediction, race_config, prediction_wet=wet_prediction)
+    rendered = render_page(dry_prediction, {}, prediction_wet=wet_prediction)
     assert "Dry" in rendered
     assert "Wet" in rendered
-    assert "Scenario: Dry" in rendered
-    assert "Scenario: Wet" in rendered
-    assert "Biggest wet swing" in rendered
+    assert "Race" in rendered
+    assert "Win" in rendered
+    assert "Podium" in rendered

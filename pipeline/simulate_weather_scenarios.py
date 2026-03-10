@@ -29,12 +29,11 @@ if __package__ is None or __package__ == "":
     sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from pipeline.simulate_race import (  # noqa: E402
-    build_entries,
     load_json,
     load_or_default_config,
-    run_simulation,
-    safe_float,
 )
+from pipeline.simulate_race import safe_float  # noqa: E402
+from pipeline.simulate_target_prediction import run_target_prediction  # noqa: E402
 
 
 LOGGER = logging.getLogger("simulate_weather_scenarios")
@@ -47,6 +46,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--strategy-scores", default="models/strategy_scores.json", help="Strategy scores JSON path.")
     parser.add_argument("--reliability-scores", default="models/reliability_scores.json", help="Reliability scores JSON path.")
     parser.add_argument("--race-config", default="config/race_config.json", help="Race config JSON path.")
+    parser.add_argument("--raw-dir", default="data/raw/fastf1", help="FastF1 raw snapshot directory.")
     parser.add_argument("--fixed-grid", default=None, help="Comma-separated driver abbreviations for starting grid (overrides config).")
     parser.add_argument("--output-dry", default="outputs/prediction_dry.json", help="Dry scenario output path.")
     parser.add_argument("--output-wet", default="outputs/prediction_wet.json", help="Wet scenario output path.")
@@ -126,10 +126,6 @@ def main() -> int:
         if args.fixed_grid:
             base_config["fixed_grid"] = [x.strip().upper() for x in args.fixed_grid.split(",") if x.strip()]
 
-        entries = build_entries(driver_ratings, team_ratings, strategy_scores, reliability_scores)
-        if not entries:
-            raise ValueError("No drivers available for simulation. Run update_ratings first.")
-
         generated_at = utc_iso_timestamp()
 
         dry_config = make_scenario_config(
@@ -147,8 +143,22 @@ def main() -> int:
         )
         wet_config["generated_at"] = generated_at
 
-        dry_prediction = run_simulation(entries, dry_config, driver_ratings, team_ratings)
-        wet_prediction = run_simulation(entries, wet_config, driver_ratings, team_ratings)
+        dry_prediction = run_target_prediction(
+            driver_ratings,
+            team_ratings,
+            strategy_scores,
+            reliability_scores,
+            dry_config,
+            raw_dir=Path(args.raw_dir),
+        )
+        wet_prediction = run_target_prediction(
+            driver_ratings,
+            team_ratings,
+            strategy_scores,
+            reliability_scores,
+            wet_config,
+            raw_dir=Path(args.raw_dir),
+        )
     except Exception as exc:
         LOGGER.error("simulate_weather_scenarios failed: %s", exc)
         return 1

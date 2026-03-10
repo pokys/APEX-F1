@@ -60,8 +60,9 @@ def validate_prediction(path: Path) -> None:
     if not isinstance(rows, list) or not rows:
         raise ValueError("Prediction payload must include non-empty 'drivers' list.")
 
-    win_sum = 0.0
-    podium_sum = 0.0
+    target_output_type = str(payload.get("target_output_type") or "race")
+    first_metric_sum = 0.0
+    second_metric_sum = 0.0
     for idx, row in enumerate(rows):
         if not isinstance(row, dict):
             raise ValueError(f"Prediction driver row #{idx} is not an object.")
@@ -69,25 +70,54 @@ def validate_prediction(path: Path) -> None:
         if not name:
             raise ValueError(f"Prediction driver row #{idx} has empty name.")
 
-        win = float(row.get("win_probability"))
-        podium = float(row.get("podium_probability"))
-        exp_finish = float(row.get("expected_finish"))
+        if target_output_type == "qualifying":
+            pole = float(row.get("pole_probability"))
+            front_row = float(row.get("front_row_probability"))
+            top10 = float(row.get("top10_probability"))
+            expected_position = float(row.get("expected_position"))
 
-        if not (0.0 <= win <= 1.0):
-            raise ValueError(f"win_probability out of bounds for {name}: {win}")
-        if not (0.0 <= podium <= 1.0):
-            raise ValueError(f"podium_probability out of bounds for {name}: {podium}")
-        if podium < win:
-            raise ValueError(f"podium_probability must be >= win_probability for {name}")
-        if exp_finish < 1.0:
-            raise ValueError(f"expected_finish must be >= 1 for {name}")
+            if not (0.0 <= pole <= 1.0):
+                raise ValueError(f"pole_probability out of bounds for {name}: {pole}")
+            if not (0.0 <= front_row <= 1.0):
+                raise ValueError(f"front_row_probability out of bounds for {name}: {front_row}")
+            if not (0.0 <= top10 <= 1.0):
+                raise ValueError(f"top10_probability out of bounds for {name}: {top10}")
+            if front_row < pole:
+                raise ValueError(f"front_row_probability must be >= pole_probability for {name}")
+            if top10 < front_row:
+                raise ValueError(f"top10_probability must be >= front_row_probability for {name}")
+            if expected_position < 1.0:
+                raise ValueError(f"expected_position must be >= 1 for {name}")
 
-        win_sum += win
-        podium_sum += podium
+            first_metric_sum += pole
+            second_metric_sum += front_row
+        else:
+            win = float(row.get("win_probability"))
+            podium = float(row.get("podium_probability"))
+            exp_finish = float(row.get("expected_finish"))
 
-    # Rounding in persisted output is 6 dp, so allow tiny tolerance.
-    assert_close(win_sum, 1.0, 1e-3, "sum(win_probability)")
-    assert_close(podium_sum, 3.0, 1e-3, "sum(podium_probability)")
+            if not (0.0 <= win <= 1.0):
+                raise ValueError(f"win_probability out of bounds for {name}: {win}")
+            if not (0.0 <= podium <= 1.0):
+                raise ValueError(f"podium_probability out of bounds for {name}: {podium}")
+            if podium < win:
+                raise ValueError(f"podium_probability must be >= win_probability for {name}")
+            if exp_finish < 1.0:
+                raise ValueError(f"expected_finish must be >= 1 for {name}")
+
+            first_metric_sum += win
+            second_metric_sum += podium
+
+    if target_output_type == "qualifying":
+        top10_target = float(min(10, len(rows)))
+        top10_sum = sum(float(row.get("top10_probability")) for row in rows)
+        assert_close(first_metric_sum, 1.0, 1e-3, "sum(pole_probability)")
+        assert_close(second_metric_sum, 2.0, 1e-3, "sum(front_row_probability)")
+        assert_close(top10_sum, top10_target, 1e-3, "sum(top10_probability)")
+    else:
+        # Rounding in persisted output is 6 dp, so allow tiny tolerance.
+        assert_close(first_metric_sum, 1.0, 1e-3, "sum(win_probability)")
+        assert_close(second_metric_sum, 3.0, 1e-3, "sum(podium_probability)")
 
 
 def validate_model_file(path: Path, season: int, key: str) -> None:

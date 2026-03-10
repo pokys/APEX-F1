@@ -1,4 +1,4 @@
-name: Simulate Race
+name: Simulate Prediction
 
 on:
   workflow_dispatch:
@@ -13,9 +13,12 @@ on:
     paths:
       - "pipeline/simulate_race.py"
       - "pipeline/simulate_weather_scenarios.py"
+      - "pipeline/select_prediction_target.py"
+      - "pipeline/simulate_target_prediction.py"
       - "pipeline/render_prediction_page.py"
       - "models/*.json"
       - "config/race_config.json"
+      - "config/session_weights.json"
       - "config/track_profiles.json"
       - ".github/workflows/simulate-race.yml"
       - "requirements.lock"
@@ -46,6 +49,10 @@ jobs:
         run: |
           python pipeline/select_next_gp.py --season "$(date -u +%Y)" --as-of-date "$(date -u +%F)" --race-config config/race_config.json --log-level INFO
 
+      - name: Select automatic prediction target
+        run: |
+          python pipeline/select_prediction_target.py --race-config config/race_config.json --raw-dir data/raw/fastf1 --session-weights config/session_weights.json --signals-dir knowledge/processed --log-level INFO
+
       - name: Apply backtest calibration
         run: |
           python pipeline/apply_backtest_calibration.py --season "$(date -u +%Y)" --race-config config/race_config.json --allow-missing-report --log-level INFO
@@ -58,7 +65,7 @@ jobs:
           if [ -n "$FIXED_GRID" ]; then
             ARGS+=(--fixed-grid "$FIXED_GRID")
           fi
-          python pipeline/simulate_weather_scenarios.py "${ARGS[@]}" --allow-missing-models --log-level INFO
+          python pipeline/simulate_weather_scenarios.py "${ARGS[@]}" --raw-dir data/raw/fastf1 --allow-missing-models --log-level INFO
 
       - name: Publish canonical prediction
         run: |
@@ -80,7 +87,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -- outputs/prediction.json outputs/prediction_dry.json outputs/prediction_wet.json outputs/prediction_report.html config/race_config.json
-          git commit -m "Update race prediction"
+          git commit -m "Update prediction outputs"
           for attempt in 1 2 3; do
             if git push; then
               exit 0

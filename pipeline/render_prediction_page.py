@@ -314,6 +314,7 @@ def render_page(
     tyre_compounds: dict[str, Any] | None = None,
 ) -> str:
     target = str(prediction.get("prediction_target") or race_config.get("prediction_target") or "race")
+    target_theme = "quali" if target in QUALIFYING_TARGETS else "race"
     target_label = str(prediction.get("prediction_target_label") or race_config.get("prediction_target_label") or "Race")
     target_output_type = str(prediction.get("target_output_type") or race_config.get("target_output_type") or "race")
     race_name = html.escape(str(prediction.get("race") or race_config.get("race") or "Next GP"))
@@ -428,6 +429,21 @@ def render_page(
         border-radius: 22px;
         padding: 22px;
         backdrop-filter: blur(10px);
+        position: relative;
+        overflow: hidden;
+      }}
+      .hero::before {{
+        content: "";
+        position: absolute;
+        inset: 0 0 auto 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--hero-accent), transparent 82%);
+      }}
+      .theme-quali {{
+        --hero-accent: #e10600;
+      }}
+      .theme-race {{
+        --hero-accent: #ffffff;
       }}
       h1 {{
         margin: 0 0 6px;
@@ -461,6 +477,30 @@ def render_page(
         margin: 0;
         font-size: 1.15rem;
         font-weight: 700;
+      }}
+      .target-pill {{
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(8, 14, 20, 0.9);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+      }}
+      .target-pill::before {{
+        content: "";
+        width: 9px;
+        height: 9px;
+        border-radius: 999px;
+        background: var(--hero-accent);
+        box-shadow: 0 0 16px color-mix(in srgb, var(--hero-accent) 55%, transparent);
+      }}
+      .theme-race .target-pill {{
+        border-color: rgba(225, 6, 0, 0.28);
+      }}
+      .theme-quali .target-pill {{
+        border-color: rgba(255, 255, 255, 0.18);
       }}
       .meta-strip {{
         margin-top: 16px;
@@ -838,13 +878,13 @@ def render_page(
   </head>
   <body>
     <main class="wrap">
-      <section class="hero">
+      <section class="hero theme-{target_theme}">
         <h1>{race_name}</h1>
         <p class="subtitle">{html.escape(target_blurb)}</p>
         <div class="status-grid">
           <article class="status-card">
             <p class="status-kicker">Now Predicting</p>
-            <p class="status-value">{html.escape(target_label)}</p>
+            <p class="status-value"><span class="target-pill">{html.escape(target_label)}</span></p>
           </article>
           <article class="status-card">
             <p class="status-kicker">Weekend Format</p>

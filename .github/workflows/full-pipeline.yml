@@ -31,7 +31,9 @@ on:
       - "pipeline/*.py"
       - "config/race_config.json"
       - "config/session_weights.json"
+      - "config/tyre_sources.json"
       - "data/raw/calendars/**"
+      - "data/raw/tyres/**"
       - "config/track_profiles.json"
       - "config/signal_guardrails.json"
       - "requirements.txt"
@@ -93,6 +95,13 @@ jobs:
         run: |
           python pipeline/select_prediction_target.py --race-config config/race_config.json --raw-dir data/raw/fastf1 --calendar-cache-dir data/raw/calendars --session-weights config/session_weights.json --signals-dir knowledge/processed --log-level INFO
 
+      - name: Collect Pirelli weekend compounds
+        env:
+          SEASON: ${{ github.event.inputs.season }}
+        run: |
+          TARGET_SEASON="${SEASON:-$(date -u +%Y)}"
+          python pipeline/collect_tyre_compounds.py --season "$TARGET_SEASON" --calendar-cache-dir data/raw/calendars --source-config config/tyre_sources.json --output-dir data/raw/tyres --log-level INFO
+
       - name: Validate processed signals
         run: |
           python pipeline/validate_signals.py --signals-dir knowledge/processed --allow-empty --log-level INFO
@@ -140,7 +149,7 @@ jobs:
 
       - name: Render prediction page
         run: |
-          python pipeline/render_prediction_page.py --prediction outputs/prediction.json --prediction-dry outputs/prediction_dry.json --prediction-wet outputs/prediction_wet.json --race-config config/race_config.json --output outputs/prediction_report.html --allow-missing-input --log-level INFO
+          python pipeline/render_prediction_page.py --prediction outputs/prediction.json --prediction-dry outputs/prediction_dry.json --prediction-wet outputs/prediction_wet.json --race-config config/race_config.json --tyres-input data/raw/tyres --output outputs/prediction_report.html --allow-missing-input --log-level INFO
 
       - name: Validate outputs
         run: |
@@ -151,14 +160,14 @@ jobs:
           # Clear inbox after successful run to avoid re-processing old articles
           echo "# F1 Article Inbox" > knowledge/inbox/articles.md
 
-          if [ -z "$(git status --porcelain -- knowledge/inbox/articles.md knowledge/processed data/raw/fastf1 data/raw/calendars data/processed models outputs/prediction.json outputs/prediction_dry.json outputs/prediction_wet.json outputs/prediction_report.html config/race_config.json)" ]; then
+          if [ -z "$(git status --porcelain -- knowledge/inbox/articles.md knowledge/processed data/raw/fastf1 data/raw/calendars data/raw/tyres data/processed models outputs/prediction.json outputs/prediction_dry.json outputs/prediction_wet.json outputs/prediction_report.html config/race_config.json)" ]; then
             echo "No pipeline output changes."
             exit 0
           fi
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- knowledge/inbox/articles.md knowledge/processed data/raw/fastf1 data/raw/calendars data/processed models outputs/prediction.json outputs/prediction_dry.json outputs/prediction_wet.json outputs/prediction_report.html config/race_config.json
+          git add -- knowledge/inbox/articles.md knowledge/processed data/raw/fastf1 data/raw/calendars data/raw/tyres data/processed models outputs/prediction.json outputs/prediction_dry.json outputs/prediction_wet.json outputs/prediction_report.html config/race_config.json
           git commit -m "Run full F1 prediction pipeline"
           for attempt in 1 2 3; do
             if git push; then

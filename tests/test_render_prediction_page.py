@@ -41,8 +41,12 @@ def test_render_page_shows_current_target_and_inputs() -> None:
         "signal_count": 3,
         "grid_source": "simulation",
     }
+    tyre_compounds = {
+        "compounds": {"hard": "C2", "medium": "C3", "soft": "C4"},
+        "event_name": "Australian Grand Prix",
+    }
 
-    rendered = render_page(prediction, race_config)
+    rendered = render_page(prediction, race_config, tyre_compounds=tyre_compounds)
     assert "Now Predicting" in rendered
     assert "Qualifying" in rendered
     assert "Sessions Online" in rendered
@@ -60,6 +64,13 @@ def test_render_page_shows_current_target_and_inputs() -> None:
     assert "Pole" in rendered
     assert "Expected Position" in rendered
     assert "Because the season is still young" in rendered
+    assert "Pirelli Weekend Compounds" in rendered
+    assert "Hard" in rendered
+    assert "Medium" in rendered
+    assert "Soft" in rendered
+    assert "C2" in rendered
+    assert "C3" in rendered
+    assert "C4" in rendered
 
 
 def test_render_page_shows_dry_wet_toggle_for_race_predictions() -> None:

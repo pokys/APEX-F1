@@ -32,9 +32,12 @@ def test_render_page_shows_current_target_and_inputs() -> None:
     rendered = render_page(prediction, race_config)
     assert "Now Predicting" in rendered
     assert "Qualifying" in rendered
-    assert "Sessions Online: FP1, FP2, FP3" in rendered
+    assert "Sessions Online" in rendered
+    assert "FP1, FP2, FP3" in rendered
     assert "Input Weights" in rendered
     assert "Weekend Timeline" in rendered
+    assert "Why This Is Active Now" in rendered
+    assert "Technical Details" in rendered
     assert "history_driver" in rendered
     assert "Pole" in rendered
     assert "Expected Position" in rendered

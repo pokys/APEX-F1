@@ -154,6 +154,23 @@ def timeline_html(weekend_format: str, available_sessions: list[str], target_ses
     return "".join(cards)
 
 
+def why_active_now(target: str, weekend_format: str, available_sessions: list[str]) -> str:
+    available = {str(code).upper() for code in available_sessions}
+    if target == "sprint_qualifying":
+        return "This is a sprint weekend and no sprint qualifying result is available yet, so the system is forecasting Sprint Qualifying."
+    if target == "sprint":
+        return "Sprint Qualifying is already available, so the system now switches to the Sprint itself."
+    if target == "qualifying" and weekend_format == "sprint":
+        if "S" in available:
+            return "The sprint has already been run, and the next competitive session is Qualifying for the main Grand Prix."
+        return "The next competitive session is Qualifying, so the system is estimating the starting order."
+    if target == "qualifying":
+        return "Qualifying has not been completed yet, so the system is estimating the next starting order."
+    if target == "race":
+        return "Qualifying results are available, so the system now simulates the race from the known grid when possible."
+    return "The system is automatically selecting the next competitive session and forecasting it."
+
+
 def scenario_panel_html(prediction: dict[str, Any], scenario_key: str, scenario_label: str, active: bool) -> str:
     target = str(prediction.get("prediction_target") or "race")
     rows = parse_prediction_rows(prediction)
@@ -238,6 +255,7 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
     grid_source = html.escape(str(prediction.get("simulation", {}).get("grid_source") or race_config.get("grid_source") or "simulation"))
     simulations = int(to_float(prediction.get("simulation", {}).get("simulations"), to_float(race_config.get("simulations"), 0)))
     signal_count = int(to_float(race_config.get("signal_count"), 0))
+    why_now = why_active_now(target, str(prediction.get("weekend_format") or race_config.get("weekend_format") or "standard"), list(available_sessions))
 
     toggle_html = ""
     script_html = ""
@@ -332,7 +350,7 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
       .status-grid {{
         margin-top: 18px;
         display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 12px;
       }}
       .status-card {{
@@ -366,6 +384,67 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
         font-family: "IBM Plex Mono", monospace;
         color: var(--muted);
         background: rgba(9, 18, 28, 0.85);
+      }}
+      .explain-card {{
+        margin-top: 16px;
+        background: rgba(18, 34, 49, 0.72);
+        border: 1px solid var(--grid);
+        border-radius: 16px;
+        padding: 16px;
+      }}
+      .explain-card h2 {{
+        margin: 0 0 8px;
+        font-size: 0.95rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }}
+      .explain-card p {{
+        margin: 0;
+        color: var(--ink);
+        line-height: 1.55;
+      }}
+      .debug-panel {{
+        margin-top: 16px;
+        background: rgba(10, 20, 30, 0.6);
+        border: 1px solid var(--grid);
+        border-radius: 16px;
+        overflow: hidden;
+      }}
+      .debug-panel summary {{
+        cursor: pointer;
+        list-style: none;
+        padding: 14px 16px;
+        font-family: "IBM Plex Mono", monospace;
+        color: var(--muted);
+      }}
+      .debug-panel summary::-webkit-details-marker {{
+        display: none;
+      }}
+      .debug-grid {{
+        padding: 0 16px 16px;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+      }}
+      .debug-card {{
+        background: var(--panel-2);
+        border: 1px solid var(--grid);
+        border-radius: 14px;
+        padding: 12px;
+      }}
+      .debug-card p {{
+        margin: 0;
+      }}
+      .debug-label {{
+        color: var(--muted);
+        font-size: 0.76rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 6px !important;
+      }}
+      .debug-value {{
+        font-weight: 700;
       }}
       .scenario-toggle {{
         margin-top: 16px;
@@ -550,6 +629,9 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
         .inputs-grid {{
           grid-template-columns: 1fr;
         }}
+        .debug-grid {{
+          grid-template-columns: 1fr;
+        }}
         .timeline-grid {{
           grid-template-columns: 1fr 1fr;
         }}
@@ -586,25 +668,50 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
             <p class="status-value">{html.escape(target_label)}</p>
           </article>
           <article class="status-card">
-            <p class="status-kicker">Target Session</p>
-            <p class="status-value">{target_session_code}</p>
-          </article>
-          <article class="status-card">
             <p class="status-kicker">Weekend Format</p>
             <p class="status-value">{weekend_format.title()}</p>
           </article>
           <article class="status-card">
-            <p class="status-kicker">Grid Source</p>
-            <p class="status-value">{grid_source}</p>
+            <p class="status-kicker">Sessions Online</p>
+            <p class="status-value">{html.escape(available_sessions_label)}</p>
           </article>
         </div>
         <div class="meta-strip">
           <span class="chip">Generated: {generated_at}</span>
-          <span class="chip">Sessions Online: {html.escape(available_sessions_label)}</span>
-          <span class="chip">Signals: {signal_count}</span>
-          <span class="chip">Simulations: {simulations}</span>
-          <span class="chip">Output Type: {html.escape(target_output_type)}</span>
         </div>
+        <section class="explain-card">
+          <h2>Why This Is Active Now</h2>
+          <p>{html.escape(why_now)}</p>
+        </section>
+        <details class="debug-panel">
+          <summary>Technical Details</summary>
+          <div class="debug-grid">
+            <article class="debug-card">
+              <p class="debug-label">Target Session</p>
+              <p class="debug-value">{target_session_code}</p>
+            </article>
+            <article class="debug-card">
+              <p class="debug-label">Grid Source</p>
+              <p class="debug-value">{grid_source}</p>
+            </article>
+            <article class="debug-card">
+              <p class="debug-label">Signals</p>
+              <p class="debug-value">{signal_count}</p>
+            </article>
+            <article class="debug-card">
+              <p class="debug-label">Simulations</p>
+              <p class="debug-value">{simulations}</p>
+            </article>
+            <article class="debug-card">
+              <p class="debug-label">Output Type</p>
+              <p class="debug-value">{html.escape(target_output_type)}</p>
+            </article>
+            <article class="debug-card">
+              <p class="debug-label">Generated</p>
+              <p class="debug-value">{generated_at}</p>
+            </article>
+          </div>
+        </details>
         {toggle_html}
       </section>
 

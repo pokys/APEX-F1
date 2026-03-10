@@ -704,7 +704,7 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
           grid-template-columns: 1fr 1fr;
         }}
         .hero-grid {{
-          grid-template-columns: 1fr;
+          display: none;
         }}
         .desktop-table {{
           display: none;

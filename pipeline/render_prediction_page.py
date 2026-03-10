@@ -198,6 +198,19 @@ def why_active_now(target: str, weekend_format: str, available_sessions: list[st
     return "The system is automatically selecting the next competitive session and forecasting it."
 
 
+def season_blend_note(season_blend: dict[str, Any]) -> str:
+    current_weight = int(to_float(season_blend.get("current_weight"), 100))
+    current_season = int(to_float(season_blend.get("current_season"), 0))
+    previous_weight = int(to_float(season_blend.get("previous_weight"), 0))
+    previous_season = int(to_float(season_blend.get("previous_season"), 0))
+    if current_weight >= 100 or previous_weight <= 0 or current_season <= 0 or previous_season <= 0:
+        return ""
+    return (
+        f"Because the season is still young, the model is blending {current_weight}% of {current_season} data "
+        f"with {previous_weight}% of {previous_season} data."
+    )
+
+
 def scenario_panel_html(prediction: dict[str, Any], scenario_key: str, scenario_label: str, active: bool) -> str:
     target = str(prediction.get("prediction_target") or "race")
     rows = parse_prediction_rows(prediction)
@@ -280,10 +293,15 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
     available_sessions_label = ", ".join(str(code) for code in available_sessions) if available_sessions else "none"
     inputs_used = prediction.get("inputs_used") or race_config.get("inputs_used") or []
     inputs_status = prediction.get("inputs_status") or race_config.get("inputs_status") or []
+    season_blend = prediction.get("season_blend") or {}
     grid_source = html.escape(str(prediction.get("simulation", {}).get("grid_source") or race_config.get("grid_source") or "simulation"))
     simulations = int(to_float(prediction.get("simulation", {}).get("simulations"), to_float(race_config.get("simulations"), 0)))
     signal_count = int(to_float(race_config.get("signal_count"), 0))
     why_now = why_active_now(target, str(prediction.get("weekend_format") or race_config.get("weekend_format") or "standard"), list(available_sessions))
+    blend_note = season_blend_note(season_blend if isinstance(season_blend, dict) else {})
+    if blend_note:
+        why_now = f"{why_now} {blend_note}"
+    season_blend_summary = html.escape(str((season_blend or {}).get("summary") or "Unknown"))
 
     toggle_html = ""
     script_html = ""
@@ -754,6 +772,10 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
         <details class="debug-panel">
           <summary>Technical Details</summary>
           <div class="debug-grid">
+            <article class="debug-card">
+              <p class="debug-label">Season Blend</p>
+              <p class="debug-value">{season_blend_summary}</p>
+            </article>
             <article class="debug-card">
               <p class="debug-label">Target Session</p>
               <p class="debug-value">{target_session_code}</p>

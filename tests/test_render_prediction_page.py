@@ -23,6 +23,13 @@ def test_render_page_shows_current_target_and_inputs() -> None:
             {"source": "fp1", "source_key": "FP1", "configured_weight": 0.1, "status": "missing"},
             {"source": "signals", "source_key": "signals", "configured_weight": 0.1, "status": "available_zero_weight"},
         ],
+        "season_blend": {
+            "summary": "20% Season 2026 / 80% Season 2025",
+            "current_weight": 20,
+            "current_season": 2026,
+            "previous_weight": 80,
+            "previous_season": 2025,
+        },
         "simulation": {"simulations": 6000, "available_sessions": ["FP1", "FP2", "FP3"]},
         "drivers": [
             {"name": "RUS", "team": "Mercedes", "pole_probability": 0.31, "front_row_probability": 0.6, "top10_probability": 0.99, "expected_position": 2.1},
@@ -45,11 +52,14 @@ def test_render_page_shows_current_target_and_inputs() -> None:
     assert "Weekend Timeline" in rendered
     assert "Why This Is Active Now" in rendered
     assert "Technical Details" in rendered
+    assert "Season Blend" in rendered
+    assert "20% Season 2026 / 80% Season 2025" in rendered
     assert "Available, zero weight" in rendered
     assert "Missing" in rendered
     assert "history_driver" in rendered
     assert "Pole" in rendered
     assert "Expected Position" in rendered
+    assert "Because the season is still young" in rendered
 
 
 def test_render_page_shows_dry_wet_toggle_for_race_predictions() -> None:

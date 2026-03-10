@@ -1,5 +1,5 @@
 {
-  "deterministic_run_id": "8c4074376302908d9612",
+  "deterministic_run_id": "e431a60d07c67427a0d3",
   "drivers": [
     {
       "driver_share": 52.4,
@@ -244,26 +244,26 @@
       "weekend_form_delta": 0.0
     }
   ],
-  "generated_at": "2026-03-10T07:23:05Z",
+  "generated_at": "2026-03-10T07:44:41Z",
   "inputs_used": [
     {
       "source": "history_driver",
       "source_key": "history_driver",
-      "weight": 0.6
+      "weight": 0.636364
     },
     {
       "source": "history_team",
       "source_key": "history_team",
-      "weight": 0.4
+      "weight": 0.363636
     }
   ],
   "integrity": {
-    "driver_ratings_hash": "40d3642b424c",
-    "race_config_hash": "69f9a3e66bd3",
-    "team_ratings_hash": "d63a6d3c51ef"
+    "driver_ratings_hash": "d1ef0183b84b",
+    "race_config_hash": "d31ccb88c8b5",
+    "team_ratings_hash": "73142af0a498"
   },
-  "prediction_target": "qualifying",
-  "prediction_target_label": "Qualifying",
+  "prediction_target": "sprint_qualifying",
+  "prediction_target_label": "Sprint Qualifying",
   "race": "Chinese Grand Prix",
   "simulation": {
     "available_sessions": [],
@@ -274,6 +274,6 @@
     "weather": "dry"
   },
   "target_output_type": "qualifying",
-  "target_session_code": "Q",
-  "weekend_format": "standard"
+  "target_session_code": "SQ",
+  "weekend_format": "sprint"
 }

@@ -41,6 +41,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--prediction-dry", default="outputs/prediction_dry.json", help="Dry scenario prediction JSON input path.")
     parser.add_argument("--prediction-wet", default="outputs/prediction_wet.json", help="Wet scenario prediction JSON input path.")
     parser.add_argument("--race-config", default="config/race_config.json", help="Race config JSON input path.")
+    parser.add_argument("--tyres-input", default="data/raw/tyres", help="Weekend tyre compounds file or directory.")
     parser.add_argument("--output", default="outputs/prediction_report.html", help="Rendered HTML output path.")
     parser.add_argument("--allow-missing-input", action="store_true", help="Exit 0 if prediction input is missing.")
     parser.add_argument(
@@ -54,6 +55,31 @@ def parse_args() -> argparse.Namespace:
 
 def load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def slug(value: str | None) -> str:
+    if not value:
+        return ""
+    return "".join(ch.lower() if ch.isalnum() else "-" for ch in value).strip("-")
+
+
+def load_tyre_compounds(tyres_input: Path, season: int, race_name: str) -> dict[str, Any] | None:
+    path = tyres_input / f"season_{season}.json" if tyres_input.is_dir() else tyres_input
+    if not path.exists():
+        return None
+    try:
+        raw = load_json(path)
+    except Exception:
+        return None
+    if not isinstance(raw, list):
+        return None
+    target = slug(race_name)
+    for row in raw:
+        if not isinstance(row, dict):
+            continue
+        if slug(str(row.get("event_name") or "")) == target:
+            return row
+    return None
 
 
 def to_float(value: Any, default: float = 0.0) -> float:
@@ -281,7 +307,12 @@ def scenario_panel_html(prediction: dict[str, Any], scenario_key: str, scenario_
     )
 
 
-def render_page(prediction: dict[str, Any], race_config: dict[str, Any], prediction_wet: dict[str, Any] | None = None) -> str:
+def render_page(
+    prediction: dict[str, Any],
+    race_config: dict[str, Any],
+    prediction_wet: dict[str, Any] | None = None,
+    tyre_compounds: dict[str, Any] | None = None,
+) -> str:
     target = str(prediction.get("prediction_target") or race_config.get("prediction_target") or "race")
     target_label = str(prediction.get("prediction_target_label") or race_config.get("prediction_target_label") or "Race")
     target_output_type = str(prediction.get("target_output_type") or race_config.get("target_output_type") or "race")
@@ -302,6 +333,19 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
     if blend_note:
         why_now = f"{why_now} {blend_note}"
     season_blend_summary = html.escape(str((season_blend or {}).get("summary") or "Unknown"))
+    compounds_html = ""
+    if isinstance(tyre_compounds, dict) and isinstance(tyre_compounds.get("compounds"), dict):
+        compounds = tyre_compounds["compounds"]
+        compounds_html = (
+            '<section class="tyre-card">'
+            '<h2>Pirelli Weekend Compounds</h2>'
+            '<div class="tyre-grid">'
+            f'<article class="tyre-item tyre-hard"><p class="tyre-label">Hard</p><p class="tyre-value">{html.escape(str(compounds.get("hard") or "?"))}</p></article>'
+            f'<article class="tyre-item tyre-medium"><p class="tyre-label">Medium</p><p class="tyre-value">{html.escape(str(compounds.get("medium") or "?"))}</p></article>'
+            f'<article class="tyre-item tyre-soft"><p class="tyre-label">Soft</p><p class="tyre-value">{html.escape(str(compounds.get("soft") or "?"))}</p></article>'
+            "</div>"
+            "</section>"
+        )
 
     toggle_html = ""
     script_html = ""
@@ -450,6 +494,52 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
         margin: 0;
         color: var(--ink);
         line-height: 1.55;
+      }}
+      .tyre-card {{
+        margin-top: 16px;
+        background: rgba(18, 34, 49, 0.72);
+        border: 1px solid var(--grid);
+        border-radius: 16px;
+        padding: 16px;
+      }}
+      .tyre-card h2 {{
+        margin: 0 0 12px;
+        font-size: 0.95rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }}
+      .tyre-grid {{
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+      }}
+      .tyre-item {{
+        border: 1px solid var(--grid);
+        border-radius: 14px;
+        padding: 12px;
+        background: rgba(9, 18, 28, 0.72);
+      }}
+      .tyre-hard {{
+        box-shadow: inset 0 0 0 1px rgba(235, 244, 255, 0.08);
+      }}
+      .tyre-medium {{
+        box-shadow: inset 0 0 0 1px rgba(255, 201, 70, 0.18);
+      }}
+      .tyre-soft {{
+        box-shadow: inset 0 0 0 1px rgba(255, 93, 93, 0.18);
+      }}
+      .tyre-label {{
+        margin: 0 0 6px;
+        color: var(--muted);
+        font-size: 0.76rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }}
+      .tyre-value {{
+        margin: 0;
+        font-size: 1.2rem;
+        font-weight: 700;
       }}
       .debug-panel {{
         margin-top: 16px;
@@ -721,6 +811,9 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
         .timeline-grid {{
           grid-template-columns: 1fr 1fr;
         }}
+        .tyre-grid {{
+          grid-template-columns: 1fr;
+        }}
         .hero-grid {{
           display: none;
         }}
@@ -769,6 +862,7 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
           <h2>Why This Is Active Now</h2>
           <p>{html.escape(why_now)}</p>
         </section>
+        {compounds_html}
         <details class="debug-panel">
           <summary>Technical Details</summary>
           <div class="debug-grid">
@@ -869,7 +963,10 @@ def main() -> int:
             raw = load_json(race_config_path)
             if isinstance(raw, dict):
                 race_config = raw
-        rendered = render_page(prediction, race_config, prediction_wet=prediction_wet)
+        season = int(to_float(prediction.get("season"), to_float(race_config.get("season"), 0)))
+        race_name = str(prediction.get("race") or race_config.get("race") or "")
+        tyre_compounds = load_tyre_compounds(Path(args.tyres_input), season, race_name) if season > 0 and race_name else None
+        rendered = render_page(prediction, race_config, prediction_wet=prediction_wet, tyre_compounds=tyre_compounds)
         output_path = Path(args.output)
         output_path.parent.mkdir(parents=True, exist_ok=True)
         output_path.write_text(rendered, encoding="utf-8")

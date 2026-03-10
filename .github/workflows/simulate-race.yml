@@ -20,6 +20,7 @@ on:
       - "config/race_config.json"
       - "config/session_weights.json"
       - "data/raw/calendars/**"
+      - "data/raw/tyres/**"
       - "config/track_profiles.json"
       - ".github/workflows/simulate-race.yml"
       - "requirements.lock"
@@ -76,7 +77,7 @@ jobs:
 
       - name: Render prediction page
         run: |
-          python pipeline/render_prediction_page.py --prediction outputs/prediction.json --prediction-dry outputs/prediction_dry.json --prediction-wet outputs/prediction_wet.json --race-config config/race_config.json --output outputs/prediction_report.html --allow-missing-input --log-level INFO
+          python pipeline/render_prediction_page.py --prediction outputs/prediction.json --prediction-dry outputs/prediction_dry.json --prediction-wet outputs/prediction_wet.json --race-config config/race_config.json --tyres-input data/raw/tyres --output outputs/prediction_report.html --allow-missing-input --log-level INFO
 
       - name: Commit changes
         run: |

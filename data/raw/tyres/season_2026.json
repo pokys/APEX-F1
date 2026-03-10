@@ -1,0 +1,35 @@
+[
+  {
+    "compounds": {
+      "hard": "C3",
+      "medium": "C4",
+      "soft": "C5"
+    },
+    "event_name": "Australian Grand Prix",
+    "round": 1,
+    "source_title": "Complete F1 tyre range for the first three Grands Prix of 2026",
+    "source_url": "https://press.pirelli.com/complete-f1-tyre-range-for-the-first-three-grands-prix-of-2026/"
+  },
+  {
+    "compounds": {
+      "hard": "C2",
+      "medium": "C3",
+      "soft": "C4"
+    },
+    "event_name": "Chinese Grand Prix",
+    "round": 2,
+    "source_title": "Complete F1 tyre range for the first three Grands Prix of 2026",
+    "source_url": "https://press.pirelli.com/complete-f1-tyre-range-for-the-first-three-grands-prix-of-2026/"
+  },
+  {
+    "compounds": {
+      "hard": "C1",
+      "medium": "C2",
+      "soft": "C3"
+    },
+    "event_name": "Japanese Grand Prix",
+    "round": 3,
+    "source_title": "Complete F1 tyre range for the first three Grands Prix of 2026",
+    "source_url": "https://press.pirelli.com/complete-f1-tyre-range-for-the-first-three-grands-prix-of-2026/"
+  }
+]

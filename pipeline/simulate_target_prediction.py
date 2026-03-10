@@ -5,6 +5,7 @@ Target-aware prediction execution for qualifying, sprint qualifying, sprint and 
 
 from __future__ import annotations
 
+import re
 from pathlib import Path
 from typing import Any
 
@@ -19,6 +20,36 @@ from pipeline.simulate_race import (
     stable_hash_json,
     temperature_scale_distribution,
 )
+
+SEASON_BLEND_RE = re.compile(r"Blended Data:\s*(\d+)% Season (\d{4}),\s*(\d+)% Season (\d{4})")
+
+
+def extract_season_blend(metadata: dict[str, Any]) -> dict[str, Any]:
+    source_summary = str(metadata.get("source_summary") or "").strip()
+    season = int(safe_float(metadata.get("season"), 0))
+    if not source_summary:
+        return {"summary": f"100% Season {season}" if season > 0 else "Unknown"}
+
+    match = SEASON_BLEND_RE.search(source_summary)
+    if match:
+        current_weight, current_season, previous_weight, previous_season = match.groups()
+        return {
+            "summary": f"{current_weight}% Season {current_season} / {previous_weight}% Season {previous_season}",
+            "current_weight": int(current_weight),
+            "current_season": int(current_season),
+            "previous_weight": int(previous_weight),
+            "previous_season": int(previous_season),
+        }
+
+    if season > 0:
+        return {
+            "summary": f"100% Season {season}",
+            "current_weight": 100,
+            "current_season": season,
+            "previous_weight": 0,
+            "previous_season": season - 1 if season > 1 else season,
+        }
+    return {"summary": source_summary}
 
 
 def apply_weekend_adjustments(entries: list[dict[str, Any]], config: dict[str, Any], raw_dir: Path) -> tuple[list[dict[str, Any]], dict[str, dict[str, Any]]]:
@@ -68,6 +99,7 @@ def _shared_prediction_meta(
 ) -> dict[str, Any]:
     seed = int(safe_float(config.get("seed"), 20260303))
     simulations = max(int(safe_float(config.get("simulations"), MIN_SIMULATIONS)), MIN_SIMULATIONS)
+    season_blend = extract_season_blend(driver_ratings)
     return {
         "race": str(config.get("race") or "Next GP"),
         "generated_at": str(config.get("generated_at") or config.get("race_date") or "1970-01-01T00:00:00Z"),
@@ -77,6 +109,7 @@ def _shared_prediction_meta(
         "target_output_type": str(config.get("target_output_type") or "race"),
         "weekend_format": str(config.get("weekend_format") or "standard"),
         "inputs_used": config.get("inputs_used", []),
+        "season_blend": season_blend,
         "deterministic_run_id": stable_hash_json(
             {
                 "seed": seed,

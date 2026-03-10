@@ -779,22 +779,21 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
               <p class="debug-value">{generated_at}</p>
             </article>
           </div>
+          <h2 class="section-title">Input Weights</h2>
+          <section class="inputs-grid">{manifest_cards}</section>
+
+          <h2 class="section-title">Input Availability</h2>
+          <section class="input-status-grid">{input_status_cards}</section>
         </details>
         {toggle_html}
       </section>
 
-      <h2 class="section-title">Input Weights</h2>
-      <section class="inputs-grid">{manifest_cards}</section>
-
-      <h2 class="section-title">Input Availability</h2>
-      <section class="input-status-grid">{input_status_cards}</section>
-
-      <h2 class="section-title">Weekend Timeline</h2>
-      <section class="timeline-grid">{weekend_timeline}</section>
-
       <h2 class="section-title">Predictions</h2>
       {dry_panel}
       {wet_panel}
+
+      <h2 class="section-title">Weekend Timeline</h2>
+      <section class="timeline-grid">{weekend_timeline}</section>
     </main>
 {script_html}
   </body>

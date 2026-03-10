@@ -87,7 +87,21 @@ def load_session_weights(path: Path) -> dict[str, dict[str, float]]:
         out[target] = clean
     return out
 
+def load_cached_calendar(path: Path) -> list[dict[str, Any]]:
+    if not path.exists():
+        return []
+    raw = load_json(path)
+    if not isinstance(raw, list):
+        return []
+    return [item for item in raw if isinstance(item, dict)]
 
+
+def find_cached_calendar_entry(calendar: list[dict[str, Any]], race_name: str) -> dict[str, Any] | None:
+    key = race_name.strip().lower()
+    for item in calendar:
+        if str(item.get("event_name") or "").strip().lower() == key:
+            return item
+    return None
 def normalize_weekend_format(event_format: Any, available_sessions: list[str]) -> str:
     text = str(event_format or "").strip().lower()
     if "sprint" in text:

@@ -19,6 +19,7 @@ on:
       - "models/*.json"
       - "config/race_config.json"
       - "config/session_weights.json"
+      - "data/raw/calendars/**"
       - "config/track_profiles.json"
       - ".github/workflows/simulate-race.yml"
       - "requirements.lock"
@@ -47,11 +48,11 @@ jobs:
 
       - name: Select next GP config
         run: |
-          python pipeline/select_next_gp.py --season "$(date -u +%Y)" --as-of-date "$(date -u +%F)" --race-config config/race_config.json --log-level INFO
+          python pipeline/select_next_gp.py --season "$(date -u +%Y)" --as-of-date "$(date -u +%F)" --raw-dir data/raw/fastf1 --calendar-cache-dir data/raw/calendars --race-config config/race_config.json --log-level INFO
 
       - name: Select automatic prediction target
         run: |
-          python pipeline/select_prediction_target.py --race-config config/race_config.json --raw-dir data/raw/fastf1 --session-weights config/session_weights.json --signals-dir knowledge/processed --log-level INFO
+          python pipeline/select_prediction_target.py --race-config config/race_config.json --raw-dir data/raw/fastf1 --calendar-cache-dir data/raw/calendars --session-weights config/session_weights.json --signals-dir knowledge/processed --log-level INFO
 
       - name: Apply backtest calibration
         run: |

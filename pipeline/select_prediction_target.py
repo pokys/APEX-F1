@@ -32,8 +32,10 @@ from pipeline.prediction_targeting import (  # noqa: E402
     available_sessions_for_event,
     build_inputs_manifest,
     extract_fixed_grid_from_event,
+    find_cached_calendar_entry,
     find_calendar_entry,
     find_event,
+    load_cached_calendar,
     load_json,
     load_session_weights,
     normalize_weekend_format,
@@ -49,6 +51,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Select the current automatic prediction target.")
     parser.add_argument("--race-config", default="config/race_config.json", help="Race config JSON path.")
     parser.add_argument("--raw-dir", default="data/raw/fastf1", help="FastF1 raw snapshot directory.")
+    parser.add_argument("--calendar-cache-dir", default="data/raw/calendars", help="Normalized calendar cache directory.")
     parser.add_argument("--session-weights", default="config/session_weights.json", help="Session weights config path.")
     parser.add_argument("--signals-dir", default="knowledge/processed", help="Processed signal directory.")
     parser.add_argument(
@@ -89,6 +92,8 @@ def main() -> int:
 
         event = find_event(snapshot, race_name)
         calendar_entry = find_calendar_entry(snapshot, race_name)
+        cached_calendar = load_cached_calendar(Path(args.calendar_cache_dir) / f"season_{season}.json")
+        cached_entry = find_cached_calendar_entry(cached_calendar, race_name)
         if event is None and calendar_entry is None:
             LOGGER.warning(
                 "Race '%s' not found in %s. Falling back to config-only target selection.",
@@ -102,6 +107,8 @@ def main() -> int:
             event_format = str(event.get("event_format") or "")
         elif calendar_entry is not None:
             event_format = str(calendar_entry.get("event_format") or "")
+        elif cached_entry is not None:
+            event_format = str(cached_entry.get("event_format") or "")
         weekend_format = normalize_weekend_format(event_format, available_sessions)
         target = select_prediction_target(weekend_format, available_sessions)
         target_code = TARGET_SESSION_CODE[target]

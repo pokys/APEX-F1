@@ -1,6 +1,10 @@
 from __future__ import annotations
 
 from pipeline.prediction_targeting import build_inputs_manifest, select_prediction_target
+import json
+from pathlib import Path
+
+from pipeline.prediction_targeting import build_inputs_manifest, find_cached_calendar_entry, load_cached_calendar, select_prediction_target
 
 
 def test_select_prediction_target_standard_weekend() -> None:
@@ -37,3 +41,23 @@ def test_build_inputs_manifest_filters_missing_sessions_and_normalizes() -> None
     assert "signals" not in sources
     total = sum(float(row["weight"]) for row in manifest)
     assert round(total, 6) == 1.0
+
+
+def test_cached_calendar_lookup(tmp_path: Path) -> None:
+    path = tmp_path / "season_2026.json"
+    path.write_text(
+        json.dumps(
+            [
+                {"event_name": "Chinese Grand Prix", "event_format": "sprint"},
+                {"event_name": "Japanese Grand Prix", "event_format": "conventional"},
+            ]
+        ),
+        encoding="utf-8",
+    )
+    calendar = load_cached_calendar(path)
+    chinese = find_cached_calendar_entry(calendar, "Chinese Grand Prix")
+    japan = find_cached_calendar_entry(calendar, "Japanese Grand Prix")
+    assert chinese is not None
+    assert chinese["event_format"] == "sprint"
+    assert japan is not None
+    assert japan["event_format"] == "conventional"

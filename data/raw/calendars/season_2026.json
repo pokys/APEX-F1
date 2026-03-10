@@ -1,25 +1,232 @@
 [
-  {"country":"Australia","event_date":"2026-03-08","event_format":"conventional","event_name":"Australian Grand Prix","location":"Melbourne","official_event_name":"FORMULA 1 LOUIS VUITTON AUSTRALIAN GRAND PRIX 2026","round":1,"season":2026},
-  {"country":"China","event_date":"2026-03-15","event_format":"sprint","event_name":"Chinese Grand Prix","location":"Shanghai","official_event_name":"FORMULA 1 HEINEKEN CHINESE GRAND PRIX 2026","round":2,"season":2026},
-  {"country":"Japan","event_date":"2026-03-29","event_format":"conventional","event_name":"Japanese Grand Prix","location":"Suzuka","official_event_name":"FORMULA 1 LENOVO JAPANESE GRAND PRIX 2026","round":3,"season":2026},
-  {"country":"Bahrain","event_date":"2026-04-12","event_format":"conventional","event_name":"Bahrain Grand Prix","location":"Sakhir","official_event_name":"FORMULA 1 GULF AIR BAHRAIN GRAND PRIX 2026","round":4,"season":2026},
-  {"country":"Saudi Arabia","event_date":"2026-04-19","event_format":"conventional","event_name":"Saudi Arabian Grand Prix","location":"Jeddah","official_event_name":"FORMULA 1 STC SAUDI ARABIAN GRAND PRIX 2026","round":5,"season":2026},
-  {"country":"United States","event_date":"2026-05-03","event_format":"sprint","event_name":"Miami Grand Prix","location":"Miami","official_event_name":"FORMULA 1 CRYPTO.COM MIAMI GRAND PRIX 2026","round":6,"season":2026},
-  {"country":"Canada","event_date":"2026-05-24","event_format":"sprint","event_name":"Canadian Grand Prix","location":"Montreal","official_event_name":"FORMULA 1 PIRELLI CANADIAN GRAND PRIX 2026","round":7,"season":2026},
-  {"country":"Monaco","event_date":"2026-06-07","event_format":"conventional","event_name":"Monaco Grand Prix","location":"Monte Carlo","official_event_name":"FORMULA 1 TAG HEUER GRAND PRIX DE MONACO 2026","round":8,"season":2026},
-  {"country":"Spain","event_date":"2026-06-14","event_format":"conventional","event_name":"Spanish Grand Prix","location":"Barcelona","official_event_name":"FORMULA 1 AWS GRAN PREMIO DE ESPANA 2026","round":9,"season":2026},
-  {"country":"Austria","event_date":"2026-06-28","event_format":"conventional","event_name":"Austrian Grand Prix","location":"Spielberg","official_event_name":"FORMULA 1 MSC CRUISES AUSTRIAN GRAND PRIX 2026","round":10,"season":2026},
-  {"country":"United Kingdom","event_date":"2026-07-05","event_format":"sprint","event_name":"British Grand Prix","location":"Silverstone","official_event_name":"FORMULA 1 QATAR AIRWAYS BRITISH GRAND PRIX 2026","round":11,"season":2026},
-  {"country":"Belgium","event_date":"2026-07-19","event_format":"conventional","event_name":"Belgian Grand Prix","location":"Spa-Francorchamps","official_event_name":"FORMULA 1 MOET & CHANDON BELGIAN GRAND PRIX 2026","round":12,"season":2026},
-  {"country":"Hungary","event_date":"2026-07-26","event_format":"conventional","event_name":"Hungarian Grand Prix","location":"Budapest","official_event_name":"FORMULA 1 LENOVO HUNGARIAN GRAND PRIX 2026","round":13,"season":2026},
-  {"country":"Netherlands","event_date":"2026-08-23","event_format":"sprint","event_name":"Dutch Grand Prix","location":"Zandvoort","official_event_name":"FORMULA 1 HEINEKEN DUTCH GRAND PRIX 2026","round":14,"season":2026},
-  {"country":"Italy","event_date":"2026-09-06","event_format":"conventional","event_name":"Italian Grand Prix","location":"Monza","official_event_name":"FORMULA 1 PIRELLI GRAN PREMIO D'ITALIA 2026","round":15,"season":2026},
-  {"country":"Azerbaijan","event_date":"2026-09-27","event_format":"conventional","event_name":"Azerbaijan Grand Prix","location":"Baku","official_event_name":"FORMULA 1 QATAR AIRWAYS AZERBAIJAN GRAND PRIX 2026","round":16,"season":2026},
-  {"country":"Singapore","event_date":"2026-10-11","event_format":"sprint","event_name":"Singapore Grand Prix","location":"Singapore","official_event_name":"FORMULA 1 SINGAPORE AIRLINES SINGAPORE GRAND PRIX 2026","round":17,"season":2026},
-  {"country":"United States","event_date":"2026-10-25","event_format":"conventional","event_name":"United States Grand Prix","location":"Austin","official_event_name":"FORMULA 1 MSC CRUISES UNITED STATES GRAND PRIX 2026","round":18,"season":2026},
-  {"country":"Mexico","event_date":"2026-11-01","event_format":"conventional","event_name":"Mexico City Grand Prix","location":"Mexico City","official_event_name":"FORMULA 1 GRAN PREMIO DE LA CIUDAD DE MEXICO 2026","round":19,"season":2026},
-  {"country":"Brazil","event_date":"2026-11-08","event_format":"conventional","event_name":"Sao Paulo Grand Prix","location":"Sao Paulo","official_event_name":"FORMULA 1 GRANDE PREMIO DE SAO PAULO 2026","round":20,"season":2026},
-  {"country":"United States","event_date":"2026-11-21","event_format":"conventional","event_name":"Las Vegas Grand Prix","location":"Las Vegas","official_event_name":"FORMULA 1 HEINEKEN LAS VEGAS GRAND PRIX 2026","round":21,"season":2026},
-  {"country":"Qatar","event_date":"2026-11-29","event_format":"conventional","event_name":"Qatar Grand Prix","location":"Lusail","official_event_name":"FORMULA 1 QATAR AIRWAYS QATAR GRAND PRIX 2026","round":22,"season":2026},
-  {"country":"Abu Dhabi","event_date":"2026-12-06","event_format":"conventional","event_name":"Abu Dhabi Grand Prix","location":"Yas Marina","official_event_name":"FORMULA 1 ETIHAD AIRWAYS ABU DHABI GRAND PRIX 2026","round":23,"season":2026}
+  {
+    "country": "Australia",
+    "event_date": "2026-03-08",
+    "event_format": "conventional",
+    "event_name": "Australian Grand Prix",
+    "location": "Melbourne",
+    "official_event_name": "FORMULA 1 LOUIS VUITTON AUSTRALIAN GRAND PRIX 2026",
+    "round": 1,
+    "season": 2026
+  },
+  {
+    "country": "China",
+    "event_date": "2026-03-15",
+    "event_format": "sprint",
+    "event_name": "Chinese Grand Prix",
+    "location": "Shanghai",
+    "official_event_name": "FORMULA 1 HEINEKEN CHINESE GRAND PRIX 2026",
+    "round": 2,
+    "season": 2026
+  },
+  {
+    "country": "Japan",
+    "event_date": "2026-03-29",
+    "event_format": "conventional",
+    "event_name": "Japanese Grand Prix",
+    "location": "Suzuka",
+    "official_event_name": "FORMULA 1 LENOVO JAPANESE GRAND PRIX 2026",
+    "round": 3,
+    "season": 2026
+  },
+  {
+    "country": "Bahrain",
+    "event_date": "2026-04-12",
+    "event_format": "conventional",
+    "event_name": "Bahrain Grand Prix",
+    "location": "Sakhir",
+    "official_event_name": "FORMULA 1 GULF AIR BAHRAIN GRAND PRIX 2026",
+    "round": 4,
+    "season": 2026
+  },
+  {
+    "country": "Saudi Arabia",
+    "event_date": "2026-04-19",
+    "event_format": "conventional",
+    "event_name": "Saudi Arabian Grand Prix",
+    "location": "Jeddah",
+    "official_event_name": "FORMULA 1 STC SAUDI ARABIAN GRAND PRIX 2026",
+    "round": 5,
+    "season": 2026
+  },
+  {
+    "country": "United States",
+    "event_date": "2026-05-03",
+    "event_format": "sprint",
+    "event_name": "Miami Grand Prix",
+    "location": "Miami",
+    "official_event_name": "FORMULA 1 CRYPTO.COM MIAMI GRAND PRIX 2026",
+    "round": 6,
+    "season": 2026
+  },
+  {
+    "country": "Canada",
+    "event_date": "2026-05-24",
+    "event_format": "sprint",
+    "event_name": "Canadian Grand Prix",
+    "location": "Montreal",
+    "official_event_name": "FORMULA 1 PIRELLI CANADIAN GRAND PRIX 2026",
+    "round": 7,
+    "season": 2026
+  },
+  {
+    "country": "Monaco",
+    "event_date": "2026-06-07",
+    "event_format": "conventional",
+    "event_name": "Monaco Grand Prix",
+    "location": "Monte Carlo",
+    "official_event_name": "FORMULA 1 TAG HEUER GRAND PRIX DE MONACO 2026",
+    "round": 8,
+    "season": 2026
+  },
+  {
+    "country": "Spain",
+    "event_date": "2026-06-14",
+    "event_format": "conventional",
+    "event_name": "Spanish Grand Prix",
+    "location": "Barcelona",
+    "official_event_name": "FORMULA 1 AWS GRAN PREMIO DE ESPANA 2026",
+    "round": 9,
+    "season": 2026
+  },
+  {
+    "country": "Austria",
+    "event_date": "2026-06-28",
+    "event_format": "conventional",
+    "event_name": "Austrian Grand Prix",
+    "location": "Spielberg",
+    "official_event_name": "FORMULA 1 MSC CRUISES AUSTRIAN GRAND PRIX 2026",
+    "round": 10,
+    "season": 2026
+  },
+  {
+    "country": "United Kingdom",
+    "event_date": "2026-07-05",
+    "event_format": "sprint",
+    "event_name": "British Grand Prix",
+    "location": "Silverstone",
+    "official_event_name": "FORMULA 1 QATAR AIRWAYS BRITISH GRAND PRIX 2026",
+    "round": 11,
+    "season": 2026
+  },
+  {
+    "country": "Belgium",
+    "event_date": "2026-07-19",
+    "event_format": "conventional",
+    "event_name": "Belgian Grand Prix",
+    "location": "Spa-Francorchamps",
+    "official_event_name": "FORMULA 1 MOET & CHANDON BELGIAN GRAND PRIX 2026",
+    "round": 12,
+    "season": 2026
+  },
+  {
+    "country": "Hungary",
+    "event_date": "2026-07-26",
+    "event_format": "conventional",
+    "event_name": "Hungarian Grand Prix",
+    "location": "Budapest",
+    "official_event_name": "FORMULA 1 LENOVO HUNGARIAN GRAND PRIX 2026",
+    "round": 13,
+    "season": 2026
+  },
+  {
+    "country": "Netherlands",
+    "event_date": "2026-08-23",
+    "event_format": "sprint",
+    "event_name": "Dutch Grand Prix",
+    "location": "Zandvoort",
+    "official_event_name": "FORMULA 1 HEINEKEN DUTCH GRAND PRIX 2026",
+    "round": 14,
+    "season": 2026
+  },
+  {
+    "country": "Italy",
+    "event_date": "2026-09-06",
+    "event_format": "conventional",
+    "event_name": "Italian Grand Prix",
+    "location": "Monza",
+    "official_event_name": "FORMULA 1 PIRELLI GRAN PREMIO D'ITALIA 2026",
+    "round": 15,
+    "season": 2026
+  },
+  {
+    "country": "Spain",
+    "event_date": "2026-09-13",
+    "event_format": "conventional",
+    "event_name": "Spanish Grand Prix",
+    "location": "Madrid",
+    "official_event_name": "FORMULA 1 MADRID GRAND PRIX 2026",
+    "round": 16,
+    "season": 2026
+  },
+  {
+    "country": "Azerbaijan",
+    "event_date": "2026-09-26",
+    "event_format": "conventional",
+    "event_name": "Azerbaijan Grand Prix",
+    "location": "Baku",
+    "official_event_name": "FORMULA 1 QATAR AIRWAYS AZERBAIJAN GRAND PRIX 2026",
+    "round": 17,
+    "season": 2026
+  },
+  {
+    "country": "Singapore",
+    "event_date": "2026-10-11",
+    "event_format": "sprint",
+    "event_name": "Singapore Grand Prix",
+    "location": "Singapore",
+    "official_event_name": "FORMULA 1 SINGAPORE AIRLINES SINGAPORE GRAND PRIX 2026",
+    "round": 18,
+    "season": 2026
+  },
+  {
+    "country": "United States",
+    "event_date": "2026-10-25",
+    "event_format": "conventional",
+    "event_name": "United States Grand Prix",
+    "location": "Austin",
+    "official_event_name": "FORMULA 1 MSC CRUISES UNITED STATES GRAND PRIX 2026",
+    "round": 19,
+    "season": 2026
+  },
+  {
+    "country": "Mexico",
+    "event_date": "2026-11-01",
+    "event_format": "conventional",
+    "event_name": "Mexico City Grand Prix",
+    "location": "Mexico City",
+    "official_event_name": "FORMULA 1 GRAN PREMIO DE LA CIUDAD DE MEXICO 2026",
+    "round": 20,
+    "season": 2026
+  },
+  {
+    "country": "Brazil",
+    "event_date": "2026-11-08",
+    "event_format": "conventional",
+    "event_name": "Sao Paulo Grand Prix",
+    "location": "Sao Paulo",
+    "official_event_name": "FORMULA 1 GRANDE PREMIO DE SAO PAULO 2026",
+    "round": 21,
+    "season": 2026
+  },
+  {
+    "country": "United States",
+    "event_date": "2026-11-21",
+    "event_format": "conventional",
+    "event_name": "Las Vegas Grand Prix",
+    "location": "Las Vegas",
+    "official_event_name": "FORMULA 1 HEINEKEN LAS VEGAS GRAND PRIX 2026",
+    "round": 22,
+    "season": 2026
+  },
+  {
+    "country": "Qatar",
+    "event_date": "2026-11-29",
+    "event_format": "conventional",
+    "event_name": "Qatar Grand Prix",
+    "location": "Lusail",
+    "official_event_name": "FORMULA 1 QATAR AIRWAYS QATAR GRAND PRIX 2026",
+    "round": 23,
+    "season": 2026
+  }
 ]

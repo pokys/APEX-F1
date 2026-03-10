@@ -106,6 +106,52 @@
         color: var(--ink);
         line-height: 1.55;
       }
+      .tyre-card {
+        margin-top: 16px;
+        background: rgba(18, 34, 49, 0.72);
+        border: 1px solid var(--grid);
+        border-radius: 16px;
+        padding: 16px;
+      }
+      .tyre-card h2 {
+        margin: 0 0 12px;
+        font-size: 0.95rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .tyre-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+      }
+      .tyre-item {
+        border: 1px solid var(--grid);
+        border-radius: 14px;
+        padding: 12px;
+        background: rgba(9, 18, 28, 0.72);
+      }
+      .tyre-hard {
+        box-shadow: inset 0 0 0 1px rgba(235, 244, 255, 0.08);
+      }
+      .tyre-medium {
+        box-shadow: inset 0 0 0 1px rgba(255, 201, 70, 0.18);
+      }
+      .tyre-soft {
+        box-shadow: inset 0 0 0 1px rgba(255, 93, 93, 0.18);
+      }
+      .tyre-label {
+        margin: 0 0 6px;
+        color: var(--muted);
+        font-size: 0.76rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .tyre-value {
+        margin: 0;
+        font-size: 1.2rem;
+        font-weight: 700;
+      }
       .debug-panel {
         margin-top: 16px;
         background: rgba(10, 20, 30, 0.6);
@@ -376,6 +422,9 @@
         .timeline-grid {
           grid-template-columns: 1fr 1fr;
         }
+        .tyre-grid {
+          grid-template-columns: 1fr;
+        }
         .hero-grid {
           display: none;
         }
@@ -424,6 +473,7 @@
           <h2>Why This Is Active Now</h2>
           <p>This is a sprint weekend and no sprint qualifying result is available yet, so the system is forecasting Sprint Qualifying. Because the season is still young, the model is blending 20% of 2026 data with 80% of 2025 data.</p>
         </section>
+        <section class="tyre-card"><h2>Pirelli Weekend Compounds</h2><div class="tyre-grid"><article class="tyre-item tyre-hard"><p class="tyre-label">Hard</p><p class="tyre-value">C2</p></article><article class="tyre-item tyre-medium"><p class="tyre-label">Medium</p><p class="tyre-value">C3</p></article><article class="tyre-item tyre-soft"><p class="tyre-label">Soft</p><p class="tyre-value">C4</p></article></div></section>
         <details class="debug-panel">
           <summary>Technical Details</summary>
           <div class="debug-grid">

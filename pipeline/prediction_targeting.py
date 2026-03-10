@@ -263,6 +263,48 @@ def build_inputs_manifest(
     return manifest
 
 
+def build_inputs_status(
+    target: str,
+    available_sessions: list[str],
+    session_weights: dict[str, dict[str, float]],
+    active_signal_count: int,
+) -> list[dict[str, Any]]:
+    weight_map = session_weights.get(target, {})
+    source_map = TARGET_SOURCE_MAP.get(target, {})
+    available = {str(code).upper() for code in available_sessions}
+    used_manifest = build_inputs_manifest(
+        target=target,
+        available_sessions=available_sessions,
+        session_weights=session_weights,
+        active_signal_count=active_signal_count,
+    )
+    used_sources = {str(item.get("source")) for item in used_manifest}
+
+    status_rows: list[dict[str, Any]] = []
+    for source_name, source_key in source_map.items():
+        configured_weight = float(weight_map.get(source_name, 0.0))
+        if source_name in used_sources:
+            status = "used"
+        elif source_key in {"history_driver", "history_team"}:
+            status = "available_zero_weight" if configured_weight <= 0 else "missing"
+        elif source_key == "signals":
+            status = "missing" if active_signal_count <= 0 else "available_zero_weight"
+        elif source_key not in available:
+            status = "not_applicable" if configured_weight <= 0 else "missing"
+        else:
+            status = "available_zero_weight"
+        status_rows.append(
+            {
+                "source": source_name,
+                "source_key": source_key,
+                "configured_weight": round(configured_weight, 6),
+                "status": status,
+            }
+        )
+    status_rows.sort(key=lambda item: (str(item["status"]), str(item["source"])))
+    return status_rows
+
+
 def session_position_score(event: dict[str, Any], session_code: str, driver_name: str) -> float | None:
     sessions = event.get("sessions")
     if not isinstance(sessions, list):

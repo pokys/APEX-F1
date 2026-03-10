@@ -128,6 +128,33 @@ def manifest_html(items: list[dict[str, Any]]) -> str:
     return "".join(cards)
 
 
+def input_status_html(items: list[dict[str, Any]]) -> str:
+    if not items:
+        return '<div class="empty-card">No input status available.</div>'
+    cards = []
+    labels = {
+        "used": "Used",
+        "missing": "Missing",
+        "not_applicable": "Not applicable",
+        "available_zero_weight": "Available, zero weight",
+    }
+    for item in items:
+        source = html.escape(str(item.get("source") or "unknown"))
+        key = html.escape(str(item.get("source_key") or ""))
+        status = str(item.get("status") or "unknown")
+        status_label = labels.get(status, status.replace("_", " ").title())
+        weight = to_float(item.get("configured_weight"), 0.0) * 100.0
+        cards.append(
+            f'<article class="status-input-card status-{html.escape(status)}">'
+            f'<p class="input-source">{source}</p>'
+            f'<p class="input-key">{key}</p>'
+            f'<p class="status-badge">{html.escape(status_label)}</p>'
+            f'<p class="input-weight">Configured weight: {weight:.2f}%</p>'
+            "</article>"
+        )
+    return "".join(cards)
+
+
 def metric_labels(target: str) -> tuple[str, str, str]:
     if target in QUALIFYING_TARGETS:
         return ("Pole", "Front Row", "Top 10")
@@ -252,6 +279,7 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
     available_sessions = prediction.get("simulation", {}).get("available_sessions") or race_config.get("available_sessions") or []
     available_sessions_label = ", ".join(str(code) for code in available_sessions) if available_sessions else "none"
     inputs_used = prediction.get("inputs_used") or race_config.get("inputs_used") or []
+    inputs_status = prediction.get("inputs_status") or race_config.get("inputs_status") or []
     grid_source = html.escape(str(prediction.get("simulation", {}).get("grid_source") or race_config.get("grid_source") or "simulation"))
     simulations = int(to_float(prediction.get("simulation", {}).get("simulations"), to_float(race_config.get("simulations"), 0)))
     signal_count = int(to_float(race_config.get("signal_count"), 0))
@@ -287,6 +315,7 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
     dry_panel = scenario_panel_html(prediction, "dry", "Dry", True)
     wet_panel = scenario_panel_html(prediction_wet, "wet", "Wet", False) if isinstance(prediction_wet, dict) else ""
     manifest_cards = manifest_html(inputs_used if isinstance(inputs_used, list) else [])
+    input_status_cards = input_status_html(inputs_status if isinstance(inputs_status, list) else [])
     weekend_timeline = timeline_html(str(prediction.get("weekend_format") or race_config.get("weekend_format") or "standard"), list(available_sessions), target_session_code)
 
     target_blurb = {
@@ -476,6 +505,11 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 12px;
       }}
+      .input-status-grid {{
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+      }}
       .timeline-grid {{
         display: grid;
         grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -512,6 +546,37 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
         border: 1px solid var(--grid);
         border-radius: 16px;
         padding: 14px;
+      }}
+      .status-input-card {{
+        background: var(--panel);
+        border: 1px solid var(--grid);
+        border-radius: 16px;
+        padding: 14px;
+      }}
+      .status-badge {{
+        display: inline-block;
+        margin: 10px 0 0;
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }}
+      .status-used .status-badge {{
+        background: rgba(79, 224, 215, 0.18);
+        color: #8df7ef;
+      }}
+      .status-missing .status-badge {{
+        background: rgba(255, 157, 87, 0.16);
+        color: #ffbf8f;
+      }}
+      .status-not_applicable .status-badge {{
+        background: rgba(120, 136, 153, 0.18);
+        color: #b7c5d4;
+      }}
+      .status-available_zero_weight .status-badge {{
+        background: rgba(100, 196, 255, 0.16);
+        color: #9edcff;
       }}
       .input-source {{
         margin: 0;
@@ -629,6 +694,9 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
         .inputs-grid {{
           grid-template-columns: 1fr;
         }}
+        .input-status-grid {{
+          grid-template-columns: 1fr;
+        }}
         .debug-grid {{
           grid-template-columns: 1fr;
         }}
@@ -717,6 +785,9 @@ def render_page(prediction: dict[str, Any], race_config: dict[str, Any], predict
 
       <h2 class="section-title">Input Weights</h2>
       <section class="inputs-grid">{manifest_cards}</section>
+
+      <h2 class="section-title">Input Availability</h2>
+      <section class="input-status-grid">{input_status_cards}</section>
 
       <h2 class="section-title">Weekend Timeline</h2>
       <section class="timeline-grid">{weekend_timeline}</section>

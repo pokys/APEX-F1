@@ -31,6 +31,7 @@ from pipeline.prediction_targeting import (  # noqa: E402
     TARGET_SESSION_CODE,
     available_sessions_for_event,
     build_inputs_manifest,
+    build_inputs_status,
     extract_fixed_grid_from_event,
     find_cached_calendar_entry,
     find_calendar_entry,
@@ -123,6 +124,12 @@ def main() -> int:
             session_weights=weights,
             active_signal_count=active_signal_count,
         )
+        inputs_status = build_inputs_status(
+            target=target,
+            available_sessions=available_sessions,
+            session_weights=weights,
+            active_signal_count=active_signal_count,
+        )
 
         config["available_sessions"] = available_sessions
         config["weekend_format"] = weekend_format
@@ -131,6 +138,7 @@ def main() -> int:
         config["target_session_code"] = target_code
         config["target_output_type"] = target_output_type
         config["inputs_used"] = inputs_used
+        config["inputs_status"] = inputs_status
         config["signal_count"] = active_signal_count
 
         if target == "race":

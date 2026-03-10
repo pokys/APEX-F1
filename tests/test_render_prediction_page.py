@@ -17,6 +17,12 @@ def test_render_page_shows_current_target_and_inputs() -> None:
             {"source": "fp3", "source_key": "FP3", "weight": 0.3},
             {"source": "signals", "source_key": "signals", "weight": 0.2},
         ],
+        "inputs_status": [
+            {"source": "history_driver", "source_key": "history_driver", "configured_weight": 0.5, "status": "used"},
+            {"source": "history_team", "source_key": "history_team", "configured_weight": 0.3, "status": "used"},
+            {"source": "fp1", "source_key": "FP1", "configured_weight": 0.1, "status": "missing"},
+            {"source": "signals", "source_key": "signals", "configured_weight": 0.1, "status": "available_zero_weight"},
+        ],
         "simulation": {"simulations": 6000, "available_sessions": ["FP1", "FP2", "FP3"]},
         "drivers": [
             {"name": "RUS", "team": "Mercedes", "pole_probability": 0.31, "front_row_probability": 0.6, "top10_probability": 0.99, "expected_position": 2.1},
@@ -35,9 +41,12 @@ def test_render_page_shows_current_target_and_inputs() -> None:
     assert "Sessions Online" in rendered
     assert "FP1, FP2, FP3" in rendered
     assert "Input Weights" in rendered
+    assert "Input Availability" in rendered
     assert "Weekend Timeline" in rendered
     assert "Why This Is Active Now" in rendered
     assert "Technical Details" in rendered
+    assert "Available, zero weight" in rendered
+    assert "Missing" in rendered
     assert "history_driver" in rendered
     assert "Pole" in rendered
     assert "Expected Position" in rendered

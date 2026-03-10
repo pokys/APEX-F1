@@ -45,3 +45,23 @@ def test_validate_prediction_rejects_invalid_win_sum(tmp_path: Path) -> None:
     )
     with pytest.raises(ValueError, match="sum\\(win_probability\\)"):
         validate_prediction(path)
+
+
+def test_validate_prediction_accepts_qualifying_distribution(tmp_path: Path) -> None:
+    path = tmp_path / "quali_prediction.json"
+    path.write_text(
+        json.dumps(
+            {
+                "prediction_target": "qualifying",
+                "target_output_type": "qualifying",
+                "drivers": [
+                    {"name": "A", "pole_probability": 0.4, "front_row_probability": 0.7, "top10_probability": 1.0, "expected_position": 2.1},
+                    {"name": "B", "pole_probability": 0.35, "front_row_probability": 0.65, "top10_probability": 1.0, "expected_position": 2.4},
+                    {"name": "C", "pole_probability": 0.25, "front_row_probability": 0.4, "top10_probability": 1.0, "expected_position": 3.6},
+                    {"name": "D", "pole_probability": 0.0, "front_row_probability": 0.25, "top10_probability": 1.0, "expected_position": 4.4},
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    validate_prediction(path)

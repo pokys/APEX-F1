@@ -1,74 +1,155 @@
-# APEX-F1 // Intelligence
+# APEX-F1
 
-APEX-F1 je deterministický datový pipeline a Monte Carlo simulátor navržený pro predikci výsledků Formule 1. Na rozdíl od běžných tipů nepoužívá LLM k hádání výsledků, ale počítá pravděpodobnosti na základě tvrdých dat z FastF1 a strukturovaných signálů z expertních médií.
+APEX-F1 je deterministicky reprodukovatelný F1 prediction pipeline běžící čistě v GitHubu. Nesází na LLM tipování výsledků. LLM slouží jen jako pomocník pro strukturovanou extrakci signálů z článků. Samotné predikce vznikají pouze z datové pipeline a Monte Carlo simulace.
 
-Důležité principy:
-- **Žádné LLM predikce:** Pravděpodobnosti počítá matematický model, ne chat.
-- **Data-Driven:** Každý výsledek je podložen konkrétním datovým zdrojem.
-- **Plná autonomie:** Systém žije v GitHub Actions a sám reaguje na závodní víkend.
+## Veřejný web
 
-## 📊 Veřejný Dashboard
+- Dashboard: [https://pokys.github.io/APEX-F1/](https://pokys.github.io/APEX-F1/)
 
-Predikce jsou publikovány na: **https://pokys.github.io/APEX-F1/**
+Na webu je vždy vidět:
+- co se právě predikuje,
+- pro jaký víkendový formát,
+- které session už jsou k dispozici,
+- jaké vstupy a váhy model právě používá,
+- suchý a mokrý scénář.
 
-Dashboard nabízí:
-- **Visual Hierarchy:** Dominantní karty pro favority (P1-P3).
-- **Team Branding:** Automatické barevné kódování podle stájí.
-- **Skill vs Machinery:** Unikátní rozbor přínosu jezdce (**W: Wheel**) vs síly auta (**E: Engine**).
-- **System Trace:** Kompletní technický audit každého výpočtu (hashe, verze dat, aktivní signály).
+## Co systém právě predikuje
 
-## 🧠 Analytická Logika
+Pipeline se rozhoduje automaticky podle kalendáře a dostupných session dat:
 
-### Systemic Season Blending
-Na začátku sezóny trpí modely nedostatkem dat. APEX-F1 to řeší globální logikou míchání:
-- **Prvních 5 závodů:** Systém automaticky míchá data aktuální sezóny s tou předchozí (např. po 1. závodu: 20 % váha pro 2026, 80 % pro 2025).
-- **Stabilita:** Tato logika brání extrémním výkyvům po jednom nepodařeném víkendu (např. pád Verstappena na dno tabulky).
+- Standard weekend:
+  - před `Q` predikuje `Qualifying`
+  - po `Q` a před `R` predikuje `Race`
+- Sprint weekend:
+  - před `SQ` predikuje `Sprint Qualifying`
+  - po `SQ` a před `S` predikuje `Sprint`
+  - po `S` a před `Q` predikuje `Qualifying`
+  - po `Q` a před `R` predikuje `Race`
 
-### Live Weekend Adaptation
-Pipeline dynamicky mění své zaměření:
-- **Před kvalifikací:** Cílem je `QUALIFYING` (predikce startovního roštu).
-- **Po kvalifikaci:** Cílem je `RACE` (simulace závodu z reálného roštu).
-- **Track Profiles:** Simulátor počítá s charakteristikami každé tratě (obtížnost předjíždění, degradace pneu).
+Tato volba se zapisuje do [`config/race_config.json`](config/race_config.json) a dál ji používá simulace i web.
 
-## ⚡ Automace (Race Weekend Mode)
+## Jaká data systém používá
 
-Systém běží zcela autonomně v GitHub Actions:
-- **Závodní víkend (Čt-Ne):** Pipeline se spouští **každou hodinu**.
-- **Pracovní týden (Po-St):** Spouštění **každé 4 hodiny**.
-- **Samo-čištění:** Po úspěšném závodě systém automaticky vymaže inbox článků a připraví se na další GP.
+### Hard data
 
-## 🛠️ Jak pipeline teče
+- `FastF1`
+- historické výsledky a session snapshoty
+- průběžně načtené session:
+  - `FP1`
+  - `FP2`
+  - `FP3`
+  - `SQ`
+  - `S`
+  - `Q`
+  - `R`
 
-1. **Ingest (`ingest_fastf1.py`):** Stahuje telemetrii a výsledky z FastF1.
-2. **Next GP (`select_next_gp.py`):** Automaticky detekuje aktuální závod v kalendáři a přepíná profily tratí.
-3. **Features (`build_features.py`):** Spojuje tvrdá data se strukturovanými zprávami (Signály).
-4. **Ratings (`update_ratings.py`):** Přepočítává vnitřní modely výkonnosti (včetně blendingu sezón).
-5. **Simulation (`simulate_race.py`):** Spouští 6000+ Monte Carlo simulací pro suchý i mokrý scénář.
-6. **Render (`render_prediction_page.py`):** Generuje interaktivní HTML dashboard.
+Výchozí ingest běží právě přes tuto sadu session, aby měl systém dost dat pro automatické přepínání cíle predikce.
 
-## 🚀 Lokální spuštění
+### Soft data
 
-Instalace závislostí:
+- RSS články z `knowledge/feeds.yaml`
+- ručně zpracované AI/Human signály v `knowledge/processed/*.json`
+
+Soft data mají omezený a kontrolovaný dopad přes guardrails. Nepřebíjí tvrdá timing data.
+
+## Výstupy podle typu predikce
+
+### Qualifying / Sprint Qualifying
+
+Výstup obsahuje:
+- `pole_probability`
+- `front_row_probability`
+- `top10_probability`
+- `expected_position`
+
+### Sprint / Race
+
+Výstup obsahuje:
+- `win_probability`
+- `podium_probability`
+- `expected_finish`
+
+Web i JSON vždy ukazují správný typ výstupu pro aktuální `prediction_target`.
+
+## Vstupy a váhy
+
+Zdrojové váhy jsou verzované v [`config/session_weights.json`](config/session_weights.json).
+
+Pipeline z nich pro každou situaci sestaví manifest vstupů:
+- historie kvalifikací,
+- historie závodů,
+- tréninky,
+- `SQ`,
+- sprint,
+- hotová kvalifikace,
+- aktivní signály.
+
+Tento manifest se zapisuje do výstupu jako `inputs_used` a web ho zobrazuje přímo uživateli.
+
+## Jak teče pipeline
+
+1. [`pipeline/collect_articles.py`](pipeline/collect_articles.py)
+   Sbírá F1 články do inboxu.
+2. [`pipeline/ingest_fastf1.py`](pipeline/ingest_fastf1.py)
+   Načte session data a vytvoří raw snapshot sezony.
+3. [`pipeline/select_next_gp.py`](pipeline/select_next_gp.py)
+   Vybere následující GP a traťový profil.
+4. [`pipeline/select_prediction_target.py`](pipeline/select_prediction_target.py)
+   Automaticky určí, zda se má predikovat `SQ`, `Sprint`, `Qualifying` nebo `Race`.
+5. [`pipeline/build_features.py`](pipeline/build_features.py)
+   Postaví features z tvrdých dat a soft signálů.
+6. [`pipeline/update_ratings.py`](pipeline/update_ratings.py)
+   Přepočítá ratingy jezdců, týmů, strategie a reliability.
+7. [`pipeline/simulate_weather_scenarios.py`](pipeline/simulate_weather_scenarios.py)
+   Spustí suchý i mokrý scénář nad správným typem predikce.
+8. [`pipeline/publish_prediction.py`](pipeline/publish_prediction.py)
+   Zapíše finální kanonický JSON výstup.
+9. [`pipeline/render_prediction_page.py`](pipeline/render_prediction_page.py)
+   Vygeneruje HTML dashboard.
+10. [`pipeline/validate_outputs.py`](pipeline/validate_outputs.py)
+    Zkontroluje, že pravděpodobnosti dávají matematicky smysl.
+
+## GitHub Actions
+
+Hlavní automatický běh je:
+- [`Full Prediction Pipeline`](.github/workflows/full-pipeline.yml)
+
+Tento workflow:
+- běží na cron schedule,
+- běží ručně přes `workflow_dispatch`,
+- po změně relevantních dat a pipeline souborů přepočítá výstupy,
+- po úspěchu commituje nové artefakty do repa.
+
+Predikční refresh běží i přes:
+- [`Simulate Prediction`](.github/workflows/simulate-race.yml)
+
+Deploy veřejného webu zajišťuje GitHub Pages workflow.
+
+## Lokální spuštění
+
+Instalace:
+
 ```bash
 python -m pip install --upgrade pip
 pip install -r requirements.lock
 ```
 
-Kompletní manuální běh:
+Plný lokální běh:
+
 ```bash
-python pipeline/select_next_gp.py --log-level INFO
-python pipeline/update_ratings.py --log-level INFO
-python pipeline/simulate_weather_scenarios.py --log-level INFO
-python pipeline/render_prediction_page.py --output outputs/prediction_report.html --log-level INFO
+python pipeline/collect_articles.py --log-level INFO
+python pipeline/ingest_fastf1.py --log-level INFO
+python pipeline/select_next_gp.py --race-config config/race_config.json --log-level INFO
+python pipeline/select_prediction_target.py --race-config config/race_config.json --raw-dir data/raw/fastf1 --session-weights config/session_weights.json --signals-dir knowledge/processed --log-level INFO
+python pipeline/build_features.py --guardrails-config config/signal_guardrails.json --allow-missing-fastf1 --log-level INFO
+python pipeline/update_ratings.py --guardrails-config config/signal_guardrails.json --allow-missing-features --log-level INFO
+python pipeline/apply_backtest_calibration.py --race-config config/race_config.json --allow-missing-report --log-level INFO
+python pipeline/simulate_weather_scenarios.py --raw-dir data/raw/fastf1 --allow-missing-models --log-level INFO
+python pipeline/publish_prediction.py --allow-missing-input --log-level INFO
+python pipeline/render_prediction_page.py --prediction outputs/prediction.json --prediction-dry outputs/prediction_dry.json --prediction-wet outputs/prediction_wet.json --race-config config/race_config.json --output outputs/prediction_report.html --allow-missing-input --log-level INFO
+python pipeline/validate_outputs.py --log-level INFO
 ```
 
-## 📂 Struktura repozitáře
+## Co ještě není dotažené
 
-- `data/`: Snapshoty FastF1 a zpracované features.
-- `knowledge/`: RSS feedy a inbox pro extrakci AI signálů.
-- `models/`: Výsledné ratingy jezdců a týmů (JSON).
-- `config/`: Profily tratí a parametry modelu.
-- `outputs/`: Finální JSON predikce a HTML report.
-
----
-*Generated by APEX-F1 Intelligence System*
+Repo už umí automaticky rozlišit, co se má predikovat. Další velký krok je dostat `FP1/FP2/FP3`, `SQ` a segmenty `Q1/Q2/Q3` hlouběji do feature engineeringu, nejen do target selection a víkendových úprav v simulaci.

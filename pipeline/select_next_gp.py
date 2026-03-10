@@ -234,6 +234,7 @@ def normalize_calendar_event(event: dict[str, Any], season: int) -> dict[str, An
         "round": round_number,
         "event_name": str(event.get("event_name") or "Next GP"),
         "official_event_name": str(event.get("official_event_name") or event.get("event_name") or "Next GP"),
+        "event_format": str(event.get("event_format") or ""),
         "country": str(event.get("country") or ""),
         "location": str(event.get("location") or ""),
         "event_date": event_date.isoformat(),
@@ -475,6 +476,7 @@ def main() -> int:
         config["race"] = event["event_name"]
         config["location"] = event.get("location", "")
         config["race_date"] = event["event_date"]
+        config["event_format"] = event.get("event_format", "")
         config["generated_at"] = utc_iso_timestamp()
         
         # Track available sessions for debug info
@@ -488,16 +490,8 @@ def main() -> int:
         if profile_name:
             config["track_profile"] = profile_name
 
-        # NEW: Try to extract fixed grid if qualifying has happened
-        fixed_grid = extract_fixed_grid(Path(args.raw_dir), event["season"], event["event_name"])
-        if fixed_grid:
-            config["fixed_grid"] = fixed_grid
-            config["grid_source"] = "qualifying"
-            LOGGER.info("Detected qualifying results for %s. Applying fixed grid.", event["event_name"])
-        else:
-            config["grid_source"] = "simulation"
-            if "fixed_grid" in config:
-                del config["fixed_grid"]
+        config["grid_source"] = "simulation"
+        config.pop("fixed_grid", None)
 
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(config, indent=2, sort_keys=True, ensure_ascii=True) + "\n", encoding="utf-8")

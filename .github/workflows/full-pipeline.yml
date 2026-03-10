@@ -30,6 +30,7 @@ on:
       - ".github/workflows/full-pipeline.yml"
       - "pipeline/*.py"
       - "config/race_config.json"
+      - "config/session_weights.json"
       - "config/track_profiles.json"
       - "config/signal_guardrails.json"
       - "requirements.txt"
@@ -87,6 +88,10 @@ jobs:
           AS_OF_DATE="${CUTOFF_DATE:-$(date -u +%F)}"
           python pipeline/select_next_gp.py --season "$TARGET_SEASON" --as-of-date "$AS_OF_DATE" --race-config config/race_config.json --log-level INFO
 
+      - name: Select automatic prediction target
+        run: |
+          python pipeline/select_prediction_target.py --race-config config/race_config.json --raw-dir data/raw/fastf1 --session-weights config/session_weights.json --signals-dir knowledge/processed --log-level INFO
+
       - name: Validate processed signals
         run: |
           python pipeline/validate_signals.py --signals-dir knowledge/processed --allow-empty --log-level INFO
@@ -124,7 +129,7 @@ jobs:
           if [ -n "$FIXED_GRID" ]; then
             ARGS+=(--fixed-grid "$FIXED_GRID")
           fi
-          python pipeline/simulate_weather_scenarios.py "${ARGS[@]}" --allow-missing-models --log-level INFO
+          python pipeline/simulate_weather_scenarios.py "${ARGS[@]}" --raw-dir data/raw/fastf1 --allow-missing-models --log-level INFO
 
       - name: Publish prediction
         run: |

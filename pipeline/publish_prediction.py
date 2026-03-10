@@ -54,6 +54,7 @@ def load_json(path: Path) -> Any:
 
 
 def normalize_prediction(payload: dict[str, Any]) -> dict[str, Any]:
+    target_output_type = str(payload.get("target_output_type") or "race")
     drivers_raw = payload.get("drivers", [])
     if not isinstance(drivers_raw, list):
         raise ValueError("Prediction payload missing 'drivers' list.")
@@ -66,33 +67,54 @@ def normalize_prediction(payload: dict[str, Any]) -> dict[str, Any]:
         if not name:
             continue
 
-        win = clamp(safe_float(row.get("win_probability"), 0.0), 0.0, 1.0)
-        podium = clamp(safe_float(row.get("podium_probability"), 0.0), 0.0, 1.0)
-        podium = max(podium, win)
-        expected_finish = max(1.0, safe_float(row.get("expected_finish"), 99.0))
-
-        # SYSTEMIC FIX: Preserve analytical fields
         driver_entry = {
             "name": name,
             "team": str(row.get("team") or "Unknown"),
-            "win_probability": round(win, 6),
-            "podium_probability": round(podium, 6),
-            "expected_finish": round(expected_finish, 6),
         }
-        # Optional shares for Skill vs Machinery breakdown
+
+        if target_output_type == "qualifying":
+            pole = clamp(safe_float(row.get("pole_probability"), 0.0), 0.0, 1.0)
+            front_row = clamp(safe_float(row.get("front_row_probability"), 0.0), 0.0, 1.0)
+            top10 = clamp(safe_float(row.get("top10_probability"), 0.0), 0.0, 1.0)
+            expected_position = max(1.0, safe_float(row.get("expected_position"), 99.0))
+            front_row = max(front_row, pole)
+            top10 = max(top10, front_row)
+            driver_entry["pole_probability"] = round(pole, 6)
+            driver_entry["front_row_probability"] = round(front_row, 6)
+            driver_entry["top10_probability"] = round(top10, 6)
+            driver_entry["expected_position"] = round(expected_position, 6)
+        else:
+            win = clamp(safe_float(row.get("win_probability"), 0.0), 0.0, 1.0)
+            podium = clamp(safe_float(row.get("podium_probability"), 0.0), 0.0, 1.0)
+            podium = max(podium, win)
+            expected_finish = max(1.0, safe_float(row.get("expected_finish"), 99.0))
+            driver_entry["win_probability"] = round(win, 6)
+            driver_entry["podium_probability"] = round(podium, 6)
+            driver_entry["expected_finish"] = round(expected_finish, 6)
+
         if "driver_share" in row: driver_entry["driver_share"] = row["driver_share"]
         if "team_share" in row: driver_entry["team_share"] = row["team_share"]
+        if "weekend_form_delta" in row: driver_entry["weekend_form_delta"] = row["weekend_form_delta"]
 
         normalized_drivers.append(driver_entry)
 
-    normalized_drivers.sort(key=lambda x: (-x["win_probability"], x["expected_finish"], x["name"].lower()))
+    if target_output_type == "qualifying":
+        normalized_drivers.sort(key=lambda x: (-x["pole_probability"], x["expected_position"], x["name"].lower()))
+    else:
+        normalized_drivers.sort(key=lambda x: (-x["win_probability"], x["expected_finish"], x["name"].lower()))
 
     # SYSTEMIC FIX: Preserve integrity and simulation metadata
     out = {
         "race": str(payload.get("race") or "Next GP"),
         "generated_at": str(payload.get("generated_at") or "1970-01-01T00:00:00Z"),
+        "prediction_target": str(payload.get("prediction_target") or "race"),
+        "prediction_target_label": str(payload.get("prediction_target_label") or "Race"),
+        "target_session_code": str(payload.get("target_session_code") or "R"),
+        "target_output_type": target_output_type,
+        "weekend_format": str(payload.get("weekend_format") or "standard"),
         "drivers": normalized_drivers,
     }
+    if "inputs_used" in payload: out["inputs_used"] = payload["inputs_used"]
     if "integrity" in payload: out["integrity"] = payload["integrity"]
     if "simulation" in payload: out["simulation"] = payload["simulation"]
     if "deterministic_run_id" in payload: out["deterministic_run_id"] = payload["deterministic_run_id"]

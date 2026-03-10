@@ -1,175 +1,187 @@
 # APEX-F1 Runbook
 
-Praktický provozní návod pro každodenní běh a závodní víkend.
+Praktický provozní návod pro automatický provoz.
 
-## 1. Denní režim
+## 1. Co systém dělá bez zásahu člověka
 
-Běžná automatika:
-- `Collect F1 Articles`: každých 6 hodin
-- `Ingest FastF1 Data`: denně
-- `Build Features`: denně
-- `Update Ratings`: denně
-- `Simulate Race`: denně
-- `Backtest Simulation`: týdně
-- `Deploy Prediction Page`: při změně `outputs/prediction_report.html` na `main`
+Pipeline běží v GitHub Actions a sama:
+- stáhne nové články,
+- načte nové FastF1 session snapshoty,
+- vybere nejbližší relevantní GP,
+- určí, co se právě má predikovat,
+- přepočítá features a ratingy,
+- vygeneruje suchý i mokrý scénář,
+- vyrenderuje web,
+- nasadí veřejnou stránku přes GitHub Pages.
 
-`Full Prediction Pipeline` je one-shot end-to-end běh.
+Veřejná stránka:
+- [https://pokys.github.io/APEX-F1/](https://pokys.github.io/APEX-F1/)
 
-Veřejná stránka predikce:
-- **https://pokys.github.io/APEX-F1/**
+## 2. Automatické rozhodnutí: co se právě predikuje
 
-Pokud by deploy padal s Pages chybou, jednorázově nastav:
-- `Settings -> Pages -> Source: GitHub Actions`
+Rozhodovací logika je v [`pipeline/select_prediction_target.py`](pipeline/select_prediction_target.py).
 
-## 2. Human-in-the-loop signály
+### Standard weekend
 
-Signály z článků jsou záměrně pod lidskou kontrolou.
+- před `Q` => `Qualifying`
+- po `Q` a před `R` => `Race`
+
+### Sprint weekend
+
+- před `SQ` => `Sprint Qualifying`
+- po `SQ` a před `S` => `Sprint`
+- po `S` a před `Q` => `Qualifying`
+- po `Q` a před `R` => `Race`
+
+Skript zapisuje do [`config/race_config.json`](config/race_config.json):
+- `prediction_target`
+- `prediction_target_label`
+- `target_session_code`
+- `target_output_type`
+- `available_sessions`
+- `weekend_format`
+- `inputs_used`
+- `fixed_grid` a `grid_source`, pokud už existuje relevantní grid
+
+## 3. Co zobrazuje web
+
+Web report je kontrolní panel. Nahoře má být vždy jasně vidět:
+- co se právě predikuje,
+- jaký je formát víkendu,
+- které session už jsou online,
+- odkud přišel grid,
+- jaké vstupy a jaké váhy byly použity,
+- kolik signálů bylo započítáno.
+
+### Typy výstupu
+
+Pokud je target:
+- `Qualifying` nebo `Sprint Qualifying`, web ukazuje:
+  - `Pole`
+  - `Front Row`
+  - `Top 10`
+  - `Expected Position`
+
+Pokud je target:
+- `Sprint` nebo `Race`, web ukazuje:
+  - `Win`
+  - `Podium`
+  - `Expected Finish`
+
+Web má zároveň přepínač `Dry/Wet`.
+
+## 4. Odkud se berou váhy
+
+Váhy zdrojů jsou v:
+- [`config/session_weights.json`](config/session_weights.json)
+
+Používají se pro sestavení `inputs_used`, které se zobrazují i na webu.
+
+Typické zdroje:
+- `history_qualifying`
+- `history_race`
+- `fp1`
+- `fp2`
+- `fp3`
+- `sprint_history`
+- `sq_result`
+- `qualifying_result`
+- `signals`
+
+## 5. FastF1 ingest
+
+Výchozí ingest načítá:
+- `FP1`
+- `FP2`
+- `FP3`
+- `SQ`
+- `S`
+- `Q`
+- `R`
+
+To je důležité pro automatické přepínání cíle predikce i pro víkendové úpravy simulace.
+
+## 6. Human-in-the-loop signály
+
+Signály z článků nejsou generované v GitHub Actions. GitHub Actions je jen konzumují.
 
 Postup:
-1. Otevři `knowledge/inbox/articles.md`.
-2. Vyber relevantní F1 články.
-3. V externím AI nástroji udělej strukturovanou extrakci.
-4. Ulož JSON do `knowledge/processed/signals_YYYY-MM-DD.json`.
-5. Commit + push.
+1. RSS collector přidá články do [`knowledge/inbox/articles.md`](knowledge/inbox/articles.md).
+2. Člověk nebo externí AI z nich vytvoří strukturovaný JSON.
+3. JSON se uloží do `knowledge/processed/`.
+4. Pipeline signály zvaliduje a započítá.
 
-Po pushi:
-- automaticky běží validace signálů,
-- následně může běžet plná pipeline.
+Signal count se propisuje i do `race_config` a webu.
 
-Životní cyklus:
-- aktivní signály jsou v `knowledge/processed/`,
-- po odjetí závodů se staré soubory přesouvají do `knowledge/processed/archive/`.
+## 7. Běžné workflow
 
-## 3. Doporučený race-week postup
+### Full Prediction Pipeline
 
-1. Aktualizuj hard data:
+Soubor:
+- [`.github/workflows/full-pipeline.yml`](.github/workflows/full-pipeline.yml)
 
-```bash
-python pipeline/ingest_fastf1.py --season 2026 --sessions Q,R --cutoff-date YYYY-MM-DD --log-level INFO
-```
+Spouští:
+- cron
+- ruční dispatch
+- push relevantních souborů
 
-2. Vyber další GP:
+Dělá kompletní end-to-end běh.
 
-```bash
-python pipeline/select_next_gp.py --season 2026 --as-of-date YYYY-MM-DD --race-config config/race_config.json --log-level INFO
-```
+### Simulate Prediction
 
-3. Zvaliduj a aplikuj signály:
+Soubor:
+- [`.github/workflows/simulate-race.yml`](.github/workflows/simulate-race.yml)
 
-```bash
-python pipeline/validate_signals.py --signals-dir knowledge/processed --log-level INFO
-python pipeline/build_features.py --season 2026 --guardrails-config config/signal_guardrails.json --allow-missing-fastf1 --log-level INFO
-python pipeline/update_ratings.py --season 2026 --guardrails-config config/signal_guardrails.json --allow-missing-features --log-level INFO
-```
+Slouží pro rychlý refresh predikčních výstupů bez plného ingestu článků a feature rebuild řetězce.
 
-4. Aplikuj backtest kalibraci:
+### GitHub Pages
 
-```bash
-python pipeline/apply_backtest_calibration.py --season 2026 --allow-missing-report --race-config config/race_config.json --log-level INFO
-```
+Pokud by Pages deploy selhal:
+- `Settings -> Pages -> Source: GitHub Actions`
 
-5. Simulace + publikace + validace:
+## 8. Lokální příkazy
+
+Plný lokální běh:
 
 ```bash
-python pipeline/simulate_weather_scenarios.py --allow-missing-models --log-level INFO
-python pipeline/publish_prediction.py --input outputs/prediction_dry.json --output outputs/prediction_dry.json --allow-missing-input --log-level INFO
-python pipeline/publish_prediction.py --input outputs/prediction_wet.json --output outputs/prediction_wet.json --allow-missing-input --log-level INFO
+python pipeline/collect_articles.py --log-level INFO
+python pipeline/ingest_fastf1.py --log-level INFO
+python pipeline/select_next_gp.py --race-config config/race_config.json --log-level INFO
+python pipeline/select_prediction_target.py --race-config config/race_config.json --raw-dir data/raw/fastf1 --session-weights config/session_weights.json --signals-dir knowledge/processed --log-level INFO
+python pipeline/build_features.py --guardrails-config config/signal_guardrails.json --allow-missing-fastf1 --log-level INFO
+python pipeline/update_ratings.py --guardrails-config config/signal_guardrails.json --allow-missing-features --log-level INFO
+python pipeline/apply_backtest_calibration.py --race-config config/race_config.json --allow-missing-report --log-level INFO
+python pipeline/simulate_weather_scenarios.py --raw-dir data/raw/fastf1 --allow-missing-models --log-level INFO
 python pipeline/publish_prediction.py --allow-missing-input --log-level INFO
 python pipeline/render_prediction_page.py --prediction outputs/prediction.json --prediction-dry outputs/prediction_dry.json --prediction-wet outputs/prediction_wet.json --race-config config/race_config.json --output outputs/prediction_report.html --allow-missing-input --log-level INFO
 python pipeline/validate_outputs.py --log-level INFO
 ```
 
-Poznámka:
-- Web report teď má přepínač scénářů `Dry/Wet`.
-- Web report má i přepínač seznamu `Top 10/All Drivers` (na mobilu je default `Top 10`).
-- V horní části reportu jsou insight karty pro rychlé čtení.
-- `prediction.json` zůstává kvůli kompatibilitě (alias dry scénáře).
+## 9. Fallbacky a očekávané chování
 
-## 4. Chování na startu nové sezony
+### Začátek sezony
 
-Na začátku sezony bývají data nekompletní.
+Když aktuální sezona ještě nemá odjetá data:
+- features můžou fallbacknout na poslední použitelnou sezonu,
+- ratings můžou fallbacknout na poslední použitelná features.
 
-Aktuální fallback logika:
-- `build_features.py`: když sezona nemá odjeté session, vezme poslední kompletní sezonu.
-- `update_ratings.py`: když nejsou použitelné features pro aktuální sezonu, vezme poslední s daty.
+To je očekávané chování.
 
-To je očekávané chování, dokud se nenajedou aktuální závody.
+### Kalendář nebo session ještě nejsou online
 
-## 5. Počasí
+Když raw snapshot ještě neobsahuje cílový závod:
+- `select_prediction_target.py` nespadne,
+- použije konfiguraci závodu a zvolí target bez session-specific vstupů,
+- web stále ukáže, že session zatím nejsou k dispozici.
 
-Aktuálně:
-- simulace používá `weather` + `weather_modifier` z konfigurace,
-- live weather API zatím není zapojené.
+### GitHub push 500
 
-Ruční ladění:
-- `config/track_profiles.json` (defaulty podle tratě/země),
-- nebo přímo `config/race_config.json` před během.
+Pokud workflow failne na `git push` HTTP 500:
+- obvykle jde o dočasný GitHub problém,
+- workflow už má retry logiku,
+- případně stačí rerun.
 
-## 6. Články, důvěryhodnost a guardrails
+## 10. Co ještě chybí
 
-Aktuálně:
-- RSS sběr je automatický,
-- semantická extrakce článků je ruční/external AI,
-- dopad signálů je řízen v `config/signal_guardrails.json`:
-  - mapa důvěryhodnosti zdrojů,
-  - minimální confidence,
-  - echo-decay (opakované stejné tvrzení),
-  - capy dopadu soft signálů.
-
-Výsledek:
-- soft data mají omezený, kontrolovaný vliv,
-- bulvár/hype neprojde naplno do modelu.
-
-## 7. Troubleshooting
-
-### A) `git push` HTTP 500 ve workflow
-
-Význam:
-- většinou dočasný problém GitHubu.
-
-Co dělat:
-- rerun workflow (workflowe mají retry logiku).
-
-### B) `select_next_gp` selže při načtení kalendáře
-
-Význam:
-- dočasný výpadek FastF1 backendu/API.
-
-Chování:
-- skript zachová stávající `config/race_config.json`, pokud existuje.
-
-Co dělat:
-- spustit znovu později,
-- nebo explicitně vyplnit `--season` a `--as-of-date`.
-
-### C) Chyby ve zpracovaných signálech
-
-Symptomy:
-- padá `validate_signals.py`.
-
-Co dělat:
-- opravit JSON podle schématu,
-- znovu pustit validaci.
-
-### D) Testy v GitHubu hlásí import path
-
-Mitigace už je zapojená:
-- `pipeline/__init__.py`
-- `tests/conftest.py`
-- `PYTHONPATH` v `tests.yml`
-
-## 8. Co je pořád na člověku
-
-- výběr relevantních článků,
-- síla signálů (`source_confidence`, concern/change),
-- případné ruční doladění před víkendem (trať/počasí).
-
-## 9. Před-run checklist
-
-Před větším během ověř:
-- `knowledge/feeds.yaml` je validní,
-- `knowledge/processed/*.json` projde validací,
-- `config/race_config.json` míří na správný závod,
-- backtest report je dostupný (doporučeno),
-- výsledný `outputs/prediction.json` projde validací,
-- veřejná stránka je dostupná: **https://pokys.github.io/APEX-F1/**
+Největší další krok:
+- hlouběji zapojit `FP1/FP2/FP3`, `SQ` a `Q1/Q2/Q3` přímo do `build_features.py`, aby jejich vliv nebyl jen v target selection a víkendových simulovaných úpravách, ale i v samotných rating/features vrstvách.

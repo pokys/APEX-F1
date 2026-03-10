@@ -44,8 +44,8 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--sessions",
-        default="Q,R",
-        help="Comma-separated session codes (default: Q,R). Allowed: FP1,FP2,FP3,SQ,S,Q,R.",
+        default="FP1,FP2,FP3,SQ,S,Q,R",
+        help="Comma-separated session codes (default: FP1,FP2,FP3,SQ,S,Q,R). Allowed: FP1,FP2,FP3,SQ,S,Q,R.",
     )
     parser.add_argument(
         "--cutoff-date",
@@ -280,6 +280,7 @@ def ingest(season: int, sessions: list[str], cutoff: date, output_dir: Path, cac
                 "round": round_number,
                 "event_name": to_json_scalar(row.get("EventName")),
                 "official_event_name": to_json_scalar(row.get("OfficialEventName")),
+                "event_format": to_json_scalar(row.get("EventFormat")),
                 "country": to_json_scalar(row.get("Country")),
                 "location": to_json_scalar(row.get("Location")),
                 "event_date": event_date.isoformat() if event_date else None,
@@ -306,6 +307,7 @@ def ingest(season: int, sessions: list[str], cutoff: date, output_dir: Path, cac
                 "round": round_number,
                 "event_name": to_json_scalar(row.get("EventName")),
                 "official_event_name": to_json_scalar(row.get("OfficialEventName")),
+                "event_format": to_json_scalar(row.get("EventFormat")),
                 "country": to_json_scalar(row.get("Country")),
                 "location": to_json_scalar(row.get("Location")),
                 "event_date": to_json_scalar(row.get("EventDate")),

@@ -52,7 +52,7 @@
       .status-grid {
         margin-top: 18px;
         display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 12px;
       }
       .status-card {
@@ -86,6 +86,67 @@
         font-family: "IBM Plex Mono", monospace;
         color: var(--muted);
         background: rgba(9, 18, 28, 0.85);
+      }
+      .explain-card {
+        margin-top: 16px;
+        background: rgba(18, 34, 49, 0.72);
+        border: 1px solid var(--grid);
+        border-radius: 16px;
+        padding: 16px;
+      }
+      .explain-card h2 {
+        margin: 0 0 8px;
+        font-size: 0.95rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .explain-card p {
+        margin: 0;
+        color: var(--ink);
+        line-height: 1.55;
+      }
+      .debug-panel {
+        margin-top: 16px;
+        background: rgba(10, 20, 30, 0.6);
+        border: 1px solid var(--grid);
+        border-radius: 16px;
+        overflow: hidden;
+      }
+      .debug-panel summary {
+        cursor: pointer;
+        list-style: none;
+        padding: 14px 16px;
+        font-family: "IBM Plex Mono", monospace;
+        color: var(--muted);
+      }
+      .debug-panel summary::-webkit-details-marker {
+        display: none;
+      }
+      .debug-grid {
+        padding: 0 16px 16px;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+      }
+      .debug-card {
+        background: var(--panel-2);
+        border: 1px solid var(--grid);
+        border-radius: 14px;
+        padding: 12px;
+      }
+      .debug-card p {
+        margin: 0;
+      }
+      .debug-label {
+        color: var(--muted);
+        font-size: 0.76rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 6px !important;
+      }
+      .debug-value {
+        font-weight: 700;
       }
       .scenario-toggle {
         margin-top: 16px;
@@ -270,6 +331,9 @@
         .inputs-grid {
           grid-template-columns: 1fr;
         }
+        .debug-grid {
+          grid-template-columns: 1fr;
+        }
         .timeline-grid {
           grid-template-columns: 1fr 1fr;
         }
@@ -306,25 +370,50 @@
             <p class="status-value">Sprint Qualifying</p>
           </article>
           <article class="status-card">
-            <p class="status-kicker">Target Session</p>
-            <p class="status-value">SQ</p>
-          </article>
-          <article class="status-card">
             <p class="status-kicker">Weekend Format</p>
             <p class="status-value">Sprint</p>
           </article>
           <article class="status-card">
-            <p class="status-kicker">Grid Source</p>
-            <p class="status-value">simulation</p>
+            <p class="status-kicker">Sessions Online</p>
+            <p class="status-value">none</p>
           </article>
         </div>
         <div class="meta-strip">
           <span class="chip">Generated: 2026-03-10T07:46:39Z</span>
-          <span class="chip">Sessions Online: none</span>
-          <span class="chip">Signals: 0</span>
-          <span class="chip">Simulations: 6000</span>
-          <span class="chip">Output Type: qualifying</span>
         </div>
+        <section class="explain-card">
+          <h2>Why This Is Active Now</h2>
+          <p>This is a sprint weekend and no sprint qualifying result is available yet, so the system is forecasting Sprint Qualifying.</p>
+        </section>
+        <details class="debug-panel">
+          <summary>Technical Details</summary>
+          <div class="debug-grid">
+            <article class="debug-card">
+              <p class="debug-label">Target Session</p>
+              <p class="debug-value">SQ</p>
+            </article>
+            <article class="debug-card">
+              <p class="debug-label">Grid Source</p>
+              <p class="debug-value">simulation</p>
+            </article>
+            <article class="debug-card">
+              <p class="debug-label">Signals</p>
+              <p class="debug-value">0</p>
+            </article>
+            <article class="debug-card">
+              <p class="debug-label">Simulations</p>
+              <p class="debug-value">6000</p>
+            </article>
+            <article class="debug-card">
+              <p class="debug-label">Output Type</p>
+              <p class="debug-value">qualifying</p>
+            </article>
+            <article class="debug-card">
+              <p class="debug-label">Generated</p>
+              <p class="debug-value">2026-03-10T07:46:39Z</p>
+            </article>
+          </div>
+        </details>
         <div class="scenario-toggle"><button class="toggle-btn is-active" data-target="dry" type="button">Dry</button><button class="toggle-btn" data-target="wet" type="button">Wet</button></div>
       </section>
 

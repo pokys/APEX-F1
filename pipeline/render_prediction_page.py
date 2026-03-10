@@ -399,13 +399,13 @@ def render_page(
     <style>
       :root {{
         --bg: #07111b;
-        --panel: rgba(15, 27, 40, 0.88);
-        --panel-2: rgba(18, 34, 49, 0.92);
+        --panel: rgba(17, 20, 26, 0.9);
+        --panel-2: rgba(24, 28, 35, 0.94);
         --ink: #ebf4ff;
-        --muted: #96afc8;
-        --grid: #21415c;
-        --accent: #4fe0d7;
-        --accent-2: #ff9d57;
+        --muted: #aab6c5;
+        --grid: #2d3742;
+        --accent: #e10600;
+        --accent-2: #ffffff;
       }}
       * {{ box-sizing: border-box; }}
       body {{
@@ -413,9 +413,9 @@ def render_page(
         font-family: "Sora", sans-serif;
         color: var(--ink);
         background:
-          radial-gradient(900px 500px at 0% 0%, rgba(27, 82, 120, 0.45), transparent 60%),
-          radial-gradient(700px 400px at 100% 0%, rgba(136, 68, 34, 0.35), transparent 55%),
-          linear-gradient(180deg, #07111b 0%, #0a1520 48%, #0d1a28 100%);
+          radial-gradient(900px 500px at 0% 0%, rgba(225, 6, 0, 0.18), transparent 60%),
+          radial-gradient(700px 400px at 100% 0%, rgba(255, 255, 255, 0.08), transparent 55%),
+          linear-gradient(180deg, #07090d 0%, #0d1117 48%, #121820 100%);
       }}
       .wrap {{
         width: min(1200px, 94vw);
@@ -599,7 +599,7 @@ def render_page(
       }}
       .toggle-btn.is-active {{
         color: #08141d;
-        background: linear-gradient(90deg, var(--accent), #8cf7ef);
+        background: linear-gradient(90deg, var(--accent), #ff5a52);
       }}
       .section-title {{
         margin: 26px 0 12px;
@@ -642,12 +642,12 @@ def render_page(
         letter-spacing: 0.08em;
       }}
       .timeline-done {{
-        border-color: rgba(79, 224, 215, 0.55);
-        box-shadow: inset 0 0 0 1px rgba(79, 224, 215, 0.18);
+        border-color: rgba(255, 255, 255, 0.2);
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
       }}
       .timeline-current {{
-        border-color: rgba(255, 157, 87, 0.7);
-        box-shadow: inset 0 0 0 1px rgba(255, 157, 87, 0.2);
+        border-color: rgba(225, 6, 0, 0.78);
+        box-shadow: inset 0 0 0 1px rgba(225, 6, 0, 0.26);
       }}
       .input-card, .empty-card {{
         background: var(--panel);
@@ -671,8 +671,8 @@ def render_page(
         text-transform: uppercase;
       }}
       .status-used .status-badge {{
-        background: rgba(79, 224, 215, 0.18);
-        color: #8df7ef;
+        background: rgba(225, 6, 0, 0.18);
+        color: #ff9a95;
       }}
       .status-missing .status-badge {{
         background: rgba(255, 157, 87, 0.16);
@@ -707,7 +707,7 @@ def render_page(
       .input-bar span {{
         display: block;
         height: 100%;
-        background: linear-gradient(90deg, var(--accent), #7ff3eb);
+        background: linear-gradient(90deg, var(--accent), #ff6c65);
       }}
       .scenario-panel {{
         display: none;
@@ -862,7 +862,6 @@ def render_page(
           <h2>Why This Is Active Now</h2>
           <p>{html.escape(why_now)}</p>
         </section>
-        {compounds_html}
         <details class="debug-panel">
           <summary>Technical Details</summary>
           <div class="debug-grid">
@@ -910,6 +909,8 @@ def render_page(
 
       <h2 class="section-title">Weekend Timeline</h2>
       <section class="timeline-grid">{weekend_timeline}</section>
+
+      {compounds_html}
     </main>
 {script_html}
   </body>

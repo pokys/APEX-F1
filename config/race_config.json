@@ -1,22 +1,24 @@
 {
-  "available_sessions": [],
+  "available_sessions": [
+    "FP1"
+  ],
   "calibration_season": 2025,
   "calibration_source": "outputs/backtest/backtest_season_2025.json",
   "event_format": "sprint",
-  "generated_at": "2026-03-13T04:46:58Z",
+  "generated_at": "2026-03-13T05:49:28Z",
   "grid_source": "simulation",
   "inputs_status": [
-    {
-      "configured_weight": 0.2,
-      "source": "fp1",
-      "source_key": "FP1",
-      "status": "missing"
-    },
     {
       "configured_weight": 0.1,
       "source": "signals",
       "source_key": "signals",
       "status": "missing"
+    },
+    {
+      "configured_weight": 0.2,
+      "source": "fp1",
+      "source_key": "FP1",
+      "status": "used"
     },
     {
       "configured_weight": 0.35,
@@ -35,12 +37,17 @@
     {
       "source": "history_driver",
       "source_key": "history_driver",
-      "weight": 0.636364
+      "weight": 0.466667
+    },
+    {
+      "source": "fp1",
+      "source_key": "FP1",
+      "weight": 0.266667
     },
     {
       "source": "history_team",
       "source_key": "history_team",
-      "weight": 0.363636
+      "weight": 0.266667
     }
   ],
   "location": "Shanghai",

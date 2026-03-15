@@ -1,16 +1,16 @@
 {
-  "inputs_hash": "586331d6cfc0783b16dd9419e987322f2fb250fef1c55fca67120f8180a04d33",
+  "inputs_hash": "3ba5c3c6dd2c895ae8f2311d8a3133441e6bec422fd387922282de7df5bceebd",
   "season": 2026,
   "source_features": "data/processed/features_season_2026.json",
   "source_summary": "Blended Data: 40% Season 2026, 60% Season 2025",
   "teams": [
     {
       "components": {
-        "dnf_history": 31.624986,
+        "dnf_history": 38.624986,
         "new_component_penalties": 85.0,
         "power_unit_reliability": 69.0
       },
-      "reliability_score": 55.381244,
+      "reliability_score": 58.531244,
       "team": "Alpine"
     },
     {
@@ -42,20 +42,20 @@
     },
     {
       "components": {
-        "dnf_history": 64.875014,
+        "dnf_history": 78.875014,
         "new_component_penalties": 85.0,
         "power_unit_reliability": 69.0
       },
-      "reliability_score": 70.343756,
+      "reliability_score": 76.643756,
       "team": "Ferrari"
     },
     {
       "components": {
-        "dnf_history": 44.749986,
+        "dnf_history": 51.749986,
         "new_component_penalties": 85.0,
         "power_unit_reliability": 69.0
       },
-      "reliability_score": 61.287494,
+      "reliability_score": 64.437494,
       "team": "Haas F1 Team"
     },
     {
@@ -69,29 +69,29 @@
     },
     {
       "components": {
-        "dnf_history": 64.875014,
+        "dnf_history": 78.875014,
         "new_component_penalties": 85.0,
         "power_unit_reliability": 69.0
       },
-      "reliability_score": 70.343756,
+      "reliability_score": 76.643756,
       "team": "Mercedes"
     },
     {
       "components": {
-        "dnf_history": 39.499986,
+        "dnf_history": 46.499986,
         "new_component_penalties": 85.0,
         "power_unit_reliability": 69.0
       },
-      "reliability_score": 58.924994,
+      "reliability_score": 62.074994,
       "team": "Racing Bulls"
     },
     {
       "components": {
-        "dnf_history": 56.125,
+        "dnf_history": 63.125,
         "new_component_penalties": 85.0,
         "power_unit_reliability": 69.0
       },
-      "reliability_score": 66.40625,
+      "reliability_score": 69.55625,
       "team": "Red Bull Racing"
     },
     {

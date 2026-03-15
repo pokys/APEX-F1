@@ -1,116 +1,82 @@
 {
-  "available_sessions": [
-    "FP1",
-    "SQ",
-    "S",
-    "Q"
-  ],
+  "available_sessions": [],
   "calibration_season": 2025,
   "calibration_source": "outputs/backtest/backtest_season_2025.json",
-  "event_format": "sprint",
-  "fixed_grid": [
-    "ANT",
-    "RUS",
-    "HAM",
-    "LEC",
-    "PIA",
-    "NOR",
-    "GAS",
-    "VER",
-    "HAD",
-    "BEA",
-    "HUL",
-    "COL",
-    "OCO",
-    "LAW",
-    "LIN",
-    "BOR",
-    "SAI",
-    "ALB",
-    "ALO",
-    "BOT",
-    "STR",
-    "PER"
-  ],
-  "generated_at": "2026-03-15T08:41:05Z",
-  "grid_source": "qualifying",
+  "event_format": "conventional",
+  "generated_at": "2026-03-15T09:38:49Z",
+  "grid_source": "simulation",
   "inputs_status": [
     {
-      "configured_weight": 0.05,
+      "configured_weight": 0.1,
+      "source": "fp1",
+      "source_key": "FP1",
+      "status": "missing"
+    },
+    {
+      "configured_weight": 0.15,
       "source": "fp2",
       "source_key": "FP2",
       "status": "missing"
     },
     {
-      "configured_weight": 0.1,
+      "configured_weight": 0.15,
       "source": "fp3",
       "source_key": "FP3",
       "status": "missing"
     },
     {
-      "configured_weight": 0.15,
+      "configured_weight": 0.1,
       "source": "signals",
       "source_key": "signals",
       "status": "missing"
     },
     {
-      "configured_weight": 0.2,
+      "configured_weight": 0.3,
       "source": "history_driver",
       "source_key": "history_driver",
       "status": "used"
     },
     {
-      "configured_weight": 0.15,
+      "configured_weight": 0.2,
       "source": "history_team",
       "source_key": "history_team",
-      "status": "used"
-    },
-    {
-      "configured_weight": 0.35,
-      "source": "qualifying",
-      "source_key": "Q",
       "status": "used"
     }
   ],
   "inputs_used": [
     {
-      "source": "qualifying",
-      "source_key": "Q",
-      "weight": 0.5
-    },
-    {
       "source": "history_driver",
       "source_key": "history_driver",
-      "weight": 0.285714
+      "weight": 0.6
     },
     {
       "source": "history_team",
       "source_key": "history_team",
-      "weight": 0.214286
+      "weight": 0.4
     }
   ],
-  "location": "Shanghai",
-  "next_round": 2,
-  "overtaking_difficulty": 0.5,
-  "prediction_target": "race",
-  "prediction_target_label": "Race",
-  "race": "Chinese Grand Prix",
-  "race_date": "2026-03-15",
-  "safety_car_probability": 0.23,
+  "location": "Suzuka",
+  "next_round": 3,
+  "overtaking_difficulty": 0.63,
+  "prediction_target": "qualifying",
+  "prediction_target_label": "Qualifying",
+  "race": "Japanese Grand Prix",
+  "race_date": "2026-03-29",
+  "safety_car_probability": 0.22,
   "season": 2026,
-  "seed": 202602,
+  "seed": 202603,
   "signal_count": 0,
   "simulations": 6000,
-  "target_output_type": "race",
-  "target_session_code": "R",
+  "target_output_type": "qualifying",
+  "target_session_code": "Q",
   "track": {
-    "qualifying_noise": 2.4,
-    "race_noise": 3.55,
-    "tyre_degradation_factor": 0.58
+    "qualifying_noise": 2.35,
+    "race_noise": 3.4,
+    "tyre_degradation_factor": 0.62
   },
-  "track_profile": "country:china",
+  "track_profile": "country:japan",
   "weather": "dry",
   "weather_modifier": 0.05,
-  "weekend_format": "sprint",
+  "weekend_format": "standard",
   "win_temperature": 1.2
 }

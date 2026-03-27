@@ -6,6 +6,7 @@ from pathlib import Path
 from pipeline.update_ratings import (
     choose_features_file,
     aggregate_optional_signal_indexes,
+    compute_driver_ratings,
     DEFAULT_SIGNAL_GUARDRAILS,
     current_season_blend_weight,
 )
@@ -53,3 +54,37 @@ def test_current_season_blend_weight_favors_current_season_earlier() -> None:
     assert current_season_blend_weight(3) == 0.75
     assert current_season_blend_weight(4) == 0.90
     assert current_season_blend_weight(5) == 1.0
+
+
+def test_compute_driver_ratings_softens_teammate_penalty_on_small_samples() -> None:
+    features = {
+        "drivers": [
+            {
+                "driver": "ANT",
+                "team": "Mercedes",
+                "starts": 2,
+                "race_avg_position": 1.5,
+                "race_form_last3": 1.5,
+                "qualifying_avg_position": 1.5,
+                "qualifying_phase_depth": 1.0,
+                "dnf_rate": 0.0,
+            },
+            {
+                "driver": "RUS",
+                "team": "Mercedes",
+                "starts": 2,
+                "race_avg_position": 1.5,
+                "race_form_last3": 1.5,
+                "qualifying_avg_position": 1.5,
+                "qualifying_phase_depth": 1.0,
+                "dnf_rate": 0.0,
+            },
+        ]
+    }
+
+    ratings = compute_driver_ratings(features, wet_by_team={}, active_drivers={"ANT": "Mercedes", "RUS": "Mercedes"})
+    by_driver = {row["driver"]: row for row in ratings["drivers"]}
+
+    assert by_driver["ANT"]["driver_rating"] > 55.0
+    assert by_driver["RUS"]["driver_rating"] > 55.0
+    assert by_driver["ANT"]["components"]["teammate_delta_performance"] == 50.0

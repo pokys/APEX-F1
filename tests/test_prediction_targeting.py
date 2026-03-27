@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from pipeline.prediction_targeting import build_inputs_manifest, build_inputs_status, find_cached_calendar_entry, load_cached_calendar, select_prediction_target
+from pipeline.prediction_targeting import build_inputs_manifest, build_inputs_status, find_cached_calendar_entry, load_cached_calendar, load_session_weights, select_prediction_target
 
 
 def test_select_prediction_target_standard_weekend() -> None:
@@ -81,3 +81,20 @@ def test_build_inputs_status_marks_used_and_missing() -> None:
     assert by_source["history_team"]["status"] == "used"
     assert by_source["fp1"]["status"] == "missing"
     assert by_source["signals"]["status"] == "available_zero_weight"
+
+
+def test_config_session_weights_prioritize_current_inputs() -> None:
+    weights = load_session_weights(Path("config/session_weights.json"))
+
+    current_inputs = {
+        "qualifying": {"fp1", "fp2", "fp3", "signals"},
+        "race": {"qualifying", "fp2", "fp3", "signals"},
+        "sprint_qualifying": {"fp1", "signals"},
+        "sprint": {"sprint_qualifying", "fp1", "signals"},
+    }
+
+    for target, sources in current_inputs.items():
+        target_weights = weights[target]
+        history_weight = target_weights["history_driver"] + target_weights["history_team"]
+        current_weight = sum(target_weights[source] for source in sources)
+        assert current_weight > history_weight

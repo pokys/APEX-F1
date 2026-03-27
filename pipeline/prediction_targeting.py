@@ -354,8 +354,17 @@ def compute_weekend_form(driver_name: str, event: dict[str, Any], manifest: list
     for item in manifest:
         source = str(item.get("source_key") or "")
         weight = float(item.get("weight") or 0.0)
-        if source in {"history_driver", "history_team", "signals"}:
+        if weight <= 0:
             continue
+
+        # Historical and signal-derived inputs act as a neutral baseline.
+        # Session results then pull the score away from that baseline according
+        # to their configured share of the active manifest.
+        if source in {"history_driver", "history_team", "signals"}:
+            weighted_sum += weight * 0.5
+            total_weight += weight
+            continue
+
         score = session_position_score(event, source, driver_name)
         if score is None:
             continue

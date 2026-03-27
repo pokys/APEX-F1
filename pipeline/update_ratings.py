@@ -677,6 +677,27 @@ def blend_features(current: dict[str, Any], previous: dict[str, Any], current_we
     }
 
 
+def current_season_blend_weight(max_starts: float) -> float:
+    starts = max(0.0, float(max_starts))
+    if starts <= 0:
+        return 0.0
+    if starts >= 5:
+        return 1.0
+
+    # Pull the model toward current-season data faster so early form,
+    # upgrades and team-order changes show up sooner in ratings.
+    thresholds = (
+        (1.0, 0.45),
+        (2.0, 0.60),
+        (3.0, 0.75),
+        (4.0, 0.90),
+    )
+    for cutoff, weight in thresholds:
+        if starts <= cutoff:
+            return weight
+    return 1.0
+
+
 def main() -> int:
     args = parse_args()
     logging.basicConfig(
@@ -711,8 +732,7 @@ def main() -> int:
             prev_path = Path(args.features_input) / f"features_season_{prev_season}.json"
             if prev_path.exists():
                 previous_features = load_json(prev_path)
-                # Blending weight: 1 race = 0.2, 2 races = 0.4, ... 5+ races = 1.0
-                weight = min(1.0, max_starts * 0.2)
+                weight = current_season_blend_weight(max_starts)
                 LOGGER.info("Blending features: season %s (weight %.1f) + season %s (weight %.1f)", 
                             season, weight, prev_season, 1.0 - weight)
                 features = blend_features(features, previous_features, weight)

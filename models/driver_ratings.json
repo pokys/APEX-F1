@@ -93,6 +93,19 @@
     },
     {
       "components": {
+        "consistency": 69.0,
+        "qualifying_pace": 48.54,
+        "qualifying_progression": 54.0,
+        "teammate_delta_performance": 50.0,
+        "weekend_practice_pace": 49.2,
+        "wet_performance_index": 50.0
+      },
+      "driver": "CRA",
+      "driver_rating": 54.458,
+      "team": "Aston Martin"
+    },
+    {
+      "components": {
         "consistency": 53.999992,
         "qualifying_pace": 49.327498,
         "qualifying_progression": 59.999994,
@@ -287,7 +300,7 @@
       "team": "Red Bull Racing"
     }
   ],
-  "inputs_hash": "3ef6bd3d689cc00d18d0d3f0bd2dc1e3d25e9f68504a8eb42ec233bded61041c",
+  "inputs_hash": "6101e9c5d3576b0d113051c28bcf9ce82e40bc794ff20af2434d4946071f65e4",
   "season": 2026,
   "source_features": "data/processed/features_season_2026.json",
   "source_summary": "Blended Data: 40% Season 2026, 60% Season 2025"

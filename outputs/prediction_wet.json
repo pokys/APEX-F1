@@ -1,5 +1,5 @@
 {
-  "deterministic_run_id": "750f61ed9c7b989d5a71",
+  "deterministic_run_id": "5832e0c8511e084cc4c5",
   "drivers": [
     {
       "driver_share": 50.9,
@@ -255,27 +255,27 @@
       "weekend_form_delta": 0.0
     }
   ],
-  "generated_at": "2026-03-27T05:10:09Z",
+  "generated_at": "2026-03-27T06:16:01Z",
   "inputs_used": [
     {
       "source": "history_driver",
       "source_key": "history_driver",
-      "weight": 0.5
-    },
-    {
-      "source": "history_team",
-      "source_key": "history_team",
-      "weight": 0.333333
+      "weight": 0.444444
     },
     {
       "source": "fp1",
       "source_key": "FP1",
-      "weight": 0.166667
+      "weight": 0.333333
+    },
+    {
+      "source": "history_team",
+      "source_key": "history_team",
+      "weight": 0.222222
     }
   ],
   "integrity": {
     "driver_ratings_hash": "4741b5a1578b",
-    "race_config_hash": "cf4273a9399e",
+    "race_config_hash": "318773e0f1a9",
     "team_ratings_hash": "a0f5e9783bcd"
   },
   "prediction_target": "qualifying",

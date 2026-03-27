@@ -418,24 +418,29 @@ def compute_driver_ratings(features: dict[str, Any], wet_by_team: dict[str, floa
         q_phase = safe_float(row.get("qualifying_phase_depth"))
         sprint_q_phase = safe_float(row.get("sprint_qualifying_phase_depth"))
         dnf_rate = safe_float(row.get("dnf_rate"))
+        starts = safe_float(row.get("starts")) or 0.0
+        recent_race_form = safe_float(row.get("race_form_last3"))
         signal_conf = safe_float(row.get("signal_driver_confidence_delta")) or 0.0
 
         # Baseline for rookies or missing data
         t_delta = teammate_delta.get(driver_name, 0.0)
-        teammate_component = 50.0 + 22.0 * clamp(t_delta, -2.0, 2.0)
+        sample_scale = clamp(starts / 5.0, 0.0, 1.0)
+        teammate_component = 50.0 + 14.0 * clamp(t_delta, -2.0, 2.0) * sample_scale
         consistency_component = 75.0 - 40.0 * clamp((dnf_rate if dnf_rate is not None else 0.15), 0.0, 1.0)
         wet_index = wet_by_team.get(team_key, 0.5)
         wet_component = 35.0 + 30.0 * clamp(wet_index, 0.0, 1.0)
         base_quali_component = 80.0 - 2.8 * clamp((q_avg if q_avg is not None else 12.0), 1.0, 20.0)
+        race_form_component = 82.0 - 2.6 * clamp((recent_race_form if recent_race_form is not None else (race_avg if race_avg is not None else 12.0)), 1.0, 20.0)
         practice_component = 78.0 - 2.4 * clamp((practice_avg if practice_avg is not None else 12.0), 1.0, 20.0)
         sprint_quali_component = 78.0 - 2.6 * clamp((sprint_q_avg if sprint_q_avg is not None else (q_avg if q_avg is not None else 12.0)), 1.0, 20.0)
         phase_score = q_phase if q_phase is not None else sprint_q_phase if sprint_q_phase is not None else 0.5
         progression_component = 45.0 + 18.0 * clamp(phase_score, 0.0, 1.0)
         qualifying_component = (
-            0.45 * base_quali_component
-            + 0.20 * practice_component
+            0.35 * base_quali_component
+            + 0.25 * race_form_component
+            + 0.15 * practice_component
             + 0.15 * sprint_quali_component
-            + 0.20 * progression_component
+            + 0.10 * progression_component
         )
 
         # Small adjustment for rookies to not be absolute last if they show promise in signals
@@ -445,10 +450,10 @@ def compute_driver_ratings(features: dict[str, Any], wet_by_team: dict[str, floa
         else:
             signal_component = 5.0 * clamp(signal_conf, -1.0, 1.0)
             rating = (
-                0.35 * teammate_component
+                0.20 * teammate_component
                 + 0.25 * consistency_component
                 + 0.20 * wet_component
-                + 0.20 * qualifying_component
+                + 0.35 * qualifying_component
                 + signal_component
             )
 
@@ -464,6 +469,7 @@ def compute_driver_ratings(features: dict[str, Any], wet_by_team: dict[str, floa
                     "consistency": round(consistency_component, 6),
                     "wet_performance_index": round(wet_component, 6),
                     "qualifying_pace": round(qualifying_component, 6),
+                    "recent_race_form": round(race_form_component, 6),
                     "weekend_practice_pace": round(practice_component, 6),
                     "qualifying_progression": round(progression_component, 6),
                 },

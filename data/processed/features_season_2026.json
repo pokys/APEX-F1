@@ -141,6 +141,26 @@
       "team": "Alpine"
     },
     {
+      "dnf_rate": null,
+      "driver": "CRA",
+      "fp1_avg_position": null,
+      "fp2_avg_position": null,
+      "fp3_avg_position": null,
+      "points_total": 0.0,
+      "practice_avg_position": null,
+      "qualifying_avg_position": null,
+      "qualifying_phase_depth": null,
+      "race_avg_position": null,
+      "race_form_last3": null,
+      "signal_count": 0,
+      "signal_driver_confidence_delta": null,
+      "sprint_avg_position": null,
+      "sprint_qualifying_avg_position": null,
+      "sprint_qualifying_phase_depth": null,
+      "starts": 0,
+      "team": "Aston Martin"
+    },
+    {
       "dnf_rate": 0.5,
       "driver": "GAS",
       "fp1_avg_position": null,

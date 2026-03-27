@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from pipeline.prediction_targeting import build_inputs_manifest, build_inputs_status, find_cached_calendar_entry, load_cached_calendar, load_session_weights, select_prediction_target
+from pipeline.prediction_targeting import build_inputs_manifest, build_inputs_status, compute_weekend_form, find_cached_calendar_entry, load_cached_calendar, load_session_weights, select_prediction_target
 
 
 def test_select_prediction_target_standard_weekend() -> None:
@@ -98,3 +98,28 @@ def test_config_session_weights_prioritize_current_inputs() -> None:
         history_weight = target_weights["history_driver"] + target_weights["history_team"]
         current_weight = sum(target_weights[source] for source in sources)
         assert current_weight > history_weight
+
+
+def test_compute_weekend_form_blends_history_baseline_with_sessions() -> None:
+    event = {
+        "sessions": [
+            {
+                "session_code": "FP1",
+                "results": [
+                    {"position": 1, "abbreviation": "VER"},
+                    {"position": 2, "abbreviation": "NOR"},
+                    {"position": 3, "abbreviation": "LEC"},
+                ],
+            }
+        ]
+    }
+    manifest = [
+        {"source": "history_driver", "source_key": "history_driver", "weight": 0.4},
+        {"source": "history_team", "source_key": "history_team", "weight": 0.2},
+        {"source": "fp1", "source_key": "FP1", "weight": 0.4},
+    ]
+
+    form = compute_weekend_form("VER", event, manifest)
+
+    assert form["sources"] == [{"session": "FP1", "weight": 0.4, "score": 1.0}]
+    assert round(form["delta"], 6) == 2.0

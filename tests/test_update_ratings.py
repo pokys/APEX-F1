@@ -7,6 +7,7 @@ from pipeline.update_ratings import (
     choose_features_file,
     aggregate_optional_signal_indexes,
     DEFAULT_SIGNAL_GUARDRAILS,
+    current_season_blend_weight,
 )
 
 
@@ -44,3 +45,11 @@ def test_penalty_index_is_capped_by_guardrails() -> None:
     ]
     _, _, penalties = aggregate_optional_signal_indexes(signals, guardrails=guardrails)
     assert penalties["aston-martin"] <= guardrails["penalty_index_cap"]
+
+
+def test_current_season_blend_weight_favors_current_season_earlier() -> None:
+    assert current_season_blend_weight(1) == 0.45
+    assert current_season_blend_weight(2) == 0.60
+    assert current_season_blend_weight(3) == 0.75
+    assert current_season_blend_weight(4) == 0.90
+    assert current_season_blend_weight(5) == 1.0

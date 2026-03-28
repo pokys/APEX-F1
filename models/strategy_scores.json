@@ -1,67 +1,67 @@
 {
-  "inputs_hash": "45ad7ccd287829d40b5aabe8151c6afa770d168034799d256d9e59489373f07c",
+  "inputs_hash": "6d827b9fae93cea690bc1e3c0671e72e139973c271ea92f5b9d7f0f637f7f1ec",
   "season": 2026,
   "source_features": "data/processed/features_season_2026.json",
   "source_summary": "Blended Data: 60% Season 2026, 40% Season 2025",
   "teams": [
     {
       "components": {
-        "pit_stop_performance": 59.666666,
+        "pit_stop_performance": 57.666664,
         "safety_car_reactions": 60.0,
         "sprint_execution": 45.5,
         "strategic_success_history": 42.592593
       },
-      "strategy_score": 51.632407,
+      "strategy_score": 51.032407,
       "team": "Alpine"
     },
     {
       "components": {
-        "pit_stop_performance": 58.482272,
+        "pit_stop_performance": 63.282272,
         "safety_car_reactions": 60.0,
         "sprint_execution": 5.0,
         "strategic_success_history": 46.037736
       },
-      "strategy_score": 46.407889,
+      "strategy_score": 47.847889,
       "team": "Aston Martin"
     },
     {
       "components": {
-        "pit_stop_performance": 20.0,
+        "pit_stop_performance": 17.333336,
         "safety_car_reactions": 60.0,
         "sprint_execution": 9.5,
         "strategic_success_history": 42.0
       },
-      "strategy_score": 34.125,
+      "strategy_score": 33.325001,
       "team": "Audi"
     },
     {
       "components": {
-        "pit_stop_performance": 82.0,
+        "pit_stop_performance": 81.333336,
         "safety_car_reactions": 60.0,
         "sprint_execution": 5.0,
         "strategic_success_history": 40.0
       },
-      "strategy_score": 51.35,
+      "strategy_score": 51.150001,
       "team": "Cadillac"
     },
     {
       "components": {
-        "pit_stop_performance": 53.6,
+        "pit_stop_performance": 54.400002,
         "safety_car_reactions": 60.0,
         "sprint_execution": 95.0,
         "strategic_success_history": 72.666667
       },
-      "strategy_score": 67.763333,
+      "strategy_score": 68.003334,
       "team": "Ferrari"
     },
     {
       "components": {
-        "pit_stop_performance": 70.6,
+        "pit_stop_performance": 75.4,
         "safety_car_reactions": 60.0,
         "sprint_execution": 77.0,
         "strategic_success_history": 47.185185
       },
-      "strategy_score": 61.244815,
+      "strategy_score": 62.684815,
       "team": "Haas F1 Team"
     },
     {
@@ -86,32 +86,32 @@
     },
     {
       "components": {
-        "pit_stop_performance": 51.733334,
+        "pit_stop_performance": 52.533336,
         "safety_car_reactions": 60.0,
         "sprint_execution": 27.5,
         "strategic_success_history": 47.62963
       },
-      "strategy_score": 48.315371,
+      "strategy_score": 48.555371,
       "team": "Racing Bulls"
     },
     {
       "components": {
-        "pit_stop_performance": 23.400002,
+        "pit_stop_performance": 28.84,
         "safety_car_reactions": 60.0,
         "sprint_execution": 50.0,
         "strategic_success_history": 71.703704
       },
-      "strategy_score": 51.616297,
+      "strategy_score": 53.248296,
       "team": "Red Bull Racing"
     },
     {
       "components": {
-        "pit_stop_performance": 61.533333,
+        "pit_stop_performance": 61.213331,
         "safety_car_reactions": 60.0,
         "sprint_execution": 32.0,
         "strategic_success_history": 49.407407
       },
-      "strategy_score": 52.552592,
+      "strategy_score": 52.456592,
       "team": "Williams"
     }
   ]

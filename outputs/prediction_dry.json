@@ -1,281 +1,258 @@
 {
-  "deterministic_run_id": "f4dfe9eaad2b3e4e4ba0",
+  "deterministic_run_id": "c899d5c9edc2a9be581b",
   "drivers": [
     {
-      "driver_share": 48.9,
-      "expected_position": 1.532667,
-      "front_row_probability": 0.875667,
+      "driver_share": 49.0,
+      "expected_finish": 5.154333,
       "name": "RUS",
-      "pole_probability": 0.6575,
+      "podium_probability": 0.75,
       "team": "Mercedes",
-      "team_share": 51.1,
-      "top10_probability": 1.0,
-      "weekend_form_delta": 0.0
+      "team_share": 51.0,
+      "weekend_form_delta": 1.02564,
+      "win_probability": 0.37913
     },
     {
       "driver_share": 47.4,
-      "expected_position": 2.602,
-      "front_row_probability": 0.565333,
+      "expected_finish": 5.773333,
       "name": "LEC",
-      "pole_probability": 0.2075,
+      "podium_probability": 0.635833,
       "team": "Ferrari",
       "team_share": 52.6,
-      "top10_probability": 1.0,
-      "weekend_form_delta": 0.0
+      "weekend_form_delta": 0.615384,
+      "win_probability": 0.213818
     },
     {
       "driver_share": 46.1,
-      "expected_position": 3.787667,
-      "front_row_probability": 0.225167,
+      "expected_finish": 6.053,
+      "name": "ANT",
+      "podium_probability": 0.543167,
+      "team": "Mercedes",
+      "team_share": 53.9,
+      "weekend_form_delta": 1.230768,
+      "win_probability": 0.158898
+    },
+    {
+      "driver_share": 46.1,
+      "expected_finish": 6.083167,
       "name": "HAM",
-      "pole_probability": 0.057,
+      "podium_probability": 0.491833,
       "team": "Ferrari",
       "team_share": 53.9,
-      "top10_probability": 1.0,
-      "weekend_form_delta": 0.0
+      "weekend_form_delta": 0.205128,
+      "win_probability": 0.132301
     },
     {
-      "driver_share": 45.8,
-      "expected_position": 4.161667,
-      "front_row_probability": 0.152,
-      "name": "ANT",
-      "pole_probability": 0.035333,
-      "team": "Mercedes",
-      "team_share": 54.2,
-      "top10_probability": 1.0,
-      "weekend_form_delta": 0.0
-    },
-    {
-      "driver_share": 49.6,
-      "expected_position": 4.343,
-      "front_row_probability": 0.121167,
+      "driver_share": 49.7,
+      "expected_finish": 8.3505,
       "name": "NOR",
-      "pole_probability": 0.031167,
+      "podium_probability": 0.342667,
       "team": "McLaren",
-      "team_share": 50.4,
-      "top10_probability": 1.0,
-      "weekend_form_delta": 0.0
+      "team_share": 50.3,
+      "weekend_form_delta": 0.410256,
+      "win_probability": 0.085372
     },
     {
       "driver_share": 50.5,
-      "expected_position": 4.9045,
-      "front_row_probability": 0.059833,
+      "expected_finish": 9.114667,
       "name": "VER",
-      "pole_probability": 0.0115,
+      "podium_probability": 0.129833,
       "team": "Red Bull Racing",
       "team_share": 49.5,
-      "top10_probability": 1.0,
-      "weekend_form_delta": 0.0
+      "weekend_form_delta": -0.820512,
+      "win_probability": 0.017065
     },
     {
-      "driver_share": 52.8,
-      "expected_position": 7.510667,
-      "front_row_probability": 0.000833,
-      "name": "BEA",
-      "pole_probability": 0.0,
-      "team": "Haas F1 Team",
-      "team_share": 47.2,
-      "top10_probability": 0.964833,
-      "weekend_form_delta": 0.0
-    },
-    {
-      "driver_share": 53.3,
-      "expected_position": 8.702167,
-      "front_row_probability": 0.0,
-      "name": "GAS",
-      "pole_probability": 0.0,
-      "team": "Alpine",
-      "team_share": 46.7,
-      "top10_probability": 0.858167,
-      "weekend_form_delta": 0.0
-    },
-    {
-      "driver_share": 48.9,
-      "expected_position": 9.744833,
-      "front_row_probability": 0.0,
-      "name": "LAW",
-      "pole_probability": 0.0,
-      "team": "Racing Bulls",
-      "team_share": 51.1,
-      "top10_probability": 0.690833,
-      "weekend_form_delta": 0.0
-    },
-    {
-      "driver_share": 44.0,
-      "expected_position": 10.643667,
-      "front_row_probability": 0.0,
-      "name": "HAD",
-      "pole_probability": 0.0,
-      "team": "Red Bull Racing",
-      "team_share": 56.0,
-      "top10_probability": 0.515833,
-      "weekend_form_delta": 0.0
-    },
-    {
-      "driver_share": 42.4,
-      "expected_position": 10.667167,
-      "front_row_probability": 0.0,
+      "driver_share": 42.7,
+      "expected_finish": 10.903167,
       "name": "PIA",
-      "pole_probability": 0.0,
+      "podium_probability": 0.034833,
       "team": "McLaren",
-      "team_share": 57.6,
-      "top10_probability": 0.512833,
-      "weekend_form_delta": 0.0
+      "team_share": 57.3,
+      "weekend_form_delta": 0.820512,
+      "win_probability": 0.004039
     },
     {
-      "driver_share": 46.6,
-      "expected_position": 12.378833,
-      "front_row_probability": 0.0,
-      "name": "LIN",
-      "pole_probability": 0.0,
-      "team": "Racing Bulls",
-      "team_share": 53.4,
-      "top10_probability": 0.214833,
-      "weekend_form_delta": 0.0
-    },
-    {
-      "driver_share": 56.8,
-      "expected_position": 13.670333,
-      "front_row_probability": 0.0,
-      "name": "CRA",
-      "pole_probability": 0.0,
-      "team": "Aston Martin",
-      "team_share": 43.2,
-      "top10_probability": 0.100667,
-      "weekend_form_delta": 0.0
-    },
-    {
-      "driver_share": 52.1,
-      "expected_position": 14.045333,
-      "front_row_probability": 0.0,
-      "name": "SAI",
-      "pole_probability": 0.0,
-      "team": "Williams",
-      "team_share": 47.9,
-      "top10_probability": 0.0835,
-      "weekend_form_delta": 0.0
-    },
-    {
-      "driver_share": 49.5,
-      "expected_position": 15.783333,
-      "front_row_probability": 0.0,
-      "name": "BOR",
-      "pole_probability": 0.0,
-      "team": "Audi",
-      "team_share": 50.5,
-      "top10_probability": 0.020833,
-      "weekend_form_delta": 0.0
-    },
-    {
-      "driver_share": 47.3,
-      "expected_position": 16.016,
-      "front_row_probability": 0.0,
-      "name": "COL",
-      "pole_probability": 0.0,
-      "team": "Alpine",
-      "team_share": 52.7,
-      "top10_probability": 0.017167,
-      "weekend_form_delta": 0.0
-    },
-    {
-      "driver_share": 49.1,
-      "expected_position": 16.299667,
-      "front_row_probability": 0.0,
-      "name": "HUL",
-      "pole_probability": 0.0,
-      "team": "Audi",
-      "team_share": 50.9,
-      "top10_probability": 0.012,
-      "weekend_form_delta": 0.0
-    },
-    {
-      "driver_share": 44.3,
-      "expected_position": 17.236667,
-      "front_row_probability": 0.0,
-      "name": "OCO",
-      "pole_probability": 0.0,
+      "driver_share": 52.4,
+      "expected_finish": 11.4,
+      "name": "BEA",
+      "podium_probability": 0.026833,
       "team": "Haas F1 Team",
-      "team_share": 55.7,
-      "top10_probability": 0.006333,
-      "weekend_form_delta": 0.0
+      "team_share": 47.6,
+      "weekend_form_delta": -2.256409,
+      "win_probability": 0.003731
     },
     {
       "driver_share": 53.2,
-      "expected_position": 18.7,
-      "front_row_probability": 0.0,
-      "name": "ALO",
-      "pole_probability": 0.0,
-      "team": "Aston Martin",
+      "expected_finish": 12.037,
+      "name": "GAS",
+      "podium_probability": 0.026167,
+      "team": "Alpine",
       "team_share": 46.8,
-      "top10_probability": 0.001167,
-      "weekend_form_delta": 0.0
+      "weekend_form_delta": 0.0,
+      "win_probability": 0.003731
     },
     {
-      "driver_share": 47.6,
-      "expected_position": 19.5465,
-      "front_row_probability": 0.0,
-      "name": "ALB",
-      "pole_probability": 0.0,
+      "driver_share": 44.1,
+      "expected_finish": 12.046167,
+      "name": "HAD",
+      "podium_probability": 0.009333,
+      "team": "Red Bull Racing",
+      "team_share": 55.9,
+      "weekend_form_delta": -0.205128,
+      "win_probability": 0.001368
+    },
+    {
+      "driver_share": 48.4,
+      "expected_finish": 13.064,
+      "name": "LAW",
+      "podium_probability": 0.005,
+      "team": "Racing Bulls",
+      "team_share": 51.6,
+      "weekend_form_delta": -1.435896,
+      "win_probability": 0.000548
+    },
+    {
+      "driver_share": 46.6,
+      "expected_finish": 13.824,
+      "name": "LIN",
+      "podium_probability": 0.002333,
+      "team": "Racing Bulls",
+      "team_share": 53.4,
+      "weekend_form_delta": -0.615384,
+      "win_probability": 0.0
+    },
+    {
+      "driver_share": 44.4,
+      "expected_finish": 14.508833,
+      "name": "OCO",
+      "podium_probability": 0.0005,
+      "team": "Haas F1 Team",
+      "team_share": 55.6,
+      "weekend_form_delta": -1.02564,
+      "win_probability": 0.0
+    },
+    {
+      "driver_share": 51.7,
+      "expected_finish": 14.723667,
+      "name": "SAI",
+      "podium_probability": 0.000667,
       "team": "Williams",
-      "team_share": 52.4,
-      "top10_probability": 0.001,
-      "weekend_form_delta": 0.0
+      "team_share": 48.3,
+      "weekend_form_delta": -1.846153,
+      "win_probability": 0.0
     },
     {
-      "driver_share": 49.1,
-      "expected_position": 21.139333,
-      "front_row_probability": 0.0,
-      "name": "PER",
-      "pole_probability": 0.0,
-      "team": "Cadillac",
-      "team_share": 50.9,
-      "top10_probability": 0.0,
-      "weekend_form_delta": 0.0
-    },
-    {
-      "driver_share": 50.6,
-      "expected_position": 21.226,
-      "front_row_probability": 0.0,
-      "name": "STR",
-      "pole_probability": 0.0,
+      "driver_share": 57.2,
+      "expected_finish": 15.162,
+      "name": "CRA",
+      "podium_probability": 0.000833,
       "team": "Aston Martin",
-      "team_share": 49.4,
-      "top10_probability": 0.0,
-      "weekend_form_delta": 0.0
+      "team_share": 42.8,
+      "weekend_form_delta": 0.0,
+      "win_probability": 0.0
     },
     {
-      "driver_share": 48.9,
-      "expected_position": 21.358,
-      "front_row_probability": 0.0,
-      "name": "BOT",
-      "pole_probability": 0.0,
+      "driver_share": 46.6,
+      "expected_finish": 15.4705,
+      "name": "COL",
+      "podium_probability": 0.0,
+      "team": "Alpine",
+      "team_share": 53.4,
+      "weekend_form_delta": -1.641025,
+      "win_probability": 0.0
+    },
+    {
+      "driver_share": 49.2,
+      "expected_finish": 16.636833,
+      "name": "BOR",
+      "podium_probability": 0.0,
+      "team": "Audi",
+      "team_share": 50.8,
+      "weekend_form_delta": -0.410256,
+      "win_probability": 0.0
+    },
+    {
+      "driver_share": 46.9,
+      "expected_finish": 16.8485,
+      "name": "ALB",
+      "podium_probability": 0.000167,
+      "team": "Williams",
+      "team_share": 53.1,
+      "weekend_form_delta": -2.051281,
+      "win_probability": 0.0
+    },
+    {
+      "driver_share": 52.8,
+      "expected_finish": 17.2305,
+      "name": "ALO",
+      "podium_probability": 0.0,
+      "team": "Aston Martin",
+      "team_share": 47.2,
+      "weekend_form_delta": -2.871793,
+      "win_probability": 0.0
+    },
+    {
+      "driver_share": 48.4,
+      "expected_finish": 17.240333,
+      "name": "HUL",
+      "podium_probability": 0.0,
+      "team": "Audi",
+      "team_share": 51.6,
+      "weekend_form_delta": -1.230768,
+      "win_probability": 0.0
+    },
+    {
+      "driver_share": 48.7,
+      "expected_finish": 18.012167,
+      "name": "PER",
+      "podium_probability": 0.0,
       "team": "Cadillac",
-      "team_share": 51.1,
-      "top10_probability": 0.0,
-      "weekend_form_delta": 0.0
+      "team_share": 51.3,
+      "weekend_form_delta": -2.461537,
+      "win_probability": 0.0
+    },
+    {
+      "driver_share": 50.1,
+      "expected_finish": 18.092833,
+      "name": "STR",
+      "podium_probability": 0.0,
+      "team": "Aston Martin",
+      "team_share": 49.9,
+      "weekend_form_delta": -3.076921,
+      "win_probability": 0.0
+    },
+    {
+      "driver_share": 48.2,
+      "expected_finish": 18.327833,
+      "name": "BOT",
+      "podium_probability": 0.0,
+      "team": "Cadillac",
+      "team_share": 51.8,
+      "weekend_form_delta": -2.666665,
+      "win_probability": 0.0
     }
   ],
-  "generated_at": "2026-03-28T07:11:26Z",
+  "generated_at": "2026-03-28T08:43:34Z",
   "inputs_used": [
     {
-      "source": "fp2",
-      "source_key": "FP2",
-      "weight": 0.235294
-    },
-    {
-      "source": "fp3",
-      "source_key": "FP3",
-      "weight": 0.235294
+      "source": "qualifying",
+      "source_key": "Q",
+      "weight": 0.470588
     },
     {
       "source": "history_driver",
       "source_key": "history_driver",
-      "weight": 0.235294
+      "weight": 0.176471
     },
     {
-      "source": "fp1",
-      "source_key": "FP1",
-      "weight": 0.176471
+      "source": "fp2",
+      "source_key": "FP2",
+      "weight": 0.117647
+    },
+    {
+      "source": "fp3",
+      "source_key": "FP3",
+      "weight": 0.117647
     },
     {
       "source": "history_team",
@@ -284,12 +261,12 @@
     }
   ],
   "integrity": {
-    "driver_ratings_hash": "a11547dea68c",
-    "race_config_hash": "47e1b2697611",
-    "team_ratings_hash": "7e675f493965"
+    "driver_ratings_hash": "d68ae288f516",
+    "race_config_hash": "6ac4b2fb9b46",
+    "team_ratings_hash": "43e01726aaf7"
   },
-  "prediction_target": "qualifying",
-  "prediction_target_label": "Qualifying",
+  "prediction_target": "race",
+  "prediction_target_label": "Race",
   "race": "Japanese Grand Prix",
   "season_blend": {
     "current_season": 2026,
@@ -302,15 +279,18 @@
     "available_sessions": [
       "FP1",
       "FP2",
-      "FP3"
+      "FP3",
+      "Q"
     ],
-    "grid_source": "simulation",
-    "qualifying_noise": 2.35,
+    "grid_source": "qualifying",
+    "overtaking_difficulty": 0.63,
+    "safety_car_probability": 0.22,
     "seed": 202603,
     "simulations": 6000,
-    "weather": "dry"
+    "weather": "dry",
+    "win_temperature": 1.2
   },
-  "target_output_type": "qualifying",
-  "target_session_code": "Q",
+  "target_output_type": "race",
+  "target_session_code": "R",
   "weekend_format": "standard"
 }

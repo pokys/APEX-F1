@@ -17,7 +17,7 @@
       "sprint_avg_position": 16.0,
       "sprint_qualifying_avg_position": null,
       "sprint_qualifying_phase_depth": null,
-      "starts": 2,
+      "starts": 3,
       "team": "Williams"
     },
     {
@@ -37,11 +37,11 @@
       "sprint_avg_position": 17.0,
       "sprint_qualifying_avg_position": null,
       "sprint_qualifying_phase_depth": null,
-      "starts": 2,
+      "starts": 3,
       "team": "Aston Martin"
     },
     {
-      "dnf_rate": 0.0,
+      "dnf_rate": 0.333333,
       "driver": "ANT",
       "fp1_avg_position": null,
       "fp2_avg_position": null,
@@ -57,11 +57,11 @@
       "sprint_avg_position": 5.0,
       "sprint_qualifying_avg_position": null,
       "sprint_qualifying_phase_depth": null,
-      "starts": 2,
+      "starts": 3,
       "team": "Mercedes"
     },
     {
-      "dnf_rate": 0.5,
+      "dnf_rate": 0.666667,
       "driver": "BEA",
       "fp1_avg_position": null,
       "fp2_avg_position": null,
@@ -77,7 +77,7 @@
       "sprint_avg_position": 8.0,
       "sprint_qualifying_avg_position": null,
       "sprint_qualifying_phase_depth": null,
-      "starts": 2,
+      "starts": 3,
       "team": "Haas F1 Team"
     },
     {
@@ -97,7 +97,7 @@
       "sprint_avg_position": 13.0,
       "sprint_qualifying_avg_position": null,
       "sprint_qualifying_phase_depth": null,
-      "starts": 2,
+      "starts": 3,
       "team": "Audi"
     },
     {
@@ -117,7 +117,7 @@
       "sprint_avg_position": 21.0,
       "sprint_qualifying_avg_position": null,
       "sprint_qualifying_phase_depth": null,
-      "starts": 2,
+      "starts": 3,
       "team": "Cadillac"
     },
     {
@@ -137,7 +137,7 @@
       "sprint_avg_position": 14.0,
       "sprint_qualifying_avg_position": null,
       "sprint_qualifying_phase_depth": null,
-      "starts": 2,
+      "starts": 3,
       "team": "Alpine"
     },
     {
@@ -161,7 +161,7 @@
       "team": "Aston Martin"
     },
     {
-      "dnf_rate": 0.5,
+      "dnf_rate": 0.666667,
       "driver": "GAS",
       "fp1_avg_position": null,
       "fp2_avg_position": null,
@@ -177,11 +177,11 @@
       "sprint_avg_position": 11.0,
       "sprint_qualifying_avg_position": null,
       "sprint_qualifying_phase_depth": null,
-      "starts": 2,
+      "starts": 3,
       "team": "Alpine"
     },
     {
-      "dnf_rate": 0.5,
+      "dnf_rate": 0.666667,
       "driver": "HAD",
       "fp1_avg_position": null,
       "fp2_avg_position": null,
@@ -197,11 +197,11 @@
       "sprint_avg_position": 15.0,
       "sprint_qualifying_avg_position": null,
       "sprint_qualifying_phase_depth": null,
-      "starts": 2,
+      "starts": 3,
       "team": "Red Bull Racing"
     },
     {
-      "dnf_rate": 0.0,
+      "dnf_rate": 0.333333,
       "driver": "HAM",
       "fp1_avg_position": null,
       "fp2_avg_position": null,
@@ -217,7 +217,7 @@
       "sprint_avg_position": 3.0,
       "sprint_qualifying_avg_position": null,
       "sprint_qualifying_phase_depth": null,
-      "starts": 2,
+      "starts": 3,
       "team": "Ferrari"
     },
     {
@@ -237,11 +237,11 @@
       "sprint_avg_position": 20.0,
       "sprint_qualifying_avg_position": null,
       "sprint_qualifying_phase_depth": null,
-      "starts": 2,
+      "starts": 3,
       "team": "Audi"
     },
     {
-      "dnf_rate": 0.5,
+      "dnf_rate": 0.666667,
       "driver": "LAW",
       "fp1_avg_position": null,
       "fp2_avg_position": null,
@@ -257,11 +257,11 @@
       "sprint_avg_position": 7.0,
       "sprint_qualifying_avg_position": null,
       "sprint_qualifying_phase_depth": null,
-      "starts": 2,
+      "starts": 3,
       "team": "Racing Bulls"
     },
     {
-      "dnf_rate": 0.0,
+      "dnf_rate": 0.333333,
       "driver": "LEC",
       "fp1_avg_position": null,
       "fp2_avg_position": null,
@@ -277,7 +277,7 @@
       "sprint_avg_position": 2.0,
       "sprint_qualifying_avg_position": null,
       "sprint_qualifying_phase_depth": null,
-      "starts": 2,
+      "starts": 3,
       "team": "Ferrari"
     },
     {
@@ -297,11 +297,11 @@
       "sprint_avg_position": 22.0,
       "sprint_qualifying_avg_position": null,
       "sprint_qualifying_phase_depth": null,
-      "starts": 2,
+      "starts": 3,
       "team": "Racing Bulls"
     },
     {
-      "dnf_rate": 0.5,
+      "dnf_rate": 0.666667,
       "driver": "NOR",
       "fp1_avg_position": null,
       "fp2_avg_position": null,
@@ -317,7 +317,7 @@
       "sprint_avg_position": 4.0,
       "sprint_qualifying_avg_position": null,
       "sprint_qualifying_phase_depth": null,
-      "starts": 2,
+      "starts": 3,
       "team": "McLaren"
     },
     {
@@ -337,7 +337,7 @@
       "sprint_avg_position": 10.0,
       "sprint_qualifying_avg_position": null,
       "sprint_qualifying_phase_depth": null,
-      "starts": 2,
+      "starts": 3,
       "team": "Haas F1 Team"
     },
     {
@@ -357,7 +357,7 @@
       "sprint_avg_position": 19.0,
       "sprint_qualifying_avg_position": null,
       "sprint_qualifying_phase_depth": null,
-      "starts": 2,
+      "starts": 3,
       "team": "Cadillac"
     },
     {
@@ -377,11 +377,11 @@
       "sprint_avg_position": 6.0,
       "sprint_qualifying_avg_position": null,
       "sprint_qualifying_phase_depth": null,
-      "starts": 2,
+      "starts": 3,
       "team": "McLaren"
     },
     {
-      "dnf_rate": 0.0,
+      "dnf_rate": 0.333333,
       "driver": "RUS",
       "fp1_avg_position": null,
       "fp2_avg_position": null,
@@ -397,7 +397,7 @@
       "sprint_avg_position": 1.0,
       "sprint_qualifying_avg_position": null,
       "sprint_qualifying_phase_depth": null,
-      "starts": 2,
+      "starts": 3,
       "team": "Mercedes"
     },
     {
@@ -417,7 +417,7 @@
       "sprint_avg_position": 12.0,
       "sprint_qualifying_avg_position": null,
       "sprint_qualifying_phase_depth": null,
-      "starts": 2,
+      "starts": 3,
       "team": "Williams"
     },
     {
@@ -437,11 +437,11 @@
       "sprint_avg_position": 18.0,
       "sprint_qualifying_avg_position": null,
       "sprint_qualifying_phase_depth": null,
-      "starts": 2,
+      "starts": 3,
       "team": "Aston Martin"
     },
     {
-      "dnf_rate": 0.5,
+      "dnf_rate": 0.666667,
       "driver": "VER",
       "fp1_avg_position": null,
       "fp2_avg_position": null,
@@ -457,7 +457,7 @@
       "sprint_avg_position": 9.0,
       "sprint_qualifying_avg_position": null,
       "sprint_qualifying_phase_depth": null,
-      "starts": 2,
+      "starts": 3,
       "team": "Red Bull Racing"
     }
   ],
@@ -467,7 +467,7 @@
   "source": "build_features",
   "teams": [
     {
-      "dnf_rate": 0.75,
+      "dnf_rate": 0.833333,
       "fp1_avg_position": null,
       "fp2_avg_position": null,
       "fp3_avg_position": null,
@@ -482,7 +482,7 @@
       "sprint_avg_position": 12.5,
       "sprint_qualifying_avg_position": null,
       "sprint_qualifying_phase_depth": null,
-      "starts": 4,
+      "starts": 6,
       "team": "Alpine"
     },
     {
@@ -501,7 +501,7 @@
       "sprint_avg_position": 17.5,
       "sprint_qualifying_avg_position": null,
       "sprint_qualifying_phase_depth": null,
-      "starts": 4,
+      "starts": 6,
       "team": "Aston Martin"
     },
     {
@@ -520,7 +520,7 @@
       "sprint_avg_position": 16.5,
       "sprint_qualifying_avg_position": null,
       "sprint_qualifying_phase_depth": null,
-      "starts": 4,
+      "starts": 6,
       "team": "Audi"
     },
     {
@@ -539,11 +539,11 @@
       "sprint_avg_position": 20.0,
       "sprint_qualifying_avg_position": null,
       "sprint_qualifying_phase_depth": null,
-      "starts": 4,
+      "starts": 6,
       "team": "Cadillac"
     },
     {
-      "dnf_rate": 0.0,
+      "dnf_rate": 0.333333,
       "fp1_avg_position": null,
       "fp2_avg_position": null,
       "fp3_avg_position": null,
@@ -558,11 +558,11 @@
       "sprint_avg_position": 2.5,
       "sprint_qualifying_avg_position": null,
       "sprint_qualifying_phase_depth": null,
-      "starts": 4,
+      "starts": 6,
       "team": "Ferrari"
     },
     {
-      "dnf_rate": 0.75,
+      "dnf_rate": 0.833333,
       "fp1_avg_position": null,
       "fp2_avg_position": null,
       "fp3_avg_position": null,
@@ -577,11 +577,11 @@
       "sprint_avg_position": 9.0,
       "sprint_qualifying_avg_position": null,
       "sprint_qualifying_phase_depth": null,
-      "starts": 4,
+      "starts": 6,
       "team": "Haas F1 Team"
     },
     {
-      "dnf_rate": 0.75,
+      "dnf_rate": 0.833333,
       "fp1_avg_position": null,
       "fp2_avg_position": null,
       "fp3_avg_position": null,
@@ -596,11 +596,11 @@
       "sprint_avg_position": 5.0,
       "sprint_qualifying_avg_position": null,
       "sprint_qualifying_phase_depth": null,
-      "starts": 4,
+      "starts": 6,
       "team": "McLaren"
     },
     {
-      "dnf_rate": 0.0,
+      "dnf_rate": 0.333333,
       "fp1_avg_position": null,
       "fp2_avg_position": null,
       "fp3_avg_position": null,
@@ -615,11 +615,11 @@
       "sprint_avg_position": 3.0,
       "sprint_qualifying_avg_position": null,
       "sprint_qualifying_phase_depth": null,
-      "starts": 4,
+      "starts": 6,
       "team": "Mercedes"
     },
     {
-      "dnf_rate": 0.75,
+      "dnf_rate": 0.833333,
       "fp1_avg_position": null,
       "fp2_avg_position": null,
       "fp3_avg_position": null,
@@ -634,11 +634,11 @@
       "sprint_avg_position": 14.5,
       "sprint_qualifying_avg_position": null,
       "sprint_qualifying_phase_depth": null,
-      "starts": 4,
+      "starts": 6,
       "team": "Racing Bulls"
     },
     {
-      "dnf_rate": 0.5,
+      "dnf_rate": 0.666667,
       "fp1_avg_position": null,
       "fp2_avg_position": null,
       "fp3_avg_position": null,
@@ -653,7 +653,7 @@
       "sprint_avg_position": 12.0,
       "sprint_qualifying_avg_position": null,
       "sprint_qualifying_phase_depth": null,
-      "starts": 4,
+      "starts": 6,
       "team": "Red Bull Racing"
     },
     {
@@ -672,7 +672,7 @@
       "sprint_avg_position": 14.0,
       "sprint_qualifying_avg_position": null,
       "sprint_qualifying_phase_depth": null,
-      "starts": 4,
+      "starts": 6,
       "team": "Williams"
     }
   ]

@@ -3,7 +3,7 @@
   "calibration_season": 2025,
   "calibration_source": "outputs/backtest/backtest_season_2025.json",
   "event_format": "conventional",
-  "generated_at": "2026-04-12T23:38:58Z",
+  "generated_at": "2026-04-13T03:24:36Z",
   "grid_source": "simulation",
   "inputs_status": [
     {
@@ -55,26 +55,26 @@
       "weight": 0.333333
     }
   ],
-  "location": "Sakhir",
-  "next_round": 4,
-  "overtaking_difficulty": 0.5,
+  "location": "Jeddah",
+  "next_round": 5,
+  "overtaking_difficulty": 0.41,
   "prediction_target": "qualifying",
   "prediction_target_label": "Qualifying",
-  "race": "Bahrain Grand Prix",
-  "race_date": "2026-04-12",
-  "safety_car_probability": 0.19,
+  "race": "Saudi Arabian Grand Prix",
+  "race_date": "2026-04-19",
+  "safety_car_probability": 0.43,
   "season": 2026,
-  "seed": 202604,
+  "seed": 202605,
   "signal_count": 0,
   "simulations": 6000,
   "target_output_type": "qualifying",
   "target_session_code": "Q",
   "track": {
     "qualifying_noise": 2.35,
-    "race_noise": 3.45,
-    "tyre_degradation_factor": 0.67
+    "race_noise": 3.55,
+    "tyre_degradation_factor": 0.43
   },
-  "track_profile": "country:bahrain",
+  "track_profile": "country:saudi arabia",
   "weather": "dry",
   "weather_modifier": 0.05,
   "weekend_format": "standard",

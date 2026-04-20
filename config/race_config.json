@@ -2,30 +2,18 @@
   "available_sessions": [],
   "calibration_season": 2025,
   "calibration_source": "outputs/backtest/backtest_season_2025.json",
-  "event_format": "conventional",
-  "generated_at": "2026-04-19T23:40:44Z",
+  "event_format": "sprint",
+  "generated_at": "2026-04-20T03:25:18Z",
   "grid_source": "simulation",
   "inputs_status": [
     {
-      "configured_weight": 0.15,
+      "configured_weight": 0.45,
       "source": "fp1",
       "source_key": "FP1",
       "status": "missing"
     },
     {
-      "configured_weight": 0.2,
-      "source": "fp2",
-      "source_key": "FP2",
-      "status": "missing"
-    },
-    {
-      "configured_weight": 0.2,
-      "source": "fp3",
-      "source_key": "FP3",
-      "status": "missing"
-    },
-    {
-      "configured_weight": 0.15,
+      "configured_weight": 0.25,
       "source": "signals",
       "source_key": "signals",
       "status": "missing"
@@ -55,28 +43,28 @@
       "weight": 0.333333
     }
   ],
-  "location": "Jeddah",
-  "next_round": 5,
-  "overtaking_difficulty": 0.41,
-  "prediction_target": "qualifying",
-  "prediction_target_label": "Qualifying",
-  "race": "Saudi Arabian Grand Prix",
-  "race_date": "2026-04-19",
-  "safety_car_probability": 0.43,
+  "location": "Miami",
+  "next_round": 6,
+  "overtaking_difficulty": 0.56,
+  "prediction_target": "sprint_qualifying",
+  "prediction_target_label": "Sprint Qualifying",
+  "race": "Miami Grand Prix",
+  "race_date": "2026-05-03",
+  "safety_car_probability": 0.29,
   "season": 2026,
-  "seed": 202605,
+  "seed": 202606,
   "signal_count": 0,
   "simulations": 6000,
   "target_output_type": "qualifying",
-  "target_session_code": "Q",
+  "target_session_code": "SQ",
   "track": {
     "qualifying_noise": 2.35,
-    "race_noise": 3.55,
-    "tyre_degradation_factor": 0.43
+    "race_noise": 3.5,
+    "tyre_degradation_factor": 0.52
   },
-  "track_profile": "country:saudi arabia",
+  "track_profile": "country:united states",
   "weather": "dry",
   "weather_modifier": 0.05,
-  "weekend_format": "standard",
+  "weekend_format": "sprint",
   "win_temperature": 1.2
 }

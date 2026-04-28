@@ -3,7 +3,7 @@
   "calibration_season": 2025,
   "calibration_source": "outputs/backtest/backtest_season_2025.json",
   "event_format": "sprint",
-  "generated_at": "2026-04-28T03:37:26Z",
+  "generated_at": "2026-04-28T06:33:19Z",
   "grid_source": "simulation",
   "inputs_status": [
     {

@@ -51,6 +51,26 @@ def assert_close(value: float, expected: float, tolerance: float, label: str) ->
         raise ValueError(f"{label} expected {expected} ± {tolerance}, got {value}")
 
 
+def warn_if_stale(payload: dict[str, Any]) -> None:
+    """Non-fatal: log a clear warning when the prediction is built on stale
+    hard data (e.g. race weekends were skipped or postponed)."""
+    freshness = payload.get("data_freshness")
+    if not isinstance(freshness, dict):
+        return
+    if not freshness.get("is_stale"):
+        return
+    days_since = freshness.get("days_since_latest_event")
+    threshold = freshness.get("stale_threshold_days")
+    latest_event = freshness.get("latest_completed_event") or "n/a"
+    LOGGER.warning(
+        "Prediction is built on stale hard data: latest completed event=%s, "
+        "days_since=%s, stale_threshold_days=%s. Ratings have not been refreshed by recent races.",
+        latest_event,
+        days_since,
+        threshold,
+    )
+
+
 def validate_prediction(path: Path) -> None:
     payload = load_json(path)
     if not isinstance(payload, dict):
@@ -59,6 +79,8 @@ def validate_prediction(path: Path) -> None:
     rows = payload.get("drivers")
     if not isinstance(rows, list) or not rows:
         raise ValueError("Prediction payload must include non-empty 'drivers' list.")
+
+    warn_if_stale(payload)
 
     target_output_type = str(payload.get("target_output_type") or "race")
     first_metric_sum = 0.0

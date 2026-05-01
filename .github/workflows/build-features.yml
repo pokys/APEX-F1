@@ -13,6 +13,7 @@ on:
       - "data/raw/fastf1/**"
       - "knowledge/processed/**"
       - "config/signal_guardrails.json"
+      - "config/recency.json"
       - "requirements.lock"
       - ".github/workflows/build-features.yml"
   schedule:
@@ -48,7 +49,7 @@ jobs:
             ARGS+=(--season "$SEASON")
           fi
           python pipeline/validate_signals.py --signals-dir knowledge/processed --allow-empty --log-level INFO
-          python pipeline/build_features.py "${ARGS[@]}" --guardrails-config config/signal_guardrails.json --allow-missing-fastf1 --log-level INFO
+          python pipeline/build_features.py "${ARGS[@]}" --guardrails-config config/signal_guardrails.json --recency-config config/recency.json --allow-missing-fastf1 --log-level INFO
 
       - name: Commit changes
         run: |

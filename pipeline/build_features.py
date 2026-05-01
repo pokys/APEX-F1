@@ -42,6 +42,20 @@ DEFAULT_SIGNAL_GUARDRAILS = {
         "driver_confidence": {"baseline": 0.0, "max_delta": 0.35},
     },
 }
+DEFAULT_RECENCY_CONFIG = {
+    "half_life_events": {
+        "race": 4.0,
+        "qualifying": 4.0,
+        "sprint": 3.0,
+        "sprint_qualifying": 3.0,
+        "practice": 2.0,
+        "fp1": 2.0,
+        "fp2": 2.0,
+        "fp3": 2.0,
+    },
+    "stale_threshold_days": 21,
+    "minimum_effective_sample": 1.5,
+}
 SEASON_FILE_RE = re.compile(r"^season_(\d{4})\.json$")
 PRACTICE_CODES = {"FP1", "FP2", "FP3"}
 
@@ -73,6 +87,11 @@ def parse_args() -> argparse.Namespace:
         "--guardrails-config",
         default="config/signal_guardrails.json",
         help="Signal guardrails configuration JSON path.",
+    )
+    parser.add_argument(
+        "--recency-config",
+        default="config/recency.json",
+        help="Recency-weighting configuration JSON path.",
     )
     parser.add_argument(
         "--log-level",
@@ -158,6 +177,82 @@ def stable_mean(values: list[float]) -> float | None:
     if not values:
         return None
     return round(statistics.fmean(values), 6)
+
+
+def recency_weighted_mean(pairs: list[tuple[int, float]], half_life: float) -> tuple[float | None, float]:
+    """Exponential-decay weighted mean ranked by event index.
+
+    pairs: list of (event_index, value). The most recent event_index gets
+    weight 1.0; older events decay as 0.5 ** (rank / half_life).
+
+    Returns (mean, effective_sample_size). When pairs is empty returns (None, 0.0).
+    Effective sample size uses the Kish formula (sum w)^2 / sum w^2.
+    """
+    if not pairs:
+        return None, 0.0
+    max_idx = max(idx for idx, _ in pairs)
+    half = max(float(half_life), 1e-6)
+    decay = 0.5 ** (1.0 / half)
+    weighted_sum = 0.0
+    weight_sum = 0.0
+    weight_sq_sum = 0.0
+    for idx, value in pairs:
+        rank = max_idx - idx
+        weight = decay ** rank
+        weighted_sum += weight * value
+        weight_sum += weight
+        weight_sq_sum += weight * weight
+    if weight_sum <= 0.0:
+        return None, 0.0
+    mean = weighted_sum / weight_sum
+    ess = (weight_sum * weight_sum) / weight_sq_sum if weight_sq_sum > 0 else 0.0
+    return round(mean, 6), round(ess, 6)
+
+
+def load_recency_config(path: Path) -> dict[str, Any]:
+    merged = json.loads(json.dumps(DEFAULT_RECENCY_CONFIG))
+    if not path.exists():
+        return merged
+    try:
+        raw = load_json(path)
+    except Exception as exc:
+        LOGGER.warning("Could not parse recency config %s: %s", path, exc)
+        return merged
+    if not isinstance(raw, dict):
+        return merged
+
+    half_lives = raw.get("half_life_events")
+    if isinstance(half_lives, dict):
+        normalized: dict[str, float] = {}
+        for key, value in half_lives.items():
+            num = to_float(value)
+            if num is None or num <= 0:
+                continue
+            normalized[str(key).strip().lower()] = num
+        if normalized:
+            base = dict(merged["half_life_events"])
+            base.update(normalized)
+            merged["half_life_events"] = base
+
+    stale = to_float(raw.get("stale_threshold_days"))
+    if stale is not None and stale >= 0:
+        merged["stale_threshold_days"] = stale
+
+    min_ess = to_float(raw.get("minimum_effective_sample"))
+    if min_ess is not None and min_ess >= 0:
+        merged["minimum_effective_sample"] = min_ess
+
+    return merged
+
+
+def half_life_for(recency_config: dict[str, Any], source_key: str) -> float:
+    half_lives = recency_config.get("half_life_events", {})
+    if isinstance(half_lives, dict):
+        candidate = to_float(half_lives.get(source_key))
+        if candidate is not None and candidate > 0:
+            return candidate
+    default = DEFAULT_RECENCY_CONFIG["half_life_events"].get(source_key, 4.0)
+    return float(default)
 
 
 def slug(value: str | None) -> str:
@@ -396,11 +491,26 @@ def aggregate_signals(signals: list[dict[str, Any]], guardrails: dict[str, Any])
     return team_agg, driver_agg
 
 
-def build_features(fastf1_snapshot: dict[str, Any], signals: list[dict[str, Any]], guardrails: dict[str, Any]) -> dict[str, Any]:
+def _last_n_values(pairs: list[tuple[int, float]], n: int) -> list[float]:
+    if not pairs or n <= 0:
+        return []
+    ordered = sorted(pairs, key=lambda item: item[0])
+    return [value for _, value in ordered[-n:]]
+
+
+def build_features(
+    fastf1_snapshot: dict[str, Any],
+    signals: list[dict[str, Any]],
+    guardrails: dict[str, Any],
+    recency_config: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     season = int(fastf1_snapshot.get("season"))
     events = fastf1_snapshot.get("events", [])
     if not isinstance(events, list):
         raise ValueError("FastF1 snapshot has invalid events format.")
+
+    if recency_config is None:
+        recency_config = json.loads(json.dumps(DEFAULT_RECENCY_CONFIG))
 
     drivers: dict[str, dict[str, Any]] = {}
     teams: dict[str, dict[str, Any]] = {}
@@ -452,12 +562,14 @@ def build_features(fastf1_snapshot: dict[str, Any], signals: list[dict[str, Any]
             },
         )
 
+    event_idx = -1
     for event in events:
         if not isinstance(event, dict):
             continue
         sessions = event.get("sessions", [])
         if not isinstance(sessions, list):
             continue
+        event_idx += 1
 
         for session in sessions:
             if not isinstance(session, dict):
@@ -481,8 +593,8 @@ def build_features(fastf1_snapshot: dict[str, Any], signals: list[dict[str, Any]
 
                 if code == "R":
                     if position is not None:
-                        driver_state["race_positions"].append(position)
-                        team_state["race_positions"].append(position)
+                        driver_state["race_positions"].append((event_idx, position))
+                        team_state["race_positions"].append((event_idx, position))
                     driver_state["starts"] += 1
                     team_state["starts"] += 1
                     if not is_race_finish(str(row.get("status") or "")):
@@ -494,38 +606,72 @@ def build_features(fastf1_snapshot: dict[str, Any], signals: list[dict[str, Any]
                         team_state["points_total"] += points
                 elif code == "Q":
                     if position is not None:
-                        driver_state["qualifying_positions"].append(position)
-                        team_state["qualifying_positions"].append(position)
+                        driver_state["qualifying_positions"].append((event_idx, position))
+                        team_state["qualifying_positions"].append((event_idx, position))
                     if phase_depth is not None:
-                        driver_state["qualifying_phase_depths"].append(phase_depth)
-                        team_state["qualifying_phase_depths"].append(phase_depth)
+                        driver_state["qualifying_phase_depths"].append((event_idx, phase_depth))
+                        team_state["qualifying_phase_depths"].append((event_idx, phase_depth))
                 elif code == "SQ":
                     if position is not None:
-                        driver_state["sprint_qualifying_positions"].append(position)
-                        team_state["sprint_qualifying_positions"].append(position)
+                        driver_state["sprint_qualifying_positions"].append((event_idx, position))
+                        team_state["sprint_qualifying_positions"].append((event_idx, position))
                     if phase_depth is not None:
-                        driver_state["sprint_qualifying_phase_depths"].append(phase_depth)
-                        team_state["sprint_qualifying_phase_depths"].append(phase_depth)
+                        driver_state["sprint_qualifying_phase_depths"].append((event_idx, phase_depth))
+                        team_state["sprint_qualifying_phase_depths"].append((event_idx, phase_depth))
                 elif code == "S":
                     if position is not None:
-                        driver_state["sprint_positions"].append(position)
-                        team_state["sprint_positions"].append(position)
+                        driver_state["sprint_positions"].append((event_idx, position))
+                        team_state["sprint_positions"].append((event_idx, position))
                 elif code in PRACTICE_CODES and position is not None:
-                    driver_state["practice_positions"].append(position)
-                    team_state["practice_positions"].append(position)
-                    driver_state[f"{code.lower()}_positions"].append(position)
-                    team_state[f"{code.lower()}_positions"].append(position)
+                    driver_state["practice_positions"].append((event_idx, position))
+                    team_state["practice_positions"].append((event_idx, position))
+                    driver_state[f"{code.lower()}_positions"].append((event_idx, position))
+                    team_state[f"{code.lower()}_positions"].append((event_idx, position))
 
     team_signal_agg, driver_signal_agg = aggregate_signals(signals, guardrails=guardrails)
     caps = guardrails.get("caps", {})
     if not isinstance(caps, dict):
         caps = {}
 
+    hl_race = half_life_for(recency_config, "race")
+    hl_qualifying = half_life_for(recency_config, "qualifying")
+    hl_sprint = half_life_for(recency_config, "sprint")
+    hl_sprint_q = half_life_for(recency_config, "sprint_qualifying")
+    hl_practice = half_life_for(recency_config, "practice")
+    hl_fp1 = half_life_for(recency_config, "fp1")
+    hl_fp2 = half_life_for(recency_config, "fp2")
+    hl_fp3 = half_life_for(recency_config, "fp3")
+
+    def driver_or_team_metrics(state: dict[str, Any]) -> dict[str, Any]:
+        race_avg, race_ess = recency_weighted_mean(state["race_positions"], hl_race)
+        q_avg, q_ess = recency_weighted_mean(state["qualifying_positions"], hl_qualifying)
+        practice_avg, _ = recency_weighted_mean(state["practice_positions"], hl_practice)
+        fp1_avg, _ = recency_weighted_mean(state["fp1_positions"], hl_fp1)
+        fp2_avg, _ = recency_weighted_mean(state["fp2_positions"], hl_fp2)
+        fp3_avg, _ = recency_weighted_mean(state["fp3_positions"], hl_fp3)
+        sprint_q_avg, _ = recency_weighted_mean(state["sprint_qualifying_positions"], hl_sprint_q)
+        sprint_avg, _ = recency_weighted_mean(state["sprint_positions"], hl_sprint)
+        q_phase, _ = recency_weighted_mean(state["qualifying_phase_depths"], hl_qualifying)
+        sprint_q_phase, _ = recency_weighted_mean(state["sprint_qualifying_phase_depths"], hl_sprint_q)
+        return {
+            "race_avg_position": race_avg,
+            "qualifying_avg_position": q_avg,
+            "practice_avg_position": practice_avg,
+            "fp1_avg_position": fp1_avg,
+            "fp2_avg_position": fp2_avg,
+            "fp3_avg_position": fp3_avg,
+            "sprint_qualifying_avg_position": sprint_q_avg,
+            "sprint_avg_position": sprint_avg,
+            "qualifying_phase_depth": q_phase,
+            "sprint_qualifying_phase_depth": sprint_q_phase,
+            "race_effective_starts": race_ess,
+            "qualifying_effective_starts": q_ess,
+        }
+
     driver_rows: list[dict[str, Any]] = []
     for key in sorted(drivers.keys()):
         state = drivers[key]
         race_positions = state["race_positions"]
-        q_positions = state["qualifying_positions"]
 
         starts = int(state["starts"])
         dnfs = int(state["dnfs"])
@@ -543,22 +689,25 @@ def build_features(fastf1_snapshot: dict[str, Any], signals: list[dict[str, Any]
                 max_delta = 0.35
             confidence_delta = round(capped_soft_signal(raw_conf_delta, baseline, max_delta, -1.0, 1.0), 6)
 
+        metrics = driver_or_team_metrics(state)
         driver_rows.append(
             {
                 "driver": state["driver"],
                 "team": state["team"],
-                "race_avg_position": stable_mean(race_positions),
-                "race_form_last3": stable_mean(race_positions[-3:]),
-                "qualifying_avg_position": stable_mean(q_positions),
-                "practice_avg_position": stable_mean(state["practice_positions"]),
-                "fp1_avg_position": stable_mean(state["fp1_positions"]),
-                "fp2_avg_position": stable_mean(state["fp2_positions"]),
-                "fp3_avg_position": stable_mean(state["fp3_positions"]),
-                "sprint_qualifying_avg_position": stable_mean(state["sprint_qualifying_positions"]),
-                "sprint_avg_position": stable_mean(state["sprint_positions"]),
-                "qualifying_phase_depth": stable_mean(state["qualifying_phase_depths"]),
-                "sprint_qualifying_phase_depth": stable_mean(state["sprint_qualifying_phase_depths"]),
+                "race_avg_position": metrics["race_avg_position"],
+                "race_form_last3": stable_mean(_last_n_values(race_positions, 3)),
+                "qualifying_avg_position": metrics["qualifying_avg_position"],
+                "practice_avg_position": metrics["practice_avg_position"],
+                "fp1_avg_position": metrics["fp1_avg_position"],
+                "fp2_avg_position": metrics["fp2_avg_position"],
+                "fp3_avg_position": metrics["fp3_avg_position"],
+                "sprint_qualifying_avg_position": metrics["sprint_qualifying_avg_position"],
+                "sprint_avg_position": metrics["sprint_avg_position"],
+                "qualifying_phase_depth": metrics["qualifying_phase_depth"],
+                "sprint_qualifying_phase_depth": metrics["sprint_qualifying_phase_depth"],
                 "starts": starts,
+                "race_effective_starts": metrics["race_effective_starts"],
+                "qualifying_effective_starts": metrics["qualifying_effective_starts"],
                 "dnf_rate": round(dnfs / starts, 6) if starts else None,
                 "points_total": round(state["points_total"], 6),
                 "signal_driver_confidence_delta": confidence_delta,
@@ -596,20 +745,23 @@ def build_features(fastf1_snapshot: dict[str, Any], signals: list[dict[str, Any]
             upgrade_score = round(capped_soft_signal(raw_upgrade, up_baseline, up_max_delta, 0.0, 3.0), 6)
             reliability_concern = round(capped_soft_signal(raw_rel, rel_baseline, rel_max_delta, 0.0, 1.0), 6)
 
+        metrics = driver_or_team_metrics(state)
         team_rows.append(
             {
                 "team": state["team"],
-                "race_avg_position": stable_mean(state["race_positions"]),
-                "qualifying_avg_position": stable_mean(state["qualifying_positions"]),
-                "practice_avg_position": stable_mean(state["practice_positions"]),
-                "fp1_avg_position": stable_mean(state["fp1_positions"]),
-                "fp2_avg_position": stable_mean(state["fp2_positions"]),
-                "fp3_avg_position": stable_mean(state["fp3_positions"]),
-                "sprint_qualifying_avg_position": stable_mean(state["sprint_qualifying_positions"]),
-                "sprint_avg_position": stable_mean(state["sprint_positions"]),
-                "qualifying_phase_depth": stable_mean(state["qualifying_phase_depths"]),
-                "sprint_qualifying_phase_depth": stable_mean(state["sprint_qualifying_phase_depths"]),
+                "race_avg_position": metrics["race_avg_position"],
+                "qualifying_avg_position": metrics["qualifying_avg_position"],
+                "practice_avg_position": metrics["practice_avg_position"],
+                "fp1_avg_position": metrics["fp1_avg_position"],
+                "fp2_avg_position": metrics["fp2_avg_position"],
+                "fp3_avg_position": metrics["fp3_avg_position"],
+                "sprint_qualifying_avg_position": metrics["sprint_qualifying_avg_position"],
+                "sprint_avg_position": metrics["sprint_avg_position"],
+                "qualifying_phase_depth": metrics["qualifying_phase_depth"],
+                "sprint_qualifying_phase_depth": metrics["sprint_qualifying_phase_depth"],
                 "starts": starts,
+                "race_effective_starts": metrics["race_effective_starts"],
+                "qualifying_effective_starts": metrics["qualifying_effective_starts"],
                 "dnf_rate": round(dnfs / starts, 6) if starts else None,
                 "points_total": round(state["points_total"], 6),
                 "signal_upgrade_score": upgrade_score,
@@ -623,6 +775,9 @@ def build_features(fastf1_snapshot: dict[str, Any], signals: list[dict[str, Any]
         "source": "build_features",
         "drivers": driver_rows,
         "teams": team_rows,
+        "recency_config": {
+            "half_life_events": dict(recency_config.get("half_life_events", {})),
+        },
     }
 
 
@@ -654,7 +809,13 @@ def main() -> int:
 
         signals, signal_files = collect_signals(Path(args.signals_dir))
         guardrails = load_signal_guardrails(Path(args.guardrails_config))
-        features = build_features(fastf1_snapshot, signals, guardrails=guardrails)
+        recency_config = load_recency_config(Path(args.recency_config))
+        features = build_features(
+            fastf1_snapshot,
+            signals,
+            guardrails=guardrails,
+            recency_config=recency_config,
+        )
         features["fastf1_snapshot"] = fastf1_path.as_posix()
         features["signals_files"] = signal_files
 

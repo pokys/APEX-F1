@@ -98,11 +98,24 @@ Tento manifest se zapisuje do výstupu jako `inputs_used` a web ho zobrazuje př
 4. [`pipeline/select_prediction_target.py`](pipeline/select_prediction_target.py)
    Automaticky určí, zda se má predikovat `SQ`, `Sprint`, `Qualifying` nebo `Race`.
 5. [`pipeline/build_features.py`](pipeline/build_features.py)
-   Postaví features z tvrdých dat a soft signálů.
+   Postaví features z tvrdých dat a soft signálů. Průměry session pozic
+   nepočítá uniformně přes celou sezónu — používá exponenciální recency
+   decay podle pořadí eventů, takže nejčerstvější závody dominují
+   ratingům. Half-life je konfigurovatelný per session type v
+   [`config/recency.json`](config/recency.json) (default `race=4`,
+   `qualifying=4`, `practice=2` eventů). Vedle raw `starts` ukládá i
+   `race_effective_starts` (Kish ESS), kterou pak `update_ratings.py`
+   používá pro current/previous season blending — staré závody nikdy
+   úplně nezmizí, jen mají menší váhu.
 6. [`pipeline/update_ratings.py`](pipeline/update_ratings.py)
    Přepočítá ratingy jezdců, týmů, strategie a reliability.
 7. [`pipeline/simulate_weather_scenarios.py`](pipeline/simulate_weather_scenarios.py)
-   Spustí suchý i mokrý scénář nad správným typem predikce.
+   Spustí suchý i mokrý scénář nad správným typem predikce. Do výstupu
+   přidává blok `data_freshness` (poslední dokončený event, dny od něj,
+   `is_stale` flag podle `stale_threshold_days` z
+   [`config/recency.json`](config/recency.json)) — `validate_outputs.py`
+   z toho generuje warning, když predikce běží na zastaralých tvrdých
+   datech (vynechané závody, dlouhá pauza).
 8. [`pipeline/publish_prediction.py`](pipeline/publish_prediction.py)
    Zapíše finální kanonický JSON výstup.
 9. [`pipeline/render_prediction_page.py`](pipeline/render_prediction_page.py)

@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from pipeline.prediction_targeting import build_inputs_manifest, build_inputs_status, compute_weekend_form, find_cached_calendar_entry, load_cached_calendar, load_session_weights, select_prediction_target
+from pipeline.prediction_targeting import build_inputs_manifest, build_inputs_status, compute_data_freshness, compute_weekend_form, find_cached_calendar_entry, latest_completed_event, load_cached_calendar, load_session_weights, select_prediction_target
 
 
 def test_select_prediction_target_standard_weekend() -> None:
@@ -123,3 +123,85 @@ def test_compute_weekend_form_blends_history_baseline_with_sessions() -> None:
 
     assert form["sources"] == [{"session": "FP1", "weight": 0.4, "score": 1.0}]
     assert round(form["delta"], 6) == 2.0
+
+
+def test_latest_completed_event_picks_most_recent_with_results() -> None:
+    snapshot = {
+        "events": [
+            {
+                "event_name": "Australian Grand Prix",
+                "event_date": "2026-03-08",
+                "sessions": [{"session_code": "R", "results": [{"position": 1}]}],
+            },
+            {
+                "event_name": "Chinese Grand Prix",
+                "event_date": "2026-03-15",
+                "sessions": [{"session_code": "R", "results": [{"position": 1}]}],
+            },
+            # Future placeholder with no results - must be ignored.
+            {
+                "event_name": "Bahrain Grand Prix",
+                "event_date": "2026-04-12",
+                "sessions": [{"session_code": "R", "results": []}],
+            },
+        ]
+    }
+    name, when = latest_completed_event(snapshot)
+    assert name == "Chinese Grand Prix"
+    assert when.isoformat() == "2026-03-15"
+
+
+def test_compute_data_freshness_flags_long_gap_as_stale() -> None:
+    snapshot = {
+        "events": [
+            {
+                "event_name": "Japanese Grand Prix",
+                "event_date": "2026-03-29",
+                "sessions": [{"session_code": "R", "results": [{"position": 1}]}],
+            },
+        ]
+    }
+    freshness = compute_data_freshness(
+        snapshot,
+        race_date="2026-05-03",
+        generated_at="2026-05-01T09:00:00Z",
+        stale_threshold_days=21,
+    )
+    assert freshness["latest_completed_event"] == "Japanese Grand Prix"
+    assert freshness["latest_completed_date"] == "2026-03-29"
+    assert freshness["days_since_latest_event"] == 33
+    assert freshness["days_until_next_race"] == 2
+    assert freshness["is_stale"] is True
+
+
+def test_compute_data_freshness_recent_event_not_stale() -> None:
+    snapshot = {
+        "events": [
+            {
+                "event_name": "Miami Grand Prix",
+                "event_date": "2026-05-03",
+                "sessions": [{"session_code": "R", "results": [{"position": 1}]}],
+            },
+        ]
+    }
+    freshness = compute_data_freshness(
+        snapshot,
+        race_date="2026-05-24",
+        generated_at="2026-05-08T09:00:00Z",
+        stale_threshold_days=21,
+    )
+    assert freshness["days_since_latest_event"] == 5
+    assert freshness["is_stale"] is False
+
+
+def test_compute_data_freshness_no_results_is_stale() -> None:
+    freshness = compute_data_freshness(
+        {"events": []},
+        race_date="2026-05-03",
+        generated_at="2026-05-01T09:00:00Z",
+        stale_threshold_days=21,
+    )
+    assert freshness["latest_completed_event"] is None
+    assert freshness["latest_completed_date"] is None
+    assert freshness["days_since_latest_event"] is None
+    assert freshness["is_stale"] is True

@@ -6,6 +6,7 @@ Shared helpers for automatic prediction target selection and source manifests.
 from __future__ import annotations
 
 import json
+from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -308,6 +309,104 @@ def build_inputs_status(
         )
     status_rows.sort(key=lambda item: (str(item["status"]), str(item["source"])))
     return status_rows
+
+
+def _parse_iso_date(raw: Any) -> date | None:
+    if not raw:
+        return None
+    text = str(raw).strip()
+    if not text:
+        return None
+    try:
+        return date.fromisoformat(text[:10])
+    except ValueError:
+        return None
+
+
+def latest_completed_event(snapshot: dict[str, Any]) -> tuple[str | None, date | None]:
+    """Return (event_name, event_date) for the most recent event with at least
+    one session that has non-empty results. Falls back to (None, None)."""
+    events = snapshot.get("events")
+    if not isinstance(events, list):
+        return None, None
+    best_name: str | None = None
+    best_date: date | None = None
+    for event in events:
+        if not isinstance(event, dict):
+            continue
+        sessions = event.get("sessions")
+        if not isinstance(sessions, list):
+            continue
+        has_results = False
+        for session in sessions:
+            if not isinstance(session, dict):
+                continue
+            results = session.get("results")
+            if isinstance(results, list) and results:
+                has_results = True
+                break
+        if not has_results:
+            continue
+        event_date = _parse_iso_date(event.get("event_date"))
+        if event_date is None:
+            continue
+        if best_date is None or event_date > best_date:
+            best_date = event_date
+            best_name = str(event.get("event_name") or "").strip() or None
+    return best_name, best_date
+
+
+def compute_data_freshness(
+    snapshot: dict[str, Any],
+    race_date: Any,
+    generated_at: Any,
+    stale_threshold_days: float = 21.0,
+) -> dict[str, Any]:
+    """Build a freshness block describing the gap between the most recent
+    completed event in the snapshot and now / the upcoming race.
+
+    The output is always JSON-serialisable. is_stale is True when no event has
+    any results, or when the gap exceeds stale_threshold_days. Used by the
+    publish step and validate_outputs to surface stale-data warnings without
+    breaking the pipeline.
+    """
+    threshold = float(stale_threshold_days) if stale_threshold_days is not None else 21.0
+    if threshold < 0:
+        threshold = 0.0
+
+    name, latest_date = latest_completed_event(snapshot)
+
+    reference: date | None = None
+    if isinstance(generated_at, str) and generated_at:
+        try:
+            reference = datetime.fromisoformat(generated_at.replace("Z", "+00:00")).astimezone(timezone.utc).date()
+        except ValueError:
+            reference = _parse_iso_date(generated_at)
+    if reference is None:
+        reference = datetime.now(timezone.utc).date()
+
+    next_race_date = _parse_iso_date(race_date)
+
+    days_since = None
+    if latest_date is not None:
+        days_since = (reference - latest_date).days
+
+    days_until = None
+    if next_race_date is not None:
+        days_until = (next_race_date - reference).days
+
+    is_stale = (latest_date is None) or (days_since is not None and days_since > threshold)
+
+    return {
+        "latest_completed_event": name,
+        "latest_completed_date": latest_date.isoformat() if latest_date else None,
+        "reference_date": reference.isoformat(),
+        "next_race_date": next_race_date.isoformat() if next_race_date else None,
+        "days_since_latest_event": days_since,
+        "days_until_next_race": days_until,
+        "stale_threshold_days": round(threshold, 6),
+        "is_stale": bool(is_stale),
+    }
 
 
 def session_position_score(event: dict[str, Any], session_code: str, driver_name: str) -> float | None:

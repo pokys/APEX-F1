@@ -684,6 +684,14 @@ def blend_features(current: dict[str, Any], previous: dict[str, Any], current_we
 
 
 def current_season_blend_weight(max_starts: float) -> float:
+    """Map effective sample size of current-season races to a [0,1] blend weight.
+
+    Accepts either an integer count of completed races, or a fractional
+    effective sample size (Kish ESS) derived from recency-weighted features.
+    The schedule is intentionally aggressive: even one finished race already
+    leans the model 45% toward the current season so mid-season car
+    development, upgrades and team-order changes show up early.
+    """
     starts = max(0.0, float(max_starts))
     if starts <= 0:
         return 0.0
@@ -727,11 +735,19 @@ def main() -> int:
 
         # SYSTEMIC FIX: Early season blending
         source_summary = f"Season {season} data"
-        # 1. Determine how many races were finished in current season
-        max_starts = 0
+        # 1. Determine the effective sample size of the current season.
+        #    Prefer race_effective_starts (recency-weighted ESS produced by
+        #    build_features) so a stale 5-race season counts less than a
+        #    fresh 5-race season. Fall back to integer starts when ESS
+        #    is missing for backward compatibility with old features files.
+        max_starts = 0.0
         for dr in features.get("drivers", []):
-            max_starts = max(max_starts, safe_float(dr.get("starts")) or 0)
-        
+            ess = safe_float(dr.get("race_effective_starts"))
+            if ess is None:
+                ess = safe_float(dr.get("starts")) or 0.0
+            if ess > max_starts:
+                max_starts = ess
+
         # 2. If it's early (e.g. < 5 races), try to load previous season for blending
         if 0 < max_starts < 5 and target_season == season:
             prev_season = season - 1

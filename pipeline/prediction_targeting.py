@@ -288,7 +288,12 @@ def build_inputs_status(
         elif source_key in {"history_driver", "history_team"}:
             status = "available_zero_weight" if configured_weight <= 0 else "missing"
         elif source_key == "signals":
-            status = "missing" if active_signal_count <= 0 else "available_zero_weight"
+            if configured_weight <= 0:
+                status = "available_zero_weight"
+            elif active_signal_count <= 0:
+                status = "missing"
+            else:
+                status = "available_zero_weight"
         elif source_key not in available:
             status = "not_applicable" if configured_weight <= 0 else "missing"
         else:

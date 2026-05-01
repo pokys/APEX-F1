@@ -7,13 +7,13 @@ from pathlib import Path
 from pipeline.select_next_gp import apply_track_profile, load_cached_calendar, next_event_from_calendar, utc_iso_timestamp
 
 
-def test_next_event_from_calendar_selects_first_future_event() -> None:
+def test_next_event_from_calendar_selects_first_future_event(tmp_path: Path) -> None:
     calendar = [
         {"event_date": "2026-03-01", "event_name": "Old GP"},
         {"event_date": "2026-03-08", "event_name": "Australian Grand Prix"},
         {"event_date": "2026-03-22", "event_name": "Chinese Grand Prix"},
     ]
-    event = next_event_from_calendar(calendar, as_of=date(2026, 3, 3))
+    event = next_event_from_calendar(calendar, as_of=date(2026, 3, 3), raw_dir=tmp_path)
     assert event is not None
     assert event["event_name"] == "Australian Grand Prix"
 

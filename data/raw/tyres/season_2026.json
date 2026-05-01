@@ -31,5 +31,16 @@
     "round": 3,
     "source_title": "Complete F1 tyre range for the first three Grands Prix of 2026",
     "source_url": "https://press.pirelli.com/complete-f1-tyre-range-for-the-first-three-grands-prix-of-2026/"
+  },
+  {
+    "compounds": {
+      "hard": "C1",
+      "medium": "C2",
+      "soft": "C3"
+    },
+    "event_name": "British Grand Prix",
+    "round": 9,
+    "source_title": "Complete F1 tyre range for the first three Grands Prix of 2026",
+    "source_url": "https://press.pirelli.com/complete-f1-tyre-range-for-the-first-three-grands-prix-of-2026/"
   }
 ]

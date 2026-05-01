@@ -1,0 +1,14 @@
+{
+  "half_life_events": {
+    "race": 4.0,
+    "qualifying": 4.0,
+    "sprint": 3.0,
+    "sprint_qualifying": 3.0,
+    "practice": 2.0,
+    "fp1": 2.0,
+    "fp2": 2.0,
+    "fp3": 2.0
+  },
+  "stale_threshold_days": 21,
+  "minimum_effective_sample": 1.5
+}

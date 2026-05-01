@@ -120,6 +120,7 @@ def normalize_prediction(payload: dict[str, Any]) -> dict[str, Any]:
     if "integrity" in payload: out["integrity"] = payload["integrity"]
     if "simulation" in payload: out["simulation"] = payload["simulation"]
     if "deterministic_run_id" in payload: out["deterministic_run_id"] = payload["deterministic_run_id"]
+    if "data_freshness" in payload: out["data_freshness"] = payload["data_freshness"]
     
     return out
 

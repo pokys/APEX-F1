@@ -56,6 +56,15 @@ def test_current_season_blend_weight_favors_current_season_earlier() -> None:
     assert current_season_blend_weight(5) == 1.0
 
 
+def test_current_season_blend_weight_accepts_fractional_effective_starts() -> None:
+    # Two recency-weighted races (effective starts ~ 1.8) should land in the
+    # 1<x<=2 bucket. This mirrors the ESS produced by build_features when
+    # races have been skipped or deprioritised.
+    assert current_season_blend_weight(1.8) == 0.60
+    assert current_season_blend_weight(0.5) == 0.45
+    assert current_season_blend_weight(0.0) == 0.0
+
+
 def test_compute_driver_ratings_softens_teammate_penalty_on_small_samples() -> None:
     features = {
         "drivers": [

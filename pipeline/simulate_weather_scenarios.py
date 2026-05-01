@@ -33,6 +33,7 @@ from pipeline.simulate_race import (  # noqa: E402
     load_or_default_config,
 )
 from pipeline.simulate_race import safe_float  # noqa: E402
+from pipeline.prediction_targeting import compute_data_freshness  # noqa: E402
 from pipeline.simulate_target_prediction import run_target_prediction  # noqa: E402
 
 
@@ -47,6 +48,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--reliability-scores", default="models/reliability_scores.json", help="Reliability scores JSON path.")
     parser.add_argument("--race-config", default="config/race_config.json", help="Race config JSON path.")
     parser.add_argument("--raw-dir", default="data/raw/fastf1", help="FastF1 raw snapshot directory.")
+    parser.add_argument(
+        "--recency-config",
+        default="config/recency.json",
+        help="Recency configuration JSON (used to derive stale_threshold_days).",
+    )
     parser.add_argument("--fixed-grid", default=None, help="Comma-separated driver abbreviations for starting grid (overrides config).")
     parser.add_argument("--output-dry", default="outputs/prediction_dry.json", help="Dry scenario output path.")
     parser.add_argument("--output-wet", default="outputs/prediction_wet.json", help="Wet scenario output path.")
@@ -159,6 +165,41 @@ def main() -> int:
             wet_config,
             raw_dir=Path(args.raw_dir),
         )
+
+        # Annotate predictions with data freshness so the dashboard and
+        # validate_outputs can surface stale-rating warnings (e.g. when
+        # races have been skipped or postponed).
+        season = base_config.get("season")
+        snapshot: dict[str, Any] = {}
+        if season is not None:
+            snapshot_path = Path(args.raw_dir) / f"season_{int(season)}.json"
+            if snapshot_path.exists():
+                try:
+                    snapshot = load_json(snapshot_path)
+                except Exception as exc:
+                    LOGGER.warning("Could not load FastF1 snapshot for freshness check: %s", exc)
+                    snapshot = {}
+
+        stale_threshold_days = 21.0
+        recency_path = Path(args.recency_config)
+        if recency_path.exists():
+            try:
+                recency_payload = load_json(recency_path)
+                if isinstance(recency_payload, dict):
+                    raw_threshold = safe_float(recency_payload.get("stale_threshold_days"), 21.0)
+                    if raw_threshold >= 0:
+                        stale_threshold_days = float(raw_threshold)
+            except Exception as exc:
+                LOGGER.warning("Could not load recency config %s: %s", recency_path, exc)
+
+        freshness = compute_data_freshness(
+            snapshot,
+            race_date=base_config.get("race_date"),
+            generated_at=generated_at,
+            stale_threshold_days=stale_threshold_days,
+        )
+        dry_prediction["data_freshness"] = freshness
+        wet_prediction["data_freshness"] = freshness
     except Exception as exc:
         LOGGER.error("simulate_weather_scenarios failed: %s", exc)
         return 1

@@ -22,6 +22,7 @@ on:
       - "data/raw/calendars/**"
       - "data/raw/tyres/**"
       - "config/track_profiles.json"
+      - "config/recency.json"
       - ".github/workflows/simulate-race.yml"
       - "requirements.lock"
 
@@ -67,7 +68,7 @@ jobs:
           if [ -n "$FIXED_GRID" ]; then
             ARGS+=(--fixed-grid "$FIXED_GRID")
           fi
-          python pipeline/simulate_weather_scenarios.py "${ARGS[@]}" --raw-dir data/raw/fastf1 --allow-missing-models --log-level INFO
+          python pipeline/simulate_weather_scenarios.py "${ARGS[@]}" --raw-dir data/raw/fastf1 --recency-config config/recency.json --allow-missing-models --log-level INFO
 
       - name: Publish canonical prediction
         run: |

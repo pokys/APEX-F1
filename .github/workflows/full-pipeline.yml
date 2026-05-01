@@ -36,6 +36,7 @@ on:
       - "data/raw/tyres/**"
       - "config/track_profiles.json"
       - "config/signal_guardrails.json"
+      - "config/recency.json"
       - "requirements.txt"
       - "requirements.lock"
 
@@ -113,7 +114,7 @@ jobs:
           TARGET_SEASON="${SEASON:-$(date -u +%Y)}"
           ARGS=()
           ARGS+=(--season "$TARGET_SEASON")
-          python pipeline/build_features.py "${ARGS[@]}" --guardrails-config config/signal_guardrails.json --allow-missing-fastf1 --log-level INFO
+          python pipeline/build_features.py "${ARGS[@]}" --guardrails-config config/signal_guardrails.json --recency-config config/recency.json --allow-missing-fastf1 --log-level INFO
 
       - name: Update ratings
         env:
@@ -139,7 +140,7 @@ jobs:
           if [ -n "$FIXED_GRID" ]; then
             ARGS+=(--fixed-grid "$FIXED_GRID")
           fi
-          python pipeline/simulate_weather_scenarios.py "${ARGS[@]}" --raw-dir data/raw/fastf1 --allow-missing-models --log-level INFO
+          python pipeline/simulate_weather_scenarios.py "${ARGS[@]}" --raw-dir data/raw/fastf1 --recency-config config/recency.json --allow-missing-models --log-level INFO
 
       - name: Publish prediction
         run: |

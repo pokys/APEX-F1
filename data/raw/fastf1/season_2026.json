@@ -26,6 +26,15 @@
       "location": "Suzuka",
       "official_event_name": "FORMULA 1 ARAMCO JAPANESE GRAND PRIX 2026",
       "round": 3
+    },
+    {
+      "country": "United States",
+      "event_date": "2026-05-03",
+      "event_format": "sprint_qualifying",
+      "event_name": "Miami Grand Prix",
+      "location": "Miami Gardens",
+      "official_event_name": "FORMULA 1 CRYPTO.COM MIAMI GRAND PRIX 2026",
+      "round": 6
     }
   ],
   "cutoff_date": "2026-05-01",

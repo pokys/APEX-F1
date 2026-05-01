@@ -178,3 +178,6 @@
 - [ ] What's really going on with Miami F1 lightning threat (https://www.the-race.com/formula-1/whats-really-going-on-with-miami-f1-lightning-risk/)
 - [ ] Why a US law could stop the 2026 Miami F1 Grand Prix if weather forecasts are correct (https://www.motorsport.com/f1/news/the-law-that-would-cancel-the-miami-f1-grand-prix-if-the-predictions-come-true/10816519/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] “It’s looking really bad”: F1 drivers and FIA to discuss rain threat to Miami GP | Formula 1 (https://www.racefans.net/2026/04/30/its-looking-really-bad-f1-drivers-and-fia-to-discuss-rain-threat-to-miami-gp/)
+
+## 2026-05-01
+- [ ] “Nothing really changes”: Norris expects new rules will make no difference to races | Formula 1 (https://www.racefans.net/2026/05/01/nothing-really-changes-norris-expects-new-rules-will-make-no-difference-to-races/)

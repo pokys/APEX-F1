@@ -2,8 +2,8 @@
   "available_sessions": [],
   "calibration_season": 2025,
   "calibration_source": "outputs/backtest/backtest_season_2025.json",
-  "event_format": "sprint",
-  "generated_at": "2026-05-01T20:56:28Z",
+  "event_format": "sprint_qualifying",
+  "generated_at": "2026-05-01T21:22:20Z",
   "grid_source": "simulation",
   "inputs_status": [
     {
@@ -44,7 +44,7 @@
     }
   ],
   "location": "Miami",
-  "next_round": 6,
+  "next_round": 4,
   "overtaking_difficulty": 0.56,
   "prediction_target": "sprint_qualifying",
   "prediction_target_label": "Sprint Qualifying",
@@ -52,7 +52,7 @@
   "race_date": "2026-05-03",
   "safety_car_probability": 0.29,
   "season": 2026,
-  "seed": 202606,
+  "seed": 202604,
   "signal_count": 0,
   "simulations": 6000,
   "target_output_type": "qualifying",

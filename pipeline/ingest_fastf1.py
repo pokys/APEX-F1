@@ -13,9 +13,10 @@ import json
 import logging
 import math
 import sys
+import time
 from datetime import date, datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable, Iterable
 
 try:
     import fastf1  # type: ignore
@@ -32,6 +33,13 @@ SESSION_ALIASES = {
     "SPRINT_QUALIFYING": "SQ",
 }
 VALID_SESSIONS = {"FP1", "FP2", "FP3", "SQ", "S", "Q", "R"}
+SCHEDULE_BACKENDS = ("f1timing", "ergast")
+SCHEDULE_RETRIES = 3
+SCHEDULE_RETRY_BASE_SECONDS = 2.0
+
+
+class ScheduleUnavailableError(RuntimeError):
+    """Raised when none of the configured schedule backends respond."""
 
 
 def parse_args() -> argparse.Namespace:
@@ -258,7 +266,51 @@ def load_session(season: int, round_number: int, session_code: str, cutoff: date
     }
 
 
-def ingest(season: int, sessions: list[str], cutoff: date, output_dir: Path, cache_dir: Path) -> Path:
+def fetch_schedule(
+    season: int,
+    fetcher: Callable[[int, str], Any],
+    backends: Iterable[str] = SCHEDULE_BACKENDS,
+    retries: int = SCHEDULE_RETRIES,
+    sleep_fn: Callable[[float], None] = time.sleep,
+    base_delay_seconds: float = SCHEDULE_RETRY_BASE_SECONDS,
+) -> Any:
+    """Fetch the season schedule, trying each backend with exponential backoff.
+
+    The upstream F1 timing API and Ergast both fail intermittently. Without
+    retry+fallback a single transient hiccup kills the whole pipeline run.
+    Returns the schedule object on success; raises ScheduleUnavailableError
+    when every backend has been exhausted so callers can decide whether to
+    soft-fail (keep last good snapshot) or hard-fail.
+    """
+    last_exc: Exception | None = None
+    for backend in backends:
+        for attempt in range(1, max(1, retries) + 1):
+            try:
+                return fetcher(season, backend)
+            except Exception as exc:
+                last_exc = exc
+                LOGGER.warning(
+                    "Schedule fetch failed (season=%s, backend=%s, attempt=%s/%s): %s",
+                    season,
+                    backend,
+                    attempt,
+                    retries,
+                    exc,
+                )
+                if attempt < retries:
+                    sleep_fn(base_delay_seconds * (2 ** (attempt - 1)))
+    raise ScheduleUnavailableError(
+        f"No schedule backend responded for season {season} after {retries} attempts each: {last_exc}"
+    )
+
+
+def _default_schedule_fetcher(season: int, backend: str) -> Any:
+    if fastf1 is None:
+        raise RuntimeError("fastf1 is not installed.")
+    return fastf1.get_event_schedule(season, include_testing=False, backend=backend)
+
+
+def ingest(season: int, sessions: list[str], cutoff: date, output_dir: Path, cache_dir: Path) -> Path | None:
     if fastf1 is None:
         raise RuntimeError("fastf1 is not installed. Install dependencies from requirements.txt first.")
 
@@ -266,7 +318,15 @@ def ingest(season: int, sessions: list[str], cutoff: date, output_dir: Path, cac
     output_dir.mkdir(parents=True, exist_ok=True)
 
     fastf1.Cache.enable_cache(str(cache_dir))
-    schedule = fastf1.get_event_schedule(season, include_testing=False, backend="f1timing")
+    try:
+        schedule = fetch_schedule(season, fetcher=_default_schedule_fetcher)
+    except ScheduleUnavailableError as exc:
+        LOGGER.warning(
+            "Keeping previous FastF1 snapshot for season %s: %s",
+            season,
+            exc,
+        )
+        return None
     schedule = schedule.sort_values(by=["RoundNumber", "EventDate"], kind="stable")
 
     calendar_payload: list[dict[str, Any]] = []
@@ -352,6 +412,16 @@ def main() -> int:
     except Exception as exc:
         LOGGER.error("ingest_fastf1 failed: %s", exc)
         return 1
+
+    if output_path is None:
+        # Schedule backends were unavailable. The previous snapshot remains
+        # in place; downstream steps (build_features, select_next_gp) read
+        # from cached calendar/snapshot, so the pipeline can keep going.
+        LOGGER.warning(
+            "FastF1 schedule unavailable; existing snapshot left untouched. "
+            "Next scheduled run will retry."
+        )
+        return 0
 
     LOGGER.info("Wrote FastF1 snapshot: %s", output_path)
     return 0

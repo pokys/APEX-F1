@@ -6,7 +6,8 @@
   ],
   "available_sessions_by_calendar": [
     "FP1",
-    "SQ"
+    "SQ",
+    "S"
   ],
   "available_sessions_ingested": [
     "S"
@@ -14,7 +15,7 @@
   "calibration_season": 2025,
   "calibration_source": "outputs/backtest/backtest_season_2025.json",
   "event_format": "sprint",
-  "generated_at": "2026-05-02T19:04:00Z",
+  "generated_at": "2026-05-02T20:02:49Z",
   "grid_source": "simulation",
   "inputs_status": [
     {

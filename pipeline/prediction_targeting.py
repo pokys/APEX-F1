@@ -125,6 +125,70 @@ DATE_ONLY_EARLY_SESSION_HOURS = 18
 # same-day sessions into the same midnight timestamp.
 SESSION_ORDER = {"FP1": 0, "FP2": 1, "FP3": 2, "SQ": 3, "S": 4, "Q": 5, "R": 6}
 
+# Approximate UTC offset (in hours, positive east) used during the F1
+# race weekend at each host country. Race-weekend DST is folded in. This
+# is intentionally a flat per-country lookup rather than full TZ logic
+# because: (a) the F1 calendar is small and stable, (b) the only question
+# we ask is "is the session over yet" with a ~30 min tolerance, and
+# (c) full TZ data would pull pytz/zoneinfo dependencies into a small
+# pure-stdlib module. Errs on the conservative side; consumers always
+# fall back to DATE_ONLY_EARLY_SESSION_HOURS when a country is missing.
+COUNTRY_UTC_OFFSET_HOURS: dict[str, float] = {
+    "australia": 11.0,
+    "china": 8.0,
+    "japan": 9.0,
+    "bahrain": 3.0,
+    "saudi arabia": 3.0,
+    "united states": -4.0,
+    "canada": -4.0,
+    "monaco": 2.0,
+    "spain": 2.0,
+    "austria": 2.0,
+    "united kingdom": 1.0,
+    "hungary": 2.0,
+    "belgium": 2.0,
+    "netherlands": 2.0,
+    "italy": 2.0,
+    "azerbaijan": 4.0,
+    "singapore": 8.0,
+    "qatar": 3.0,
+    "mexico": -5.0,
+    "brazil": -3.0,
+    "abu dhabi": 4.0,
+    "united arab emirates": 4.0,
+}
+
+# Conservative typical session end times in race-weekend LOCAL time
+# (24h clock). FP1 13:30-14:30 -> 14.5 etc. We use end-time, not start,
+# so the threshold is the moment a session is reliably finished. These
+# are intentionally rounded slightly late so a normal-length session is
+# fully concluded by the time we declare it done. Night-race outliers
+# (Singapore, Vegas, Bahrain qual block) typically also fit because the
+# races there shift the schedule by 4-6 hours but durations are similar.
+SESSION_END_LOCAL_HOUR: dict[str, dict[str, float]] = {
+    "sprint": {
+        "FP1": 14.5,
+        "SQ": 18.5,
+        "S": 13.5,
+        "Q": 17.5,
+        "R": 17.0,
+    },
+    "conventional": {
+        "FP1": 14.5,
+        "FP2": 18.5,
+        "FP3": 13.5,
+        "Q": 17.5,
+        "R": 17.0,
+    },
+}
+
+
+def _weekend_format_from_schedule(sessions_schedule: dict[str, Any]) -> str:
+    keys_upper = {str(k).strip().upper() for k in sessions_schedule.keys()}
+    if "SQ" in keys_upper or "S" in keys_upper:
+        return "sprint"
+    return "conventional"
+
 
 def _parse_iso_datetime(raw: Any) -> datetime | None:
     if raw is None:
@@ -160,29 +224,40 @@ def sessions_completed_by_calendar(
     sessions_schedule: dict[str, Any] | None,
     reference_time: Any,
     buffer_minutes: float = DEFAULT_SESSION_COMPLETION_BUFFER_MINUTES,
+    country: str | None = None,
+    weekend_format: str | None = None,
 ) -> list[str]:
     """Return session codes whose scheduled completion is at or before
     `reference_time`.
 
-    Per-session completion threshold:
-      * Precise timestamp (anything other than 00:00:00 UTC): completion =
-        scheduled_start + buffer_minutes (default 90, long enough that a
-        60-minute session is reliably finished, short enough that the next
-        session isn't prematurely declared done during itself).
-      * Date-only timestamp (00:00:00 UTC, typical of the Ergast schedule
-        fallback): completion depends on the session's chronological
-        position among same-day date-only sessions. The last one of the
-        day completes at end-of-day (start + 24h); every earlier one
-        completes at start + DATE_ONLY_EARLY_SESSION_HOURS (18h). This
-        lets the target advance through e.g. Saturday Sprint mid-day
-        without prematurely advancing through Saturday Qualifying that
-        runs later the same UTC day. Errors on the late side by a couple
-        of hours; never declares a session done before it has actually
-        run for any race in the calendar.
+    Three-tier completion threshold per session, falling back when data is
+    less precise:
 
-    Ordering is enforced: sessions are evaluated in chronological order
-    (by start time, ties broken by SESSION_ORDER) and we stop at the
-    first session whose completion threshold is in the future. This
+      1. Precise UTC timestamp (anything other than 00:00:00 UTC) ->
+         completion = scheduled_start + buffer_minutes (default 90 -
+         long enough for a 60-minute session to be reliably finished,
+         short enough that the next session isn't prematurely flagged
+         done while it is still running).
+
+      2. Date-only timestamp (00:00:00 UTC, typical of the Ergast
+         schedule fallback) AND we know the host country's UTC offset
+         AND the typical local end-time of this session for this
+         weekend format -> completion = midnight UTC of the local
+         session date + (typical_local_end_hour - country_offset)
+         hours. For Miami sprint Saturday this resolves Q to 21:00 UTC
+         (real Q ends at 17:00 EDT), advancing the target to "race"
+         within ~30 min of the actual session ending.
+
+      3. Date-only timestamp without country/format info -> per-day
+         position fallback: the last of N same-day sessions completes
+         at start + 24h (end of UTC day); earlier ones complete at
+         start + DATE_ONLY_EARLY_SESSION_HOURS (18h). This is the
+         conservative path that ships even when COUNTRY_UTC_OFFSET_HOURS
+         hasn't been updated for a new race.
+
+    Ordering is always enforced: sessions are evaluated in chronological
+    order (by start time, ties broken by SESSION_ORDER) and we stop at
+    the first session whose completion threshold is in the future. This
     guarantees a corrupt or out-of-order schedule cannot let Q advance
     the target without FP1, SQ and S also being done."""
     if not isinstance(sessions_schedule, dict) or not sessions_schedule:
@@ -191,6 +266,12 @@ def sessions_completed_by_calendar(
     if reference is None:
         return []
     buffer = timedelta(minutes=max(0.0, float(buffer_minutes)))
+
+    country_key = (country or "").strip().lower() or None
+    country_offset = COUNTRY_UTC_OFFSET_HOURS.get(country_key) if country_key else None
+    if not weekend_format:
+        weekend_format = _weekend_format_from_schedule(sessions_schedule)
+    end_hours_map = SESSION_END_LOCAL_HOUR.get(str(weekend_format).strip().lower(), {})
 
     raw_pairs: list[tuple[datetime, str, bool]] = []
     for code, value in sessions_schedule.items():
@@ -204,8 +285,7 @@ def sessions_completed_by_calendar(
         raw_pairs.append((scheduled_start, code_upper, is_date_only))
 
     # Group date-only sessions by UTC date so we can identify which one is
-    # last-of-day (end-of-day completion) and which are earlier-of-day
-    # (DATE_ONLY_EARLY_SESSION_HOURS completion).
+    # last-of-day for the per-day position fallback.
     same_day_codes: dict[date, list[str]] = {}
     for scheduled_start, code_upper, is_date_only in raw_pairs:
         if is_date_only:
@@ -220,11 +300,20 @@ def sessions_completed_by_calendar(
         if not is_date_only:
             completion = scheduled_start + buffer
         else:
-            day_codes = same_day_codes.get(scheduled_start.date(), [])
-            if day_codes and code_upper == day_codes[-1]:
-                completion = scheduled_start + timedelta(days=1)
+            local_end_hour = end_hours_map.get(code_upper)
+            if country_offset is not None and local_end_hour is not None:
+                # Tier 2: derive UTC end time from country timezone offset
+                # and typical local end hour.
+                completion = scheduled_start + timedelta(
+                    hours=float(local_end_hour) - float(country_offset)
+                )
             else:
-                completion = scheduled_start + timedelta(hours=DATE_ONLY_EARLY_SESSION_HOURS)
+                # Tier 3: per-day position fallback.
+                day_codes = same_day_codes.get(scheduled_start.date(), [])
+                if day_codes and code_upper == day_codes[-1]:
+                    completion = scheduled_start + timedelta(days=1)
+                else:
+                    completion = scheduled_start + timedelta(hours=DATE_ONLY_EARLY_SESSION_HOURS)
         if completion <= reference:
             completed.append(code_upper)
         else:

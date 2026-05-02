@@ -314,6 +314,82 @@ def test_sessions_completed_by_calendar_enforces_chronological_order() -> None:
     assert completed == ["FP1"]
 
 
+def test_sessions_completed_by_calendar_uses_country_offset_for_date_only() -> None:
+    # Miami sprint Saturday: real Q ends ~21:00 UTC (16:00 EDT + 1h
+    # session, EDT = UTC-4). With country="United States" + sprint
+    # format, the helper must derive Q completion at 21:00 UTC instead
+    # of falling back to end-of-day Sunday.
+    schedule = {
+        "FP1": "2026-05-01T00:00:00+00:00",
+        "SQ":  "2026-05-01T00:00:00+00:00",
+        "S":   "2026-05-02T00:00:00+00:00",
+        "Q":   "2026-05-02T00:00:00+00:00",
+        "R":   "2026-05-03T20:00:00+00:00",
+    }
+    # Saturday 21:43 UTC: real Q is over (~21:00 UTC). Target must
+    # advance to race.
+    completed = sessions_completed_by_calendar(
+        schedule,
+        reference_time="2026-05-02T21:43:00+00:00",
+        country="United States",
+        weekend_format="sprint",
+    )
+    assert completed == ["FP1", "SQ", "S", "Q"]
+    # Saturday 20:30 UTC: Q hasn't started yet (~20:00 UTC start in
+    # Miami). Target must still be qualifying.
+    pre_q = sessions_completed_by_calendar(
+        schedule,
+        reference_time="2026-05-02T20:30:00+00:00",
+        country="United States",
+        weekend_format="sprint",
+    )
+    assert pre_q == ["FP1", "SQ", "S"]
+
+
+def test_sessions_completed_by_calendar_falls_back_when_country_unknown() -> None:
+    # Unknown / empty country -> position-of-day fallback, identical to
+    # the pre-country behaviour (last-of-day +24h, earlier +18h). This
+    # protects new race hosts that haven't been added to the offset map.
+    schedule = {
+        "S": "2026-05-02T00:00:00+00:00",
+        "Q": "2026-05-02T00:00:00+00:00",
+    }
+    completed = sessions_completed_by_calendar(
+        schedule,
+        reference_time="2026-05-02T22:00:00+00:00",
+        country="Atlantis",
+        weekend_format="sprint",
+    )
+    assert completed == ["S"]
+
+
+def test_sessions_completed_by_calendar_country_for_european_conventional() -> None:
+    # Spain conventional Q on Saturday: real end ~15:00 UTC
+    # (16:00 local CEST = UTC+2 + 1h session - 2h offset = 15:00 UTC).
+    # We use SESSION_END_LOCAL_HOUR conventional Q = 17.5 -> 17.5 - 2.0
+    # = 15.5h after midnight UTC = 15:30 UTC.
+    schedule = {
+        "FP3": "2026-06-13T00:00:00+00:00",
+        "Q":   "2026-06-13T00:00:00+00:00",
+    }
+    pre_q = sessions_completed_by_calendar(
+        schedule,
+        reference_time="2026-06-13T15:00:00+00:00",
+        country="Spain",
+        weekend_format="conventional",
+    )
+    # FP3 typical end 13:30 local = 11:30 UTC -> threshold 11:30 UTC,
+    # already past. Q threshold 15:30 UTC, not yet.
+    assert pre_q == ["FP3"]
+    post_q = sessions_completed_by_calendar(
+        schedule,
+        reference_time="2026-06-13T16:00:00+00:00",
+        country="Spain",
+        weekend_format="conventional",
+    )
+    assert post_q == ["FP3", "Q"]
+
+
 def test_sessions_completed_by_calendar_full_day_advance() -> None:
     # The day after qualifying day, every date-only session is firmly in
     # the past and only the precise R timestamp + buffer gates further.

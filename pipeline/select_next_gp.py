@@ -26,6 +26,92 @@ except ModuleNotFoundError:
 LOGGER = logging.getLogger("select_next_gp")
 MIN_COMPLETE_CALENDAR_EVENTS = 12
 
+# FastF1's schedule rows expose Session1..Session5 (display names) plus
+# Session1DateUtc..Session5DateUtc (UTC timestamps). We map the display names
+# to our canonical session codes so downstream code never has to care about
+# upstream string churn (e.g. FastF1 3.8 renamed "sprint" -> "sprint_qualifying"
+# and "Sprint Shootout" -> "Sprint Qualifying").
+SESSION_NAME_TO_CODE = {
+    "practice 1": "FP1",
+    "practice 2": "FP2",
+    "practice 3": "FP3",
+    "qualifying": "Q",
+    "sprint qualifying": "SQ",
+    "sprint shootout": "SQ",
+    "sprint": "S",
+    "race": "R",
+}
+
+
+def normalize_event_format(raw: Any) -> str:
+    """Map FastF1's event_format strings into our canonical {"sprint",
+    "conventional"} domain. FastF1 3.8 emits "sprint_qualifying" for
+    sprint weekends; older versions used "sprint". We collapse both."""
+    text = str(raw or "").strip().lower()
+    if not text:
+        return ""
+    if "sprint" in text:
+        return "sprint"
+    return "conventional"
+
+
+def session_code_from_name(name: Any) -> str | None:
+    text = str(name or "").strip().lower()
+    if not text:
+        return None
+    return SESSION_NAME_TO_CODE.get(text)
+
+
+def utc_iso_from_value(value: Any) -> str | None:
+    """Render a FastF1 schedule cell into an ISO-8601 UTC datetime string."""
+    if value is None:
+        return None
+    candidate = value
+    if hasattr(candidate, "to_pydatetime"):
+        try:
+            candidate = candidate.to_pydatetime()
+        except Exception:
+            return None
+    if isinstance(candidate, datetime):
+        try:
+            if candidate.tzinfo is None:
+                candidate = candidate.replace(tzinfo=timezone.utc)
+            return candidate.astimezone(timezone.utc).isoformat()
+        except Exception:
+            return None
+    if isinstance(candidate, str):
+        text = candidate.strip()
+        if not text:
+            return None
+        try:
+            parsed = datetime.fromisoformat(text.replace("Z", "+00:00"))
+        except ValueError:
+            return None
+        if parsed.tzinfo is None:
+            parsed = parsed.replace(tzinfo=timezone.utc)
+        return parsed.astimezone(timezone.utc).isoformat()
+    return None
+
+
+def extract_sessions_schedule(row: Any) -> dict[str, str]:
+    """Pull Session1..Session5 + Session1DateUtc..Session5DateUtc from a
+    FastF1 schedule row and return {session_code: iso_utc_datetime}.
+    Missing or unmapped sessions are silently skipped."""
+    schedule: dict[str, str] = {}
+    getter = (lambda key: row.get(key)) if hasattr(row, "get") else (lambda key: getattr(row, key, None))
+    for idx in range(1, 6):
+        name = getter(f"Session{idx}")
+        date_value = getter(f"Session{idx}DateUtc")
+        if date_value is None:
+            date_value = getter(f"Session{idx}Date")
+        code = session_code_from_name(name)
+        iso = utc_iso_from_value(date_value)
+        if code and iso:
+            # Prefer the latest entry if a code somehow appears twice (it
+            # shouldn't in a well-formed schedule).
+            schedule[code] = iso
+    return schedule
+
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Select next GP and update race_config.json.")
@@ -231,15 +317,25 @@ def normalize_calendar_event(event: dict[str, Any], season: int) -> dict[str, An
         round_number = int(float(event.get("round")))
     except Exception:
         round_number = 0
+    sessions_schedule = event.get("sessions_schedule")
+    if not isinstance(sessions_schedule, dict):
+        sessions_schedule = {}
+    else:
+        sessions_schedule = {
+            str(k).upper(): str(v)
+            for k, v in sessions_schedule.items()
+            if v is not None and str(v).strip()
+        }
     return {
         "season": season,
         "round": round_number,
         "event_name": str(event.get("event_name") or "Next GP"),
         "official_event_name": str(event.get("official_event_name") or event.get("event_name") or "Next GP"),
-        "event_format": str(event.get("event_format") or ""),
+        "event_format": normalize_event_format(event.get("event_format")),
         "country": str(event.get("country") or ""),
         "location": str(event.get("location") or ""),
         "event_date": event_date.isoformat(),
+        "sessions_schedule": sessions_schedule,
     }
 
 
@@ -367,10 +463,11 @@ def next_event_for_season(season: int, as_of: date, raw_dir: Path) -> dict[str, 
                 "round": round_number,
                 "event_name": str(row.get("EventName") or "Next GP"),
                 "official_event_name": str(row.get("OfficialEventName") or row.get("EventName") or "Next GP"),
-                "event_format": str(row.get("EventFormat") or ""),
+                "event_format": normalize_event_format(row.get("EventFormat")),
                 "country": str(row.get("Country") or ""),
                 "location": str(row.get("Location") or ""),
                 "event_date": event_date.isoformat(),
+                "sessions_schedule": extract_sessions_schedule(row),
             }
     return None
 
@@ -402,10 +499,11 @@ def fetch_live_calendar(season: int) -> list[dict[str, Any]]:
                     "round": round_number,
                     "event_name": str(row.get("EventName") or "Next GP"),
                     "official_event_name": str(row.get("OfficialEventName") or row.get("EventName") or "Next GP"),
-                    "event_format": str(row.get("EventFormat") or ""),
+                    "event_format": normalize_event_format(row.get("EventFormat")),
                     "country": str(row.get("Country") or ""),
                     "location": str(row.get("Location") or ""),
                     "event_date": event_date.isoformat(),
+                    "sessions_schedule": extract_sessions_schedule(row),
                 }
             )
         if normalized:
@@ -554,9 +652,10 @@ def main() -> int:
         config["race"] = event["event_name"]
         config["location"] = event.get("location", "")
         config["race_date"] = event["event_date"]
-        config["event_format"] = event.get("event_format", "")
+        config["event_format"] = normalize_event_format(event.get("event_format"))
+        config["sessions_schedule"] = dict(event.get("sessions_schedule") or {})
         config["generated_at"] = utc_iso_timestamp()
-        
+
         # Track available sessions for debug info
         config["available_sessions"] = get_available_sessions(Path(args.raw_dir), event["season"], event["event_name"])
 

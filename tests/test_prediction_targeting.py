@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from pipeline.prediction_targeting import build_inputs_manifest, build_inputs_status, compute_data_freshness, compute_weekend_form, find_cached_calendar_entry, latest_completed_event, load_cached_calendar, load_session_weights, select_prediction_target
+from pipeline.prediction_targeting import build_inputs_manifest, build_inputs_status, compute_data_freshness, compute_weekend_form, find_cached_calendar_entry, latest_completed_event, load_cached_calendar, load_session_weights, select_prediction_target, sessions_completed_by_calendar
 
 
 def test_select_prediction_target_standard_weekend() -> None:
@@ -205,3 +205,51 @@ def test_compute_data_freshness_no_results_is_stale() -> None:
     assert freshness["latest_completed_date"] is None
     assert freshness["days_since_latest_event"] is None
     assert freshness["is_stale"] is True
+
+
+def test_sessions_completed_by_calendar_includes_past_sessions() -> None:
+    schedule = {
+        "FP1": "2026-05-01T20:30:00+00:00",
+        "SQ":  "2026-05-02T00:30:00+00:00",
+        "S":   "2026-05-02T20:00:00+00:00",
+        "Q":   "2026-05-03T00:00:00+00:00",
+        "R":   "2026-05-03T19:30:00+00:00",
+    }
+    # Saturday afternoon UTC: FP1 + SQ are firmly done, S has just started.
+    completed = sessions_completed_by_calendar(
+        schedule,
+        reference_time="2026-05-02T18:00:00+00:00",
+        buffer_minutes=90,
+    )
+    assert sorted(completed) == ["FP1", "SQ"]
+
+
+def test_sessions_completed_by_calendar_respects_buffer() -> None:
+    # Buffer prevents the next session from being prematurely declared done
+    # during the session itself.
+    schedule = {"SQ": "2026-05-02T00:30:00+00:00"}
+    # 60 minutes after SQ start - well within typical 60 min session window.
+    not_yet = sessions_completed_by_calendar(
+        schedule, reference_time="2026-05-02T01:30:00+00:00", buffer_minutes=90,
+    )
+    assert not_yet == []
+    # 100 minutes after SQ start - SQ is reliably done.
+    done = sessions_completed_by_calendar(
+        schedule, reference_time="2026-05-02T02:10:00+00:00", buffer_minutes=90,
+    )
+    assert done == ["SQ"]
+
+
+def test_sessions_completed_by_calendar_handles_empty_schedule() -> None:
+    assert sessions_completed_by_calendar(None, reference_time="2026-05-02T18:00:00Z") == []
+    assert sessions_completed_by_calendar({}, reference_time="2026-05-02T18:00:00Z") == []
+    # bad reference_time returns []
+    assert sessions_completed_by_calendar({"SQ": "2026-05-02T00:30:00+00:00"}, reference_time="not-a-date") == []
+
+
+def test_sessions_completed_by_calendar_normalizes_codes() -> None:
+    schedule = {"fp1": "2026-05-01T20:30:00+00:00"}
+    completed = sessions_completed_by_calendar(
+        schedule, reference_time="2026-05-02T18:00:00+00:00", buffer_minutes=90,
+    )
+    assert completed == ["FP1"]

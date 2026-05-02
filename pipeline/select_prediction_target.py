@@ -19,6 +19,7 @@ import argparse
 import json
 import logging
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -26,6 +27,7 @@ if __package__ is None or __package__ == "":
     sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from pipeline.prediction_targeting import (  # noqa: E402
+    DEFAULT_SESSION_COMPLETION_BUFFER_MINUTES,
     TARGET_LABEL,
     TARGET_OUTPUT_TYPE,
     TARGET_SESSION_CODE,
@@ -41,6 +43,7 @@ from pipeline.prediction_targeting import (  # noqa: E402
     load_session_weights,
     normalize_weekend_format,
     select_prediction_target,
+    sessions_completed_by_calendar,
     signal_count,
 )
 
@@ -55,6 +58,19 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--calendar-cache-dir", default="data/raw/calendars", help="Normalized calendar cache directory.")
     parser.add_argument("--session-weights", default="config/session_weights.json", help="Session weights config path.")
     parser.add_argument("--signals-dir", default="knowledge/processed", help="Processed signal directory.")
+    parser.add_argument(
+        "--reference-time",
+        default=None,
+        help="UTC ISO datetime used as 'now' for calendar-based session completion "
+        "(default: current UTC time). Sessions scheduled more than --calendar-completion-buffer "
+        "minutes before this point are treated as completed even if FastF1 hasn't ingested results yet.",
+    )
+    parser.add_argument(
+        "--calendar-completion-buffer-minutes",
+        type=float,
+        default=DEFAULT_SESSION_COMPLETION_BUFFER_MINUTES,
+        help="Minutes after a session's scheduled start before we consider it finished by calendar.",
+    )
     parser.add_argument(
         "--log-level",
         default="INFO",
@@ -102,7 +118,7 @@ def main() -> int:
                 snapshot_path,
             )
 
-        available_sessions = available_sessions_for_event(event) if event is not None else list(config.get("available_sessions") or [])
+        ingested_sessions = available_sessions_for_event(event) if event is not None else []
         event_format = ""
         if event is not None:
             event_format = str(event.get("event_format") or "")
@@ -110,6 +126,47 @@ def main() -> int:
             event_format = str(calendar_entry.get("event_format") or "")
         elif cached_entry is not None:
             event_format = str(cached_entry.get("event_format") or "")
+
+        # Calendar fallback: if FastF1 hasn't yet ingested a session whose
+        # scheduled start time is in the past, we still advance the
+        # prediction target. The race weekend has clear time-based stages
+        # (FP1 -> SQ -> S -> Q -> R) and the user must not be stuck on
+        # "predicting SQ" hours after SQ has actually run just because the
+        # upstream timing API has a multi-hour delay or got renumbered.
+        sessions_schedule: dict[str, Any] | None = None
+        for source in (calendar_entry, cached_entry):
+            if isinstance(source, dict) and isinstance(source.get("sessions_schedule"), dict):
+                sessions_schedule = source.get("sessions_schedule")
+                break
+        if sessions_schedule is None and isinstance(config.get("sessions_schedule"), dict):
+            sessions_schedule = config.get("sessions_schedule")
+
+        if args.reference_time:
+            reference_time = args.reference_time
+        else:
+            reference_time = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
+
+        calendar_completed = sessions_completed_by_calendar(
+            sessions_schedule,
+            reference_time=reference_time,
+            buffer_minutes=args.calendar_completion_buffer_minutes,
+        )
+
+        seen: set[str] = set()
+        available_sessions: list[str] = []
+        for code in ingested_sessions + calendar_completed:
+            up = str(code).strip().upper()
+            if up and up not in seen:
+                seen.add(up)
+                available_sessions.append(up)
+        # Fall back to whatever the config remembered if both sources are empty.
+        if not available_sessions:
+            available_sessions = [
+                str(c).strip().upper()
+                for c in (config.get("available_sessions") or [])
+                if str(c).strip()
+            ]
+
         weekend_format = normalize_weekend_format(event_format, available_sessions)
         target = select_prediction_target(weekend_format, available_sessions)
         target_code = TARGET_SESSION_CODE[target]
@@ -132,6 +189,8 @@ def main() -> int:
         )
 
         config["available_sessions"] = available_sessions
+        config["available_sessions_ingested"] = ingested_sessions
+        config["available_sessions_by_calendar"] = calendar_completed
         config["weekend_format"] = weekend_format
         config["prediction_target"] = target
         config["prediction_target_label"] = target_label

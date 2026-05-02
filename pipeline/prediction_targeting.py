@@ -6,7 +6,7 @@ Shared helpers for automatic prediction target selection and source manifests.
 from __future__ import annotations
 
 import json
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
@@ -110,6 +110,59 @@ def normalize_weekend_format(event_format: Any, available_sessions: list[str]) -
     if "SQ" in available_sessions or "S" in available_sessions:
         return "sprint"
     return "standard"
+
+
+DEFAULT_SESSION_COMPLETION_BUFFER_MINUTES = 90
+
+
+def _parse_iso_datetime(raw: Any) -> datetime | None:
+    if raw is None:
+        return None
+    text = str(raw).strip()
+    if not text:
+        return None
+    try:
+        parsed = datetime.fromisoformat(text.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    return parsed.astimezone(timezone.utc)
+
+
+def sessions_completed_by_calendar(
+    sessions_schedule: dict[str, Any] | None,
+    reference_time: Any,
+    buffer_minutes: float = DEFAULT_SESSION_COMPLETION_BUFFER_MINUTES,
+) -> list[str]:
+    """Return session codes whose scheduled start is at least `buffer_minutes`
+    in the past relative to `reference_time`.
+
+    F1 sessions are 60 minutes (FP/Q/SQ) up to ~120 minutes (Race). We use
+    a single configurable buffer that defaults to 90 minutes — long enough
+    that a session is reliably finished, short enough that the next session
+    isn't usually wrongly considered finished too. This is the calendar-time
+    fallback used when FastF1 hasn't ingested the actual session results
+    yet (upstream lag, transient outages, schedule re-numbering after a race
+    cancellation, ...). It guarantees the prediction target advances on
+    schedule even when hard-data ingest is delayed.
+    """
+    if not isinstance(sessions_schedule, dict) or not sessions_schedule:
+        return []
+    reference = _parse_iso_datetime(reference_time)
+    if reference is None:
+        return []
+    buffer = timedelta(minutes=max(0.0, float(buffer_minutes)))
+    completed: list[str] = []
+    for code, value in sessions_schedule.items():
+        scheduled_start = _parse_iso_datetime(value)
+        if scheduled_start is None:
+            continue
+        if scheduled_start + buffer <= reference:
+            code_upper = str(code).strip().upper()
+            if code_upper:
+                completed.append(code_upper)
+    return completed
 
 
 def select_prediction_target(weekend_format: str, available_sessions: list[str]) -> str:

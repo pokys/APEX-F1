@@ -4,7 +4,15 @@ from datetime import date, datetime
 
 from pathlib import Path
 
-from pipeline.select_next_gp import apply_track_profile, load_cached_calendar, next_event_from_calendar, utc_iso_timestamp
+from pipeline.select_next_gp import (
+    apply_track_profile,
+    extract_sessions_schedule,
+    load_cached_calendar,
+    next_event_from_calendar,
+    normalize_event_format,
+    session_code_from_name,
+    utc_iso_timestamp,
+)
 
 
 def test_next_event_from_calendar_selects_first_future_event(tmp_path: Path) -> None:
@@ -61,3 +69,56 @@ def test_load_cached_calendar_and_pick_china(tmp_path: Path) -> None:
     assert event is not None
     assert event["event_name"] == "Chinese Grand Prix"
     assert event["event_format"] == "sprint"
+
+
+def test_normalize_event_format_collapses_fastf1_string_variants() -> None:
+    # FastF1 3.8 emits "sprint_qualifying"; older versions emit "sprint".
+    # We collapse both to "sprint" so downstream stays stable.
+    assert normalize_event_format("sprint_qualifying") == "sprint"
+    assert normalize_event_format("sprint") == "sprint"
+    assert normalize_event_format("Sprint Shootout") == "sprint"
+    assert normalize_event_format("conventional") == "conventional"
+    assert normalize_event_format("") == ""
+    assert normalize_event_format(None) == ""
+
+
+def test_session_code_from_name_maps_fastf1_display_names() -> None:
+    assert session_code_from_name("Practice 1") == "FP1"
+    assert session_code_from_name("Practice 3") == "FP3"
+    assert session_code_from_name("Sprint Qualifying") == "SQ"
+    assert session_code_from_name("Sprint Shootout") == "SQ"
+    assert session_code_from_name("Sprint") == "S"
+    assert session_code_from_name("Qualifying") == "Q"
+    assert session_code_from_name("Race") == "R"
+    assert session_code_from_name("") is None
+    assert session_code_from_name(None) is None
+    assert session_code_from_name("Unknown") is None
+
+
+def test_extract_sessions_schedule_pulls_named_sessions_from_row() -> None:
+    # FastF1 schedule rows expose Session1..Session5 (display names) plus
+    # Session1DateUtc..Session5DateUtc (UTC timestamps).
+    row = {
+        "Session1": "Practice 1",
+        "Session1DateUtc": "2026-05-01T20:30:00+00:00",
+        "Session2": "Sprint Qualifying",
+        "Session2DateUtc": "2026-05-02T00:30:00+00:00",
+        "Session3": "Sprint",
+        "Session3DateUtc": "2026-05-02T20:00:00+00:00",
+        "Session4": "Qualifying",
+        "Session4DateUtc": "2026-05-03T00:00:00+00:00",
+        "Session5": "Race",
+        "Session5DateUtc": "2026-05-03T19:30:00+00:00",
+    }
+    schedule = extract_sessions_schedule(row)
+    assert sorted(schedule.keys()) == ["FP1", "Q", "R", "S", "SQ"]
+    assert schedule["SQ"] == "2026-05-02T00:30:00+00:00"
+
+
+def test_extract_sessions_schedule_falls_back_to_local_date_when_utc_missing() -> None:
+    row = {
+        "Session1": "Practice 1",
+        "Session1Date": "2026-05-01T20:30:00+00:00",
+    }
+    schedule = extract_sessions_schedule(row)
+    assert schedule == {"FP1": "2026-05-01T20:30:00+00:00"}

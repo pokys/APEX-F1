@@ -9,7 +9,7 @@
     "reference_date": "2026-05-02",
     "stale_threshold_days": 21.0
   },
-  "deterministic_run_id": "a1e29be0250e1d688d22",
+  "deterministic_run_id": "93c96a347ef686b14809",
   "drivers": [
     {
       "driver_share": 48.0,
@@ -232,31 +232,36 @@
       "win_probability": 0.0
     }
   ],
-  "generated_at": "2026-05-02T17:47:17Z",
+  "generated_at": "2026-05-02T17:58:39Z",
   "inputs_used": [
     {
-      "source": "qualifying",
-      "source_key": "Q",
-      "weight": 0.615385
+      "source": "sprint_qualifying",
+      "source_key": "SQ",
+      "weight": 0.529412
+    },
+    {
+      "source": "fp1",
+      "source_key": "FP1",
+      "weight": 0.176471
     },
     {
       "source": "history_driver",
       "source_key": "history_driver",
-      "weight": 0.230769
+      "weight": 0.176471
     },
     {
       "source": "history_team",
       "source_key": "history_team",
-      "weight": 0.153846
+      "weight": 0.117647
     }
   ],
   "integrity": {
-    "driver_ratings_hash": "fbf7ff2657bc",
-    "race_config_hash": "befc8bba1cf7",
-    "team_ratings_hash": "c7905012824d"
+    "driver_ratings_hash": "845c407a803d",
+    "race_config_hash": "11d78ce81de2",
+    "team_ratings_hash": "251b7519ec81"
   },
-  "prediction_target": "race",
-  "prediction_target_label": "Race",
+  "prediction_target": "sprint",
+  "prediction_target_label": "Sprint",
   "race": "Miami Grand Prix",
   "season_blend": {
     "current_season": 2026,
@@ -268,8 +273,6 @@
   "simulation": {
     "available_sessions": [
       "FP1",
-      "Q",
-      "S",
       "SQ"
     ],
     "grid_source": "simulation",
@@ -281,6 +284,6 @@
     "win_temperature": 1.2
   },
   "target_output_type": "race",
-  "target_session_code": "R",
+  "target_session_code": "S",
   "weekend_format": "sprint"
 }

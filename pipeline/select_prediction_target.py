@@ -120,12 +120,18 @@ def main() -> int:
 
         ingested_sessions = available_sessions_for_event(event) if event is not None else []
         event_format = ""
-        if event is not None:
-            event_format = str(event.get("event_format") or "")
-        elif calendar_entry is not None:
-            event_format = str(calendar_entry.get("event_format") or "")
-        elif cached_entry is not None:
-            event_format = str(cached_entry.get("event_format") or "")
+        country = ""
+        for source in (event, calendar_entry, cached_entry):
+            if not isinstance(source, dict):
+                continue
+            if not event_format:
+                event_format = str(source.get("event_format") or "")
+            if not country:
+                country = str(source.get("country") or "").strip()
+            if event_format and country:
+                break
+        if not country:
+            country = str(config.get("country") or config.get("location") or "").strip()
 
         # Calendar fallback: if FastF1 hasn't yet ingested a session whose
         # scheduled start time is in the past, we still advance the
@@ -146,10 +152,16 @@ def main() -> int:
         else:
             reference_time = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
 
+        # Best-guess weekend format for completion calibration. Real weekend
+        # format gets recomputed below from the merged available_sessions
+        # list; this preliminary one is just used to look up local end-hours.
+        provisional_format = "sprint" if "sprint" in event_format.lower() else "conventional"
         calendar_completed = sessions_completed_by_calendar(
             sessions_schedule,
             reference_time=reference_time,
             buffer_minutes=args.calendar_completion_buffer_minutes,
+            country=country,
+            weekend_format=provisional_format,
         )
 
         seen: set[str] = set()

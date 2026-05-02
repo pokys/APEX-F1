@@ -82,7 +82,7 @@
       },
       "driver": "BOT",
       "driver_rating": 40.059328,
-      "team": "Cadillac"
+      "team": "Cadillac F1 Team"
     },
     {
       "components": {
@@ -90,27 +90,13 @@
         "qualifying_pace": 44.129508,
         "qualifying_progression": 57.000006,
         "recent_race_form": 47.333334,
-        "teammate_delta_performance": 37.778084,
+        "teammate_delta_performance": 22.0,
         "weekend_practice_pace": 49.2,
         "wet_performance_index": 50.0
       },
       "driver": "COL",
-      "driver_rating": 44.945387,
-      "team": "Alpine"
-    },
-    {
-      "components": {
-        "consistency": 69.0,
-        "qualifying_pace": 48.74,
-        "qualifying_progression": 54.0,
-        "recent_race_form": 50.8,
-        "teammate_delta_performance": 50.0,
-        "weekend_practice_pace": 49.2,
-        "wet_performance_index": 50.0
-      },
-      "driver": "CRA",
-      "driver_rating": 54.309,
-      "team": "Aston Martin"
+      "driver_rating": 41.78977,
+      "team": "Alpine F1 Team"
     },
     {
       "components": {
@@ -124,7 +110,7 @@
       },
       "driver": "GAS",
       "driver_rating": 59.727085,
-      "team": "Alpine"
+      "team": "Alpine F1 Team"
     },
     {
       "components": {
@@ -138,7 +124,7 @@
       },
       "driver": "HAD",
       "driver_rating": 48.673366,
-      "team": "Red Bull Racing"
+      "team": "Red Bull"
     },
     {
       "components": {
@@ -174,13 +160,13 @@
         "qualifying_pace": 50.193528,
         "qualifying_progression": 58.665078,
         "recent_race_form": 56.866666,
-        "teammate_delta_performance": 67.207638,
+        "teammate_delta_performance": 59.726122,
         "weekend_practice_pace": 49.2,
         "wet_performance_index": 50.0
       },
       "driver": "LAW",
-      "driver_rating": 56.321765,
-      "team": "Racing Bulls"
+      "driver_rating": 54.825462,
+      "team": "RB F1 Team"
     },
     {
       "components": {
@@ -202,13 +188,13 @@
         "qualifying_pace": 50.734866,
         "qualifying_progression": 61.019874,
         "recent_race_form": 52.533334,
-        "teammate_delta_performance": 48.653245,
+        "teammate_delta_performance": 44.164327,
         "weekend_practice_pace": 49.2,
         "wet_performance_index": 50.0
       },
       "driver": "LIN",
-      "driver_rating": 49.571182,
-      "team": "Racing Bulls"
+      "driver_rating": 48.673398,
+      "team": "RB F1 Team"
     },
     {
       "components": {
@@ -250,7 +236,7 @@
       },
       "driver": "PER",
       "driver_rating": 45.233401,
-      "team": "Cadillac"
+      "team": "Cadillac F1 Team"
     },
     {
       "components": {
@@ -320,10 +306,10 @@
       },
       "driver": "VER",
       "driver_rating": 61.332138,
-      "team": "Red Bull Racing"
+      "team": "Red Bull"
     }
   ],
-  "inputs_hash": "ef6075bd29f771b3b084911b88b1bdf2139ce1a9bea311919a30be9eadfd74e8",
+  "inputs_hash": "67a812ee0592f1962ec92c6be931be369cf58388da132659583f618a46343b7d",
   "season": 2026,
   "source_features": "data/processed/features_season_2026.json",
   "source_summary": "Blended Data: 75% Season 2026, 25% Season 2025"

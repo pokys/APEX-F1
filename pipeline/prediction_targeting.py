@@ -114,6 +114,12 @@ def normalize_weekend_format(event_format: Any, available_sessions: list[str]) -
 
 DEFAULT_SESSION_COMPLETION_BUFFER_MINUTES = 90
 
+# Canonical chronological order of session codes within a weekend. Used to
+# enforce monotonic calendar progression (a later session cannot be marked
+# done before an earlier one) when the upstream schedule packs multiple
+# same-day sessions into the same midnight timestamp.
+SESSION_ORDER = {"FP1": 0, "FP2": 1, "FP3": 2, "SQ": 3, "S": 4, "Q": 5, "R": 6}
+
 
 def _parse_iso_datetime(raw: Any) -> datetime | None:
     if raw is None:
@@ -130,38 +136,75 @@ def _parse_iso_datetime(raw: Any) -> datetime | None:
     return parsed.astimezone(timezone.utc)
 
 
+def _is_midnight_utc(dt: datetime) -> bool:
+    """A timestamp at exactly 00:00:00 UTC almost always means the upstream
+    only knows the date (e.g. Ergast fallback). We must not treat it as a
+    precise session start time, otherwise every session on that day gets
+    flagged as 'done at 00:01 UTC' which collapses the whole weekend into
+    a single point and lets the target race ahead through Q before Q has
+    actually run."""
+    return (
+        dt.hour == 0
+        and dt.minute == 0
+        and dt.second == 0
+        and dt.microsecond == 0
+    )
+
+
 def sessions_completed_by_calendar(
     sessions_schedule: dict[str, Any] | None,
     reference_time: Any,
     buffer_minutes: float = DEFAULT_SESSION_COMPLETION_BUFFER_MINUTES,
 ) -> list[str]:
-    """Return session codes whose scheduled start is at least `buffer_minutes`
-    in the past relative to `reference_time`.
+    """Return session codes whose scheduled completion is at or before
+    `reference_time`.
 
-    F1 sessions are 60 minutes (FP/Q/SQ) up to ~120 minutes (Race). We use
-    a single configurable buffer that defaults to 90 minutes — long enough
-    that a session is reliably finished, short enough that the next session
-    isn't usually wrongly considered finished too. This is the calendar-time
-    fallback used when FastF1 hasn't ingested the actual session results
-    yet (upstream lag, transient outages, schedule re-numbering after a race
-    cancellation, ...). It guarantees the prediction target advances on
-    schedule even when hard-data ingest is delayed.
-    """
+    Two-mode completion threshold per session:
+      * Precise timestamp (anything other than 00:00:00 UTC): completion =
+        scheduled_start + buffer_minutes (default 90, long enough that a
+        60-minute session is reliably finished, short enough that the next
+        session isn't prematurely declared done during itself).
+      * Date-only timestamp (00:00:00 UTC, typical of the Ergast schedule
+        fallback): completion = end of that calendar day UTC, i.e.
+        scheduled_start + 24h. This errs on the late side - a session
+        appears done up to ~12 hours after it actually finished - but
+        prevents the much worse failure mode of advancing the prediction
+        target past sessions that have not yet been driven.
+
+    Ordering is enforced: sessions are evaluated in chronological order
+    (by start time, ties broken by SESSION_ORDER) and we stop at the
+    first session whose completion threshold is in the future. This
+    guarantees we never claim Q is done while Sprint is still ongoing
+    just because they share a midnight timestamp."""
     if not isinstance(sessions_schedule, dict) or not sessions_schedule:
         return []
     reference = _parse_iso_datetime(reference_time)
     if reference is None:
         return []
     buffer = timedelta(minutes=max(0.0, float(buffer_minutes)))
-    completed: list[str] = []
+
+    parsed: list[tuple[datetime, str, datetime]] = []
     for code, value in sessions_schedule.items():
+        code_upper = str(code).strip().upper()
+        if not code_upper:
+            continue
         scheduled_start = _parse_iso_datetime(value)
         if scheduled_start is None:
             continue
-        if scheduled_start + buffer <= reference:
-            code_upper = str(code).strip().upper()
-            if code_upper:
-                completed.append(code_upper)
+        if _is_midnight_utc(scheduled_start):
+            completion = scheduled_start + timedelta(days=1)
+        else:
+            completion = scheduled_start + buffer
+        parsed.append((scheduled_start, code_upper, completion))
+
+    parsed.sort(key=lambda item: (item[0], SESSION_ORDER.get(item[1], 99)))
+
+    completed: list[str] = []
+    for _, code_upper, completion in parsed:
+        if completion <= reference:
+            completed.append(code_upper)
+        else:
+            break
     return completed
 
 

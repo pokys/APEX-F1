@@ -253,3 +253,58 @@ def test_sessions_completed_by_calendar_normalizes_codes() -> None:
         schedule, reference_time="2026-05-02T18:00:00+00:00", buffer_minutes=90,
     )
     assert completed == ["FP1"]
+
+
+def test_sessions_completed_by_calendar_treats_date_only_as_end_of_day() -> None:
+    # FastF1's Ergast fallback collapses every same-day session to 00:00 UTC.
+    # Without special handling, 00:00 + 90 min buffer would mark every
+    # session of a Friday/Saturday as 'done' by Saturday afternoon and the
+    # target would race past Q before Q had been driven. Date-only
+    # timestamps must be treated as end-of-day, not start-of-day.
+    schedule = {
+        "FP1": "2026-05-01T00:00:00+00:00",
+        "SQ":  "2026-05-01T00:00:00+00:00",
+        "S":   "2026-05-02T00:00:00+00:00",
+        "Q":   "2026-05-02T00:00:00+00:00",
+        "R":   "2026-05-03T20:00:00+00:00",
+    }
+    # Saturday afternoon UTC: only Friday's sessions (FP1, SQ) are reliably
+    # behind us. Saturday's S+Q must NOT be flagged as done.
+    completed = sessions_completed_by_calendar(
+        schedule, reference_time="2026-05-02T18:00:00+00:00", buffer_minutes=90,
+    )
+    assert completed == ["FP1", "SQ"]
+
+
+def test_sessions_completed_by_calendar_enforces_chronological_order() -> None:
+    # Even if SQ has a precise timestamp that falls before FP1 (corrupt
+    # upstream), we must not let SQ advance the target without FP1 also
+    # being done. We sort by start time, so the natural chronology wins.
+    schedule = {
+        "Q":  "2026-05-02T00:00:00+00:00",
+        "FP1": "2026-05-01T20:30:00+00:00",
+        "SQ":  "2026-05-02T00:30:00+00:00",
+    }
+    # 60 min after SQ scheduled start: SQ session itself still ongoing,
+    # so SQ is not done. FP1 finished long ago though.
+    completed = sessions_completed_by_calendar(
+        schedule, reference_time="2026-05-02T01:30:00+00:00", buffer_minutes=90,
+    )
+    assert completed == ["FP1"]
+
+
+def test_sessions_completed_by_calendar_full_day_advance() -> None:
+    # The day after qualifying day, both same-day midnight sessions
+    # (S + Q) are now safely in the past.
+    schedule = {
+        "FP1": "2026-05-01T00:00:00+00:00",
+        "SQ":  "2026-05-01T00:00:00+00:00",
+        "S":   "2026-05-02T00:00:00+00:00",
+        "Q":   "2026-05-02T00:00:00+00:00",
+        "R":   "2026-05-03T20:00:00+00:00",
+    }
+    completed = sessions_completed_by_calendar(
+        schedule, reference_time="2026-05-03T05:00:00+00:00", buffer_minutes=90,
+    )
+    # Race start hasn't occurred yet (20:00 UTC).
+    assert completed == ["FP1", "SQ", "S", "Q"]

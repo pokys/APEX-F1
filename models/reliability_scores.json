@@ -1,17 +1,17 @@
 {
-  "inputs_hash": "0235c96ab4aebecb70d396f738690bf3a24eccc960be089ae92eec37647f8eef",
+  "inputs_hash": "125598f41f0bd2d626ed5c2d97984a0204b6e32f0fad30acbdbd6107643f7553",
   "season": 2026,
   "source_features": "data/processed/features_season_2026.json",
   "source_summary": "Blended Data: 75% Season 2026, 25% Season 2025",
   "teams": [
     {
       "components": {
-        "dnf_history": 48.177078,
+        "dnf_history": 50.0,
         "new_component_penalties": 85.0,
         "power_unit_reliability": 69.0
       },
-      "reliability_score": 62.829685,
-      "team": "Alpine"
+      "reliability_score": 63.65,
+      "team": "Alpine F1 Team"
     },
     {
       "components": {
@@ -38,7 +38,7 @@
         "power_unit_reliability": 69.0
       },
       "reliability_score": 53.150011,
-      "team": "Cadillac"
+      "team": "Cadillac F1 Team"
     },
     {
       "components": {
@@ -78,21 +78,21 @@
     },
     {
       "components": {
-        "dnf_history": 51.458328,
+        "dnf_history": 50.0,
         "new_component_penalties": 85.0,
         "power_unit_reliability": 69.0
       },
-      "reliability_score": 64.306247,
-      "team": "Racing Bulls"
+      "reliability_score": 63.65,
+      "team": "RB F1 Team"
     },
     {
       "components": {
-        "dnf_history": 64.218767,
+        "dnf_history": 61.66669,
         "new_component_penalties": 85.0,
         "power_unit_reliability": 69.0
       },
-      "reliability_score": 70.048445,
-      "team": "Red Bull Racing"
+      "reliability_score": 68.900011,
+      "team": "Red Bull"
     },
     {
       "components": {

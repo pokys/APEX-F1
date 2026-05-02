@@ -1,18 +1,18 @@
 {
-  "inputs_hash": "604da954a08f9a7fe8f3b169dd83e613bdac3229adc70f66e5f9466e2f167c30",
+  "inputs_hash": "ef6075bd29f771b3b084911b88b1bdf2139ce1a9bea311919a30be9eadfd74e8",
   "season": 2026,
   "source_features": "data/processed/features_season_2026.json",
   "source_summary": "Blended Data: 75% Season 2026, 25% Season 2025",
   "teams": [
     {
       "components": {
-        "pit_stop_performance": 59.050744,
+        "pit_stop_performance": 56.079724,
         "safety_car_reactions": 60.0,
         "sprint_execution": 45.5,
-        "strategic_success_history": 50.666667
+        "strategic_success_history": 44.121212
       },
-      "strategy_score": 54.273557,
-      "team": "Alpine F1 Team"
+      "strategy_score": 51.091341,
+      "team": "Alpine"
     },
     {
       "components": {
@@ -42,7 +42,7 @@
         "strategic_success_history": 40.0
       },
       "strategy_score": 49.373271,
-      "team": "Cadillac F1 Team"
+      "team": "Cadillac"
     },
     {
       "components": {
@@ -86,23 +86,23 @@
     },
     {
       "components": {
-        "pit_stop_performance": 60.330504,
+        "pit_stop_performance": 54.331212,
         "safety_car_reactions": 60.0,
         "sprint_execution": 27.5,
-        "strategic_success_history": 48.0
+        "strategic_success_history": 47.515152
       },
-      "strategy_score": 51.024151,
-      "team": "RB F1 Team"
+      "strategy_score": 49.054667,
+      "team": "Racing Bulls"
     },
     {
       "components": {
-        "pit_stop_performance": 22.61592,
+        "pit_stop_performance": 30.33694,
         "safety_car_reactions": 60.0,
         "sprint_execution": 50.0,
-        "strategic_success_history": 50.666667
+        "strategic_success_history": 67.757576
       },
-      "strategy_score": 44.018109,
-      "team": "Red Bull"
+      "strategy_score": 52.316234,
+      "team": "Red Bull Racing"
     },
     {
       "components": {

@@ -255,12 +255,11 @@ def test_sessions_completed_by_calendar_normalizes_codes() -> None:
     assert completed == ["FP1"]
 
 
-def test_sessions_completed_by_calendar_treats_date_only_as_end_of_day() -> None:
+def test_sessions_completed_by_calendar_advances_through_first_of_day() -> None:
     # FastF1's Ergast fallback collapses every same-day session to 00:00 UTC.
-    # Without special handling, 00:00 + 90 min buffer would mark every
-    # session of a Friday/Saturday as 'done' by Saturday afternoon and the
-    # target would race past Q before Q had been driven. Date-only
-    # timestamps must be treated as end-of-day, not start-of-day.
+    # For sprint Saturday, S (1st of day) and Q (2nd of day) share the
+    # midnight start. After Sprint runs (mid-Saturday UTC) but before Q,
+    # the target must advance to qualifying - i.e. S "done", Q not.
     schedule = {
         "FP1": "2026-05-01T00:00:00+00:00",
         "SQ":  "2026-05-01T00:00:00+00:00",
@@ -268,12 +267,34 @@ def test_sessions_completed_by_calendar_treats_date_only_as_end_of_day() -> None
         "Q":   "2026-05-02T00:00:00+00:00",
         "R":   "2026-05-03T20:00:00+00:00",
     }
-    # Saturday afternoon UTC: only Friday's sessions (FP1, SQ) are reliably
-    # behind us. Saturday's S+Q must NOT be flagged as done.
+    # Saturday 22:00 UTC: post-Sprint, pre-Quali for any timezone.
     completed = sessions_completed_by_calendar(
+        schedule, reference_time="2026-05-02T22:00:00+00:00", buffer_minutes=90,
+    )
+    assert completed == ["FP1", "SQ", "S"]
+
+
+def test_sessions_completed_by_calendar_holds_at_last_of_day_until_end_of_day() -> None:
+    # The last date-only session of a day (Q on Saturday in sprint format)
+    # should not be flagged done before end-of-day UTC, otherwise the
+    # target races ahead to "race" before Q has actually been driven.
+    schedule = {
+        "FP1": "2026-05-01T00:00:00+00:00",
+        "SQ":  "2026-05-01T00:00:00+00:00",
+        "S":   "2026-05-02T00:00:00+00:00",
+        "Q":   "2026-05-02T00:00:00+00:00",
+        "R":   "2026-05-03T20:00:00+00:00",
+    }
+    # Saturday 18:00 UTC: post-Sprint but Q is later this UTC day.
+    just_before_q = sessions_completed_by_calendar(
         schedule, reference_time="2026-05-02T18:00:00+00:00", buffer_minutes=90,
     )
-    assert completed == ["FP1", "SQ"]
+    assert just_before_q == ["FP1", "SQ", "S"]
+    # Sunday 00:30 UTC: end of Saturday UTC is past, Q now considered done.
+    after_eod = sessions_completed_by_calendar(
+        schedule, reference_time="2026-05-03T00:30:00+00:00", buffer_minutes=90,
+    )
+    assert after_eod == ["FP1", "SQ", "S", "Q"]
 
 
 def test_sessions_completed_by_calendar_enforces_chronological_order() -> None:
@@ -294,8 +315,8 @@ def test_sessions_completed_by_calendar_enforces_chronological_order() -> None:
 
 
 def test_sessions_completed_by_calendar_full_day_advance() -> None:
-    # The day after qualifying day, both same-day midnight sessions
-    # (S + Q) are now safely in the past.
+    # The day after qualifying day, every date-only session is firmly in
+    # the past and only the precise R timestamp + buffer gates further.
     schedule = {
         "FP1": "2026-05-01T00:00:00+00:00",
         "SQ":  "2026-05-01T00:00:00+00:00",

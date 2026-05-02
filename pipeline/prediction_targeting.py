@@ -113,6 +113,11 @@ def normalize_weekend_format(event_format: Any, available_sessions: list[str]) -
 
 
 DEFAULT_SESSION_COMPLETION_BUFFER_MINUTES = 90
+# Hours after midnight UTC of session date when an early-of-day, date-only
+# session is considered finished. 18h covers most timezones: an Americas
+# Sprint at ~16:30 UTC end is comfortably done, while not preempting later
+# same-day sessions.
+DATE_ONLY_EARLY_SESSION_HOURS = 18
 
 # Canonical chronological order of session codes within a weekend. Used to
 # enforce monotonic calendar progression (a later session cannot be marked
@@ -159,23 +164,27 @@ def sessions_completed_by_calendar(
     """Return session codes whose scheduled completion is at or before
     `reference_time`.
 
-    Two-mode completion threshold per session:
+    Per-session completion threshold:
       * Precise timestamp (anything other than 00:00:00 UTC): completion =
         scheduled_start + buffer_minutes (default 90, long enough that a
         60-minute session is reliably finished, short enough that the next
         session isn't prematurely declared done during itself).
       * Date-only timestamp (00:00:00 UTC, typical of the Ergast schedule
-        fallback): completion = end of that calendar day UTC, i.e.
-        scheduled_start + 24h. This errs on the late side - a session
-        appears done up to ~12 hours after it actually finished - but
-        prevents the much worse failure mode of advancing the prediction
-        target past sessions that have not yet been driven.
+        fallback): completion depends on the session's chronological
+        position among same-day date-only sessions. The last one of the
+        day completes at end-of-day (start + 24h); every earlier one
+        completes at start + DATE_ONLY_EARLY_SESSION_HOURS (18h). This
+        lets the target advance through e.g. Saturday Sprint mid-day
+        without prematurely advancing through Saturday Qualifying that
+        runs later the same UTC day. Errors on the late side by a couple
+        of hours; never declares a session done before it has actually
+        run for any race in the calendar.
 
     Ordering is enforced: sessions are evaluated in chronological order
     (by start time, ties broken by SESSION_ORDER) and we stop at the
     first session whose completion threshold is in the future. This
-    guarantees we never claim Q is done while Sprint is still ongoing
-    just because they share a midnight timestamp."""
+    guarantees a corrupt or out-of-order schedule cannot let Q advance
+    the target without FP1, SQ and S also being done."""
     if not isinstance(sessions_schedule, dict) or not sessions_schedule:
         return []
     reference = _parse_iso_datetime(reference_time)
@@ -183,7 +192,7 @@ def sessions_completed_by_calendar(
         return []
     buffer = timedelta(minutes=max(0.0, float(buffer_minutes)))
 
-    parsed: list[tuple[datetime, str, datetime]] = []
+    raw_pairs: list[tuple[datetime, str, bool]] = []
     for code, value in sessions_schedule.items():
         code_upper = str(code).strip().upper()
         if not code_upper:
@@ -191,16 +200,31 @@ def sessions_completed_by_calendar(
         scheduled_start = _parse_iso_datetime(value)
         if scheduled_start is None:
             continue
-        if _is_midnight_utc(scheduled_start):
-            completion = scheduled_start + timedelta(days=1)
-        else:
-            completion = scheduled_start + buffer
-        parsed.append((scheduled_start, code_upper, completion))
+        is_date_only = _is_midnight_utc(scheduled_start)
+        raw_pairs.append((scheduled_start, code_upper, is_date_only))
 
-    parsed.sort(key=lambda item: (item[0], SESSION_ORDER.get(item[1], 99)))
+    # Group date-only sessions by UTC date so we can identify which one is
+    # last-of-day (end-of-day completion) and which are earlier-of-day
+    # (DATE_ONLY_EARLY_SESSION_HOURS completion).
+    same_day_codes: dict[date, list[str]] = {}
+    for scheduled_start, code_upper, is_date_only in raw_pairs:
+        if is_date_only:
+            same_day_codes.setdefault(scheduled_start.date(), []).append(code_upper)
+    for codes in same_day_codes.values():
+        codes.sort(key=lambda c: SESSION_ORDER.get(c, 99))
+
+    raw_pairs.sort(key=lambda item: (item[0], SESSION_ORDER.get(item[1], 99)))
 
     completed: list[str] = []
-    for _, code_upper, completion in parsed:
+    for scheduled_start, code_upper, is_date_only in raw_pairs:
+        if not is_date_only:
+            completion = scheduled_start + buffer
+        else:
+            day_codes = same_day_codes.get(scheduled_start.date(), [])
+            if day_codes and code_upper == day_codes[-1]:
+                completion = scheduled_start + timedelta(days=1)
+            else:
+                completion = scheduled_start + timedelta(hours=DATE_ONLY_EARLY_SESSION_HOURS)
         if completion <= reference:
             completed.append(code_upper)
         else:

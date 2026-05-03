@@ -43,6 +43,17 @@ on:
 permissions:
   contents: write
 
+# Serialize every workflow that commits to main against every other one.
+# All bot-write workflows (full-pipeline, build-features, simulate-race,
+# update-ratings, ingest-fastf1, archive-signals, collect-articles,
+# backtest) share the same group so they can never race on the same
+# generated files. cancel-in-progress: false queues new triggers behind
+# the running one - the pipeline regenerates fully each run, so dropping
+# a queued trigger could lose an ingest window we want to keep.
+concurrency:
+  group: bot-outputs
+  cancel-in-progress: false
+
 jobs:
   pipeline:
     runs-on: ubuntu-latest
@@ -158,27 +169,17 @@ jobs:
 
       - name: Commit changes
         run: |
-          # Clear inbox after successful run to avoid re-processing old articles
           echo "# F1 Article Inbox" > knowledge/inbox/articles.md
-
-          if [ -z "$(git status --porcelain -- knowledge/inbox/articles.md knowledge/processed data/raw/fastf1 data/raw/calendars data/raw/tyres data/processed models outputs/prediction.json outputs/prediction_dry.json outputs/prediction_wet.json outputs/prediction_report.html config/race_config.json)" ]; then
-            echo "No pipeline output changes."
-            exit 0
-          fi
-
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- knowledge/inbox/articles.md knowledge/processed data/raw/fastf1 data/raw/calendars data/raw/tyres data/processed models outputs/prediction.json outputs/prediction_dry.json outputs/prediction_wet.json outputs/prediction_report.html config/race_config.json
-          git commit -m "Run full F1 prediction pipeline"
-          for attempt in 1 2 3; do
-            if git push; then
-              exit 0
-            fi
-            if [ "$attempt" -lt 3 ]; then
-              echo "git push failed (attempt $attempt), retrying after rebase..."
-              git pull --rebase || true
-              sleep $((attempt * 7))
-            fi
-          done
-          echo "git push failed after 3 attempts."
-          exit 1
+          bash scripts/commit_bot_outputs.sh "Run full F1 prediction pipeline" \
+            knowledge/inbox/articles.md \
+            knowledge/processed \
+            data/raw/fastf1 \
+            data/raw/calendars \
+            data/raw/tyres \
+            data/processed \
+            models \
+            outputs/prediction.json \
+            outputs/prediction_dry.json \
+            outputs/prediction_wet.json \
+            outputs/prediction_report.html \
+            config/race_config.json

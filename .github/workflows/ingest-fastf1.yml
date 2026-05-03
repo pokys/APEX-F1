@@ -27,6 +27,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: bot-outputs
+  cancel-in-progress: false
+
 jobs:
   ingest:
     runs-on: ubuntu-latest
@@ -66,25 +70,4 @@ jobs:
           python pipeline/ingest_fastf1.py "${ARGS[@]}" --log-level INFO
 
       - name: Commit changes
-        run: |
-          if [ -z "$(git status --porcelain -- data/raw/fastf1)" ]; then
-            echo "No FastF1 data changes."
-            exit 0
-          fi
-
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- data/raw/fastf1
-          git commit -m "Update FastF1 raw data snapshot"
-          for attempt in 1 2 3; do
-            if git push; then
-              exit 0
-            fi
-            if [ "$attempt" -lt 3 ]; then
-              echo "git push failed (attempt $attempt), retrying after rebase..."
-              git pull --rebase || true
-              sleep $((attempt * 7))
-            fi
-          done
-          echo "git push failed after 3 attempts."
-          exit 1
+        run: bash scripts/commit_bot_outputs.sh "Update FastF1 raw data snapshot" data/raw/fastf1

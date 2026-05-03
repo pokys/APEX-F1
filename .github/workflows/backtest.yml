@@ -26,6 +26,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: bot-outputs
+  cancel-in-progress: false
+
 jobs:
   backtest:
     runs-on: ubuntu-latest
@@ -55,25 +59,4 @@ jobs:
           python pipeline/backtest_simulation.py --season "$TARGET_SEASON" --simulations "$TARGET_SIMS" --log-level INFO
 
       - name: Commit report
-        run: |
-          if [ -z "$(git status --porcelain -- outputs/backtest)" ]; then
-            echo "No backtest report changes."
-            exit 0
-          fi
-
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- outputs/backtest
-          git commit -m "Update simulation backtest report"
-          for attempt in 1 2 3; do
-            if git push; then
-              exit 0
-            fi
-            if [ "$attempt" -lt 3 ]; then
-              echo "git push failed (attempt $attempt), retrying after rebase..."
-              git pull --rebase || true
-              sleep $((attempt * 7))
-            fi
-          done
-          echo "git push failed after 3 attempts."
-          exit 1
+        run: bash scripts/commit_bot_outputs.sh "Update simulation backtest report" outputs/backtest

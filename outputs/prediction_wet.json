@@ -1,15 +1,15 @@
 {
   "data_freshness": {
-    "days_since_latest_event": 34,
-    "days_until_next_race": 1,
+    "days_since_latest_event": 35,
+    "days_until_next_race": 0,
     "is_stale": true,
     "latest_completed_date": "2026-03-29",
     "latest_completed_event": "Japanese Grand Prix",
     "next_race_date": "2026-05-03",
-    "reference_date": "2026-05-02",
+    "reference_date": "2026-05-03",
     "stale_threshold_days": 21.0
   },
-  "deterministic_run_id": "996e4a33dd389e9e9132",
+  "deterministic_run_id": "100ceb882ee096dfa24f",
   "drivers": [
     {
       "driver_share": 48.0,
@@ -242,7 +242,7 @@
       "win_probability": 0.0
     }
   ],
-  "generated_at": "2026-05-02T23:49:13Z",
+  "generated_at": "2026-05-03T03:31:00Z",
   "inputs_used": [
     {
       "source": "qualifying",
@@ -261,9 +261,9 @@
     }
   ],
   "integrity": {
-    "driver_ratings_hash": "1ad66237afd6",
-    "race_config_hash": "4859645271a5",
-    "team_ratings_hash": "c3194e47b8a3"
+    "driver_ratings_hash": "bcf10e1653d2",
+    "race_config_hash": "aa7c0bb9a9d2",
+    "team_ratings_hash": "6ac4aa66beab"
   },
   "prediction_target": "race",
   "prediction_target_label": "Race",

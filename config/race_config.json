@@ -3,19 +3,21 @@
     "FP1",
     "SQ",
     "S",
-    "Q"
+    "Q",
+    "R"
   ],
   "available_sessions_by_calendar": [
     "FP1",
     "SQ",
     "S",
-    "Q"
+    "Q",
+    "R"
   ],
   "available_sessions_ingested": [],
   "calibration_season": 2025,
   "calibration_source": "outputs/backtest/backtest_season_2025.json",
   "event_format": "sprint",
-  "generated_at": "2026-05-03T20:48:25Z",
+  "generated_at": "2026-05-03T21:45:13Z",
   "grid_source": "simulation",
   "inputs_status": [
     {

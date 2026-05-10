@@ -1,15 +1,15 @@
 {
   "data_freshness": {
-    "days_since_latest_event": 6,
-    "days_until_next_race": 15,
+    "days_since_latest_event": 7,
+    "days_until_next_race": 14,
     "is_stale": false,
     "latest_completed_date": "2026-05-03",
     "latest_completed_event": "Miami Grand Prix",
     "next_race_date": "2026-05-24",
-    "reference_date": "2026-05-09",
+    "reference_date": "2026-05-10",
     "stale_threshold_days": 21.0
   },
-  "deterministic_run_id": "09827051997c472e515d",
+  "deterministic_run_id": "0a0435c55130b96178a3",
   "drivers": [
     {
       "driver_share": 48.4,
@@ -254,7 +254,7 @@
       "weekend_form_delta": 0.0
     }
   ],
-  "generated_at": "2026-05-09T23:53:05Z",
+  "generated_at": "2026-05-10T03:34:22Z",
   "inputs_used": [
     {
       "source": "history_driver",
@@ -268,9 +268,9 @@
     }
   ],
   "integrity": {
-    "driver_ratings_hash": "68f6e907d728",
-    "race_config_hash": "3da8514978e4",
-    "team_ratings_hash": "b00b1703736e"
+    "driver_ratings_hash": "d48519459ac3",
+    "race_config_hash": "f91c75083f46",
+    "team_ratings_hash": "fdf865238cdb"
   },
   "prediction_target": "sprint_qualifying",
   "prediction_target_label": "Sprint Qualifying",

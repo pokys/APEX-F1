@@ -2,329 +2,315 @@
   "drivers": [
     {
       "components": {
-        "consistency": 41.66667,
-        "qualifying_pace": 39.486244,
-        "qualifying_progression": 52.665084,
-        "recent_race_form": 35.2,
-        "teammate_delta_performance": 23.513428,
+        "consistency": 46.666668,
+        "qualifying_pace": 39.961048,
+        "qualifying_progression": 54.044478,
+        "recent_race_form": 36.933334,
+        "teammate_delta_performance": 25.50203,
         "weekend_practice_pace": 49.2,
         "wet_performance_index": 50.0
       },
       "driver": "ALB",
-      "driver_rating": 38.939538,
+      "driver_rating": 40.75344,
       "team": "Williams"
     },
     {
       "components": {
-        "consistency": 42.08333,
-        "qualifying_pace": 37.884506,
+        "consistency": 37.833332,
+        "qualifying_pace": 37.589724,
         "qualifying_progression": 50.999994,
-        "recent_race_form": 36.066666,
-        "teammate_delta_performance": 59.643116,
+        "recent_race_form": 38.666666,
+        "teammate_delta_performance": 60.566654,
         "weekend_practice_pace": 49.2,
         "wet_performance_index": 50.0
       },
       "driver": "ALO",
-      "driver_rating": 45.709033,
+      "driver_rating": 44.728067,
       "team": "Aston Martin"
     },
     {
       "components": {
-        "consistency": 72.5,
-        "qualifying_pace": 68.760896,
+        "consistency": 74.0,
+        "qualifying_pace": 70.587791,
         "qualifying_progression": 63.0,
-        "recent_race_form": 78.533334,
-        "teammate_delta_performance": 47.196556,
+        "recent_race_form": 79.4,
+        "teammate_delta_performance": 57.592732,
         "weekend_practice_pace": 49.2,
         "wet_performance_index": 50.0
       },
       "driver": "ANT",
-      "driver_rating": 61.630625,
+      "driver_rating": 64.724273,
       "team": "Mercedes"
     },
     {
       "components": {
-        "consistency": 52.49999,
-        "qualifying_pace": 47.080876,
-        "qualifying_progression": 56.625354,
-        "recent_race_form": 52.533334,
-        "teammate_delta_performance": 47.935658,
+        "consistency": 47.0,
+        "qualifying_pace": 46.910979,
+        "qualifying_progression": 56.744568,
+        "recent_race_form": 49.066666,
+        "teammate_delta_performance": 51.802136,
         "weekend_practice_pace": 49.2,
         "wet_performance_index": 50.0
       },
       "driver": "BEA",
-      "driver_rating": 49.190436,
+      "driver_rating": 48.52927,
       "team": "Haas F1 Team"
     },
     {
       "components": {
-        "consistency": 49.99999,
-        "qualifying_pace": 47.512376,
-        "qualifying_progression": 59.354784,
-        "recent_race_form": 44.733334,
-        "teammate_delta_performance": 44.94124,
+        "consistency": 46.0,
+        "qualifying_pace": 43.390398,
+        "qualifying_progression": 56.696238,
+        "recent_race_form": 42.133334,
+        "teammate_delta_performance": 60.961258,
         "weekend_practice_pace": 49.2,
         "wet_performance_index": 50.0
       },
       "driver": "BOR",
-      "driver_rating": 48.117577,
+      "driver_rating": 48.878891,
       "team": "Audi"
     },
     {
       "components": {
         "consistency": 35.0,
-        "qualifying_pace": 34.610194,
+        "qualifying_pace": 35.141823,
         "qualifying_progression": 50.999994,
-        "recent_race_form": 37.8,
-        "teammate_delta_performance": 45.978802,
+        "recent_race_form": 38.666666,
+        "teammate_delta_performance": 42.780592,
         "weekend_practice_pace": 49.2,
         "wet_performance_index": 50.0
       },
       "driver": "BOT",
-      "driver_rating": 40.059328,
-      "team": "Cadillac"
+      "driver_rating": 39.605756,
+      "team": "Cadillac F1 Team"
     },
     {
       "components": {
-        "consistency": 47.77777,
-        "qualifying_pace": 44.129508,
-        "qualifying_progression": 57.000006,
-        "recent_race_form": 47.333334,
-        "teammate_delta_performance": 37.778084,
+        "consistency": 54.111112,
+        "qualifying_pace": 48.849988,
+        "qualifying_progression": 58.909248,
+        "recent_race_form": 53.4,
+        "teammate_delta_performance": 51.425382,
         "weekend_practice_pace": 49.2,
         "wet_performance_index": 50.0
       },
       "driver": "COL",
-      "driver_rating": 44.945387,
-      "team": "Alpine"
+      "driver_rating": 50.91035,
+      "team": "Alpine F1 Team"
     },
     {
       "components": {
-        "consistency": 69.0,
-        "qualifying_pace": 48.74,
-        "qualifying_progression": 54.0,
-        "recent_race_form": 50.8,
-        "teammate_delta_performance": 50.0,
-        "weekend_practice_pace": 49.2,
-        "wet_performance_index": 50.0
-      },
-      "driver": "CRA",
-      "driver_rating": 54.309,
-      "team": "Aston Martin"
-    },
-    {
-      "components": {
-        "consistency": 59.58334,
-        "qualifying_pace": 54.946429,
-        "qualifying_progression": 61.33491,
-        "recent_race_form": 62.066666,
-        "teammate_delta_performance": 78.0,
+        "consistency": 54.833332,
+        "qualifying_pace": 53.512981,
+        "qualifying_progression": 61.864758,
+        "recent_race_form": 52.533334,
+        "teammate_delta_performance": 48.574618,
         "weekend_practice_pace": 49.2,
         "wet_performance_index": 50.0
       },
       "driver": "GAS",
-      "driver_rating": 59.727085,
-      "team": "Alpine"
+      "driver_rating": 52.1528,
+      "team": "Alpine F1 Team"
     },
     {
       "components": {
-        "consistency": 60.41668,
-        "qualifying_pace": 54.769132,
-        "qualifying_progression": 63.0,
-        "recent_race_form": 47.333334,
+        "consistency": 55.166668,
+        "qualifying_pace": 48.796879,
+        "qualifying_progression": 61.090758,
+        "recent_race_form": 45.6,
         "teammate_delta_performance": 22.0,
         "weekend_practice_pace": 49.2,
         "wet_performance_index": 50.0
       },
       "driver": "HAD",
-      "driver_rating": 48.673366,
-      "team": "Red Bull Racing"
+      "driver_rating": 45.270575,
+      "team": "Red Bull"
     },
     {
       "components": {
-        "consistency": 73.33333,
-        "qualifying_pace": 62.533709,
+        "consistency": 74.333332,
+        "qualifying_pace": 62.592298,
         "qualifying_progression": 63.0,
-        "recent_race_form": 70.733334,
-        "teammate_delta_performance": 41.031852,
+        "recent_race_form": 69.0,
+        "teammate_delta_performance": 47.952696,
         "weekend_practice_pace": 49.2,
         "wet_performance_index": 50.0
       },
       "driver": "HAM",
-      "driver_rating": 58.426501,
+      "driver_rating": 60.081176,
       "team": "Ferrari"
     },
     {
       "components": {
-        "consistency": 50.41666,
-        "qualifying_pace": 46.542966,
+        "consistency": 46.166668,
+        "qualifying_pace": 48.528291,
         "qualifying_progression": 57.000006,
-        "recent_race_form": 43.866666,
-        "teammate_delta_performance": 55.05876,
+        "recent_race_form": 46.466666,
+        "teammate_delta_performance": 39.038742,
         "weekend_practice_pace": 49.2,
         "wet_performance_index": 50.0
       },
       "driver": "HUL",
-      "driver_rating": 49.905955,
+      "driver_rating": 46.334317,
       "team": "Audi"
     },
     {
       "components": {
-        "consistency": 61.25001,
-        "qualifying_pace": 50.193528,
-        "qualifying_progression": 58.665078,
-        "recent_race_form": 56.866666,
-        "teammate_delta_performance": 67.207638,
+        "consistency": 55.5,
+        "qualifying_pace": 49.190119,
+        "qualifying_progression": 58.135248,
+        "recent_race_form": 50.8,
+        "teammate_delta_performance": 47.264344,
         "weekend_practice_pace": 49.2,
         "wet_performance_index": 50.0
       },
       "driver": "LAW",
-      "driver_rating": 56.321765,
-      "team": "Racing Bulls"
+      "driver_rating": 50.54441,
+      "team": "RB F1 Team"
     },
     {
       "components": {
-        "consistency": 73.75,
-        "qualifying_pace": 65.733854,
+        "consistency": 74.5,
+        "qualifying_pace": 65.342558,
         "qualifying_progression": 63.0,
-        "recent_race_form": 73.333334,
-        "teammate_delta_performance": 58.968148,
+        "recent_race_form": 69.0,
+        "teammate_delta_performance": 52.047304,
         "weekend_practice_pace": 49.2,
         "wet_performance_index": 50.0
       },
       "driver": "LEC",
-      "driver_rating": 63.237979,
+      "driver_rating": 61.904356,
       "team": "Ferrari"
     },
     {
       "components": {
-        "consistency": 48.33332,
-        "qualifying_pace": 50.734866,
-        "qualifying_progression": 61.019874,
-        "recent_race_form": 52.533334,
-        "teammate_delta_performance": 48.653245,
+        "consistency": 45.0,
+        "qualifying_pace": 47.098738,
+        "qualifying_progression": 57.83148,
+        "recent_race_form": 47.333334,
+        "teammate_delta_performance": 52.188525,
         "weekend_practice_pace": 49.2,
         "wet_performance_index": 50.0
       },
       "driver": "LIN",
-      "driver_rating": 49.571182,
-      "team": "Racing Bulls"
+      "driver_rating": 48.172263,
+      "team": "RB F1 Team"
     },
     {
       "components": {
-        "consistency": 63.75001,
-        "qualifying_pace": 60.605028,
+        "consistency": 65.5,
+        "qualifying_pace": 61.341333,
         "qualifying_progression": 63.0,
-        "recent_race_form": 56.0,
-        "teammate_delta_performance": 65.324344,
+        "recent_race_form": 58.6,
+        "teammate_delta_performance": 64.572824,
         "weekend_practice_pace": 49.2,
         "wet_performance_index": 50.0
       },
       "driver": "NOR",
-      "driver_rating": 60.214131,
+      "driver_rating": 60.759031,
       "team": "McLaren"
     },
     {
       "components": {
-        "consistency": 51.66666,
-        "qualifying_pace": 47.562111,
+        "consistency": 46.666668,
+        "qualifying_pace": 47.099785,
         "qualifying_progression": 57.000006,
-        "recent_race_form": 51.666666,
-        "teammate_delta_performance": 52.064342,
+        "recent_race_form": 49.933334,
+        "teammate_delta_performance": 48.197864,
         "weekend_practice_pace": 49.2,
         "wet_performance_index": 50.0
       },
       "driver": "OCO",
-      "driver_rating": 49.976272,
+      "driver_rating": 47.791164,
       "team": "Haas F1 Team"
     },
     {
       "components": {
-        "consistency": 48.33332,
-        "qualifying_pace": 35.273805,
+        "consistency": 45.0,
+        "qualifying_pace": 35.148493,
         "qualifying_progression": 50.999994,
         "recent_race_form": 40.4,
-        "teammate_delta_performance": 54.021198,
+        "teammate_delta_performance": 57.219408,
         "weekend_practice_pace": 49.2,
         "wet_performance_index": 50.0
       },
       "driver": "PER",
-      "driver_rating": 45.233401,
-      "team": "Cadillac"
+      "driver_rating": 44.995854,
+      "team": "Cadillac F1 Team"
     },
     {
       "components": {
-        "consistency": 54.16666,
-        "qualifying_pace": 59.407243,
+        "consistency": 56.666668,
+        "qualifying_pace": 61.973443,
         "qualifying_progression": 63.0,
-        "recent_race_form": 45.6,
-        "teammate_delta_performance": 34.675656,
+        "recent_race_form": 61.2,
+        "teammate_delta_performance": 35.427176,
         "weekend_practice_pace": 49.2,
         "wet_performance_index": 50.0
       },
       "driver": "PIA",
-      "driver_rating": 51.269331,
+      "driver_rating": 52.942807,
       "team": "McLaren"
     },
     {
       "components": {
-        "consistency": 74.58333,
-        "qualifying_pace": 69.095042,
+        "consistency": 74.833332,
+        "qualifying_pace": 67.704203,
         "qualifying_progression": 63.0,
-        "recent_race_form": 75.933334,
-        "teammate_delta_performance": 52.803444,
+        "recent_race_form": 73.333334,
+        "teammate_delta_performance": 42.407268,
         "weekend_practice_pace": 49.2,
         "wet_performance_index": 50.0
       },
       "driver": "RUS",
-      "driver_rating": 63.389786,
+      "driver_rating": 60.886258,
       "team": "Mercedes"
     },
     {
       "components": {
-        "consistency": 51.24999,
-        "qualifying_pace": 43.879081,
-        "qualifying_progression": 54.25929,
-        "recent_race_form": 48.2,
-        "teammate_delta_performance": 76.486572,
+        "consistency": 55.5,
+        "qualifying_pace": 45.838041,
+        "qualifying_progression": 55.334916,
+        "recent_race_form": 53.4,
+        "teammate_delta_performance": 74.49797,
         "weekend_practice_pace": 49.2,
         "wet_performance_index": 50.0
       },
       "driver": "SAI",
-      "driver_rating": 53.46749,
+      "driver_rating": 54.817908,
       "team": "Williams"
     },
     {
       "components": {
-        "consistency": 40.21739,
-        "qualifying_pace": 33.146666,
+        "consistency": 37.086956,
+        "qualifying_pace": 33.512183,
         "qualifying_progression": 50.999994,
         "recent_race_form": 33.466666,
-        "teammate_delta_performance": 40.356884,
+        "teammate_delta_performance": 39.433346,
         "weekend_practice_pace": 49.2,
         "wet_performance_index": 50.0
       },
       "driver": "STR",
-      "driver_rating": 39.727057,
+      "driver_rating": 38.887672,
       "team": "Aston Martin"
     },
     {
       "components": {
-        "consistency": 64.58334,
-        "qualifying_pace": 55.960866,
-        "qualifying_progression": 59.740722,
-        "recent_race_form": 56.0,
+        "consistency": 65.833332,
+        "qualifying_pace": 58.737854,
+        "qualifying_progression": 61.019874,
+        "recent_race_form": 56.866666,
         "teammate_delta_performance": 78.0,
         "weekend_practice_pace": 49.2,
         "wet_performance_index": 50.0
       },
       "driver": "VER",
-      "driver_rating": 61.332138,
-      "team": "Red Bull Racing"
+      "driver_rating": 62.616582,
+      "team": "Red Bull"
     }
   ],
-  "inputs_hash": "36c608fbb6c380b3c275fe76c0bdad53d64a92125b874f868e874e0ce19ac259",
+  "inputs_hash": "12b6b6d660a03b3be74a31a7d607bdd6ca738400d676cd0036e7c75595089ef9",
   "season": 2026,
   "source_features": "data/processed/features_season_2026.json",
-  "source_summary": "Blended Data: 75% Season 2026, 25% Season 2025"
+  "source_summary": "Blended Data: 90% Season 2026, 9% Season 2025"
 }

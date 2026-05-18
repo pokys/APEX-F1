@@ -168,3 +168,17 @@
 - [ ] Verstappen survives clash with sister Mercedes to lead Nurburgring 24 Hours (https://www.the-race.com/gt/max-verstappen-survives-clash-with-sister-mercedes-to-lead-nurburgring-24-hours/)
 - [ ] Verstappen's Nurburgring win bid dashed with hours left (https://www.the-race.com/gt/nurburgring-24-hours-team-verstappen-problem-victory-chances/)
 - [ ] Zarco issues injury update after frightening Barcelona MotoGP crash (https://www.the-race.com/motogp/zarco-issues-injury-update-after-frightening-barcelona-motogp-crash/)
+- [ ] Round-up: Verstappen’s Nuerburging 24hr bid ends in retirement, Palou on Indy 500 pole | RaceFans Round-up (https://www.racefans.net/2026/05/18/round-up-18th-may-2026/)
+
+## 2026-05-18
+- [ ] Catalan Grand Prix MotoGP rider rankings 2026 (https://www.the-race.com/motogp/catalan-grand-prix-motogp-rider-rankings-2026/)
+- [ ] GP winner Di Giannantonio pulls out of test in crash aftermath (https://www.the-race.com/motogp/gp-winner-di-giannantonio-pulls-out-of-test-to-recover/)
+- [ ] Juan Pablo Montoya reveals reluctance before dominant Indy 500 debut in 2000 (https://www.motorsport.com/indycar/news/juan-pablo-montoya-reveals-reluctance-before-dominant-indy-500-debut-in-2000/10821357/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Mercedes is temporarily banning Kimi Antonelli from the Nurburgring, here’s why (https://www.motorsport.com/f1/news/mercedes-is-banning-kimi-antonelli-from-the-nordschleife-heres-why/10821865/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Only F1’s struggling teams are complaining about 2026 rules – Ben Sulayem | Formula 1 (https://www.racefans.net/2026/05/18/only-f1s-struggling-teams-are-complaining-about-2026-rules-ben-sulayem/)
+- [ ] Red Bull launches $95 Crocs clog with F1 car-inspired design (https://www.motorsport.com/f1/news/red-bull-launches-95-crocs-clog-with-f1-car-inspired-design/10821798/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] The huge 2026 F1 technology change that's going under the radar (https://www.the-race.com/formula-1/the-overlooked-but-critical-part-of-f1s-2026-power-battle/)
+- [ ] What we learned from Team Verstappen's Nurburgring heartbreak (https://www.the-race.com/gt/what-we-learned-from-max-verstappen-nurburgring-heartbreak/)
+- [ ] Why Ford 'loves the V8 idea' in F1 amid changing road car strategy (https://www.autosport.com/f1/news/why-ford-loves-the-v8-idea-in-f1-amid-changing-road-car-strategy/10821863/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Why Ford 'loves the V8 idea' in F1 amid changing road car strategy (https://www.motorsport.com/f1/news/why-ford-loves-the-v8-idea-in-f1-amid-changing-road-car-strategy/10821858/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Winners and losers from Formula E's Monaco races (https://www.the-race.com/formula-e/winners-and-losers-from-formula-es-monaco-races/)

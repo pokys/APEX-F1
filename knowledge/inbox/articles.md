@@ -1,1 +1,176 @@
 # F1 Article Inbox
+
+## 2026-05-02
+- [ ] F1 Miami GP: Antonelli holds off Verstappen for third straight pole (https://www.autosport.com/f1/news/f1-miami-gp-kimi-antonelli-sees-off-max-verstappen-for-emphatic-third-straight-pole/10817524/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Why Norris expects F1 drivers to still “get penalised” for trying to go quicker after rule tweaks (https://www.autosport.com/f1/news/lando-norris-drivers-still-get-penalised-for-trying-to-go-quicker-after-f1-rule-tweaks/10817434/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+
+## 2026-05-03
+- [ ] F1 brings Miami GP start time forward due to thunderstorm threat (https://www.autosport.com/f1/news/f1-brings-miami-gp-start-time-forward-amid-thunderstorm-threat/10817621/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] F1 Miami GP: Antonelli beats Norris for hard-fought win in chaotic race (https://www.autosport.com/f1/news/f1-miami-gp-kimi-antonelli-defeats-lando-norris-to-grab-hard-fought-win/10817846/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] FIA president certain V8 engines to return to F1 by 2031 (https://www.autosport.com/f1/news/mohammed-ben-sulayem-v8-engines-to-return-to-f1-by-2031/10817808/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Hadjar officially disqualified from F1 Miami GP qualifying (https://www.autosport.com/f1/news/isack-hadjar-officially-disqualified-from-f1-miami-gp-qualifying/10817734/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Hadjar to be excluded from Miami GP qualifying over technical breach (https://www.autosport.com/f1/news/red-bulls-isack-hadjar-set-to-be-excluded-from-miami-gp-qualifying-over-technical-breach/10817630/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Leclerc handed huge Miami GP penalty after battle with Verstappen and Russell (https://www.autosport.com/f1/news/charles-leclerc-handed-huge-miami-gp-penalty-after-battle-with-max-verstappen-and-george-russell/10817972/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Verstappen penalised for crossing pit exit but keeps fifth place at F1 Miami GP (https://www.autosport.com/f1/news/verstappen-penalised-for-crossing-pit-exit-but-keeps-fifth-place-at-f1-miami-gp/10817993/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Verstappen reveals hidden factor in Red Bull’s F1 recovery (https://www.autosport.com/f1/news/max-verstappen-reveals-hidden-factor-behind-red-bulls-f1-turnaround/10817676/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Verstappen, Leclerc and Russell all summoned to stewards after F1 Miami GP (https://www.autosport.com/f1/news/max-verstappen-charles-leclerc-and-george-russell-all-summoned-after-chaotic-f1-miami-gp/10817871/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Why Lawson wasn't penalised for flipping Gasly in Miami GP (https://www.autosport.com/f1/news/why-liam-lawson-wasnt-penalised-for-flipping-pierre-gasly-in-miami-gp/10817998/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+
+## 2026-05-04
+- [ ] F1's rule tweaks got a first examination in Miami – here's how it went down (https://www.autosport.com/f1/news/a-quick-fix-or-work-to-be-done-how-f1s-rule-changes-went-down-in-miami/10818140/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+
+## 2026-05-05
+- [ ] Wolff: Poor starts “not acceptable” if Mercedes wants to win F1 world titles (https://www.autosport.com/f1/news/toto-wolff-mercedes-poor-starts-not-acceptable-if-we-want-to-win-f1-world-titles/10818317/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+
+## 2026-05-06
+- [ ] From the archive: When Niki Lauda led an F1 driver strike in 1982 (https://www.autosport.com/f1/news/from-the-archive-when-niki-lauda-led-an-f1-driver-strike-in-1982/10818642/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Sky Sports extends F1 live broadcast contract (https://www.autosport.com/f1/news/sky-sports-extends-f1-live-broadcast-contract/10818609/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Why time is running out to make bigger F1 power unit changes for 2027 (https://www.autosport.com/f1/news/why-time-is-running-out-to-make-bigger-f1-power-unit-changes-for-2027/10818520/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+
+## 2026-05-07
+- [ ] Red Bull targets Piastri as Verstappen replacement option (https://www.autosport.com/f1/news/red-bull-targets-oscar-piastri-as-max-verstappen-replacement/10818721/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Why Red Bull and McLaren sat down after surprising comments about Lambiase's role (https://www.autosport.com/f1/news/why-red-bull-and-mclaren-sat-down-after-surprising-comments-about-lambiases-role/10818742/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+
+## 2026-05-08
+- [ ] F1 working on contingency plans for Middle East races, as Q1 revenue surges (https://www.autosport.com/f1/news/f1-working-overtime-to-monitor-middle-east-as-q1-revenue-surges/10819139/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] FIA announces 2027 F1 rule changes for combustion and electrical output (https://www.autosport.com/f1/news/fia-reveals-latest-tweaks-to-f1-rules-for-2027-season/10819143/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Ford in talks with Verstappen about WEC Hypercar opportunities (https://www.autosport.com/wec/news/ford-in-talks-with-verstappen-about-wec-hypercar-opportunities/10819250/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Honda gets extra F1 power unit help after FIA tweaks rules (https://www.autosport.com/f1/news/honda-gets-extra-f1-power-unit-help-after-fia-tweaks-cost-cap-rules/10819084/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+
+## 2026-05-09
+- [ ] The real reason Verstappen is drawn to GT3 racing (https://www.autosport.com/f1/news/the-real-reason-verstappen-is-drawn-to-gt3-racing/10819342/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+
+## 2026-05-11
+- [ ] Behind the debate over F1's future engines is a battle for control (https://www.autosport.com/f1/news/behind-the-debate-over-f1s-future-engines-is-a-battle-for-control/10819989/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Red Bull aims to hit F1 weight limit by Austrian GP (https://www.autosport.com/f1/news/red-bull-aims-to-hit-f1-weight-limit-at-austrian-grand-prix/10819905/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] The F1 drivers to take on the Nurburgring 24 Hours before Verstappen (https://www.autosport.com/NLS/news/these-f1-drivers-preceded-max-verstappen-in-the-nurburgring-24-hours/10819972/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+
+## 2026-05-12
+- [ ] Red Bull enjoyed a "step forward" at Miami GP but still behind F1's best (https://www.autosport.com/f1/news/red-bull-miami-gp-step-forward/10820217/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] What would you like to ask Valtteri Bottas? (https://www.autosport.com/f1/news/what-would-you-like-to-ask-valtteri-bottas/10819048/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Why Bahrain and Saudi Arabia may still host a grand prix in F1 2026 (https://www.autosport.com/f1/news/why-bahrain-and-saudi-arabia-may-still-feature-in-f1-2026/10820239/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+
+## 2026-05-13
+- [ ] "The most fun I've had all year" - Verstappen's F1 colleagues envy his Nurburgring bid (https://www.autosport.com/NLS/news/the-most-fun-ive-had-all-year-max-verstappens-f1-colleagues-envy-his-nurburgring-bid/10820355/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Round-up: F1’s ADUO ‘not balance of performance’ after latest changes, and more | RaceFans Round-up (https://www.racefans.net/2026/05/14/round-up-14th-may-2026/)
+- [ ] Which F1 drivers have made the strongest start to 2026 against their team mates? | Formula 1 (https://www.racefans.net/2026/05/13/analysis-which-f1-drivers-have-made-the-strongest-start-to-2026-against-their-team-mates/)
+
+## 2026-05-14
+- [ ] Brown writes to FIA over Mercedes-Alpine ownership concerns (https://www.autosport.com/f1/news/zak-brown-takes-fia-fight-over-mercedes-alpine-f1-talks-public/10820815/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Round-up: 2016 Formula 1 cars were best for racing says Ricciardo, and more | RaceFans Round-up (https://www.racefans.net/2026/05/15/round-up-15th-may-2026/)
+- [ ] There’s one 2026 change Verstappen will approve of: Zero penalty points | Formula 1 (https://www.racefans.net/2026/05/14/theres-one-2026-change-verstappen-will-approve-of-zero-penalty-points/)
+- [ ] Why Haas fears loss of ground to Alpine in F1's upper-midfield battle (https://www.autosport.com/f1/news/why-haas-fears-loss-of-ground-to-alpine-in-f1s-upper-midfield-battle/10820502/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+
+## 2026-05-15
+- [ ] Former FIA aero chief officially joins Alpine in senior F1 role (https://www.autosport.com/f1/news/former-fia-aero-chief-officially-joins-alpine-in-senior-f1-role/10820964/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Grosjean felt Renault ‘told everyone I wasn’t good enough for F1’ before return | Formula 1 (https://www.racefans.net/2026/05/15/grosjean-felt-renault-told-everyone-i-wasnt-good-enough-for-f1-before-return/)
+- [ ] Round-up: Camara makes F1 test debut for Ferrari, Alpine hires Somerville and more | RaceFans Round-up (https://www.racefans.net/2026/05/16/round-up-16th-may-2026/)
+
+## 2026-05-16
+- [ ] After Honda's first annual loss in 70 years, what does it mean for its F1 project? (https://www.autosport.com/f1/news/honda-reports-first-annual-loss-in-70-years-what-does-it-mean-for-its-f1-project/10821214/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Apple eyes "huge opportunity" for major F1 expansion in the United States (https://www.motorsport.com/f1/news/apple-eyes-huge-opportunity-for-major-f1-expansion-in-the-united-states/10821292/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Caption Competition 291: Kart star Hadjar | Caption Competition (https://www.racefans.net/2026/05/16/caption-competition-291-kart-star-hadjar/)
+- [ ] Round-up: Las Vegas county commission to discuss race extension to 2037, and more | RaceFans Round-up (https://www.racefans.net/2026/05/17/round-up-17th-may-2026/)
+
+## 2026-05-17
+- [ ] Can George Russell take inspiration from Lando Norris in quest for F1 title? (https://www.motorsport.com/f1/news/can-george-russell-take-inspiration-from-lando-norris-in-quest-for-f1-title/10820983/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Can Russell take inspiration from Norris in bid for F1 title? (https://www.autosport.com/f1/news/can-george-russell-take-inspiration-from-lando-norris-in-quest-for-f1-title/10821504/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Daniel Ricciardo says life feels "more real" after abrupt F1 exit (https://www.motorsport.com/f1/news/daniel-ricciardo-says-life-feels-more-real-after-abrupt-f1-exit/10821249/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Exotic dancers target Canadian Grand Prix weekend with Montreal strike (https://www.motorsport.com/f1/news/exotic-dancers-target-canadian-grand-prix-weekend-with-montreal-strike/10821786/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] F1 2027 engine shift could hurt Mercedes and disrupt team development, says Naomi Schiff (https://www.motorsport.com/f1/news/f1-2027-engine-shift-could-hurt-mercedes-and-disrupt-team-development-says-naomi-schiff/10821541/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] F1 fans split over Carlos Sainz's first laps at Madrid's new circuit (https://www.motorsport.com/f1/news/f1-fans-split-over-carlos-sainzs-first-laps-at-madrids-new-circuit/10821796/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Juan Pablo Montoya pinpoints major factor in Kimi Antonelli's F1 success (https://www.motorsport.com/f1/news/juan-pablo-montoya-pinpoints-major-factor-in-kimi-antonellis-f1-success/10821546/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Kimi Antonelli continues prank war with his Mercedes race engineer Peter Bonnington in viral video (https://www.motorsport.com/f1/news/kimi-antonelli-continues-prank-war-with-his-mercedes-race-engineer-peter-bonnington-in-viral-video/10821278/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Kimi Antonelli’s rivals issued warning as Otmar Szafnauer predicts further growth (https://www.motorsport.com/f1/news/kimi-antonelli-rivals-warning-otmar-szafnauer-predicts-further-growth/10821704/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Max Verstappen opens up on pressure of sensational maiden F1 victory (https://www.motorsport.com/f1/news/max-verstappen-opens-up-on-pressure-of-sensational-maiden-f1-victory/10821565/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Max Verstappen revisits "super chaotic" 2024 Brazil GP win: "One of my best races" (https://www.motorsport.com/f1/news/max-verstappen-revisits-super-chaotic-2024-brazil-gp-win-as-one-of-my-best-races/10821659/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Naomi Schiff reveals how GT drivers felt about Max Verstappen's Nurburgring debut (https://www.motorsport.com/f1/news/naomi-schiff-reveals-how-gt-drivers-felt-about-max-verstappens-nurburgring-debut/10821782/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Poll: Has the time finally come for Hamilton to hang up his helmet? | Debates and Polls (https://www.racefans.net/2026/05/17/poll-has-the-time-finally-come-for-hamilton-to-hang-up-his-helmet/)
+- [ ] Round-up: Verstappen’s Nuerburging 24hr bid ends in retirement, Palou on Indy 500 pole | RaceFans Round-up (https://www.racefans.net/2026/05/18/round-up-18th-may-2026/)
+
+## 2026-05-18
+- [ ] Juan Pablo Montoya reveals reluctance before dominant Indy 500 debut in 2000 (https://www.motorsport.com/indycar/news/juan-pablo-montoya-reveals-reluctance-before-dominant-indy-500-debut-in-2000/10821357/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Lando Norris eyes Le Mans drive as McLaren endurance push heats up (https://www.motorsport.com/f1/news/lando-norris-eyes-le-mans-drive-as-mclaren-endurance-heats-up/10822065/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Lando Norris opens up on McLaren award that transformed his racing career (https://www.motorsport.com/f1/news/norris-opens-up-on-mclaren-award-that-transformed-his-racing-career/10822027/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Mercedes is temporarily banning Kimi Antonelli from the Nurburgring, here’s why (https://www.motorsport.com/f1/news/mercedes-is-banning-kimi-antonelli-from-the-nordschleife-heres-why/10821865/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Only F1’s struggling teams are complaining about 2026 rules – Ben Sulayem | Formula 1 (https://www.racefans.net/2026/05/18/only-f1s-struggling-teams-are-complaining-about-2026-rules-ben-sulayem/)
+- [ ] Oscar Piastri joins Alex Albon and Gabriel Bortoleto in viral karting session (https://www.motorsport.com/f1/news/oscar-piastri-joins-alex-albon-and-gabriel-bortoleto-in-viral-karting-session/10821985/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Red Bull launches $95 Crocs clog with F1 car-inspired design (https://www.motorsport.com/f1/news/red-bull-launches-95-crocs-clog-with-f1-car-inspired-design/10821798/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Rob Smedley slams slow F1 pitwall responses as "unacceptable" (https://www.motorsport.com/f1/news/rob-smedley-slams-slow-f1-pitwall-responses-as-unacceptable/10821956/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Round-up: Norris ‘planning Formula E run at some point’, and more | RaceFans Round-up (https://www.racefans.net/2026/05/19/round-up-19th-may-2026/)
+- [ ] Toto Wolff keeps Mercedes grounded ahead of crucial Canadian GP upgrades (https://www.motorsport.com/f1/news/toto-wolff-keeps-mercedes-grounded-ahead-of-crucial-canadian-gp-upgrades/10822062/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Why Ford 'loves the V8 idea' in F1 amid changing road car strategy (https://www.autosport.com/f1/news/why-ford-loves-the-v8-idea-in-f1-amid-changing-road-car-strategy/10821863/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Why Ford 'loves the V8 idea' in F1 amid changing road car strategy (https://www.motorsport.com/f1/news/why-ford-loves-the-v8-idea-in-f1-amid-changing-road-car-strategy/10821858/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Will Mercedes or McLaren land the next blow at F1's Canadian GP? (https://www.motorsport.com/f1/news/will-mercedes-or-mclaren-land-the-next-blow-at-f1s-canadian-gp/10821878/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Will Mercedes or McLaren land the next punch at F1's Canadian GP? (https://www.autosport.com/f1/news/will-mercedes-or-mclaren-land-the-next-blow-at-f1s-canadian-gp/10821907/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+
+## 2026-05-19
+- [ ] Cadillac details new F1 upgrade package for Canadian GP (https://www.motorsport.com/f1/news/cadillac-details-new-f1-upgrade-package-for-canadian-gp/10822214/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Enter the simulation - How GM tech accelerated Cadillac's F1 entry (https://www.motorsport.com/f1/news/enter-the-simulation-how-gm-tech-accelerated-cadillacs-f1-entry/10822107/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Honda reveals “important target” for F1 Canadian GP (https://www.motorsport.com/f1/news/honda-reveals-important-target-for-f1-canadian-gp/10822131/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] How GM tech accelerated Cadillac's F1 entry (https://www.autosport.com/f1/news/how-gm-tech-accelerated-cadillacs-f1-entry/10822240/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] How to watch the 2026 Canadian GP and Indianapolis 500 live this weekend | TV Times (https://www.racefans.net/2026/05/19/how-to-watch-the-2026-canadian-gp-and-indianapolis-500-live-this-weekend/)
+- [ ] On this day: Olivier Panis takes only F1 win in chaotic Monaco GP (https://www.motorsport.com/f1/news/oliver-panis-win-chaotic-monaco-gp/10821836/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Round-up: Mercedes and Haas confirm upgrades, Rossi injured in Indy crash | RaceFans Round-up (https://www.racefans.net/2026/05/20/round-up-20th-may-2026/)
+
+## 2026-05-20
+- [ ] Five things to look out for at the F1 Canadian GP (https://www.motorsport.com/f1/news/five-things-to-look-out-for-at-f1s-canada-gp/10822274/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Horner in talks over new BYD F1 team entry (https://www.the-race.com/formula-1/horner-in-talks-over-new-byd-f1-team-entry/)
+- [ ] How will Max Verstappen re-adapt to F1 after Nurburgring 24h adventure? (https://www.motorsport.com/f1/news/how-will-max-verstappen-re-adapt-to-f1-after-nurburgring-24h-adventure/10822231/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] How will Verstappen re-adapt to F1 after Nurburgring adventure? (https://www.autosport.com/f1/news/how-will-max-verstappen-re-adapt-to-f1-after-nurburgring-24h-adventure/10822303/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Question of the week: Is more overtaking in F1 always better? (https://www.motorsport.com/f1/news/question-of-the-week-is-more-overtaking-in-f1-always-better/10822396/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Release date and trailer for F1 25's 2026 overhaul revealed (https://www.the-race.com/gaming/release-date-and-trailer-for-f1-25s-2026-overhaul-revealed/)
+- [ ] Round-up: Las Vegas GP approved until 2037 by county commission, and more | RaceFans Round-up (https://www.racefans.net/2026/05/21/round-up-21st-may-2026/)
+- [ ] Ticktum showed his best and worst at a critical time (https://www.the-race.com/formula-e/ticktum-showed-his-best-and-worst-at-a-critical-time/)
+- [ ] Will Russell stop the rot? Five talking points for the 2026 Canadian Grand Prix | Formula 1 (https://www.racefans.net/2026/05/20/will-russell-stop-the-rot-five-talking-points-for-the-2026-canadian-grand-prix/)
+
+## 2026-05-21
+- [ ] Carlos Sainz: F1 and FIA must be "tough" on 2027 changes (https://www.motorsport.com/f1/news/carlos-sainz-f1-and-fia-must-be-tough-on-2027-changes/10822699/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Christian Horner explains Monaco E-Prix visit after Red Bull F1 exit (https://www.motorsport.com/formula-e/news/christian-horner-explains-monaco-e-prix-visit-after-red-bull-f1-exit/10822070/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] David Coulthard explains why Canadian GP Wall of Champions is so brutal (https://www.motorsport.com/f1/news/david-coulthard-explains-why-canadian-gp-wall-of-champions-is-so-brutal/10822680/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Esteban Ocon's furious denial of Haas split: "Complete bulls**t" (https://www.motorsport.com/f1/news/ocon-hits-out-at-bullshit-claims-of-komatsu-dispute-and-early-haas-f1-exit/10822634/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Ex-McLaren F1 COO among senior figures poached by Williams (https://www.the-race.com/formula-1/mclaren-f1-coo-among-senior-figures-poached-by-williams/)
+- [ ] F1 can keep Verstappen - if 2027 engine agreed (https://www.the-race.com/formula-1/max-verstappen-suggests-2027-engine-proposal-would-keep-him-in-f1/)
+- [ ] F1 gets its own "Monopoly" game in new Hasbro partnership (https://www.motorsport.com/f1/news/f1-gets-its-own-monopoly-game-in-new-hasbro-partnership/10822610/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Fernando Alonso admits Aston Martin driveability gains worth only "half a tenth" (https://www.motorsport.com/f1/news/alonso-says-aston-martin-driveability-gains-worth-only-half-a-tenth/10822731/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Fernando Alonso: F1 lost a full decade of “pure racing”, overtakes are now “avoiding actions” (https://www.motorsport.com/f1/news/fernando-alonso-f1-lost-a-full-decade-of-pure-racing-overtakes-are-now-avoiding-actions/10822663/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] FIA confirms lowest energy recharge limit yet for qualifying at Montreal | Formula 1 (https://www.racefans.net/2026/05/21/fia-confirms-lowest-energy-recharge-limit-yet-for-qualifying-at-montreal/)
+- [ ] George Russell faces "punch in the gut" warning amid Kimi Antonelli pressure (https://www.motorsport.com/f1/news/george-russell-faces-punch-in-the-gut-warning-amid-kimi-antonelli-pressure/10822660/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] George Russell reluctantly makes Canadian GP promise as old video resurfaces (https://www.motorsport.com/f1/news/george-russell-reluctantly-makes-canadian-gp-promise-as-old-video-resurfaces/10822670/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Hamilton "still motivated" and "100% clear" he will stay at Ferrari in 2027 (https://www.autosport.com/f1/news/lewis-hamilton-100-clear-he-will-stay-at-ferrari-next-season/10822679/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Hamilton didn't use Ferrari simulator to prepare for Canadian GP (https://www.the-race.com/formula-1/hamilton-ditched-ferrari-simulator-for-canadian-gp/)
+- [ ] Hamilton not thinking of quitting F1 yet: ‘I’ll be here for quite some time so get used to it’ | Formula 1 (https://www.racefans.net/2026/05/21/hamilton-not-thinking-of-quitting-f1-yet-ill-be-here-for-quite-some-time-so-get-used-to-it/)
+- [ ] How Hamilton switched to a "different approach" for F1 Canadian GP (https://www.autosport.com/f1/news/lewis-hamiltons-unusual-preparation-for-f1s-canadian-gp/10822510/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] It’s not overtaking, it’s “avoiding action" - why Alonso says F1 lost a full decade of “pure racing” (https://www.autosport.com/f1/news/fernando-alonso-f1-lost-a-full-decade-of-pure-racing-overtakes-are-now-avoiding-actions/10822668/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Lando Norris reveals special Canadian GP helmet for Sir Jackie Stewart's dementia charity (https://www.motorsport.com/f1/news/lando-norris-reveals-special-canadian-gp-helmet-for-sir-jackie-stewarts-dementia-charity/10822695/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Lewis Hamilton "100% clear" he will stay at Ferrari next season (https://www.motorsport.com/f1/news/hamilton-100-clear-he-will-stay-at-ferrari-next-season/10822676/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Lewis Hamilton "shed a tear" over Arsenal's long-awaited Premier League triumph (https://www.motorsport.com/f1/news/lewis-hamilton-shed-a-tear-over-arsenals-long-waited-premier-league-triumph/10822711/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Lewis Hamilton’s unusual preparation for F1’s Canadian GP (https://www.motorsport.com/f1/news/lewis-hamiltons-unusual-preparation-for-f1s-canadian-gp/10822505/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Martin Brundle predicts Canadian GP drama as F1 drivers "are a little bit scared" of unknown (https://www.motorsport.com/f1/news/martin-brundle-predicts-canadian-gp-drama-as-drivers-are-a-little-bit-scared-of-f1-unknown/10822623/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Max Verstappen: “Very positive” F1 engine changes “definitely” help me stay (https://www.motorsport.com/f1/news/max-verstappen-very-positive-engine-changes-definitely-help-me-stay-in-f1/10822715/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Michael Dunlop: How many Isle of Man TT races has he won and more (https://www.the-race.com/tt/michael-dunlop-how-many-isle-of-man-tt-races-has-he-won-and-more/)
+- [ ] Norris's one-off helmet for F1's Canadian GP explained (https://www.the-race.com/extra/lando-norris-one-off-helmet-for-f1s-canadian-gp-explained/)
+- [ ] Ocon: 'Bulls**t' rumours of Haas F1 exit causing real damage (https://www.the-race.com/formula-1/esteban-ocon-rants-at-bullying-like-rumours-of-haas-f1-exit/)
+- [ ] Oscar Piastri "flattered" by Red Bull F1 interest (https://www.motorsport.com/f1/news/oscar-piastri-flattered-by-red-bull-f1-interest/10822753/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Piastri "flattered" by rumours of Red Bull F1 interest (https://www.autosport.com/f1/news/oscar-piastri-flattered-by-red-bull-f1-interest/10822761/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Red Bull outlines timeline for new F1 wind tunnel (https://www.autosport.com/f1/news/red-bull-provides-update-on-long-awaited-new-f1-wind-tunnel/10822485/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Red Bull provides update on long-awaited new F1 wind tunnel (https://www.motorsport.com/f1/news/red-bull-provides-update-on-long-awaited-new-f1-wind-tunnel/10822482/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Round-up: Horner linked to BYD F1 entry, NASCAR star Kyle Busch dies and more | RaceFans Round-up (https://www.racefans.net/2026/05/22/round-up-22nd-may-2026/)
+- [ ] Verstappen: 2027 engine changes “definitely” help me stay in F1 (https://www.autosport.com/f1/news/max-verstappen-very-positive-engine-changes-definitely-help-me-stay-in-f1/10822718/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] What Formula E makes of F1's 2027 shift + why it's using it for promo (https://www.the-race.com/formula-e/what-formula-e-makes-of-f1s-2027-shift-why-its-using-it-for-promo/)
+- [ ] What we learned from day one of F1's Canadian GP (https://www.the-race.com/formula-1/what-we-learned-from-day-one-of-f1s-canadian-gp/)
+- [ ] Why Canada will be 2026 F1 cars' toughest test yet (https://www.the-race.com/formula-1/canadian-gp-2026-f1-cars-energy-demands/)
+- [ ] Why Sainz believes F1 and FIA must be "tough" on 2027 changes (https://www.autosport.com/f1/news/carlos-sainz-f1-and-fia-must-be-tough-on-2027-changes/10822702/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Williams poaches key leaders from McLaren, Mercedes, Alpine (https://www.motorsport.com/f1/news/williams-poaches-key-leaders-from-mclaren-mercedes-alpine/10822589/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Williams signs key leaders from McLaren, Mercedes, Alpine (https://www.autosport.com/f1/news/williams-signs-key-leaders-from-mclaren-mercedes-alpine/10822599/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+
+## 2026-05-22
+- [ ] Alonso: “I am the best, I don't need to prove anything” (https://www.autosport.com/f1/news/fernando-alonso-i-am-the-best-i-dont-need-to-prove-anything/10822835/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Charles Leclerc claims Ferrari is down on F1 engine power – "even to Ford" (https://www.motorsport.com/f1/news/leclerc-claims-ferrari-is-down-on-engine-power-even-to-ford/10822735/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] F1 set for crunch 2027 talks - as proposed changes in doubt (https://www.the-race.com/formula-1/f1-set-for-crunch-2027-talks-as-proposed-changes-in-doubt/)
+- [ ] Fernando Alonso: “I am the best, I don't need to prove anything” (https://www.motorsport.com/f1/news/fernando-alonso-i-am-the-best-i-dont-need-to-prove-anything/10822833/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Ferrari is down on power "even to Ford", says Leclerc (https://www.autosport.com/f1/news/charles-leclerc-claims-ferrari-is-down-on-engine-power-even-to-ford/10822764/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Isack Hadjar wants to follow Max Verstappen to Nurburgring — but says he can’t yet (https://www.motorsport.com/f1/news/isack-hadjar-wants-to-follow-max-verstappen-to-nurburgring-but-says-he-cant-yet/10822779/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Paying tribute to NASCAR racer Kyle Busch (https://www.the-race.com/nascar/paying-tribute-to-nascar-racer-kyle-busch/)
+- [ ] Russell: Formula 2 title win shows points gap to Antonelli “means nothing” at this stage | Formula 1 (https://www.racefans.net/2026/05/22/russell-formula-2-title-win-shows-points-gap-to-antonelli-means-nothing-at-this-stage/)
+- [ ] Seven things we need to know from F1’s Canadian GP (https://www.the-race.com/formula-1/seven-things-we-need-to-know-from-f1-canadian-gp/)

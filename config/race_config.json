@@ -1,62 +1,27 @@
 {
-  "available_sessions": [
-    "FP1",
-    "SQ",
-    "S",
-    "Q",
-    "R"
-  ],
-  "available_sessions_by_calendar": [
-    "FP1",
-    "SQ",
-    "S",
-    "Q",
-    "R"
-  ],
-  "available_sessions_ingested": [
-    "FP1",
-    "SQ",
-    "S",
-    "Q"
-  ],
+  "available_sessions": [],
+  "available_sessions_by_calendar": [],
+  "available_sessions_ingested": [],
   "calibration_season": 2025,
   "calibration_source": "outputs/backtest/backtest_season_2025.json",
-  "event_format": "sprint",
-  "fixed_grid": [
-    "RUS",
-    "ANT",
-    "NOR",
-    "PIA",
-    "HAM",
-    "VER",
-    "HAD",
-    "LEC",
-    "LIN",
-    "COL",
-    "HUL",
-    "LAW",
-    "BOR",
-    "GAS",
-    "SAI",
-    "BEA",
-    "OCO",
-    "ALB",
-    "ALO",
-    "PER",
-    "STR",
-    "BOT"
-  ],
-  "generated_at": "2026-05-24T22:04:42Z",
-  "grid_source": "qualifying",
+  "event_format": "conventional",
+  "generated_at": "2026-05-25T00:02:42Z",
+  "grid_source": "simulation",
   "inputs_status": [
     {
-      "configured_weight": 0.1,
+      "configured_weight": 0.15,
+      "source": "fp1",
+      "source_key": "FP1",
+      "status": "missing"
+    },
+    {
+      "configured_weight": 0.2,
       "source": "fp2",
       "source_key": "FP2",
       "status": "missing"
     },
     {
-      "configured_weight": 0.1,
+      "configured_weight": 0.2,
       "source": "fp3",
       "source_key": "FP3",
       "status": "missing"
@@ -68,7 +33,7 @@
       "status": "missing"
     },
     {
-      "configured_weight": 0.15,
+      "configured_weight": 0.2,
       "source": "history_driver",
       "source_key": "history_driver",
       "status": "used"
@@ -78,60 +43,49 @@
       "source": "history_team",
       "source_key": "history_team",
       "status": "used"
-    },
-    {
-      "configured_weight": 0.4,
-      "source": "qualifying",
-      "source_key": "Q",
-      "status": "used"
     }
   ],
   "inputs_used": [
     {
-      "source": "qualifying",
-      "source_key": "Q",
-      "weight": 0.615385
-    },
-    {
       "source": "history_driver",
       "source_key": "history_driver",
-      "weight": 0.230769
+      "weight": 0.666667
     },
     {
       "source": "history_team",
       "source_key": "history_team",
-      "weight": 0.153846
+      "weight": 0.333333
     }
   ],
-  "location": "Montreal",
-  "next_round": 5,
-  "overtaking_difficulty": 0.48,
-  "prediction_target": "race",
-  "prediction_target_label": "Race",
-  "race": "Canadian Grand Prix",
-  "race_date": "2026-05-24",
-  "safety_car_probability": 0.39,
+  "location": "Monte Carlo",
+  "next_round": 6,
+  "overtaking_difficulty": 0.92,
+  "prediction_target": "qualifying",
+  "prediction_target_label": "Qualifying",
+  "race": "Monaco Grand Prix",
+  "race_date": "2026-06-07",
+  "safety_car_probability": 0.48,
   "season": 2026,
-  "seed": 202605,
+  "seed": 202606,
   "sessions_schedule": {
-    "FP1": "2026-05-22T00:00:00+00:00",
-    "Q": "2026-05-23T00:00:00+00:00",
-    "R": "2026-05-24T20:00:00+00:00",
-    "S": "2026-05-23T00:00:00+00:00",
-    "SQ": "2026-05-22T00:00:00+00:00"
+    "FP1": "2026-06-05T00:00:00+00:00",
+    "FP2": "2026-06-05T00:00:00+00:00",
+    "FP3": "2026-06-06T00:00:00+00:00",
+    "Q": "2026-06-06T00:00:00+00:00",
+    "R": "2026-06-07T13:00:00+00:00"
   },
   "signal_count": 0,
   "simulations": 6000,
-  "target_output_type": "race",
-  "target_session_code": "R",
+  "target_output_type": "qualifying",
+  "target_session_code": "Q",
   "track": {
-    "qualifying_noise": 2.3,
-    "race_noise": 3.6,
-    "tyre_degradation_factor": 0.45
+    "qualifying_noise": 2.1,
+    "race_noise": 3.15,
+    "tyre_degradation_factor": 0.4
   },
-  "track_profile": "country:canada",
+  "track_profile": "country:monaco",
   "weather": "dry",
   "weather_modifier": 0.05,
-  "weekend_format": "sprint",
+  "weekend_format": "standard",
   "win_temperature": 1.2
 }

@@ -154,3 +154,10 @@
 - [ ] Why McLaren thinks it wouldn’t have beaten Hamilton and Verstappen in Canada (https://www.autosport.com/f1/news/why-mclaren-thinks-it-wouldnt-have-beaten-hamilton-and-verstappen-in-canada/10824334/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] ‘Not sure we had that pace’ – Were Lewis Hamilton and Max Verstappen out of reach for McLaren? (https://www.motorsport.com/f1/news/not-sure-we-had-that-pace-were-lewis-hamilton-and-max-verstappen-out-of-reach-for-mclaren/10824326/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] “He needs to back up”: How Mercedes managed Russell and Antonelli’s Canadian GP fight | Formula 1 (https://www.racefans.net/2026/05/26/he-needs-to-back-up-how-mercedes-managed-russell-and-antonellis-canadian-gp-fight/)
+- [ ] Why Audi is now key to Verstappen's F1 future (https://www.the-race.com/formula-1/why-audi-is-now-key-to-max-verstappen-f1-future/)
+
+## 2026-05-27
+- [ ] How 'new' F1 game has included big 2026 quirks (https://www.the-race.com/gaming/f1-25-game-2026-season-pack-review-super-clipping-lift-and-coast/)
+- [ ] On this day: Michael Schumacher’s final unsportsmanlike manoeuvre (https://www.motorsport.com/f1/news/on-this-day-michael-schumachers-final-unsportsmanlike-manoeuvre/10822512/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Why Mercedes' F1 2026 driver fights may not last (https://www.the-race.com/formula-1/mercedes-f1-2026-driver-fights-may-not-last-russell-antonelli/)
+- [ ] “This is actually an opportunity”: How McLaren answered drivers’ calls to abandon tyre gamble | Formula 1 (https://www.racefans.net/2026/05/27/this-is-actually-an-opportunity-how-mclaren-answered-drivers-calls-to-abandon-tyre-gamble/)

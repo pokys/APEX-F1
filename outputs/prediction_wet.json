@@ -1,15 +1,15 @@
 {
   "data_freshness": {
-    "days_since_latest_event": 3,
-    "days_until_next_race": 11,
+    "days_since_latest_event": 4,
+    "days_until_next_race": 10,
     "is_stale": false,
     "latest_completed_date": "2026-05-24",
     "latest_completed_event": "Canadian Grand Prix",
     "next_race_date": "2026-06-07",
-    "reference_date": "2026-05-27",
+    "reference_date": "2026-05-28",
     "stale_threshold_days": 21.0
   },
-  "deterministic_run_id": "52c5f4041e80d2bbd1ad",
+  "deterministic_run_id": "0d3d8bd3fc9d5e70dde4",
   "drivers": [
     {
       "driver_share": 51.0,
@@ -254,7 +254,7 @@
       "weekend_form_delta": 0.0
     }
   ],
-  "generated_at": "2026-05-27T22:00:47Z",
+  "generated_at": "2026-05-28T03:52:51Z",
   "inputs_used": [
     {
       "source": "history_driver",
@@ -268,9 +268,9 @@
     }
   ],
   "integrity": {
-    "driver_ratings_hash": "70d2e353dd6c",
-    "race_config_hash": "6c64236dec6e",
-    "team_ratings_hash": "3efab818fb80"
+    "driver_ratings_hash": "c00061713ffe",
+    "race_config_hash": "9f2ef71dfe15",
+    "team_ratings_hash": "041e12e31c12"
   },
   "prediction_target": "qualifying",
   "prediction_target_label": "Qualifying",

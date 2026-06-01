@@ -151,6 +151,7 @@
 - [ ] Toto Wolff earns Guenther Steiner praise after "remarkable" Mercedes Canadian GP decision (https://www.motorsport.com/f1/news/toto-wolff-earns-guenther-steiner-praise-after-remarkable-mercedes-canadian-gp-decision/10825708/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Why the Isle of Man TT has suspended sidecar racing (https://www.the-race.com/tt/why-the-isle-of-man-tt-has-suspended-sidecar-racing/)
 - [ ] Yo-yo racing, speed cuts, performance balancing: Is F1 too artificial now? | Debates and Polls (https://www.racefans.net/2026/05/31/yo-yo-racing-speed-cuts-performance-balancing-has-f1-become-too-artificial/)
+- [ ] Round-up: Mercedes face “several months” wait for Russell’s damaged battery, and more | RaceFans Round-up (https://www.racefans.net/2026/06/01/round-up-1st-june-2026/)
 
 ## 2026-06-01
 - [ ] Chris Harris backs McLaren Canada tyre logic but flags major strategy error (https://www.motorsport.com/f1/news/chris-harris-backs-mclaren-canada-tyre-logic-but-flags-major-strategy-error/10825692/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
@@ -158,3 +159,11 @@
 - [ ] Jacques Villeneuve explains why Canada has so few drivers reaching F1 (https://www.motorsport.com/f1/news/jacques-villeneuve-explains-why-canada-has-so-few-drivers-reaching-f1/10825865/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Kimi Antonelli branded "generational talent" after dominant 2026 F1 start (https://www.motorsport.com/f1/news/kimi-antonelli-branded-generational-talent-after-dominant-2026-f1-start/10825075/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Kimi Antonelli makes Lewis Hamilton-Nico Rosberg vow amid George Russell F1 fight (https://www.motorsport.com/f1/news/kimi-antonelli-makes-lewis-hamilton-nico-rosberg-vow-amid-george-russell-f1-fight/10825867/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Isle of Man TT shares updated 2026 schedule after poor weather (https://www.the-race.com/tt/isle-of-man-tt-2026-updated-schedule/)
+- [ ] Max Verstappen will “order a new back” for Monaco GP amid Red Bull ride woes (https://www.motorsport.com/f1/news/max-verstappen-jokes-about-red-bull-in-monaco-im-going-to-order-a-new-back/10825961/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Overtake Mode helped ‘lock cars together’ in battle at Canadian GP | Formula 1 (https://www.racefans.net/2026/06/01/overtake-mode-helped-lock-cars-together-in-battle-at-canadian-gp/)
+- [ ] The realities Formula E's running into as it finalises Gen4 format (https://www.the-race.com/formula-e/the-realities-formula-es-running-into-as-it-finalises-gen4-format/)
+- [ ] What time is F1's 2026 Monaco Grand Prix + how to watch it (https://www.the-race.com/formula-1/what-time-is-f1-2026-monaco-grand-prix-how-to-watch/)
+- [ ] What would you like to ask Robert Kubica? (https://www.autosport.com/wec/news/what-would-you-like-to-ask-robert-kubica/10825206/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Williams prioritises Monaco spare parts after costly Alex Albon Canadian GP crash (https://www.motorsport.com/f1/news/williams-prioritised-monaco-spare-parts-after-costly-alex-albon-canadian-gp-crash/10825763/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Williams's 'Director of Smooth' shows how to cut through in F1 (https://www.the-race.com/formula-1/williamss-director-of-smooth-shows-how-to-cut-through-in-f1/)

@@ -158,3 +158,14 @@
 - [ ] Why the differences between the Mercedes and McLaren F1 gearboxes matter (https://www.autosport.com/f1/news/mclaren-versus-mercedes-f1-gearbox/10826028/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] Williams prioritises Monaco spare parts after costly Alex Albon Canadian GP crash (https://www.motorsport.com/f1/news/williams-prioritised-monaco-spare-parts-after-costly-alex-albon-canadian-gp-crash/10825763/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Williams's 'Director of Smooth' shows how to cut through in F1 (https://www.the-race.com/formula-1/williamss-director-of-smooth-shows-how-to-cut-through-in-f1/)
+
+## 2026-06-02
+- [ ] Everything Marquez's return told us about his MotoGP future (https://www.the-race.com/motogp/what-marquezs-return-told-us-about-his-motogp-future/)
+- [ ] First concept image for Hamilton's HybridV10 series revealed (https://www.the-race.com/single-seater-open-wheel/first-concept-image-for-hamiltons-hybridv10-series-revealed/)
+- [ ] Isle of Man TT likely to be extended amid weather disruption (https://www.the-race.com/tt/isle-of-man-tt-likely-to-be-extended-amid-weather-disruption/)
+- [ ] Lewis Hamilton drives custom 1984 Buick Regal as F1 driver explores lowrider culture (https://www.motorsport.com/f1/news/lewis-hamilton-drives-custom-1984-buick-regal-as-f1-driver-explores-lowrider-culture/10826179/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Mercedes' unique diffuser design and why it stands out from the rest of the grid (https://www.motorsport.com/f1/news/f1-new-mercedes-design-the-upper-edge-of-the-diffuser-is-jagged-and-there-is-a-deflector-on-the-cas/10826173/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] On This Day: The "unbelievable" drive that earned Michael Schumacher his first Ferrari win (https://www.motorsport.com/f1/news/on-this-day-schumachers-greatest-achievement-in-formula-1-ever/10826192/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] The unique diffuser Mercedes brought to Canadian GP (https://www.autosport.com/f1/news/mercedes-f1-canadian-gp-diffuser/10826190/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] What we know about Red Bull's biggest 2026 F1 car weaknesses (https://www.the-race.com/formula-1/where-red-bull-stands-in-tackling-overweight-car-problem/)
+- [ ] Why Lecuona not Bulega is MotoGP's latest injury stand-in (https://www.the-race.com/motogp/why-iker-lecuona-not-nicolo-bulega-is-motogp-latest-injury-stand-in/)

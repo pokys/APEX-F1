@@ -158,3 +158,14 @@
 - [ ] Was Alonso correct with F1 hybrid engine criticism? (https://www.autosport.com/f1/news/alonso-f1-hybrid-engine-criticism/10826286/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] What we know about Red Bull's overweight car problems (https://www.the-race.com/formula-1/where-red-bull-stands-in-tackling-overweight-car-problem/)
 - [ ] Why Lecuona not Bulega is MotoGP's latest injury stand-in (https://www.the-race.com/motogp/why-iker-lecuona-not-nicolo-bulega-is-motogp-latest-injury-stand-in/)
+
+## 2026-06-03
+- [ ] All the Monaco Grand Prix special F1 liveries so far (https://www.the-race.com/formula-1/all-the-monaco-grand-prix-special-f1-liveries-so-far/)
+- [ ] Aston Martin unveils special colour-shifting Monaco GP livery (https://www.motorsport.com/f1/news/Aston-Martin-reveals-Monaco-GP-livery/10826403/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Charles Leclerc reiterates Ferrari F1 title desire as he extends contract (https://www.motorsport.com/f1/news/charles-leclerc-reiterates-ferrari-f1-title-desire-as-he-extends-contract/10826370/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Ferrari announces new contract with Leclerc ahead of home race | Formula 1 (https://www.racefans.net/2026/06/03/ferrari-announces-new-contract-with-leclerc-ahead-of-home-race/)
+- [ ] Ferrari extension set to take Leclerc F1 contract into 2030s (https://www.the-race.com/formula-1/charles-leclerc-new-ferrari-f1-contract-could-run-into-2030s/)
+- [ ] Five things to look out for at the F1 Monaco GP (https://www.motorsport.com/f1/news/five-things-to-look-out-for-at-the-f1-monaco-gp/10826298/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Leclerc extends Ferrari F1 contract with multi-year deal (https://www.autosport.com/f1/news/charles-leclerc-reiterates-ferrari-f1-title-desire-as-he-extends-contract/10826378/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Will passing be possible? Is F1’s top speed limit needed? Five Monaco GP talking points | Formula 1 (https://www.racefans.net/2026/06/03/will-passing-be-possible-is-f1s-top-speed-limit-needed-five-monaco-gp-talking-points/)
+- [ ] Yamaha's MotoGP sacrifice has robbed riders of all enthusiasm (https://www.the-race.com/motogp/yamaha-motogp-2026-sacrifice-riders-disillusioned/)

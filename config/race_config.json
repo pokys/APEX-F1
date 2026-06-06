@@ -1,9 +1,9 @@
 {
   "available_sessions": [
+    "Q",
     "FP1",
     "FP2",
-    "FP3",
-    "Q"
+    "FP3"
   ],
   "available_sessions_by_calendar": [
     "FP1",
@@ -11,12 +11,38 @@
     "FP3",
     "Q"
   ],
-  "available_sessions_ingested": [],
+  "available_sessions_ingested": [
+    "Q"
+  ],
   "calibration_season": 2025,
   "calibration_source": "outputs/backtest/backtest_season_2025.json",
   "event_format": "conventional",
-  "generated_at": "2026-06-06T16:08:13Z",
-  "grid_source": "simulation",
+  "fixed_grid": [
+    "ANT",
+    "VER",
+    "HAM",
+    "LEC",
+    "HAD",
+    "RUS",
+    "PIA",
+    "NOR",
+    "GAS",
+    "LAW",
+    "ALB",
+    "SAI",
+    "HUL",
+    "COL",
+    "LIN",
+    "BOR",
+    "OCO",
+    "PER",
+    "BEA",
+    "BOT",
+    "ALO",
+    "STR"
+  ],
+  "generated_at": "2026-06-06T18:08:27Z",
+  "grid_source": "qualifying",
   "inputs_status": [
     {
       "configured_weight": 0.15,

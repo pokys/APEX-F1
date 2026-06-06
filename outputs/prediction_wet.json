@@ -9,7 +9,7 @@
     "reference_date": "2026-06-06",
     "stale_threshold_days": 21.0
   },
-  "deterministic_run_id": "a56447b1ffa689c7a801",
+  "deterministic_run_id": "bbb196b5e222c344dccc",
   "drivers": [
     {
       "driver_share": 50.9,
@@ -265,33 +265,38 @@
       "weekend_form_delta": 0.0
     }
   ],
-  "generated_at": "2026-06-06T10:06:46Z",
+  "generated_at": "2026-06-06T12:07:13Z",
   "inputs_used": [
     {
       "source": "fp2",
       "source_key": "FP2",
-      "weight": 0.307692
+      "weight": 0.235294
+    },
+    {
+      "source": "fp3",
+      "source_key": "FP3",
+      "weight": 0.235294
     },
     {
       "source": "history_driver",
       "source_key": "history_driver",
-      "weight": 0.307692
+      "weight": 0.235294
     },
     {
       "source": "fp1",
       "source_key": "FP1",
-      "weight": 0.230769
+      "weight": 0.176471
     },
     {
       "source": "history_team",
       "source_key": "history_team",
-      "weight": 0.153846
+      "weight": 0.117647
     }
   ],
   "integrity": {
-    "driver_ratings_hash": "ca904052d33d",
-    "race_config_hash": "8c0362897b32",
-    "team_ratings_hash": "0c9040f99e62"
+    "driver_ratings_hash": "20835efc34d8",
+    "race_config_hash": "4c6ebf024ebc",
+    "team_ratings_hash": "45b9972218d2"
   },
   "prediction_target": "qualifying",
   "prediction_target_label": "Qualifying",
@@ -306,7 +311,8 @@
   "simulation": {
     "available_sessions": [
       "FP1",
-      "FP2"
+      "FP2",
+      "FP3"
     ],
     "grid_source": "simulation",
     "qualifying_noise": 2.28,

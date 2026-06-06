@@ -1,15 +1,15 @@
 {
   "data_freshness": {
-    "days_since_latest_event": -2,
-    "days_until_next_race": 2,
+    "days_since_latest_event": -1,
+    "days_until_next_race": 1,
     "is_stale": false,
     "latest_completed_date": "2026-06-07",
     "latest_completed_event": "Monaco Grand Prix",
     "next_race_date": "2026-06-07",
-    "reference_date": "2026-06-05",
+    "reference_date": "2026-06-06",
     "stale_threshold_days": 21.0
   },
-  "deterministic_run_id": "8dd2be1e3f72b412eae9",
+  "deterministic_run_id": "ea7579386de6bc0c03bc",
   "drivers": [
     {
       "driver_share": 50.9,
@@ -265,7 +265,7 @@
       "weekend_form_delta": 0.0
     }
   ],
-  "generated_at": "2026-06-05T22:16:56Z",
+  "generated_at": "2026-06-06T00:09:14Z",
   "inputs_used": [
     {
       "source": "fp2",
@@ -289,9 +289,9 @@
     }
   ],
   "integrity": {
-    "driver_ratings_hash": "43b4a39d2f4f",
-    "race_config_hash": "204c66b00ad5",
-    "team_ratings_hash": "f79595b5622e"
+    "driver_ratings_hash": "d171cfe8f7de",
+    "race_config_hash": "eccc86344d99",
+    "team_ratings_hash": "35aad27d937b"
   },
   "prediction_target": "qualifying",
   "prediction_target_label": "Qualifying",

@@ -3,13 +3,15 @@
     "FP1",
     "FP2",
     "FP3",
-    "Q"
+    "Q",
+    "R"
   ],
   "available_sessions_by_calendar": [
     "FP1",
     "FP2",
     "FP3",
-    "Q"
+    "Q",
+    "R"
   ],
   "available_sessions_ingested": [
     "FP1",
@@ -44,7 +46,7 @@
     "ALO",
     "STR"
   ],
-  "generated_at": "2026-06-07T13:58:53Z",
+  "generated_at": "2026-06-07T15:47:21Z",
   "grid_source": "qualifying",
   "inputs_status": [
     {

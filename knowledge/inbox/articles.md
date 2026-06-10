@@ -158,3 +158,18 @@
 - [ ] Why Gasly vented his lost Monaco GP podium with fake celebrations (https://www.autosport.com/f1/news/why-pierre-gasly-vented-his-lost-monaco-p3-with-fake-celebrations-i-knew-the-situation/10828587/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] Why McLaren is suffering more as a customer under new rules (https://www.the-race.com/formula-1/why-mclaren-is-suffering-more-as-a-customer-under-new-rules/)
 - [ ] Why Pierre Gasly vented his lost Monaco P3 with fake celebrations - "I knew the situation" (https://www.motorsport.com/f1/news/why-pierre-gasly-vented-his-lost-monaco-p3-with-fake-celebration-i-knew-the-situation/10828582/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Ticktum given disciplinary warning by his Formula E team (https://www.the-race.com/formula-e/dan-ticktum-disciplinary-warning-kiro-formula-e-team/)
+- [ ] What time is F1's 2026 Barcelona Grand Prix? Full weekend schedule (https://www.the-race.com/promoted/what-time-is-f1s-2026-barcelona-grand-prix-full-weekend-schedule/)
+
+## 2026-06-10
+- [ ] Audi to field Alpine F1 reserve Paul Aron in two practice outings (https://www.motorsport.com/f1/news/audi-to-field-alpine-reserve-paul-aaron-in-two-formula-1-fp1-outings/10828745/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Every 2026 circuit has exposed a new Aston Martin weakness (https://www.the-race.com/formula-1/fernando-alonso-aston-martin-f1-monaco-weakness-chassis/)
+- [ ] Herta's debut and more: Every F1 practice rookie at Barcelona (https://www.the-race.com/formula-1/barcelona-gp-f1-practice-drivers-rookies-2026/)
+- [ ] How a '10 out of 10' cameo worsened a MotoGP crisis (https://www.the-race.com/motogp/motogp-hungarian-gp-ducati-lecuona-morbidelli/)
+- [ ] Kimi Antonelli dismisses George Russell’s mind games: “I’m still the underdog” (https://www.motorsport.com/f1/news/kimi-antonelli-hits-back-at-george-russells-mind-games-im-still-the-underdog/10828644/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Mercedes on course to be first F1 team to hit big revenue milestone (https://www.the-race.com/business/mercedes-on-course-first-f1-team-to-hit-one-billion-dollars-revenue/)
+- [ ] Stats: Antonelli smashes record for youngest-ever ‘grand slam’ | 2026 Monaco Grand Prix stats and facts (https://www.racefans.net/2026/06/10/monaco-gp-stats-antonelli-smashes-record-for-youngest-ever-grand-slam/)
+- [ ] The simulator company taking over F1 and the wider motorsport world (https://www.autosport.com/f1/news/the-simulator-company-taking-over-f1-and-the-wider-motorsport-world/10828661/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Why George Russell has become so lost in F1 2026 (https://www.the-race.com/formula-1/george-russell-driving-style-f1-2026-struggles-kimi-antonelli/)
+- [ ] Why “underdog” Antonelli feels he has “nothing to lose” in response to Russell’s mind games (https://www.autosport.com/f1/news/kimi-antonelli-dismisses-george-russells-mind-games-im-still-the-underdog/10828658/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Williams blockade: Should F1 team tactics be banned in Monaco? (https://www.motorsport.com/f1/news/williams-blockade-should-team-tactics-be-banned-in-monaco/10828752/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

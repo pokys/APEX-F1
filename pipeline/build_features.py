@@ -173,6 +173,60 @@ def to_float(value: Any) -> float | None:
         return None
 
 
+def duration_to_seconds(value: Any) -> float | None:
+    if value is None:
+        return None
+    if isinstance(value, (int, float)):
+        return float(value) if math.isfinite(float(value)) else None
+    text = str(value).strip()
+    if not text:
+        return None
+
+    days = 0
+    days_match = re.match(r"^(?P<days>\d+)\s+days?\s+(?P<rest>.+)$", text)
+    if days_match:
+        days = int(days_match.group("days"))
+        text = days_match.group("rest")
+
+    parts = text.split(":")
+    try:
+        if len(parts) == 3:
+            hours = float(parts[0])
+            minutes = float(parts[1])
+            seconds = float(parts[2])
+            return days * 86400.0 + hours * 3600.0 + minutes * 60.0 + seconds
+        if len(parts) == 2:
+            minutes = float(parts[0])
+            seconds = float(parts[1])
+            return days * 86400.0 + minutes * 60.0 + seconds
+        return float(text)
+    except ValueError:
+        return None
+
+
+def representative_qualifying_time(row: dict[str, Any]) -> float | None:
+    for key in ("q3", "q2", "q1", "time"):
+        seconds = duration_to_seconds(row.get(key))
+        if seconds is not None:
+            return seconds
+    return None
+
+
+def race_gap_to_winner_seconds(row: dict[str, Any]) -> float | None:
+    position = to_float(row.get("position"))
+    if position is None:
+        return None
+    if int(position) == 1:
+        return 0.0
+    gap = duration_to_seconds(row.get("time"))
+    if gap is None:
+        return None
+    # FastF1 stores the winner's race duration and following cars as a gap.
+    # Only non-winner rows reach this branch, so the parsed value is usable
+    # directly as seconds behind winner when it is present.
+    return gap
+
+
 def stable_mean(values: list[float]) -> float | None:
     if not values:
         return None
@@ -265,7 +319,51 @@ def is_race_finish(status: str | None) -> bool:
     if not status:
         return False
     text = status.strip().lower()
-    return text.startswith("finished") or text.startswith("+")
+    if text.startswith("finished") or text.startswith("+") or text == "lapped":
+        return True
+    return re.fullmatch(r"\d+\s+laps?", text) is not None
+
+
+def is_classified_finish(classified_position: Any) -> bool:
+    text = str(classified_position or "").strip()
+    if not text:
+        return False
+    try:
+        return int(float(text)) > 0
+    except ValueError:
+        return False
+
+
+def is_completed_race_result(row: dict[str, Any]) -> bool:
+    status = str(row.get("status") or "").strip()
+    if status:
+        return is_race_finish(status)
+    return is_classified_finish(row.get("classified_position"))
+
+
+def normalized_event_date(event: dict[str, Any]) -> str | None:
+    raw = str(event.get("event_date") or "").strip()
+    if not raw:
+        return None
+    match = re.match(r"^\d{4}-\d{2}-\d{2}", raw)
+    if not match:
+        return None
+    return match.group(0)
+
+
+def event_sort_key(indexed_event: tuple[int, Any]) -> tuple[int, str, float, str, int]:
+    index, event = indexed_event
+    if not isinstance(event, dict):
+        return (1, "9999-12-31", 9999.0, "", index)
+    event_date = normalized_event_date(event)
+    round_number = to_float(event.get("round"))
+    return (
+        0 if event_date else 1,
+        event_date or "9999-12-31",
+        round_number if round_number is not None else 9999.0,
+        str(event.get("event_name") or ""),
+        index,
+    )
 
 
 def season_from_snapshot_path(path: Path) -> int | None:
@@ -525,13 +623,20 @@ def build_features(
                 "team": team_name,
                 "team_key": team_key,
                 "race_positions": [],
+                "race_time_gaps": [],
+                "race_lap_pace_gaps": [],
                 "qualifying_positions": [],
+                "qualifying_time_gaps": [],
+                "teammate_qualifying_time_gaps": [],
                 "practice_positions": [],
+                "practice_lap_pace_gaps": [],
                 "fp1_positions": [],
                 "fp2_positions": [],
                 "fp3_positions": [],
                 "sprint_qualifying_positions": [],
+                "sprint_qualifying_time_gaps": [],
                 "sprint_positions": [],
+                "sprint_lap_pace_gaps": [],
                 "qualifying_phase_depths": [],
                 "sprint_qualifying_phase_depths": [],
                 "starts": 0,
@@ -547,13 +652,19 @@ def build_features(
             {
                 "team": team_name,
                 "race_positions": [],
+                "race_time_gaps": [],
+                "race_lap_pace_gaps": [],
                 "qualifying_positions": [],
+                "qualifying_time_gaps": [],
                 "practice_positions": [],
+                "practice_lap_pace_gaps": [],
                 "fp1_positions": [],
                 "fp2_positions": [],
                 "fp3_positions": [],
                 "sprint_qualifying_positions": [],
+                "sprint_qualifying_time_gaps": [],
                 "sprint_positions": [],
+                "sprint_lap_pace_gaps": [],
                 "qualifying_phase_depths": [],
                 "sprint_qualifying_phase_depths": [],
                 "starts": 0,
@@ -563,7 +674,8 @@ def build_features(
         )
 
     event_idx = -1
-    for event in events:
+    ordered_events = [event for _, event in sorted(enumerate(events), key=event_sort_key)]
+    for event in ordered_events:
         if not isinstance(event, dict):
             continue
         sessions = event.get("sessions", [])
@@ -578,7 +690,47 @@ def build_features(
             results = session.get("results")
             if not isinstance(results, list):
                 continue
-            for row in results:
+
+            lap_metrics = session.get("lap_metrics")
+            if isinstance(lap_metrics, list):
+                for metric in lap_metrics:
+                    if not isinstance(metric, dict):
+                        continue
+                    driver_code = str(metric.get("abbreviation") or "").strip()
+                    team_name = str(metric.get("team_name") or "").strip()
+                    pace_gap = to_float(metric.get("pace_gap_to_best_seconds"))
+                    if not driver_code or not team_name or pace_gap is None:
+                        continue
+                    driver_state = ensure_driver(driver_code, team_name)
+                    team_state = ensure_team(team_name)
+                    if code == "R":
+                        driver_state["race_lap_pace_gaps"].append((event_idx, pace_gap))
+                        team_state["race_lap_pace_gaps"].append((event_idx, pace_gap))
+                    elif code == "S":
+                        driver_state["sprint_lap_pace_gaps"].append((event_idx, pace_gap))
+                        team_state["sprint_lap_pace_gaps"].append((event_idx, pace_gap))
+                    elif code in PRACTICE_CODES:
+                        driver_state["practice_lap_pace_gaps"].append((event_idx, pace_gap))
+                        team_state["practice_lap_pace_gaps"].append((event_idx, pace_gap))
+
+            representative_times: dict[int, float] = {}
+            team_best_times: dict[str, float] = {}
+            if code in {"Q", "SQ"}:
+                for row_index, row in enumerate(results):
+                    if not isinstance(row, dict):
+                        continue
+                    seconds = representative_qualifying_time(row)
+                    if seconds is None:
+                        continue
+                    representative_times[row_index] = seconds
+                    team_key = slug(str(row.get("team_name") or ""))
+                    if team_key:
+                        current_best = team_best_times.get(team_key)
+                        if current_best is None or seconds < current_best:
+                            team_best_times[team_key] = seconds
+            session_best_time = min(representative_times.values()) if representative_times else None
+
+            for row_index, row in enumerate(results):
                 if not isinstance(row, dict):
                     continue
                 driver_code = str(row.get("abbreviation") or row.get("full_name") or "").strip()
@@ -595,9 +747,13 @@ def build_features(
                     if position is not None:
                         driver_state["race_positions"].append((event_idx, position))
                         team_state["race_positions"].append((event_idx, position))
+                    race_gap = race_gap_to_winner_seconds(row)
+                    if race_gap is not None:
+                        driver_state["race_time_gaps"].append((event_idx, race_gap))
+                        team_state["race_time_gaps"].append((event_idx, race_gap))
                     driver_state["starts"] += 1
                     team_state["starts"] += 1
-                    if not is_race_finish(str(row.get("status") or "")):
+                    if not is_completed_race_result(row):
                         driver_state["dnfs"] += 1
                         team_state["dnfs"] += 1
                     points = to_float(row.get("points"))
@@ -608,6 +764,14 @@ def build_features(
                     if position is not None:
                         driver_state["qualifying_positions"].append((event_idx, position))
                         team_state["qualifying_positions"].append((event_idx, position))
+                    representative_time = representative_times.get(row_index)
+                    if representative_time is not None and session_best_time is not None:
+                        gap_ms = (representative_time - session_best_time) * 1000.0
+                        driver_state["qualifying_time_gaps"].append((event_idx, gap_ms))
+                        team_state["qualifying_time_gaps"].append((event_idx, gap_ms))
+                        team_best = team_best_times.get(team_key)
+                        if team_best is not None:
+                            driver_state["teammate_qualifying_time_gaps"].append((event_idx, (representative_time - team_best) * 1000.0))
                     if phase_depth is not None:
                         driver_state["qualifying_phase_depths"].append((event_idx, phase_depth))
                         team_state["qualifying_phase_depths"].append((event_idx, phase_depth))
@@ -615,6 +779,11 @@ def build_features(
                     if position is not None:
                         driver_state["sprint_qualifying_positions"].append((event_idx, position))
                         team_state["sprint_qualifying_positions"].append((event_idx, position))
+                    representative_time = representative_times.get(row_index)
+                    if representative_time is not None and session_best_time is not None:
+                        gap_ms = (representative_time - session_best_time) * 1000.0
+                        driver_state["sprint_qualifying_time_gaps"].append((event_idx, gap_ms))
+                        team_state["sprint_qualifying_time_gaps"].append((event_idx, gap_ms))
                     if phase_depth is not None:
                         driver_state["sprint_qualifying_phase_depths"].append((event_idx, phase_depth))
                         team_state["sprint_qualifying_phase_depths"].append((event_idx, phase_depth))
@@ -644,24 +813,38 @@ def build_features(
 
     def driver_or_team_metrics(state: dict[str, Any]) -> dict[str, Any]:
         race_avg, race_ess = recency_weighted_mean(state["race_positions"], hl_race)
+        race_gap, _ = recency_weighted_mean(state["race_time_gaps"], hl_race)
+        race_lap_pace_gap, _ = recency_weighted_mean(state["race_lap_pace_gaps"], hl_race)
         q_avg, q_ess = recency_weighted_mean(state["qualifying_positions"], hl_qualifying)
+        q_gap, _ = recency_weighted_mean(state["qualifying_time_gaps"], hl_qualifying)
+        teammate_q_gap, _ = recency_weighted_mean(state.get("teammate_qualifying_time_gaps", []), hl_qualifying)
         practice_avg, _ = recency_weighted_mean(state["practice_positions"], hl_practice)
+        practice_lap_pace_gap, _ = recency_weighted_mean(state["practice_lap_pace_gaps"], hl_practice)
         fp1_avg, _ = recency_weighted_mean(state["fp1_positions"], hl_fp1)
         fp2_avg, _ = recency_weighted_mean(state["fp2_positions"], hl_fp2)
         fp3_avg, _ = recency_weighted_mean(state["fp3_positions"], hl_fp3)
         sprint_q_avg, _ = recency_weighted_mean(state["sprint_qualifying_positions"], hl_sprint_q)
+        sprint_q_gap, _ = recency_weighted_mean(state["sprint_qualifying_time_gaps"], hl_sprint_q)
         sprint_avg, _ = recency_weighted_mean(state["sprint_positions"], hl_sprint)
+        sprint_lap_pace_gap, _ = recency_weighted_mean(state["sprint_lap_pace_gaps"], hl_sprint)
         q_phase, _ = recency_weighted_mean(state["qualifying_phase_depths"], hl_qualifying)
         sprint_q_phase, _ = recency_weighted_mean(state["sprint_qualifying_phase_depths"], hl_sprint_q)
         return {
             "race_avg_position": race_avg,
+            "race_gap_to_winner_seconds": race_gap,
+            "race_lap_pace_gap_seconds": race_lap_pace_gap,
             "qualifying_avg_position": q_avg,
+            "qualifying_gap_to_best_ms": q_gap,
+            "teammate_qualifying_gap_ms": teammate_q_gap,
             "practice_avg_position": practice_avg,
+            "practice_lap_pace_gap_seconds": practice_lap_pace_gap,
             "fp1_avg_position": fp1_avg,
             "fp2_avg_position": fp2_avg,
             "fp3_avg_position": fp3_avg,
             "sprint_qualifying_avg_position": sprint_q_avg,
+            "sprint_qualifying_gap_to_best_ms": sprint_q_gap,
             "sprint_avg_position": sprint_avg,
+            "sprint_lap_pace_gap_seconds": sprint_lap_pace_gap,
             "qualifying_phase_depth": q_phase,
             "sprint_qualifying_phase_depth": sprint_q_phase,
             "race_effective_starts": race_ess,
@@ -695,14 +878,21 @@ def build_features(
                 "driver": state["driver"],
                 "team": state["team"],
                 "race_avg_position": metrics["race_avg_position"],
+                "race_gap_to_winner_seconds": metrics["race_gap_to_winner_seconds"],
+                "race_lap_pace_gap_seconds": metrics["race_lap_pace_gap_seconds"],
                 "race_form_last3": stable_mean(_last_n_values(race_positions, 3)),
                 "qualifying_avg_position": metrics["qualifying_avg_position"],
+                "qualifying_gap_to_best_ms": metrics["qualifying_gap_to_best_ms"],
+                "teammate_qualifying_gap_ms": metrics["teammate_qualifying_gap_ms"],
                 "practice_avg_position": metrics["practice_avg_position"],
+                "practice_lap_pace_gap_seconds": metrics["practice_lap_pace_gap_seconds"],
                 "fp1_avg_position": metrics["fp1_avg_position"],
                 "fp2_avg_position": metrics["fp2_avg_position"],
                 "fp3_avg_position": metrics["fp3_avg_position"],
                 "sprint_qualifying_avg_position": metrics["sprint_qualifying_avg_position"],
+                "sprint_qualifying_gap_to_best_ms": metrics["sprint_qualifying_gap_to_best_ms"],
                 "sprint_avg_position": metrics["sprint_avg_position"],
+                "sprint_lap_pace_gap_seconds": metrics["sprint_lap_pace_gap_seconds"],
                 "qualifying_phase_depth": metrics["qualifying_phase_depth"],
                 "sprint_qualifying_phase_depth": metrics["sprint_qualifying_phase_depth"],
                 "starts": starts,
@@ -750,13 +940,19 @@ def build_features(
             {
                 "team": state["team"],
                 "race_avg_position": metrics["race_avg_position"],
+                "race_gap_to_winner_seconds": metrics["race_gap_to_winner_seconds"],
+                "race_lap_pace_gap_seconds": metrics["race_lap_pace_gap_seconds"],
                 "qualifying_avg_position": metrics["qualifying_avg_position"],
+                "qualifying_gap_to_best_ms": metrics["qualifying_gap_to_best_ms"],
                 "practice_avg_position": metrics["practice_avg_position"],
+                "practice_lap_pace_gap_seconds": metrics["practice_lap_pace_gap_seconds"],
                 "fp1_avg_position": metrics["fp1_avg_position"],
                 "fp2_avg_position": metrics["fp2_avg_position"],
                 "fp3_avg_position": metrics["fp3_avg_position"],
                 "sprint_qualifying_avg_position": metrics["sprint_qualifying_avg_position"],
+                "sprint_qualifying_gap_to_best_ms": metrics["sprint_qualifying_gap_to_best_ms"],
                 "sprint_avg_position": metrics["sprint_avg_position"],
+                "sprint_lap_pace_gap_seconds": metrics["sprint_lap_pace_gap_seconds"],
                 "qualifying_phase_depth": metrics["qualifying_phase_depth"],
                 "sprint_qualifying_phase_depth": metrics["sprint_qualifying_phase_depth"],
                 "starts": starts,

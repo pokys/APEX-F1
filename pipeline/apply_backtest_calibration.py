@@ -25,6 +25,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--race-config", default="config/race_config.json", help="Race config path to update.")
     parser.add_argument("--min-temp", type=float, default=0.6, help="Minimum allowed win temperature.")
     parser.add_argument("--max-temp", type=float, default=1.8, help="Maximum allowed win temperature.")
+    parser.add_argument("--min-qualifying-temp", type=float, default=0.6, help="Minimum allowed qualifying temperature.")
+    parser.add_argument("--max-qualifying-temp", type=float, default=1.8, help="Maximum allowed qualifying temperature.")
     parser.add_argument("--allow-missing-report", action="store_true", help="Exit 0 if no backtest report is present.")
     parser.add_argument(
         "--log-level",
@@ -122,11 +124,16 @@ def main() -> int:
         recommended = summary.get("recommended_win_temperature")
         if not isinstance(recommended, (int, float)):
             raise ValueError(f"Backtest report missing numeric recommended_win_temperature: {backtest_path}")
+        recommended_qualifying = summary.get("recommended_qualifying_temperature")
 
         win_temp = round(clamp(float(recommended), args.min_temp, args.max_temp), 6)
         race_config_path = Path(args.race_config)
         config = load_or_default_race_config(race_config_path)
         config["win_temperature"] = win_temp
+        qualifying_temp = None
+        if isinstance(recommended_qualifying, (int, float)):
+            qualifying_temp = round(clamp(float(recommended_qualifying), args.min_qualifying_temp, args.max_qualifying_temp), 6)
+            config["qualifying_temperature"] = qualifying_temp
         config["calibration_source"] = str(backtest_path.as_posix())
         config["calibration_season"] = int(report.get("season", args.season or 0))
 
@@ -139,7 +146,10 @@ def main() -> int:
         LOGGER.error("apply_backtest_calibration failed: %s", exc)
         return 1
 
-    LOGGER.info("Applied win_temperature=%s from %s", win_temp, backtest_path)
+    if qualifying_temp is None:
+        LOGGER.info("Applied win_temperature=%s from %s", win_temp, backtest_path)
+    else:
+        LOGGER.info("Applied win_temperature=%s and qualifying_temperature=%s from %s", win_temp, qualifying_temp, backtest_path)
     return 0
 
 

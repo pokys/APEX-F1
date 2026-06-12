@@ -12,6 +12,7 @@ import argparse
 import json
 import logging
 import math
+import statistics
 import sys
 import time
 from datetime import date, datetime, timezone
@@ -69,6 +70,11 @@ def parse_args() -> argparse.Namespace:
         "--cache-dir",
         default="data/raw/fastf1_cache",
         help="FastF1 cache directory (kept inside repository).",
+    )
+    parser.add_argument(
+        "--include-lap-metrics",
+        action="store_true",
+        help="Extract clean-lap pace metrics. Slower, but can improve prediction quality when used for targeted refreshes.",
     )
     parser.add_argument(
         "--log-level",
@@ -200,6 +206,37 @@ def normalize_position(value: Any) -> int | None:
         return None
 
 
+def duration_seconds(value: Any) -> float | None:
+    scalar = to_json_scalar(value)
+    if scalar is None:
+        return None
+    if isinstance(scalar, (int, float)):
+        number = float(scalar)
+        return number if math.isfinite(number) else None
+    text = str(scalar).strip()
+    if not text:
+        return None
+    days = 0
+    for marker in (" days ", " day "):
+        if marker in text:
+            prefix, _, rest = text.partition(marker)
+            try:
+                days = int(prefix)
+                text = rest
+            except ValueError:
+                pass
+            break
+    parts = text.split(":")
+    try:
+        if len(parts) == 3:
+            return days * 86400.0 + float(parts[0]) * 3600.0 + float(parts[1]) * 60.0 + float(parts[2])
+        if len(parts) == 2:
+            return days * 86400.0 + float(parts[0]) * 60.0 + float(parts[1])
+        return float(text)
+    except ValueError:
+        return None
+
+
 def extract_results(session: Any) -> list[dict[str, Any]]:
     results = getattr(session, "results", None)
     if results is None or getattr(results, "empty", True):
@@ -234,7 +271,73 @@ def extract_results(session: Any) -> list[dict[str, Any]]:
     return records
 
 
-def load_session(season: int, round_number: int, session_code: str, cutoff: date) -> dict[str, Any] | None:
+def extract_lap_metrics(session: Any) -> list[dict[str, Any]]:
+    laps = getattr(session, "laps", None)
+    if laps is None or getattr(laps, "empty", True):
+        return []
+
+    rows_by_driver: dict[str, dict[str, Any]] = {}
+    for _, row in laps.iterrows():
+        lap_time = duration_seconds(row.get("LapTime"))
+        if lap_time is None or lap_time <= 0:
+            continue
+        if row.get("IsAccurate") is False:
+            continue
+        if str(row.get("Deleted") or "").strip().lower() in {"true", "1"}:
+            continue
+        if not is_na_like(row.get("PitInTime")) or not is_na_like(row.get("PitOutTime")):
+            continue
+        track_status = str(row.get("TrackStatus") or "")
+        if any(flag in track_status for flag in ("4", "5", "6", "7")):
+            continue
+
+        driver = str(row.get("Driver") or "").strip().upper()
+        if not driver:
+            continue
+        team = str(row.get("Team") or "").strip()
+        state = rows_by_driver.setdefault(driver, {"driver": driver, "team": team, "lap_times": []})
+        if team and not state.get("team"):
+            state["team"] = team
+        state["lap_times"].append(lap_time)
+
+    if not rows_by_driver:
+        return []
+
+    median_by_driver = {
+        driver: statistics.median(state["lap_times"])
+        for driver, state in rows_by_driver.items()
+        if state["lap_times"]
+    }
+    best_by_driver = {
+        driver: min(state["lap_times"])
+        for driver, state in rows_by_driver.items()
+        if state["lap_times"]
+    }
+    best_median = min(median_by_driver.values()) if median_by_driver else None
+    best_lap = min(best_by_driver.values()) if best_by_driver else None
+
+    metrics: list[dict[str, Any]] = []
+    for driver in sorted(rows_by_driver):
+        state = rows_by_driver[driver]
+        median_time = median_by_driver.get(driver)
+        best_time = best_by_driver.get(driver)
+        if median_time is None or best_time is None:
+            continue
+        metrics.append(
+            {
+                "abbreviation": driver,
+                "team_name": state.get("team") or "",
+                "clean_lap_count": len(state["lap_times"]),
+                "median_clean_lap_time": round(median_time, 6),
+                "best_clean_lap_time": round(best_time, 6),
+                "pace_gap_to_best_seconds": round(median_time - best_median, 6) if best_median is not None else None,
+                "best_lap_gap_to_best_seconds": round(best_time - best_lap, 6) if best_lap is not None else None,
+            }
+        )
+    return metrics
+
+
+def load_session(season: int, round_number: int, session_code: str, cutoff: date, include_lap_metrics: bool = False) -> dict[str, Any] | None:
     try:
         session = fastf1.get_session(season, round_number, session_code)
     except Exception as exc:
@@ -246,10 +349,10 @@ def load_session(season: int, round_number: int, session_code: str, cutoff: date
         return None
 
     try:
-        session.load(laps=False, telemetry=False, weather=False, messages=False)
+        session.load(laps=include_lap_metrics, telemetry=False, weather=False, messages=False)
     except TypeError:
         # Compatibility with older FastF1 versions.
-        session.load(laps=False, telemetry=False, weather=False)
+        session.load(laps=include_lap_metrics, telemetry=False, weather=False)
     except Exception as exc:
         LOGGER.warning("Session load failed (%s round %s %s): %s", season, round_number, session_code, exc)
         return None
@@ -258,12 +361,17 @@ def load_session(season: int, round_number: int, session_code: str, cutoff: date
     if not results:
         return None
 
-    return {
+    payload = {
         "session_code": session_code,
         "session_name": to_json_scalar(getattr(session, "name", None)),
         "session_date": to_json_scalar(getattr(session, "date", None)),
         "results": results,
     }
+    if include_lap_metrics:
+        lap_metrics = extract_lap_metrics(session)
+        if lap_metrics:
+            payload["lap_metrics"] = lap_metrics
+    return payload
 
 
 def fetch_schedule(
@@ -310,7 +418,7 @@ def _default_schedule_fetcher(season: int, backend: str) -> Any:
     return fastf1.get_event_schedule(season, include_testing=False, backend=backend)
 
 
-def ingest(season: int, sessions: list[str], cutoff: date, output_dir: Path, cache_dir: Path) -> Path | None:
+def ingest(season: int, sessions: list[str], cutoff: date, output_dir: Path, cache_dir: Path, include_lap_metrics: bool = False) -> Path | None:
     if fastf1 is None:
         raise RuntimeError("fastf1 is not installed. Install dependencies from requirements.txt first.")
 
@@ -327,7 +435,7 @@ def ingest(season: int, sessions: list[str], cutoff: date, output_dir: Path, cac
             exc,
         )
         return None
-    schedule = schedule.sort_values(by=["RoundNumber", "EventDate"], kind="stable")
+    schedule = schedule.sort_values(by=["EventDate", "RoundNumber"], kind="stable")
 
     calendar_payload: list[dict[str, Any]] = []
     for _, row in schedule.iterrows():
@@ -355,7 +463,7 @@ def ingest(season: int, sessions: list[str], cutoff: date, output_dir: Path, cac
 
         sessions_payload: list[dict[str, Any]] = []
         for session_code in sessions:
-            loaded = load_session(season, round_number, session_code, cutoff=cutoff)
+            loaded = load_session(season, round_number, session_code, cutoff=cutoff, include_lap_metrics=include_lap_metrics)
             if loaded is not None:
                 sessions_payload.append(loaded)
 
@@ -408,6 +516,7 @@ def main() -> int:
             cutoff=cutoff,
             output_dir=Path(args.output_dir),
             cache_dir=Path(args.cache_dir),
+            include_lap_metrics=args.include_lap_metrics,
         )
     except Exception as exc:
         LOGGER.error("ingest_fastf1 failed: %s", exc)

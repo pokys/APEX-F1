@@ -16,9 +16,17 @@ on:
   push:
     paths:
       - "pipeline/backtest_simulation.py"
+      - "pipeline/build_features.py"
+      - "pipeline/update_ratings.py"
       - "pipeline/simulate_race.py"
+      - "pipeline/simulate_target_prediction.py"
+      - "pipeline/prediction_targeting.py"
       - "config/track_profiles.json"
+      - "config/session_weights.json"
+      - "config/recency.json"
+      - "config/signal_guardrails.json"
       - "models/*.json"
+      - "data/processed/*.json"
       - "data/raw/fastf1/*.json"
       - "requirements.lock"
       - ".github/workflows/backtest.yml"

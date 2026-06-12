@@ -2,7 +2,23 @@ from __future__ import annotations
 
 import pytest
 
-from pipeline.ingest_fastf1 import ScheduleUnavailableError, fetch_schedule
+from pipeline.ingest_fastf1 import ScheduleUnavailableError, extract_lap_metrics, fetch_schedule
+
+
+class FakeLaps:
+    empty = False
+
+    def __init__(self, rows: list[dict]) -> None:
+        self.rows = rows
+
+    def iterrows(self):
+        for index, row in enumerate(self.rows):
+            yield index, row
+
+
+class FakeSession:
+    def __init__(self, rows: list[dict]) -> None:
+        self.laps = FakeLaps(rows)
 
 
 def test_fetch_schedule_returns_first_success() -> None:
@@ -67,3 +83,23 @@ def test_fetch_schedule_raises_after_all_backends_exhausted() -> None:
     assert "season 2026" in str(exc_info.value)
     # 2 backends * (retries-1 sleeps each) = 4 sleeps. Backoff schedule: 1, 2.
     assert sleeps == [1.0, 2.0, 1.0, 2.0]
+
+
+def test_extract_lap_metrics_filters_unclean_laps_and_computes_gaps() -> None:
+    session = FakeSession(
+        [
+            {"Driver": "RUS", "Team": "Mercedes", "LapTime": "0 days 00:01:20.000000", "IsAccurate": True, "Deleted": False, "PitInTime": None, "PitOutTime": None, "TrackStatus": "1"},
+            {"Driver": "RUS", "Team": "Mercedes", "LapTime": "0 days 00:01:21.000000", "IsAccurate": True, "Deleted": False, "PitInTime": None, "PitOutTime": None, "TrackStatus": "1"},
+            {"Driver": "ANT", "Team": "Mercedes", "LapTime": "0 days 00:01:20.500000", "IsAccurate": True, "Deleted": False, "PitInTime": None, "PitOutTime": None, "TrackStatus": "1"},
+            {"Driver": "ANT", "Team": "Mercedes", "LapTime": "0 days 00:01:30.000000", "IsAccurate": True, "Deleted": False, "PitInTime": "pit", "PitOutTime": None, "TrackStatus": "1"},
+        ]
+    )
+
+    metrics = extract_lap_metrics(session)
+    by_driver = {row["abbreviation"]: row for row in metrics}
+
+    assert by_driver["RUS"]["median_clean_lap_time"] == 80.5
+    assert by_driver["ANT"]["median_clean_lap_time"] == 80.5
+    assert by_driver["RUS"]["pace_gap_to_best_seconds"] == 0.0
+    assert by_driver["ANT"]["pace_gap_to_best_seconds"] == 0.0
+    assert by_driver["ANT"]["clean_lap_count"] == 1

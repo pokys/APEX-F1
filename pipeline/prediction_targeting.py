@@ -6,6 +6,8 @@ Shared helpers for automatic prediction target selection and source manifests.
 from __future__ import annotations
 
 import json
+import math
+import re
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
@@ -659,6 +661,75 @@ def session_position_score(event: dict[str, Any], session_code: str, driver_name
     return None
 
 
+def duration_to_seconds(value: Any) -> float | None:
+    if value is None:
+        return None
+    if isinstance(value, (int, float)):
+        num = float(value)
+        return num if math.isfinite(num) else None
+    text = str(value).strip()
+    if not text:
+        return None
+    days = 0
+    match = re.match(r"^(?P<days>\d+)\s+days?\s+(?P<rest>.+)$", text)
+    if match:
+        days = int(match.group("days"))
+        text = match.group("rest")
+    parts = text.split(":")
+    try:
+        if len(parts) == 3:
+            return days * 86400.0 + float(parts[0]) * 3600.0 + float(parts[1]) * 60.0 + float(parts[2])
+        if len(parts) == 2:
+            return days * 86400.0 + float(parts[0]) * 60.0 + float(parts[1])
+        return float(text)
+    except ValueError:
+        return None
+
+
+def representative_qualifying_time(row: dict[str, Any]) -> float | None:
+    for key in ("q3", "q2", "q1", "time"):
+        seconds = duration_to_seconds(row.get(key))
+        if seconds is not None:
+            return seconds
+    return None
+
+
+def session_time_score(event: dict[str, Any], session_code: str, driver_name: str) -> float | None:
+    if session_code.upper().strip() not in {"Q", "SQ"}:
+        return None
+    sessions = event.get("sessions")
+    if not isinstance(sessions, list):
+        return None
+    code_key = session_code.upper().strip()
+    for session in sessions:
+        if not isinstance(session, dict):
+            continue
+        if str(session.get("session_code") or "").upper() != code_key:
+            continue
+        results = session.get("results")
+        if not isinstance(results, list) or not results:
+            return None
+        times: dict[str, float] = {}
+        for row in results:
+            if not isinstance(row, dict):
+                continue
+            name = str(row.get("abbreviation") or row.get("full_name") or "").strip().upper()
+            seconds = representative_qualifying_time(row)
+            if name and seconds is not None:
+                times[name] = seconds
+        if not times:
+            return None
+        driver_seconds = times.get(driver_name.upper())
+        if driver_seconds is None:
+            return None
+        best_seconds = min(times.values())
+        gap_ms = max(0.0, (driver_seconds - best_seconds) * 1000.0)
+        # 0 ms -> 1.0, 1600+ ms -> 0.0, smooth enough for Q1/Q2/Q3
+        # representative times without letting a single bad lap dominate.
+        return max(0.0, min(1.0, 1.0 - gap_ms / 1600.0))
+    return None
+
+
 def compute_weekend_form(driver_name: str, event: dict[str, Any], manifest: list[dict[str, Any]]) -> dict[str, Any]:
     weighted_sum = 0.0
     total_weight = 0.0
@@ -678,9 +749,16 @@ def compute_weekend_form(driver_name: str, event: dict[str, Any], manifest: list
             total_weight += weight
             continue
 
-        score = session_position_score(event, source, driver_name)
-        if score is None:
+        position_score = session_position_score(event, source, driver_name)
+        time_score = session_time_score(event, source, driver_name)
+        if position_score is None and time_score is None:
             continue
+        if position_score is None:
+            score = time_score
+        elif time_score is None:
+            score = position_score
+        else:
+            score = 0.55 * position_score + 0.45 * time_score
         weighted_sum += weight * score
         total_weight += weight
         source_rows.append(
@@ -688,6 +766,8 @@ def compute_weekend_form(driver_name: str, event: dict[str, Any], manifest: list
                 "session": source,
                 "weight": round(weight, 6),
                 "score": round(score, 6),
+                "position_score": round(position_score, 6) if position_score is not None else None,
+                "time_score": round(time_score, 6) if time_score is not None else None,
             }
         )
 

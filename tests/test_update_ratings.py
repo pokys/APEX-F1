@@ -9,6 +9,7 @@ from pipeline.update_ratings import (
     compute_driver_ratings,
     DEFAULT_SIGNAL_GUARDRAILS,
     current_season_blend_weight,
+    load_current_entry_list,
 )
 
 
@@ -96,4 +97,114 @@ def test_compute_driver_ratings_softens_teammate_penalty_on_small_samples() -> N
 
     assert by_driver["ANT"]["driver_rating"] > 55.0
     assert by_driver["RUS"]["driver_rating"] > 55.0
+    assert by_driver["ANT"]["qualifying_rating"] > 55.0
+    assert by_driver["ANT"]["race_rating"] > 55.0
     assert by_driver["ANT"]["components"]["teammate_delta_performance"] == 50.0
+
+
+def test_compute_driver_ratings_uses_timing_gap_components() -> None:
+    features = {
+        "drivers": [
+            {
+                "driver": "AAA",
+                "team": "A",
+                "starts": 3,
+                "race_avg_position": 1.5,
+                "race_gap_to_winner_seconds": 2.0,
+                "race_form_last3": 1.5,
+                "qualifying_avg_position": 1.5,
+                "qualifying_gap_to_best_ms": 50.0,
+                "teammate_qualifying_gap_ms": 0.0,
+                "qualifying_phase_depth": 1.0,
+                "dnf_rate": 0.0,
+            },
+            {
+                "driver": "BBB",
+                "team": "B",
+                "starts": 3,
+                "race_avg_position": 12.0,
+                "race_gap_to_winner_seconds": 60.0,
+                "race_form_last3": 12.0,
+                "qualifying_avg_position": 12.0,
+                "qualifying_gap_to_best_ms": 1800.0,
+                "teammate_qualifying_gap_ms": 0.0,
+                "qualifying_phase_depth": 0.33,
+                "dnf_rate": 0.0,
+            },
+        ]
+    }
+
+    ratings = compute_driver_ratings(features, wet_by_team={}, active_drivers={"AAA": "A", "BBB": "B"})
+    by_driver = {row["driver"]: row for row in ratings["drivers"]}
+
+    assert by_driver["AAA"]["qualifying_rating"] > by_driver["BBB"]["qualifying_rating"]
+    assert by_driver["AAA"]["race_rating"] > by_driver["BBB"]["race_rating"]
+
+
+def test_load_current_entry_list_uses_latest_competitive_session(tmp_path: Path) -> None:
+    raw_dir = tmp_path / "fastf1"
+    raw_dir.mkdir()
+    write_json(
+        raw_dir / "season_2026.json",
+        {
+            "season": 2026,
+            "events": [
+                {
+                    "round": 1,
+                    "event_date": "2026-03-08",
+                    "sessions": [
+                        {
+                            "session_code": "FP1",
+                            "results": [
+                                {"abbreviation": "RES", "team_name": "Mercedes"},
+                                {"abbreviation": "RUS", "team_name": "Mercedes"},
+                            ],
+                        },
+                        {
+                            "session_code": "Q",
+                            "results": [
+                                {"abbreviation": "RUS", "team_name": "Mercedes"},
+                                {"abbreviation": "ANT", "team_name": "Mercedes"},
+                            ],
+                        },
+                    ],
+                }
+            ],
+        },
+    )
+
+    drivers, teams = load_current_entry_list(raw_dir, 2026)
+
+    assert drivers == {"ANT": "Mercedes", "RUS": "Mercedes"}
+    assert teams == ["Mercedes"]
+
+
+def test_load_current_entry_list_falls_back_to_practice_when_no_competitive_session(tmp_path: Path) -> None:
+    raw_dir = tmp_path / "fastf1"
+    raw_dir.mkdir()
+    write_json(
+        raw_dir / "season_2026.json",
+        {
+            "season": 2026,
+            "events": [
+                {
+                    "round": 1,
+                    "event_date": "2026-03-08",
+                    "sessions": [
+                        {
+                            "session_code": "FP1",
+                            "results": [
+                                {"abbreviation": "RUS", "team_name": "Mercedes"},
+                                {"abbreviation": "ANT", "team_name": "Mercedes"},
+                            ],
+                        }
+                    ],
+                }
+            ],
+        },
+    )
+
+    drivers, teams = load_current_entry_list(raw_dir, 2026)
+
+    assert drivers == {"ANT": "Mercedes", "RUS": "Mercedes"}
+    assert teams == ["Mercedes"]

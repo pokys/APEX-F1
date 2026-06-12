@@ -121,8 +121,29 @@ def test_compute_weekend_form_blends_history_baseline_with_sessions() -> None:
 
     form = compute_weekend_form("VER", event, manifest)
 
-    assert form["sources"] == [{"session": "FP1", "weight": 0.4, "score": 1.0}]
+    assert form["sources"] == [{"session": "FP1", "weight": 0.4, "score": 1.0, "position_score": 1.0, "time_score": None}]
     assert round(form["delta"], 6) == 2.0
+
+
+def test_compute_weekend_form_uses_qualifying_time_gap_when_available() -> None:
+    event = {
+        "sessions": [
+            {
+                "session_code": "Q",
+                "results": [
+                    {"position": 1, "abbreviation": "VER", "q1": "0 days 00:01:20.000000", "q2": "0 days 00:01:19.000000", "q3": "0 days 00:01:18.000000"},
+                    {"position": 2, "abbreviation": "NOR", "q1": "0 days 00:01:20.200000", "q2": "0 days 00:01:19.200000", "q3": "0 days 00:01:18.800000"},
+                ],
+            }
+        ]
+    }
+    manifest = [{"source": "qualifying", "source_key": "Q", "weight": 1.0}]
+
+    form = compute_weekend_form("NOR", event, manifest)
+
+    assert form["sources"][0]["position_score"] == 0.3
+    assert form["sources"][0]["time_score"] == 0.5
+    assert form["sources"][0]["score"] == 0.39
 
 
 def test_latest_completed_event_picks_most_recent_with_results() -> None:

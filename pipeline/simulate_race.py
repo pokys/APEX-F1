@@ -110,6 +110,16 @@ def build_entries(driver_ratings: dict[str, Any], team_ratings: dict[str, Any], 
         for row in team_ratings.get("teams", [])
         if isinstance(row, dict)
     }
+    qualifying_team_rating_by_name = {
+        str(row.get("team") or ""): safe_float(row.get("qualifying_team_rating"), team_rating_by_name.get(str(row.get("team") or ""), 50.0))
+        for row in team_ratings.get("teams", [])
+        if isinstance(row, dict)
+    }
+    race_team_rating_by_name = {
+        str(row.get("team") or ""): safe_float(row.get("race_team_rating"), team_rating_by_name.get(str(row.get("team") or ""), 50.0))
+        for row in team_ratings.get("teams", [])
+        if isinstance(row, dict)
+    }
     strategy_by_name = {
         str(row.get("team") or ""): safe_float(row.get("strategy_score"), 50.0)
         for row in strategy_scores.get("teams", [])
@@ -134,7 +144,11 @@ def build_entries(driver_ratings: dict[str, Any], team_ratings: dict[str, Any], 
                 "name": name,
                 "team": team,
                 "driver_rating": safe_float(row.get("driver_rating"), 50.0),
+                "qualifying_rating": safe_float(row.get("qualifying_rating"), safe_float(row.get("driver_rating"), 50.0)),
+                "race_rating": safe_float(row.get("race_rating"), safe_float(row.get("driver_rating"), 50.0)),
                 "team_rating": team_rating_by_name.get(team, 50.0),
+                "qualifying_team_rating": qualifying_team_rating_by_name.get(team, team_rating_by_name.get(team, 50.0)),
+                "race_team_rating": race_team_rating_by_name.get(team, team_rating_by_name.get(team, 50.0)),
                 "strategy_score": strategy_by_name.get(team, 50.0),
                 "reliability_score": reliability_by_name.get(team, 60.0),
             }
@@ -147,7 +161,7 @@ def build_entries(driver_ratings: dict[str, Any], team_ratings: dict[str, Any], 
 def simulate_qualifying(entries: list[dict[str, Any]], rng: random.Random, qualifying_noise: float) -> list[str]:
     scored: list[tuple[str, float]] = []
     for entry in entries:
-        base = 0.62 * entry["driver_rating"] + 0.38 * entry["team_rating"]
+        base = 0.62 * entry.get("qualifying_rating", entry["driver_rating"]) + 0.38 * entry.get("qualifying_team_rating", entry["team_rating"])
         variation = rng.gauss(0.0, qualifying_noise)
         scored.append((entry["name"], base + variation))
     scored.sort(key=lambda x: (-x[1], x[0].lower()))
@@ -177,8 +191,8 @@ def simulate_single_race(
         grid_factor = (size - grid_pos) / max(size - 1, 1)
 
         base_pace = (
-            0.52 * entry["driver_rating"]
-            + 0.30 * entry["team_rating"]
+            0.52 * entry.get("race_rating", entry["driver_rating"])
+            + 0.30 * entry.get("race_team_rating", entry["team_rating"])
             + 0.18 * entry["strategy_score"]
         )
         strategy_noise = rng.gauss(0.0, 1.0 + tyre_degradation_factor)
@@ -187,7 +201,7 @@ def simulate_single_race(
         safety_effect = (rng.gauss(0.0, 1.8) + 0.03 * entry["strategy_score"]) if safety_car_active else 0.0
 
         start_track_position_advantage = 4.0 * grid_factor * overtaking_difficulty
-        overtaking_recovery = 4.5 * (1.0 - overtaking_difficulty) * (entry["driver_rating"] / 100.0)
+        overtaking_recovery = 4.5 * (1.0 - overtaking_difficulty) * (entry.get("race_rating", entry["driver_rating"]) / 100.0)
         pure_noise = rng.gauss(0.0, race_noise)
 
         reliability_fail_prob = clamp(0.01 + (100.0 - entry["reliability_score"]) / 170.0, 0.01, 0.35)
@@ -284,7 +298,14 @@ def run_simulation(entries: list[dict[str, Any]], config: dict[str, Any], driver
     calibrated_win_prob = temperature_scale_distribution(raw_win_prob, temperature=win_temperature)
 
     # Map driver names back to their teams and raw ratings for the output
-    driver_stats = {e["name"]: (e["team"], e["driver_rating"], e["team_rating"]) for e in entries}
+    driver_stats = {
+        e["name"]: (
+            e["team"],
+            e.get("race_rating", e["driver_rating"]),
+            e.get("race_team_rating", e["team_rating"]),
+        )
+        for e in entries
+    }
 
     rows: list[dict[str, Any]] = []
     for name in driver_names:

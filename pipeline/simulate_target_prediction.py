@@ -84,6 +84,10 @@ def apply_weekend_adjustments(entries: list[dict[str, Any]], config: dict[str, A
         updated = dict(entry)
         updated["driver_rating"] = round(clamp(entry["driver_rating"] + 0.7 * delta, 1.0, 99.0), 6)
         updated["team_rating"] = round(clamp(entry["team_rating"] + 0.3 * delta, 1.0, 99.0), 6)
+        updated["qualifying_rating"] = round(clamp(entry.get("qualifying_rating", entry["driver_rating"]) + 0.8 * delta, 1.0, 99.0), 6)
+        updated["race_rating"] = round(clamp(entry.get("race_rating", entry["driver_rating"]) + 0.5 * delta, 1.0, 99.0), 6)
+        updated["qualifying_team_rating"] = round(clamp(entry.get("qualifying_team_rating", entry["team_rating"]) + 0.35 * delta, 1.0, 99.0), 6)
+        updated["race_team_rating"] = round(clamp(entry.get("race_team_rating", entry["team_rating"]) + 0.25 * delta, 1.0, 99.0), 6)
         updated["weekend_form_delta"] = round(delta, 6)
         adjusted.append(updated)
         form_by_driver[entry["name"]] = form
@@ -172,7 +176,15 @@ def run_qualifying_prediction(
     raw_pole_prob = {name: pole_count[name] / simulations for name in names}
     scaled_pole_prob = temperature_scale_distribution(raw_pole_prob, temperature=qualifying_temperature)
 
-    driver_stats = {e["name"]: (e["team"], e["driver_rating"], e["team_rating"], e.get("weekend_form_delta", 0.0)) for e in entries}
+    driver_stats = {
+        e["name"]: (
+            e["team"],
+            e.get("qualifying_rating", e["driver_rating"]),
+            e.get("qualifying_team_rating", e["team_rating"]),
+            e.get("weekend_form_delta", 0.0),
+        )
+        for e in entries
+    }
     rows: list[dict[str, Any]] = []
     for name in names:
         team, d_rating, t_rating, form_delta = driver_stats.get(name, ("Unknown", 50.0, 50.0, 0.0))
@@ -269,7 +281,15 @@ def run_race_or_sprint_prediction(
     raw_win_prob = {name: win_count[name] / simulations for name in driver_names}
     calibrated_win_prob = temperature_scale_distribution(raw_win_prob, temperature=win_temperature)
 
-    driver_stats = {e["name"]: (e["team"], e["driver_rating"], e["team_rating"], e.get("weekend_form_delta", 0.0)) for e in entries}
+    driver_stats = {
+        e["name"]: (
+            e["team"],
+            e.get("race_rating", e["driver_rating"]),
+            e.get("race_team_rating", e["team_rating"]),
+            e.get("weekend_form_delta", 0.0),
+        )
+        for e in entries
+    }
     rows: list[dict[str, Any]] = []
     for name in driver_names:
         team, d_rating, t_rating, form_delta = driver_stats.get(name, ("Unknown", 50.0, 50.0, 0.0))

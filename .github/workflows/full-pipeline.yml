@@ -24,6 +24,11 @@ on:
         description: "Comma-separated driver abbreviations (e.g. VER,RUS,LEC). Overrides auto-detection."
         required: false
         type: string
+      include_lap_metrics:
+        description: "Extract clean-lap pace metrics during ingest (slower)"
+        required: false
+        type: boolean
+        default: false
   push:
     paths:
       - "knowledge/processed/**"
@@ -91,6 +96,9 @@ jobs:
           fi
           if [ -n "$CUTOFF_DATE" ]; then
             ARGS+=(--cutoff-date "$CUTOFF_DATE")
+          fi
+          if [ "${{ github.event.inputs.include_lap_metrics }}" = "true" ]; then
+            ARGS+=(--include-lap-metrics)
           fi
           python pipeline/ingest_fastf1.py "${ARGS[@]}" --log-level INFO
 

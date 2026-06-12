@@ -41,6 +41,16 @@ DEFAULT_SIGNAL_GUARDRAILS = {
     "echo_decay": 0.6,
     "penalty_index_cap": 0.35,
 }
+SESSION_CHRONOLOGY = {
+    "FP1": 1,
+    "FP2": 2,
+    "FP3": 3,
+    "SQ": 4,
+    "S": 5,
+    "Q": 6,
+    "R": 7,
+}
+COMPETITIVE_SESSION_CODES = {"SQ", "S", "Q", "R"}
 
 
 def parse_args() -> argparse.Namespace:
@@ -356,22 +366,53 @@ def load_current_entry_list(raw_dir: Path, season: int) -> tuple[dict[str, str],
     except Exception:
         return {}, []
 
-    mapping: dict[str, str] = {}
-    teams: set[str] = set()
+    latest_competitive: dict[str, str] = {}
+    latest_any: dict[str, str] = {}
 
-    # Prefer data from completed events/sessions if available
     events = payload.get("events", [])
-    for event in events:
-        for session in event.get("sessions", []):
-            for res in session.get("results", []):
-                d = str(res.get("abbreviation") or "").strip().upper()
-                t = str(res.get("team_name") or "").strip()
-                if d and t:
-                    mapping[d] = t
-                    teams.add(t)
+    if not isinstance(events, list):
+        return {}, []
 
-    # Fallback to calendar if no sessions yet (though less reliable for driver names)
-    return mapping, sorted(list(teams))
+    def event_key(indexed_event: tuple[int, dict[str, Any]]) -> tuple[str, float, int]:
+        index, event = indexed_event
+        raw_date = str(event.get("event_date") or "").strip()
+        event_date = raw_date[:10] if re.match(r"^\d{4}-\d{2}-\d{2}", raw_date) else "9999-12-31"
+        round_number = safe_float(event.get("round"))
+        return (event_date, round_number if round_number is not None else 9999.0, index)
+
+    for _, event in sorted(
+        ((idx, event) for idx, event in enumerate(events) if isinstance(event, dict)),
+        key=event_key,
+    ):
+        sessions = event.get("sessions", [])
+        if not isinstance(sessions, list):
+            continue
+        ordered_sessions = sorted(
+            (session for session in sessions if isinstance(session, dict)),
+            key=lambda session: SESSION_CHRONOLOGY.get(str(session.get("session_code") or "").upper(), 99),
+        )
+        for session in ordered_sessions:
+            code = str(session.get("session_code") or "").upper()
+            roster: dict[str, str] = {}
+            results = session.get("results", [])
+            if not isinstance(results, list):
+                continue
+            for res in results:
+                if not isinstance(res, dict):
+                    continue
+                driver = str(res.get("abbreviation") or "").strip().upper()
+                team = str(res.get("team_name") or "").strip()
+                if driver and team:
+                    roster[driver] = team
+            if not roster:
+                continue
+            latest_any = roster
+            if code in COMPETITIVE_SESSION_CODES:
+                latest_competitive = roster
+
+    mapping = latest_competitive or latest_any
+    teams = sorted(set(mapping.values()))
+    return mapping, teams
 
 
 def compute_driver_ratings(features: dict[str, Any], wet_by_team: dict[str, float], active_drivers: dict[str, str]) -> dict[str, Any]:
@@ -412,9 +453,16 @@ def compute_driver_ratings(features: dict[str, Any], wet_by_team: dict[str, floa
         row = feature_map.get(driver_name, {})
 
         race_avg = safe_float(row.get("race_avg_position"))
+        race_gap = safe_float(row.get("race_gap_to_winner_seconds"))
+        race_lap_gap = safe_float(row.get("race_lap_pace_gap_seconds"))
         q_avg = safe_float(row.get("qualifying_avg_position"))
+        q_gap_ms = safe_float(row.get("qualifying_gap_to_best_ms"))
+        teammate_q_gap_ms = safe_float(row.get("teammate_qualifying_gap_ms"))
         practice_avg = safe_float(row.get("practice_avg_position"))
+        practice_lap_gap = safe_float(row.get("practice_lap_pace_gap_seconds"))
         sprint_q_avg = safe_float(row.get("sprint_qualifying_avg_position"))
+        sprint_q_gap_ms = safe_float(row.get("sprint_qualifying_gap_to_best_ms"))
+        sprint_lap_gap = safe_float(row.get("sprint_lap_pace_gap_seconds"))
         q_phase = safe_float(row.get("qualifying_phase_depth"))
         sprint_q_phase = safe_float(row.get("sprint_qualifying_phase_depth"))
         dnf_rate = safe_float(row.get("dnf_rate"))
@@ -430,46 +478,69 @@ def compute_driver_ratings(features: dict[str, Any], wet_by_team: dict[str, floa
         wet_index = wet_by_team.get(team_key, 0.5)
         wet_component = 35.0 + 30.0 * clamp(wet_index, 0.0, 1.0)
         base_quali_component = 80.0 - 2.8 * clamp((q_avg if q_avg is not None else 12.0), 1.0, 20.0)
+        q_gap_component = 86.0 - 0.030 * clamp((q_gap_ms if q_gap_ms is not None else 1200.0), 0.0, 2400.0)
+        teammate_q_gap_component = 50.0 - 0.050 * clamp((teammate_q_gap_ms if teammate_q_gap_ms is not None else 0.0), -600.0, 600.0)
         race_form_component = 82.0 - 2.6 * clamp((recent_race_form if recent_race_form is not None else (race_avg if race_avg is not None else 12.0)), 1.0, 20.0)
+        race_pace_reference = race_lap_gap if race_lap_gap is not None else race_gap
+        race_gap_component = 84.0 - 0.65 * clamp((race_pace_reference if race_pace_reference is not None else 45.0), 0.0, 90.0)
         practice_component = 78.0 - 2.4 * clamp((practice_avg if practice_avg is not None else 12.0), 1.0, 20.0)
+        if practice_lap_gap is not None:
+            practice_component = 0.45 * practice_component + 0.55 * (82.0 - 4.0 * clamp(practice_lap_gap, 0.0, 12.0))
         sprint_quali_component = 78.0 - 2.6 * clamp((sprint_q_avg if sprint_q_avg is not None else (q_avg if q_avg is not None else 12.0)), 1.0, 20.0)
+        sprint_q_gap_component = 84.0 - 0.030 * clamp((sprint_q_gap_ms if sprint_q_gap_ms is not None else (q_gap_ms if q_gap_ms is not None else 1200.0)), 0.0, 2400.0)
+        sprint_pace_component = 82.0 - 4.0 * clamp((sprint_lap_gap if sprint_lap_gap is not None else 6.0), 0.0, 12.0)
         phase_score = q_phase if q_phase is not None else sprint_q_phase if sprint_q_phase is not None else 0.5
         progression_component = 45.0 + 18.0 * clamp(phase_score, 0.0, 1.0)
         qualifying_component = (
-            0.35 * base_quali_component
-            + 0.25 * race_form_component
+            0.25 * base_quali_component
+            + 0.30 * q_gap_component
+            + 0.15 * teammate_q_gap_component
             + 0.15 * practice_component
-            + 0.15 * sprint_quali_component
-            + 0.10 * progression_component
+            + 0.08 * sprint_quali_component
+            + 0.04 * sprint_q_gap_component
+            + 0.03 * progression_component
+        )
+        race_component = (
+            0.24 * race_form_component
+            + 0.24 * race_gap_component
+            + 0.18 * consistency_component
+            + 0.14 * teammate_component
+            + 0.07 * qualifying_component
+            + 0.03 * sprint_pace_component
+            + 0.10 * wet_component
         )
 
         # Small adjustment for rookies to not be absolute last if they show promise in signals
         if driver_name not in feature_map:
-             # Default rookie rating baseline
-             rating = 68.0 + 5.0 * clamp(signal_conf, -1.0, 1.0)
+            # Default rookie rating baseline.
+            qualifying_rating = 68.0 + 5.0 * clamp(signal_conf, -1.0, 1.0)
+            race_rating = 66.0 + 5.0 * clamp(signal_conf, -1.0, 1.0)
         else:
             signal_component = 5.0 * clamp(signal_conf, -1.0, 1.0)
-            rating = (
-                0.20 * teammate_component
-                + 0.25 * consistency_component
-                + 0.20 * wet_component
-                + 0.35 * qualifying_component
-                + signal_component
-            )
+            qualifying_rating = qualifying_component + signal_component
+            race_rating = race_component + signal_component
 
-        rating = round(clamp(rating, 0.0, 100.0), 6)
+        qualifying_rating = round(clamp(qualifying_rating, 0.0, 100.0), 6)
+        race_rating = round(clamp(race_rating, 0.0, 100.0), 6)
+        rating = round(clamp(0.45 * qualifying_rating + 0.55 * race_rating, 0.0, 100.0), 6)
 
         payload_rows.append(
             {
                 "driver": driver_name,
                 "team": team_name,
                 "driver_rating": rating,
+                "qualifying_rating": qualifying_rating,
+                "race_rating": race_rating,
                 "components": {
                     "teammate_delta_performance": round(teammate_component, 6),
                     "consistency": round(consistency_component, 6),
                     "wet_performance_index": round(wet_component, 6),
                     "qualifying_pace": round(qualifying_component, 6),
+                    "qualifying_gap_pace": round(q_gap_component, 6),
+                    "teammate_qualifying_gap": round(teammate_q_gap_component, 6),
                     "recent_race_form": round(race_form_component, 6),
+                    "race_gap_pace": round(race_gap_component, 6),
+                    "sprint_lap_pace": round(sprint_pace_component, 6),
                     "weekend_practice_pace": round(practice_component, 6),
                     "qualifying_progression": round(progression_component, 6),
                 },
@@ -498,35 +569,74 @@ def compute_team_ratings(features: dict[str, Any], active_teams: list[str]) -> d
         row = feature_map.get(team_name, {})
 
         q_avg = safe_float(row.get("qualifying_avg_position"))
+        q_gap_ms = safe_float(row.get("qualifying_gap_to_best_ms"))
         practice_avg = safe_float(row.get("practice_avg_position"))
+        practice_lap_gap = safe_float(row.get("practice_lap_pace_gap_seconds"))
         sprint_q_avg = safe_float(row.get("sprint_qualifying_avg_position"))
+        sprint_q_gap_ms = safe_float(row.get("sprint_qualifying_gap_to_best_ms"))
         q_phase = safe_float(row.get("qualifying_phase_depth"))
         race_avg = safe_float(row.get("race_avg_position"))
+        race_gap = safe_float(row.get("race_gap_to_winner_seconds"))
+        race_lap_gap = safe_float(row.get("race_lap_pace_gap_seconds"))
+        sprint_lap_gap = safe_float(row.get("sprint_lap_pace_gap_seconds"))
         upgrade_score = safe_float(row.get("signal_upgrade_score"))
 
         q_inputs = [value for value in (q_avg, sprint_q_avg, practice_avg) if value is not None]
         q_reference = statistics.fmean(q_inputs) if q_inputs else field_q_mean
         q_gap_proxy = 50.0 + 7.0 * clamp(field_q_mean - q_reference, -6.0, 6.0)
-        sector_dominance = 52.0 + 5.5 * clamp((q_avg if q_avg is not None else 12.0) - (race_avg if race_avg is not None else 12.0), -6.0, 6.0)
+        quali_time_proxy = 86.0 - 0.026 * clamp((q_gap_ms if q_gap_ms is not None else 1200.0), 0.0, 2600.0)
+        sprint_quali_time_proxy = 84.0 - 0.026 * clamp((sprint_q_gap_ms if sprint_q_gap_ms is not None else (q_gap_ms if q_gap_ms is not None else 1200.0)), 0.0, 2600.0)
+        race_pace_reference = race_lap_gap if race_lap_gap is not None else race_gap
+        race_pace_proxy = 84.0 - 0.58 * clamp((race_pace_reference if race_pace_reference is not None else 45.0), 0.0, 90.0)
+        sprint_pace_proxy = 82.0 - 4.0 * clamp((sprint_lap_gap if sprint_lap_gap is not None else 6.0), 0.0, 12.0)
+        race_position_proxy = 82.0 - 2.4 * clamp((race_avg if race_avg is not None else 12.0), 1.0, 20.0)
+        sector_dominance = 52.0 + 5.5 * clamp((race_avg if race_avg is not None else 12.0) - (q_avg if q_avg is not None else 12.0), -6.0, 6.0)
         upgrades_impact = 45.0 + 16.0 * clamp((upgrade_score if upgrade_score is not None else 1.0), 0.0, 3.0)
         weekend_pace_proxy = 45.0 + 20.0 * clamp(1.0 - ((practice_avg if practice_avg is not None else 12.0) / 20.0), 0.0, 1.0)
+        if practice_lap_gap is not None:
+            weekend_pace_proxy = 0.45 * weekend_pace_proxy + 0.55 * (82.0 - 4.0 * clamp(practice_lap_gap, 0.0, 12.0))
         progression_proxy = 40.0 + 20.0 * clamp((q_phase if q_phase is not None else 0.5), 0.0, 1.0)
 
         if team_name not in feature_map:
             # Baseline for new teams (e.g. Cadillac)
-            rating = 55.0 + upgrades_impact * 0.1
+            qualifying_rating = 55.0 + upgrades_impact * 0.1
+            race_rating = 55.0 + upgrades_impact * 0.1
         else:
-            rating = 0.35 * q_gap_proxy + 0.20 * sector_dominance + 0.25 * upgrades_impact + 0.10 * weekend_pace_proxy + 0.10 * progression_proxy
+            qualifying_rating = (
+                0.28 * q_gap_proxy
+                + 0.34 * quali_time_proxy
+                + 0.10 * sprint_quali_time_proxy
+                + 0.12 * upgrades_impact
+                + 0.08 * weekend_pace_proxy
+                + 0.08 * progression_proxy
+            )
+            race_rating = (
+                0.34 * race_pace_proxy
+                + 0.21 * race_position_proxy
+                + 0.14 * sector_dominance
+                + 0.03 * sprint_pace_proxy
+                + 0.14 * upgrades_impact
+                + 0.08 * weekend_pace_proxy
+                + 0.06 * qualifying_rating
+            )
 
+        qualifying_rating = round(clamp(qualifying_rating, 0.0, 100.0), 6)
+        race_rating = round(clamp(race_rating, 0.0, 100.0), 6)
+        rating = 0.45 * qualifying_rating + 0.55 * race_rating
         rating = round(clamp(rating, 0.0, 100.0), 6)
 
         payload_rows.append(
             {
                 "team": team_name,
                 "team_rating": rating,
+                "qualifying_team_rating": qualifying_rating,
+                "race_team_rating": race_rating,
                 "components": {
                     "qualifying_gap_proxy": round(q_gap_proxy, 6),
+                    "qualifying_time_gap_proxy": round(quali_time_proxy, 6),
                     "sector_dominance": round(sector_dominance, 6),
+                    "race_pace_proxy": round(race_pace_proxy, 6),
+                    "sprint_pace_proxy": round(sprint_pace_proxy, 6),
                     "upgrades_impact": round(upgrades_impact, 6),
                     "weekend_pace_proxy": round(weekend_pace_proxy, 6),
                     "qualifying_progression": round(progression_proxy, 6),
@@ -650,8 +760,12 @@ def blend_features(current: dict[str, Any], previous: dict[str, Any], current_we
         numeric_fields = [
             "race_avg_position", "qualifying_avg_position", "dnf_rate", 
             "points_per_start", "points_total", "starts",
-            "practice_avg_position", "fp1_avg_position", "fp2_avg_position", "fp3_avg_position",
-            "sprint_qualifying_avg_position", "sprint_avg_position",
+            "race_gap_to_winner_seconds", "race_lap_pace_gap_seconds",
+            "qualifying_gap_to_best_ms", "teammate_qualifying_gap_ms",
+            "practice_avg_position", "practice_lap_pace_gap_seconds",
+            "fp1_avg_position", "fp2_avg_position", "fp3_avg_position",
+            "sprint_qualifying_avg_position", "sprint_qualifying_gap_to_best_ms",
+            "sprint_avg_position", "sprint_lap_pace_gap_seconds",
             "qualifying_phase_depth", "sprint_qualifying_phase_depth",
         ]
         

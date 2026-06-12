@@ -7,6 +7,7 @@ from pipeline.build_features import (
     choose_fastf1_snapshot,
     aggregate_signals,
     build_features,
+    is_completed_race_result,
     load_recency_config,
     recency_weighted_mean,
     DEFAULT_RECENCY_CONFIG,
@@ -94,6 +95,88 @@ def test_build_features_collects_session_specific_metrics() -> None:
     assert team["practice_avg_position"] == 2.0
 
 
+def test_build_features_collects_timing_gap_metrics() -> None:
+    snapshot = {
+        "season": 2026,
+        "events": [
+            {
+                "event_date": "2026-03-08",
+                "sessions": [
+                    {
+                        "session_code": "Q",
+                        "results": [
+                            {
+                                "position": 1,
+                                "abbreviation": "RUS",
+                                "team_name": "Mercedes",
+                                "q1": "0 days 00:01:20.000000",
+                                "q2": "0 days 00:01:19.000000",
+                                "q3": "0 days 00:01:18.000000",
+                            },
+                            {
+                                "position": 2,
+                                "abbreviation": "ANT",
+                                "team_name": "Mercedes",
+                                "q1": "0 days 00:01:20.100000",
+                                "q2": "0 days 00:01:19.200000",
+                                "q3": "0 days 00:01:18.300000",
+                            },
+                        ],
+                    },
+                    {
+                        "session_code": "R",
+                        "results": [
+                            {"position": 1, "abbreviation": "RUS", "team_name": "Mercedes", "status": "Finished", "time": "0 days 01:20:00.000000"},
+                            {"position": 2, "abbreviation": "ANT", "team_name": "Mercedes", "status": "Finished", "time": "0 days 00:00:03.500000"},
+                        ],
+                    },
+                ],
+            }
+        ],
+    }
+
+    features = build_features(snapshot, [], DEFAULT_SIGNAL_GUARDRAILS)
+    by_driver = {row["driver"]: row for row in features["drivers"]}
+    team = features["teams"][0]
+
+    assert by_driver["RUS"]["qualifying_gap_to_best_ms"] == 0.0
+    assert by_driver["ANT"]["qualifying_gap_to_best_ms"] == 300.0
+    assert by_driver["ANT"]["teammate_qualifying_gap_ms"] == 300.0
+    assert by_driver["ANT"]["race_gap_to_winner_seconds"] == 3.5
+    assert team["qualifying_gap_to_best_ms"] == 150.0
+
+
+def test_build_features_collects_lap_pace_metrics_when_present() -> None:
+    snapshot = {
+        "season": 2026,
+        "events": [
+            {
+                "event_date": "2026-03-08",
+                "sessions": [
+                    {
+                        "session_code": "R",
+                        "results": [
+                            {"position": 1, "abbreviation": "RUS", "team_name": "Mercedes", "status": "Finished"},
+                            {"position": 2, "abbreviation": "ANT", "team_name": "Mercedes", "status": "Finished"},
+                        ],
+                        "lap_metrics": [
+                            {"abbreviation": "RUS", "team_name": "Mercedes", "pace_gap_to_best_seconds": 0.0},
+                            {"abbreviation": "ANT", "team_name": "Mercedes", "pace_gap_to_best_seconds": 0.35},
+                        ],
+                    }
+                ],
+            }
+        ],
+    }
+
+    features = build_features(snapshot, [], DEFAULT_SIGNAL_GUARDRAILS)
+    by_driver = {row["driver"]: row for row in features["drivers"]}
+
+    assert by_driver["RUS"]["race_lap_pace_gap_seconds"] == 0.0
+    assert by_driver["ANT"]["race_lap_pace_gap_seconds"] == 0.35
+    assert features["teams"][0]["race_lap_pace_gap_seconds"] == 0.175
+
+
 def test_recency_weighted_mean_assigns_decay_per_event_rank() -> None:
     # Three events: oldest=10, middle=5, newest=2. Half-life of one event
     # halves the weight per step, so the weighted mean must be much closer
@@ -153,6 +236,63 @@ def test_build_features_recency_biases_recent_race_over_old() -> None:
     # ESS for two events at half-life=1: (1+0.5)^2/(1+0.25) = 1.8.
     assert round(driver["race_effective_starts"], 6) == 1.8
     assert driver["starts"] == 2  # raw count is preserved
+
+
+def test_build_features_sorts_events_by_date_before_recency_weighting() -> None:
+    snapshot = {
+        "season": 2026,
+        "events": [
+            {
+                "event_date": "2026-03-29",
+                "sessions": [
+                    {"session_code": "R", "results": [{"position": 3, "abbreviation": "VER", "team_name": "Red Bull", "status": "Finished"}]},
+                ],
+            },
+            {
+                "event_date": "2026-03-08",
+                "sessions": [
+                    {"session_code": "R", "results": [{"position": 15, "abbreviation": "VER", "team_name": "Red Bull", "status": "Finished"}]},
+                ],
+            },
+        ],
+    }
+
+    recency = json.loads(json.dumps(DEFAULT_RECENCY_CONFIG))
+    recency["half_life_events"]["race"] = 1.0
+    features = build_features(snapshot, [], DEFAULT_SIGNAL_GUARDRAILS, recency_config=recency)
+    driver = features["drivers"][0]
+
+    assert driver["race_avg_position"] == 7.0
+
+
+def test_lapped_status_counts_as_completed_race_result() -> None:
+    assert is_completed_race_result({"status": "Lapped"}) is True
+    assert is_completed_race_result({"status": "+1 Lap"}) is True
+    assert is_completed_race_result({"status": "Accident"}) is False
+
+    snapshot = {
+        "season": 2026,
+        "events": [
+            {
+                "event_date": "2026-03-08",
+                "sessions": [
+                    {
+                        "session_code": "R",
+                        "results": [
+                            {
+                                "position": 10,
+                                "abbreviation": "ALB",
+                                "team_name": "Williams",
+                                "status": "Lapped",
+                            }
+                        ],
+                    },
+                ],
+            }
+        ],
+    }
+    features = build_features(snapshot, [], DEFAULT_SIGNAL_GUARDRAILS)
+    assert features["drivers"][0]["dnf_rate"] == 0.0
 
 
 def test_build_features_emits_default_recency_metadata() -> None:

@@ -14,7 +14,7 @@
   "calibration_season": 2025,
   "calibration_source": "outputs/backtest/backtest_season_2025.json",
   "event_format": "conventional",
-  "generated_at": "2026-06-12T19:07:45Z",
+  "generated_at": "2026-06-12T21:48:20Z",
   "grid_source": "simulation",
   "inputs_status": [
     {

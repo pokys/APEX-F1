@@ -15,7 +15,7 @@ on:
   workflow_run:
     workflows:
       - Full Prediction Pipeline
-      - Simulate Race
+      - Simulate Prediction
     types:
       - completed
 

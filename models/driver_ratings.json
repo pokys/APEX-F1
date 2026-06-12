@@ -146,8 +146,8 @@
         "qualifying_gap_pace": 48.048449,
         "qualifying_pace": 54.618422,
         "qualifying_progression": 61.137342,
-        "race_gap_pace": 61.255599,
-        "recent_race_form": 62.933334,
+        "race_gap_pace": 63.986597,
+        "recent_race_form": 69.866666,
         "sprint_lap_pace": 58.0,
         "teammate_delta_performance": 78.0,
         "teammate_qualifying_gap": 80.0,
@@ -155,9 +155,9 @@
         "wet_performance_index": 50.0
       },
       "driver": "GAS",
-      "driver_rating": 60.212039,
+      "driver_rating": 61.48773,
       "qualifying_rating": 54.618422,
-      "race_rating": 64.788634,
+      "race_rating": 67.108073,
       "team": "Alpine"
     },
     {
@@ -167,7 +167,7 @@
         "qualifying_pace": 64.754901,
         "qualifying_progression": 63.0,
         "race_gap_pace": 62.375994,
-        "recent_race_form": 72.466666,
+        "recent_race_form": 70.733334,
         "sprint_lap_pace": 58.0,
         "teammate_delta_performance": 78.0,
         "teammate_qualifying_gap": 80.0,
@@ -175,9 +175,9 @@
         "wet_performance_index": 50.0
       },
       "driver": "HAD",
-      "driver_rating": 65.909999,
+      "driver_rating": 65.681199,
       "qualifying_rating": 64.754901,
-      "race_rating": 66.855079,
+      "race_rating": 66.439079,
       "team": "Red Bull Racing"
     },
     {
@@ -227,7 +227,7 @@
         "qualifying_pace": 51.46476,
         "qualifying_progression": 60.141798,
         "race_gap_pace": 57.077856,
-        "recent_race_form": 67.266666,
+        "recent_race_form": 65.533334,
         "sprint_lap_pace": 58.0,
         "teammate_delta_performance": 78.0,
         "teammate_qualifying_gap": 80.0,
@@ -235,9 +235,9 @@
         "wet_performance_index": 50.0
       },
       "driver": "LAW",
-      "driver_rating": 58.692012,
+      "driver_rating": 58.463212,
       "qualifying_rating": 51.46476,
-      "race_rating": 64.605218,
+      "race_rating": 64.189219,
       "team": "Racing Bulls"
     },
     {
@@ -267,7 +267,7 @@
         "qualifying_pace": 47.070896,
         "qualifying_progression": 59.740722,
         "race_gap_pace": 63.526407,
-        "recent_race_form": 52.533334,
+        "recent_race_form": 50.8,
         "sprint_lap_pace": 58.0,
         "teammate_delta_performance": 22.0,
         "teammate_qualifying_gap": 80.0,
@@ -275,9 +275,9 @@
         "wet_performance_index": 50.0
       },
       "driver": "LIN",
-      "driver_rating": 50.480017,
+      "driver_rating": 50.251217,
       "qualifying_rating": 47.070896,
-      "race_rating": 53.269298,
+      "race_rating": 52.853298,
       "team": "Racing Bulls"
     },
     {
@@ -347,7 +347,7 @@
         "qualifying_pace": 66.888223,
         "qualifying_progression": 63.0,
         "race_gap_pace": 71.537423,
-        "recent_race_form": 65.533334,
+        "recent_race_form": 63.8,
         "sprint_lap_pace": 58.0,
         "teammate_delta_performance": 78.0,
         "teammate_qualifying_gap": 80.0,
@@ -355,9 +355,9 @@
         "wet_performance_index": 50.0
       },
       "driver": "PIA",
-      "driver_rating": 66.586238,
+      "driver_rating": 66.357438,
       "qualifying_rating": 66.888223,
-      "race_rating": 66.33916,
+      "race_rating": 65.92316,
       "team": "McLaren"
     },
     {
@@ -441,7 +441,7 @@
       "team": "Red Bull Racing"
     }
   ],
-  "inputs_hash": "582bc752f7cca66406ca644cfd5cec77fdd1dc128264fffc41f9f961c1916c5e",
+  "inputs_hash": "36f0b63bec790f6d0b8763bb7725e911610314858bae7838834838282ab9b191",
   "season": 2026,
   "source_features": "data/processed/features_season_2026.json",
   "source_summary": "Full Season 2026 Data"

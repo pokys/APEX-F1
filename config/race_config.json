@@ -11,15 +11,11 @@
     "FP3",
     "Q"
   ],
-  "available_sessions_ingested": [
-    "FP1",
-    "FP2",
-    "FP3"
-  ],
+  "available_sessions_ingested": [],
   "calibration_season": 2025,
   "calibration_source": "outputs/backtest/backtest_season_2025.json",
   "event_format": "conventional",
-  "generated_at": "2026-06-13T15:33:05Z",
+  "generated_at": "2026-06-13T16:15:28Z",
   "grid_source": "simulation",
   "inputs_status": [
     {

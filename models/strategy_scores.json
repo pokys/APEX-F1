@@ -1,17 +1,17 @@
 {
-  "inputs_hash": "c967d2de80cc424333615ac8abeaf03ed5c1f427be2af073077d30b0a4985872",
+  "inputs_hash": "0159d958dee5636d2011022079d449dc3801b4e85a8f5c3100c2dcca744bdb24",
   "season": 2026,
   "source_features": "data/processed/features_season_2026.json",
   "source_summary": "Full Season 2026 Data",
   "teams": [
     {
       "components": {
-        "pit_stop_performance": 68.528672,
+        "pit_stop_performance": 66.71732,
         "safety_car_reactions": 60.0,
         "sprint_execution": 48.552521,
-        "strategic_success_history": 56.857143
+        "strategic_success_history": 56.0
       },
-      "strategy_score": 59.74148,
+      "strategy_score": 58.898074,
       "team": "Alpine F1 Team"
     },
     {
@@ -86,12 +86,12 @@
     },
     {
       "components": {
-        "pit_stop_performance": 53.225952,
+        "pit_stop_performance": 55.037296,
         "safety_car_reactions": 60.0,
         "sprint_execution": 37.776011,
-        "strategic_success_history": 50.0
+        "strategic_success_history": 50.857143
       },
-      "strategy_score": 51.134187,
+      "strategy_score": 51.97759,
       "team": "RB F1 Team"
     },
     {

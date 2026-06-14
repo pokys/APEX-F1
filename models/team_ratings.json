@@ -1,5 +1,5 @@
 {
-  "inputs_hash": "c967d2de80cc424333615ac8abeaf03ed5c1f427be2af073077d30b0a4985872",
+  "inputs_hash": "0159d958dee5636d2011022079d449dc3801b4e85a8f5c3100c2dcca744bdb24",
   "season": 2026,
   "source_features": "data/processed/features_season_2026.json",
   "source_summary": "Full Season 2026 Data",
@@ -9,16 +9,16 @@
         "qualifying_gap_proxy": 48.342888,
         "qualifying_progression": 56.09386,
         "qualifying_time_gap_proxy": 48.44313,
-        "race_pace_proxy": 59.247197,
-        "sector_dominance": 39.261538,
+        "race_pace_proxy": 58.543194,
+        "sector_dominance": 40.506842,
         "sprint_pace_proxy": 58.0,
         "upgrades_impact": 61.0,
         "weekend_pace_proxy": 53.0
       },
       "qualifying_team_rating": 50.698495,
-      "race_team_rating": 55.71214,
+      "race_team_rating": 55.533007,
       "team": "Alpine F1 Team",
-      "team_rating": 53.456
+      "team_rating": 53.357477
     },
     {
       "components": {
@@ -138,15 +138,15 @@
         "qualifying_progression": 55.71866,
         "qualifying_time_gap_proxy": 43.617956,
         "race_pace_proxy": 55.449236,
-        "sector_dominance": 49.782158,
+        "sector_dominance": 48.536859,
         "sprint_pace_proxy": 58.0,
         "upgrades_impact": 61.0,
         "weekend_pace_proxy": 53.0
       },
       "qualifying_team_rating": 48.963709,
-      "race_team_rating": 54.933126,
+      "race_team_rating": 54.872899,
       "team": "RB F1 Team",
-      "team_rating": 52.246888
+      "team_rating": 52.213763
     },
     {
       "components": {

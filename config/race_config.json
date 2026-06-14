@@ -1,9 +1,9 @@
 {
   "available_sessions": [
-    "Q",
     "FP1",
     "FP2",
-    "FP3"
+    "FP3",
+    "Q"
   ],
   "available_sessions_by_calendar": [
     "FP1",
@@ -12,6 +12,9 @@
     "Q"
   ],
   "available_sessions_ingested": [
+    "FP1",
+    "FP2",
+    "FP3",
     "Q"
   ],
   "calibration_season": 2025,
@@ -41,7 +44,7 @@
     "STR",
     "ALO"
   ],
-  "generated_at": "2026-06-14T11:59:39Z",
+  "generated_at": "2026-06-14T14:22:50Z",
   "grid_source": "qualifying",
   "inputs_status": [
     {

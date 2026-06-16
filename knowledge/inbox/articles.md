@@ -148,3 +148,14 @@
 - [ ] Who slept best last night: Frederic Vasseur (https://www.motorsport.com/f1/news/who-slept-best-last-night-frederic-vasseur/10830463/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Who slept worst last night: George Russell (https://www.motorsport.com/f1/news/who-slept-the-worst-last-night-george-russell/10830487/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Why Red Bull hasn't given Monaco podium trophy to Gasly yet (https://www.the-race.com/formula-1/red-bull-holds-onto-gaslys-trophy-as-it-ponders-appeal/)
+
+## 2026-06-16
+- [ ] "I'm not a machine": Isack Hadjar blasts Red Bull start procedure (https://www.motorsport.com/f1/news/im-not-a-machine-isack-hadjar-blasts-red-bull-start-procedure/10830609/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Ferrari would "embarrass" F1 rivals with stronger engine - Norris (https://www.autosport.com/f1/news/ferrari-would-embarrass-f1-rivals-with-stronger-engine-norris/10830738/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] How a Mercedes pit stop error "compromised" George Russell’s Barcelona GP (https://www.motorsport.com/f1/news/f1-russell-backstory-mercedes-had-incorrectly-adjusted-the-front-wing-at-the-pit-stop/10830780/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] How the biggest weekend of Herta's F1 mission really went (https://www.the-race.com/formula-1/colton-herta-f1-mission-how-biggest-weekend-yet-really-went/)
+- [ ] Lando Norris: Ferrari would "embarrass" F1 rivals with stronger engine (https://www.motorsport.com/f1/news/lando-norris-ferrari-would-embarrass-f1-rivals-with-stronger-engine/10830640/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Lewis Hamilton's first Ferrari win celebrations spill into the streets in Italy (https://www.motorsport.com/f1/news/lewis-hamiltons-first-ferrari-win-celebrations-spill-into-the-streets-in-italy/10830731/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] New F1 track's standout corner explained + our verdict on it (https://www.the-race.com/formula-1/madrid-f1-track-spanish-gp-standout-corner-la-monumental-our-verdict/)
+- [ ] Serena Williams celebrates Lewis Hamilton after milestone Ferrari F1 win (https://www.motorsport.com/f1/news/serena-williams-celebrates-lewis-hamilton-after-milestone-ferrari-f1-win/10830689/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Three rookies vying for a past champion's Formula E seat (https://www.the-race.com/formula-e/three-rookies-vying-for-champion-di-grassi-formula-e-seat/)

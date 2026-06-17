@@ -83,6 +83,16 @@
 - [ ] Winners and losers from a cathartic Barcelona F1 Grand Prix (https://www.motorsport.com/f1/news/winners-and-losers-from-a-cathartic-barcelona-f1-grand-prix/10830418/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Wolff hints Mercedes might've won Barcelona GP with team orders (https://www.the-race.com/formula-1/toto-wolff-hints-mercedes-might-have-won-barcelona-gp-f1-team-orders/)
 - [ ] Wolff's take on Hamilton's Ferrari resurgence: "Maybe the girlfriend helps" (https://www.autosport.com/f1/news/maybe-the-girlfriend-helps-toto-wolffs-take-on-lewis-hamiltons-ferrari-revival/10830379/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] 2026 Barcelona-Catalunya Grand Prix interactive data: lap charts, times and tyres | Formula 1 (https://www.racefans.net/2026/06/14/2026-barcelona-catalunya-grand-prix-interactive-data-lap-charts-times-and-tyres/)
+- [ ] Colapinto loses eighth place and receives penalty point for yellow flag error | Formula 1 (https://www.racefans.net/2026/06/14/colapinto-loses-eighth-place-and-receives-penalty-point-for-yellow-flag-error/)
+- [ ] Hamilton becomes 16th driver to win races for three different teams | Formula 1 (https://www.racefans.net/2026/06/14/hamilton-becomes-16th-driver-to-win-races-for-three-different-teams/)
+- [ ] Hamilton is Formula 1’s oldest grand prix winner since 1970 | Formula 1 (https://www.racefans.net/2026/06/14/hamilton-is-formula-1s-oldest-grand-prix-winner-since-1970/)
+- [ ] Hamilton says breakthrough Ferrari win seemed “almost impossible” last year | Formula 1 (https://www.racefans.net/2026/06/14/hamilton-says-breakthrough-ferrari-win-seemed-almost-impossible-last-year/)
+- [ ] Hulkenberg’s bizarre retirement caused by gravel hitting car’s kill switch | Formula 1 (https://www.racefans.net/2026/06/14/hulkenbergs-bizarre-retirement-caused-by-gravel-hitting-cars-kill-switch/)
+- [ ] Round-up: Red Bull did “way better than expected” in Catalunya – Hadjar | RaceFans Round-up (https://www.racefans.net/2026/06/15/round-up-15th-june-2026/)
+- [ ] Russell reveals confusion over Mercedes’ strategy call in Barcelona-Catalunya GP | Formula 1 (https://www.racefans.net/2026/06/14/russell-reveals-confusion-over-mercedes-strategy-call-in-barcelona-catalunya-gp/)
+- [ ] Stewards reveal Antonelli should have received penalty before second pit stop | Formula 1 (https://www.racefans.net/2026/06/14/stewards-reveal-antonelli-should-have-received-five-second-time-penalty-before-pit-stop/)
+- [ ] Vote for your 2026 Barcelona-Catalunya Grand Prix Driver of the Weekend | Formula 1 (https://www.racefans.net/2026/06/14/vote-for-your-2026-barcelona-catalunya-grand-prix-driver-of-the-weekend/)
 
 ## 2026-06-15
 - [ ] "Don't forget who you are" How Hamilton beat his demons to win with Ferrari (https://www.autosport.com/f1/news/how-lewis-hamilton-banished-his-demons-to-win-with-ferrari-dont-forget-who-you-are/10830572/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
@@ -104,6 +114,11 @@
 - [ ] Who slept best last night: Frederic Vasseur (https://www.motorsport.com/f1/news/who-slept-best-last-night-frederic-vasseur/10830463/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Who slept worst last night: George Russell (https://www.motorsport.com/f1/news/who-slept-the-worst-last-night-george-russell/10830487/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Why Red Bull hasn't given Monaco podium trophy to Gasly yet (https://www.the-race.com/formula-1/red-bull-holds-onto-gaslys-trophy-as-it-ponders-appeal/)
+- [ ] Hamilton can “stick middle finger up” at critics after first Ferrari win – Norris | Formula 1 (https://www.racefans.net/2026/06/15/hamilton-can-stick-middle-finger-up-at-critics-after-first-ferrari-win-norris/)
+- [ ] Hamilton reveals he carried injury throughout 2025 season after “big crash” at Catalunya | Formula 1 (https://www.racefans.net/2026/06/15/hamilton-reveals-he-carried-injury-throughout-2025-season-after-big-crash-at-catalunya/)
+- [ ] Mercedes request Right of Review over Monaco GP result after Russell penalty | Formula 1 (https://www.racefans.net/2026/06/15/mercedes-request-right-of-review-over-monaco-gp-result-after-russell-penalty/)
+- [ ] Mercedes reveal pit crew made ‘incorrect adjustment’ on Russell’s car at last pit stop | Formula 1 (https://www.racefans.net/2026/06/15/mercedes-reveal-pit-crew-made-incorrect-adjustment-on-russells-car-at-last-pit-stop/)
+- [ ] Round-up: Ben Sulayem wants 880bhp V8s with ‘10% hybrid’ for F1 in 2030, and more | RaceFans Round-up (https://www.racefans.net/2026/06/16/round-up-16th-june-2026/)
 
 ## 2026-06-16
 - [ ] "I'm not a machine": Isack Hadjar blasts Red Bull start procedure (https://www.motorsport.com/f1/news/im-not-a-machine-isack-hadjar-blasts-red-bull-start-procedure/10830609/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
@@ -128,3 +143,14 @@
 - [ ] The title-winning characteristic McLaren has failed to replicate in F1 2026 (https://www.autosport.com/f1/news/title-winning-characteristic-mclaren-has-failed-to-replicate-in-f1-2026/10830824/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] Three rookies vying for a past champion's Formula E seat (https://www.the-race.com/formula-e/three-rookies-vying-for-champion-di-grassi-formula-e-seat/)
 - [ ] Why one of McLaren's world-beating strengths didn't carry over from F1 2025 (https://www.motorsport.com/f1/news/why-one-of-mclarens-world-beating-strengths-hasnt-carried-over-from-2025/10830759/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] McLaren confirms appeal against cancellation of Gasly’s Monaco Grand Prix penalties | Formula 1 (https://www.racefans.net/2026/06/16/mclaren-confirms-appeal-against-cancellation-of-gaslys-monaco-grand-prix-penalties/)
+- [ ] McLaren junior Fornaroli to test for Haas tomorrow | Formula 1 (https://www.racefans.net/2026/06/16/haas-offers-formula-1-test-to-mclaren-junior-fornaroli/)
+- [ ] Round-up: Madring promoters ready to work through the nights to complete track, and more | RaceFans Round-up (https://www.racefans.net/2026/06/17/round-up-17th-june-2026/)
+- [ ] ‘There were definitely moments I thought ‘maybe you do lose it” – Hamilton | Formula 1 (https://www.racefans.net/2026/06/16/there-were-definitely-moments-i-thought-maybe-you-do-lose-it-hamilton/)
+
+## 2026-06-17
+- [ ] Equivalent of 100,000 flights cut from F1's carbon footprint (https://www.the-race.com/formula-1/one-hundred-thousand-transatlantic-flights-cut-f1-carbon-footprint/)
+- [ ] F1 reports 35% CO2 reduction ahead of 2030 net-zero target (https://www.motorsport.com/f1/news/f1-reports-35-co2-reduction-ahead-of-2030-targets/10830960/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] F1 reports 35% CO2 reduction ahead of 2030 targets (https://www.autosport.com/f1/news/f1-reports-35-co2-reduction-ahead-of-2030-targets/10830967/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Ferrari’s livery isn’t red enough for Hamilton | Formula 1 (https://www.racefans.net/2026/06/17/ferraris-livery-isnt-red-enough-for-hamilton/)
+- [ ] The true cost of Mercedes' biggest 2026 weakness (https://www.the-race.com/formula-1/the-true-cost-of-mercedes-biggest-2026-weakness/)

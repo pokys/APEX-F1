@@ -1,15 +1,15 @@
 {
   "data_freshness": {
-    "days_since_latest_event": 6,
-    "days_until_next_race": 8,
+    "days_since_latest_event": 7,
+    "days_until_next_race": 7,
     "is_stale": false,
     "latest_completed_date": "2026-06-14",
     "latest_completed_event": "Barcelona Grand Prix",
     "next_race_date": "2026-06-28",
-    "reference_date": "2026-06-20",
+    "reference_date": "2026-06-21",
     "stale_threshold_days": 21.0
   },
-  "deterministic_run_id": "48627767d1d87ad1a69c",
+  "deterministic_run_id": "7b0651f924e052f5420c",
   "drivers": [
     {
       "driver_share": 48.7,
@@ -254,7 +254,7 @@
       "weekend_form_delta": 0.0
     }
   ],
-  "generated_at": "2026-06-20T22:11:10Z",
+  "generated_at": "2026-06-21T00:10:10Z",
   "inputs_used": [
     {
       "source": "history_driver",
@@ -269,7 +269,7 @@
   ],
   "integrity": {
     "driver_ratings_hash": "cc4e1df1692c",
-    "race_config_hash": "eca56d6f7188",
+    "race_config_hash": "32042de23ea7",
     "team_ratings_hash": "3ecaebf035fa"
   },
   "prediction_target": "qualifying",

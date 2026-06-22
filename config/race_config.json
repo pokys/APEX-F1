@@ -5,7 +5,7 @@
   "calibration_season": 2025,
   "calibration_source": "outputs/backtest/backtest_season_2025.json",
   "event_format": "conventional",
-  "generated_at": "2026-06-22T11:24:35Z",
+  "generated_at": "2026-06-22T14:22:12Z",
   "grid_source": "simulation",
   "inputs_status": [
     {
@@ -88,5 +88,5 @@
   "weather": "dry",
   "weather_modifier": 0.05,
   "weekend_format": "standard",
-  "win_temperature": 1.25
+  "win_temperature": 1.2
 }

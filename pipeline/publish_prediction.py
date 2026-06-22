@@ -53,6 +53,39 @@ def load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def redistribute_to_target(
+    entries: list[dict[str, Any]],
+    value_key: str,
+    lower_key: str,
+    target: float,
+) -> None:
+    """Rescale the slack above a per-driver lower bound so that ``value_key`` sums to ``target``.
+
+    The pole/win headline metric is smoothed and temperature-scaled, which lifts the
+    tail drivers off zero. The ``max(value, lower)`` monotonicity clamps then leak that
+    floor into ``front_row``/``top10``/``podium`` and inflate their sums past the exact
+    counts (2 front-row spots, N top-10 spots, 3 podium spots) the validator asserts.
+
+    To keep the invariants intact we trim only the slack above each lower bound, which
+    preserves ``value >= lower`` (monotonicity) and restores the exact target sum.
+    """
+    if not entries:
+        return
+    values = [max(safe_float(e.get(value_key), 0.0), safe_float(e.get(lower_key), 0.0)) for e in entries]
+    lowers = [safe_float(e.get(lower_key), 0.0) for e in entries]
+    total = sum(values)
+    lower_sum = sum(lowers)
+    slack_total = total - lower_sum
+    if total <= target or slack_total <= 0:
+        # Nothing to trim, or no slack to redistribute; just persist the floored values.
+        for entry, value in zip(entries, values):
+            entry[value_key] = round(value, 6)
+        return
+    keep = (target - lower_sum) / slack_total
+    for entry, value, lower in zip(entries, values, lowers):
+        entry[value_key] = round(lower + (value - lower) * keep, 6)
+
+
 def normalize_prediction(payload: dict[str, Any]) -> dict[str, Any]:
     target_output_type = str(payload.get("target_output_type") or "race")
     drivers_raw = payload.get("drivers", [])
@@ -99,8 +132,13 @@ def normalize_prediction(payload: dict[str, Any]) -> dict[str, Any]:
         normalized_drivers.append(driver_entry)
 
     if target_output_type == "qualifying":
+        # Restore the exact spot counts the validator requires after the monotonic clamps.
+        top10_target = float(min(10, len(normalized_drivers)))
+        redistribute_to_target(normalized_drivers, "front_row_probability", "pole_probability", 2.0)
+        redistribute_to_target(normalized_drivers, "top10_probability", "front_row_probability", top10_target)
         normalized_drivers.sort(key=lambda x: (-x["pole_probability"], x["expected_position"], x["name"].lower()))
     else:
+        redistribute_to_target(normalized_drivers, "podium_probability", "win_probability", 3.0)
         normalized_drivers.sort(key=lambda x: (-x["win_probability"], x["expected_finish"], x["name"].lower()))
 
     # SYSTEMIC FIX: Preserve integrity and simulation metadata

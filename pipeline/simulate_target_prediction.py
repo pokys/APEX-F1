@@ -11,12 +11,16 @@ from typing import Any
 
 from pipeline.prediction_targeting import compute_weekend_form, find_event, load_json
 from pipeline.simulate_race import (
+    DEFAULT_QUALIFYING_PROBABILITY_SMOOTHING,
+    DEFAULT_WIN_PROBABILITY_SMOOTHING,
     MIN_SIMULATIONS,
     build_entries,
     clamp,
+    probability_smoothing,
     safe_float,
     simulate_qualifying,
     simulate_single_race,
+    smooth_probability_distribution,
     stable_hash_json,
     temperature_scale_distribution,
 )
@@ -151,6 +155,11 @@ def run_qualifying_prediction(
     qualifying_noise = clamp(safe_float(track.get("qualifying_noise"), 2.6), 0.2, 8.0)
     weather_modifier = clamp(safe_float(config.get("weather_modifier"), 0.0), -2.0, 2.0)
     qualifying_temperature = clamp(safe_float(config.get("qualifying_temperature"), 1.0), 0.6, 1.8)
+    qualifying_smoothing = probability_smoothing(
+        config,
+        "qualifying_probability_smoothing",
+        DEFAULT_QUALIFYING_PROBABILITY_SMOOTHING,
+    )
 
     rng = random.Random(seed)
     names = [entry["name"] for entry in entries]
@@ -173,7 +182,10 @@ def run_qualifying_prediction(
             if idx <= top10_cutoff:
                 top10_count[name] += 1
 
-    raw_pole_prob = {name: pole_count[name] / simulations for name in names}
+    raw_pole_prob = smooth_probability_distribution(
+        {name: pole_count[name] / simulations for name in names},
+        smoothing=qualifying_smoothing,
+    )
     scaled_pole_prob = temperature_scale_distribution(raw_pole_prob, temperature=qualifying_temperature)
 
     driver_stats = {
@@ -216,6 +228,7 @@ def run_qualifying_prediction(
         "grid_source": str(config.get("grid_source") or "simulation"),
         "available_sessions": config.get("available_sessions", []),
         "qualifying_noise": round(adjusted_noise, 6),
+        "qualifying_probability_smoothing": round(qualifying_smoothing, 6),
     }
     payload["drivers"] = rows
     return payload
@@ -245,6 +258,7 @@ def run_race_or_sprint_prediction(
     qualifying_noise = clamp(safe_float(track.get("qualifying_noise"), 2.6), 0.2, 8.0)
     race_noise = clamp(safe_float(track.get("race_noise"), 3.8), 0.5, 12.0)
     win_temperature = clamp(safe_float(config.get("win_temperature"), 1.0), 0.6, 1.8)
+    win_smoothing = probability_smoothing(config, "win_probability_smoothing", DEFAULT_WIN_PROBABILITY_SMOOTHING)
 
     rng = random.Random(seed)
     driver_names = [entry["name"] for entry in entries]
@@ -278,7 +292,10 @@ def run_race_or_sprint_prediction(
             if finish <= 3:
                 podium_count[name] += 1
 
-    raw_win_prob = {name: win_count[name] / simulations for name in driver_names}
+    raw_win_prob = smooth_probability_distribution(
+        {name: win_count[name] / simulations for name in driver_names},
+        smoothing=win_smoothing,
+    )
     calibrated_win_prob = temperature_scale_distribution(raw_win_prob, temperature=win_temperature)
 
     driver_stats = {
@@ -322,6 +339,7 @@ def run_race_or_sprint_prediction(
         "safety_car_probability": round(safety_car_probability, 6),
         "overtaking_difficulty": round(overtaking_difficulty, 6),
         "win_temperature": round(win_temperature, 6),
+        "win_probability_smoothing": round(win_smoothing, 6),
     }
     payload["drivers"] = rows
     return payload

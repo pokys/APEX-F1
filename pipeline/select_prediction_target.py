@@ -189,15 +189,16 @@ def main() -> int:
         active_signal_count = signal_count(Path(args.signals_dir))
         inputs_used = build_inputs_manifest(
             target=target,
-            available_sessions=available_sessions,
+            available_sessions=ingested_sessions,
             session_weights=weights,
             active_signal_count=active_signal_count,
         )
         inputs_status = build_inputs_status(
             target=target,
-            available_sessions=available_sessions,
+            available_sessions=ingested_sessions,
             session_weights=weights,
             active_signal_count=active_signal_count,
+            calendar_sessions=calendar_completed,
         )
 
         config["available_sessions"] = available_sessions

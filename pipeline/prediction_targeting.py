@@ -480,10 +480,12 @@ def build_inputs_status(
     available_sessions: list[str],
     session_weights: dict[str, dict[str, float]],
     active_signal_count: int,
+    calendar_sessions: list[str] | None = None,
 ) -> list[dict[str, Any]]:
     weight_map = session_weights.get(target, {})
     source_map = TARGET_SOURCE_MAP.get(target, {})
     available = {str(code).upper() for code in available_sessions}
+    calendar_available = {str(code).upper() for code in (calendar_sessions or [])}
     used_manifest = build_inputs_manifest(
         target=target,
         available_sessions=available_sessions,
@@ -507,7 +509,10 @@ def build_inputs_status(
             else:
                 status = "available_zero_weight"
         elif source_key not in available:
-            status = "not_applicable" if configured_weight <= 0 else "missing"
+            if configured_weight > 0 and source_key in calendar_available:
+                status = "pending_ingest"
+            else:
+                status = "not_applicable" if configured_weight <= 0 else "missing"
         else:
             status = "available_zero_weight"
         status_rows.append(

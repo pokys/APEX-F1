@@ -83,6 +83,30 @@ def test_build_inputs_status_marks_used_and_missing() -> None:
     assert by_source["signals"]["status"] == "available_zero_weight"
 
 
+def test_build_inputs_status_marks_calendar_only_sessions_pending_ingest() -> None:
+    rows = build_inputs_status(
+        target="race",
+        available_sessions=["Q"],
+        calendar_sessions=["FP2", "FP3", "Q"],
+        session_weights={
+            "race": {
+                "history_driver": 0.15,
+                "history_team": 0.1,
+                "qualifying": 0.4,
+                "fp2": 0.1,
+                "fp3": 0.1,
+                "signals": 0.15,
+            }
+        },
+        active_signal_count=0,
+    )
+    by_source = {row["source"]: row for row in rows}
+    assert by_source["qualifying"]["status"] == "used"
+    assert by_source["fp2"]["status"] == "pending_ingest"
+    assert by_source["fp3"]["status"] == "pending_ingest"
+    assert by_source["signals"]["status"] == "missing"
+
+
 def test_config_session_weights_prioritize_current_inputs() -> None:
     weights = load_session_weights(Path("config/session_weights.json"))
 

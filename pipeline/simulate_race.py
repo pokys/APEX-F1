@@ -29,6 +29,9 @@ from typing import Any
 LOGGER = logging.getLogger("simulate_race")
 
 MIN_SIMULATIONS = 5000
+DEFAULT_WIN_PROBABILITY_SMOOTHING = 0.00025
+DEFAULT_QUALIFYING_PROBABILITY_SMOOTHING = 0.0005
+MAX_PROBABILITY_SMOOTHING = 0.02
 
 
 def parse_args() -> argparse.Namespace:
@@ -245,6 +248,32 @@ def temperature_scale_distribution(prob_map: dict[str, float], temperature: floa
     return {k: v / total for k, v in scaled.items()}
 
 
+def smooth_probability_distribution(prob_map: dict[str, float], smoothing: float) -> dict[str, float]:
+    if not prob_map:
+        return {}
+    alpha = max(0.0, float(smoothing))
+    cleaned = {k: max(0.0, float(v)) for k, v in prob_map.items()}
+    total = sum(cleaned.values())
+    if total <= 0:
+        uniform = 1.0 / len(cleaned)
+        return {k: uniform for k in cleaned}
+
+    normalized = {k: v / total for k, v in cleaned.items()}
+    if alpha <= 0:
+        return normalized
+
+    denominator = 1.0 + alpha * len(normalized)
+    return {k: (v + alpha) / denominator for k, v in normalized.items()}
+
+
+def probability_smoothing(config: dict[str, Any], field_name: str, default: float) -> float:
+    raw = config.get(field_name)
+    nested = config.get("probability_smoothing")
+    if raw is None and isinstance(nested, dict):
+        raw = nested.get(field_name)
+    return clamp(safe_float(raw, default), 0.0, MAX_PROBABILITY_SMOOTHING)
+
+
 def run_simulation(entries: list[dict[str, Any]], config: dict[str, Any], driver_ratings: dict[str, Any], team_ratings: dict[str, Any]) -> dict[str, Any]:
     if not entries:
         raise ValueError("No drivers available for simulation. Run update_ratings first.")
@@ -261,6 +290,7 @@ def run_simulation(entries: list[dict[str, Any]], config: dict[str, Any], driver
     qualifying_noise = clamp(safe_float(track.get("qualifying_noise"), 2.6), 0.2, 8.0)
     race_noise = clamp(safe_float(track.get("race_noise"), 3.8), 0.5, 12.0)
     win_temperature = clamp(safe_float(config.get("win_temperature"), 1.0), 0.6, 1.8)
+    win_smoothing = probability_smoothing(config, "win_probability_smoothing", DEFAULT_WIN_PROBABILITY_SMOOTHING)
 
     rng = random.Random(seed)
     driver_names = [entry["name"] for entry in entries]
@@ -294,7 +324,10 @@ def run_simulation(entries: list[dict[str, Any]], config: dict[str, Any], driver
             if finish <= 3:
                 podium_count[name] += 1
 
-    raw_win_prob = {name: win_count[name] / simulations for name in driver_names}
+    raw_win_prob = smooth_probability_distribution(
+        {name: win_count[name] / simulations for name in driver_names},
+        smoothing=win_smoothing,
+    )
     calibrated_win_prob = temperature_scale_distribution(raw_win_prob, temperature=win_temperature)
 
     # Map driver names back to their teams and raw ratings for the output
@@ -356,6 +389,7 @@ def run_simulation(entries: list[dict[str, Any]], config: dict[str, Any], driver
             "safety_car_probability": round(safety_car_probability, 6),
             "overtaking_difficulty": round(overtaking_difficulty, 6),
             "win_temperature": round(win_temperature, 6),
+            "win_probability_smoothing": round(win_smoothing, 6),
         },
         "drivers": rows,
     }

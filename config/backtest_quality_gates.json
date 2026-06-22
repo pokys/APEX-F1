@@ -1,0 +1,19 @@
+{
+  "minimum_counts": {
+    "qualifying_sessions_evaluated": 20,
+    "races_evaluated": 20
+  },
+  "summary_max": {
+    "calibrated_pole_log_loss": 4.5,
+    "calibrated_win_log_loss": 1.7,
+    "mean_pole_log_loss": 6.0,
+    "mean_winner_log_loss": 1.75,
+    "pole_ece_10_bins": 0.45,
+    "win_ece_10_bins": 0.25
+  },
+  "summary_min": {
+    "mean_podium_overlap_top3": 1.7,
+    "pole_accuracy": 0.2,
+    "winner_accuracy": 0.25
+  }
+}

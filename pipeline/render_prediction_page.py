@@ -161,6 +161,7 @@ def input_status_html(items: list[dict[str, Any]]) -> str:
     labels = {
         "used": "Used",
         "missing": "Missing",
+        "pending_ingest": "Pending ingest",
         "not_applicable": "Not applicable",
         "available_zero_weight": "Available, zero weight",
     }
@@ -717,6 +718,10 @@ def render_page(
       .status-missing .status-badge {{
         background: rgba(255, 157, 87, 0.16);
         color: #ffbf8f;
+      }}
+      .status-pending_ingest .status-badge {{
+        background: rgba(255, 209, 102, 0.16);
+        color: #ffe08f;
       }}
       .status-not_applicable .status-badge {{
         background: rgba(120, 136, 153, 0.18);

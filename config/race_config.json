@@ -9,14 +9,11 @@
     "FP2",
     "FP3"
   ],
-  "available_sessions_ingested": [
-    "FP1",
-    "FP2"
-  ],
+  "available_sessions_ingested": [],
   "calibration_season": 2025,
   "calibration_source": "outputs/backtest/backtest_season_2025.json",
   "event_format": "conventional",
-  "generated_at": "2026-06-27T11:36:27Z",
+  "generated_at": "2026-06-27T13:48:16Z",
   "grid_source": "simulation",
   "inputs_status": [
     {
@@ -26,22 +23,22 @@
       "status": "missing"
     },
     {
-      "configured_weight": 0.2,
-      "source": "fp3",
-      "source_key": "FP3",
-      "status": "pending_ingest"
-    },
-    {
       "configured_weight": 0.15,
       "source": "fp1",
       "source_key": "FP1",
-      "status": "used"
+      "status": "pending_ingest"
     },
     {
       "configured_weight": 0.2,
       "source": "fp2",
       "source_key": "FP2",
-      "status": "used"
+      "status": "pending_ingest"
+    },
+    {
+      "configured_weight": 0.2,
+      "source": "fp3",
+      "source_key": "FP3",
+      "status": "pending_ingest"
     },
     {
       "configured_weight": 0.2,
@@ -58,24 +55,14 @@
   ],
   "inputs_used": [
     {
-      "source": "fp2",
-      "source_key": "FP2",
-      "weight": 0.307692
-    },
-    {
       "source": "history_driver",
       "source_key": "history_driver",
-      "weight": 0.307692
-    },
-    {
-      "source": "fp1",
-      "source_key": "FP1",
-      "weight": 0.230769
+      "weight": 0.666667
     },
     {
       "source": "history_team",
       "source_key": "history_team",
-      "weight": 0.153846
+      "weight": 0.333333
     }
   ],
   "location": "Spielberg",

@@ -1,106 +1,106 @@
 {
-  "inputs_hash": "0666c748964b0f3fb28d67af878d1cfde5b88872224f33971bcbb7936bfd3e09",
+  "inputs_hash": "ebf9bf6c931379377e879c7c2ba459532df9f3f9543e6af1f3ad1f12a1159224",
   "season": 2026,
   "source_features": "data/processed/features_season_2026.json",
   "source_summary": "Full Season 2026 Data",
   "teams": [
     {
       "components": {
-        "dnf_history": 79.99997,
+        "dnf_history": 80.625,
         "new_component_penalties": 85.0,
         "power_unit_reliability": 69.0
       },
-      "reliability_score": 77.149987,
+      "reliability_score": 77.43125,
       "team": "Alpine F1 Team"
     },
     {
       "components": {
-        "dnf_history": 44.99997,
+        "dnf_history": 45.625,
         "new_component_penalties": 85.0,
         "power_unit_reliability": 69.0
       },
-      "reliability_score": 61.399986,
+      "reliability_score": 61.68125,
       "team": "Aston Martin"
     },
     {
       "components": {
-        "dnf_history": 65.00002,
+        "dnf_history": 67.5,
         "new_component_penalties": 85.0,
         "power_unit_reliability": 69.0
       },
-      "reliability_score": 70.400009,
+      "reliability_score": 71.525,
       "team": "Audi"
     },
     {
       "components": {
-        "dnf_history": 65.00002,
+        "dnf_history": 58.75,
         "new_component_penalties": 85.0,
         "power_unit_reliability": 69.0
       },
-      "reliability_score": 70.400009,
+      "reliability_score": 67.5875,
       "team": "Cadillac F1 Team"
     },
     {
       "components": {
-        "dnf_history": 75.00001,
+        "dnf_history": 76.25,
         "new_component_penalties": 85.0,
         "power_unit_reliability": 69.0
       },
-      "reliability_score": 74.900004,
+      "reliability_score": 75.4625,
       "team": "Ferrari"
     },
     {
       "components": {
-        "dnf_history": 69.99998,
+        "dnf_history": 71.875,
         "new_component_penalties": 85.0,
         "power_unit_reliability": 69.0
       },
-      "reliability_score": 72.649991,
+      "reliability_score": 73.49375,
       "team": "Haas F1 Team"
     },
     {
       "components": {
-        "dnf_history": 59.99999,
+        "dnf_history": 63.125,
         "new_component_penalties": 85.0,
         "power_unit_reliability": 69.0
       },
-      "reliability_score": 68.149996,
+      "reliability_score": 69.55625,
       "team": "McLaren"
     },
     {
       "components": {
-        "dnf_history": 75.00001,
+        "dnf_history": 76.25,
         "new_component_penalties": 85.0,
         "power_unit_reliability": 69.0
       },
-      "reliability_score": 74.900004,
+      "reliability_score": 75.4625,
       "team": "Mercedes"
     },
     {
       "components": {
-        "dnf_history": 75.00001,
+        "dnf_history": 76.25,
         "new_component_penalties": 85.0,
         "power_unit_reliability": 69.0
       },
-      "reliability_score": 74.900004,
+      "reliability_score": 75.4625,
       "team": "RB F1 Team"
     },
     {
       "components": {
-        "dnf_history": 65.00002,
+        "dnf_history": 67.5,
         "new_component_penalties": 85.0,
         "power_unit_reliability": 69.0
       },
-      "reliability_score": 70.400009,
+      "reliability_score": 71.525,
       "team": "Red Bull"
     },
     {
       "components": {
-        "dnf_history": 69.99998,
+        "dnf_history": 67.5,
         "new_component_penalties": 85.0,
         "power_unit_reliability": 69.0
       },
-      "reliability_score": 72.649991,
+      "reliability_score": 71.525,
       "team": "Williams"
     }
   ]

@@ -1,15 +1,15 @@
 {
   "data_freshness": {
-    "days_since_latest_event": 0,
-    "days_until_next_race": 7,
+    "days_since_latest_event": 1,
+    "days_until_next_race": 6,
     "is_stale": false,
     "latest_completed_date": "2026-06-28",
     "latest_completed_event": "Austrian Grand Prix",
     "next_race_date": "2026-07-05",
-    "reference_date": "2026-06-28",
+    "reference_date": "2026-06-29",
     "stale_threshold_days": 21.0
   },
-  "deterministic_run_id": "f24664a3b3a28920b67b",
+  "deterministic_run_id": "22f21744a851c8e95232",
   "drivers": [
     {
       "driver_share": 48.4,
@@ -254,7 +254,7 @@
       "weekend_form_delta": 0.0
     }
   ],
-  "generated_at": "2026-06-28T23:05:18Z",
+  "generated_at": "2026-06-29T04:20:33Z",
   "inputs_used": [
     {
       "source": "history_driver",
@@ -269,7 +269,7 @@
   ],
   "integrity": {
     "driver_ratings_hash": "e6942a4036d1",
-    "race_config_hash": "4e30d8f977b4",
+    "race_config_hash": "c12abfb7244b",
     "team_ratings_hash": "3b7906b29ae5"
   },
   "prediction_target": "sprint_qualifying",

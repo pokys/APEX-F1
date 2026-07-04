@@ -1,30 +1,57 @@
 {
   "available_sessions": [
     "S",
+    "Q",
     "FP1",
     "SQ"
   ],
   "available_sessions_by_calendar": [
     "FP1",
-    "SQ"
+    "SQ",
+    "S"
   ],
   "available_sessions_ingested": [
-    "S"
+    "S",
+    "Q"
   ],
   "calibration_season": 2025,
   "calibration_source": "outputs/backtest/backtest_season_2025.json",
   "event_format": "sprint",
-  "generated_at": "2026-07-04T17:09:10Z",
-  "grid_source": "simulation",
+  "fixed_grid": [
+    "ANT",
+    "LEC",
+    "HAM",
+    "RUS",
+    "HAD",
+    "NOR",
+    "VER",
+    "PIA",
+    "LIN",
+    "LAW",
+    "BOR",
+    "GAS",
+    "HUL",
+    "BEA",
+    "SAI",
+    "ALB",
+    "OCO",
+    "BOT",
+    "COL",
+    "PER",
+    "STR",
+    "ALO"
+  ],
+  "generated_at": "2026-07-04T19:17:55Z",
+  "grid_source": "qualifying",
   "inputs_status": [
     {
-      "configured_weight": 0.2,
+      "configured_weight": 0.1,
       "source": "fp2",
       "source_key": "FP2",
       "status": "missing"
     },
     {
-      "configured_weight": 0.2,
+      "configured_weight": 0.1,
       "source": "fp3",
       "source_key": "FP3",
       "status": "missing"
@@ -37,12 +64,6 @@
     },
     {
       "configured_weight": 0.15,
-      "source": "fp1",
-      "source_key": "FP1",
-      "status": "pending_ingest"
-    },
-    {
-      "configured_weight": 0.2,
       "source": "history_driver",
       "source_key": "history_driver",
       "status": "used"
@@ -52,25 +73,36 @@
       "source": "history_team",
       "source_key": "history_team",
       "status": "used"
+    },
+    {
+      "configured_weight": 0.4,
+      "source": "qualifying",
+      "source_key": "Q",
+      "status": "used"
     }
   ],
   "inputs_used": [
     {
+      "source": "qualifying",
+      "source_key": "Q",
+      "weight": 0.615385
+    },
+    {
       "source": "history_driver",
       "source_key": "history_driver",
-      "weight": 0.666667
+      "weight": 0.230769
     },
     {
       "source": "history_team",
       "source_key": "history_team",
-      "weight": 0.333333
+      "weight": 0.153846
     }
   ],
   "location": "Silverstone",
   "next_round": 9,
   "overtaking_difficulty": 0.47,
-  "prediction_target": "qualifying",
-  "prediction_target_label": "Qualifying",
+  "prediction_target": "race",
+  "prediction_target_label": "Race",
   "qualifying_temperature": 1.6,
   "race": "British Grand Prix",
   "race_date": "2026-07-05",
@@ -86,8 +118,8 @@
   },
   "signal_count": 0,
   "simulations": 6000,
-  "target_output_type": "qualifying",
-  "target_session_code": "Q",
+  "target_output_type": "race",
+  "target_session_code": "R",
   "track": {
     "qualifying_noise": 2.25,
     "race_noise": 3.3,

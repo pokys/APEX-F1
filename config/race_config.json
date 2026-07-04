@@ -1,16 +1,19 @@
 {
   "available_sessions": [
-    "S",
-    "Q",
     "FP1",
-    "SQ"
+    "SQ",
+    "S",
+    "Q"
   ],
   "available_sessions_by_calendar": [
     "FP1",
     "SQ",
-    "S"
+    "S",
+    "Q"
   ],
   "available_sessions_ingested": [
+    "FP1",
+    "SQ",
     "S",
     "Q"
   ],
@@ -41,7 +44,7 @@
     "STR",
     "ALO"
   ],
-  "generated_at": "2026-07-04T19:17:55Z",
+  "generated_at": "2026-07-04T21:00:19Z",
   "grid_source": "qualifying",
   "inputs_status": [
     {

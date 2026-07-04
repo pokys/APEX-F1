@@ -1,23 +1,20 @@
 {
   "available_sessions": [
+    "S",
     "FP1",
-    "SQ",
-    "S"
+    "SQ"
   ],
   "available_sessions_by_calendar": [
     "FP1",
-    "SQ",
-    "S"
+    "SQ"
   ],
   "available_sessions_ingested": [
-    "FP1",
-    "SQ",
     "S"
   ],
   "calibration_season": 2025,
   "calibration_source": "outputs/backtest/backtest_season_2025.json",
   "event_format": "sprint",
-  "generated_at": "2026-07-04T15:07:29Z",
+  "generated_at": "2026-07-04T17:09:10Z",
   "grid_source": "simulation",
   "inputs_status": [
     {
@@ -42,7 +39,7 @@
       "configured_weight": 0.15,
       "source": "fp1",
       "source_key": "FP1",
-      "status": "used"
+      "status": "pending_ingest"
     },
     {
       "configured_weight": 0.2,
@@ -61,17 +58,12 @@
     {
       "source": "history_driver",
       "source_key": "history_driver",
-      "weight": 0.444444
-    },
-    {
-      "source": "fp1",
-      "source_key": "FP1",
-      "weight": 0.333333
+      "weight": 0.666667
     },
     {
       "source": "history_team",
       "source_key": "history_team",
-      "weight": 0.222222
+      "weight": 0.333333
     }
   ],
   "location": "Silverstone",

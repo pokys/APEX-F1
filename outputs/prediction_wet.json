@@ -1,15 +1,15 @@
 {
   "data_freshness": {
-    "days_since_latest_event": 3,
-    "days_until_next_race": 11,
+    "days_since_latest_event": 4,
+    "days_until_next_race": 10,
     "is_stale": false,
     "latest_completed_date": "2026-07-05",
     "latest_completed_event": "British Grand Prix",
     "next_race_date": "2026-07-19",
-    "reference_date": "2026-07-08",
+    "reference_date": "2026-07-09",
     "stale_threshold_days": 21.0
   },
-  "deterministic_run_id": "1586e2513e4691aa1607",
+  "deterministic_run_id": "9a3cf919207b5d60e453",
   "drivers": [
     {
       "driver_share": 48.6,
@@ -254,7 +254,7 @@
       "weekend_form_delta": 0.0
     }
   ],
-  "generated_at": "2026-07-08T21:12:58Z",
+  "generated_at": "2026-07-09T03:31:36Z",
   "inputs_used": [
     {
       "source": "history_driver",
@@ -269,7 +269,7 @@
   ],
   "integrity": {
     "driver_ratings_hash": "d10d311284b2",
-    "race_config_hash": "a4bbda0b1bab",
+    "race_config_hash": "5061e3690a9e",
     "team_ratings_hash": "82671d379142"
   },
   "prediction_target": "qualifying",

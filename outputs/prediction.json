@@ -9,7 +9,7 @@
     "reference_date": "2026-07-17",
     "stale_threshold_days": 21.0
   },
-  "deterministic_run_id": "5b3870e0407d7d5d9d88",
+  "deterministic_run_id": "f94f83e11d2c4283e5d5",
   "drivers": [
     {
       "driver_share": 48.6,
@@ -254,7 +254,7 @@
       "weekend_form_delta": 0.0
     }
   ],
-  "generated_at": "2026-07-17T11:36:21Z",
+  "generated_at": "2026-07-17T13:43:31Z",
   "inputs_used": [
     {
       "source": "history_driver",
@@ -269,7 +269,7 @@
   ],
   "integrity": {
     "driver_ratings_hash": "d10d311284b2",
-    "race_config_hash": "96d82f39498f",
+    "race_config_hash": "f51744845a14",
     "team_ratings_hash": "82671d379142"
   },
   "prediction_target": "qualifying",
@@ -283,7 +283,9 @@
     "summary": "100% Season 2026"
   },
   "simulation": {
-    "available_sessions": [],
+    "available_sessions": [
+      "FP1"
+    ],
     "grid_source": "simulation",
     "qualifying_noise": 2.3,
     "qualifying_probability_smoothing": 0.0005,

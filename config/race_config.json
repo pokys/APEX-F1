@@ -1,23 +1,19 @@
 {
   "available_sessions": [
-    "FP1"
+    "FP1",
+    "FP2"
   ],
   "available_sessions_by_calendar": [
-    "FP1"
+    "FP1",
+    "FP2"
   ],
   "available_sessions_ingested": [],
   "calibration_season": 2025,
   "calibration_source": "outputs/backtest/backtest_season_2025.json",
   "event_format": "conventional",
-  "generated_at": "2026-07-17T15:16:28Z",
+  "generated_at": "2026-07-17T17:15:37Z",
   "grid_source": "simulation",
   "inputs_status": [
-    {
-      "configured_weight": 0.2,
-      "source": "fp2",
-      "source_key": "FP2",
-      "status": "missing"
-    },
     {
       "configured_weight": 0.2,
       "source": "fp3",
@@ -34,6 +30,12 @@
       "configured_weight": 0.15,
       "source": "fp1",
       "source_key": "FP1",
+      "status": "pending_ingest"
+    },
+    {
+      "configured_weight": 0.2,
+      "source": "fp2",
+      "source_key": "FP2",
       "status": "pending_ingest"
     },
     {

@@ -11,8 +11,8 @@
       "practice_lap_pace_gap_seconds": null,
       "qualifying_avg_position": 16.420909,
       "qualifying_effective_starts": 8.094182,
-      "qualifying_gap_to_best_ms": 2515.195012,
-      "qualifying_phase_depth": 0.485435,
+      "qualifying_gap_to_best_ms": 2562.31497,
+      "qualifying_phase_depth": 0.456038,
       "race_avg_position": 16.941519,
       "race_effective_starts": 7.550704,
       "race_form_last3": 18.666667,
@@ -27,7 +27,7 @@
       "sprint_qualifying_phase_depth": null,
       "starts": 9,
       "team": "Williams",
-      "teammate_qualifying_gap_ms": -1051.383253
+      "teammate_qualifying_gap_ms": -1405.18481
     },
     {
       "dnf_rate": 0.444444,
@@ -40,7 +40,7 @@
       "practice_lap_pace_gap_seconds": null,
       "qualifying_avg_position": 20.582441,
       "qualifying_effective_starts": 8.094182,
-      "qualifying_gap_to_best_ms": 3803.33083,
+      "qualifying_gap_to_best_ms": 4158.495402,
       "qualifying_phase_depth": 0.333333,
       "race_avg_position": 17.071625,
       "race_effective_starts": 7.550704,
@@ -56,7 +56,7 @@
       "sprint_qualifying_phase_depth": null,
       "starts": 9,
       "team": "Aston Martin",
-      "teammate_qualifying_gap_ms": 236.752565
+      "teammate_qualifying_gap_ms": 190.995622
     },
     {
       "dnf_rate": 0.111111,
@@ -69,7 +69,7 @@
       "practice_lap_pace_gap_seconds": null,
       "qualifying_avg_position": 1.761712,
       "qualifying_effective_starts": 8.094182,
-      "qualifying_gap_to_best_ms": 118.037367,
+      "qualifying_gap_to_best_ms": 95.224398,
       "qualifying_phase_depth": 1.0,
       "race_avg_position": 6.346268,
       "race_effective_starts": 7.550704,
@@ -85,7 +85,7 @@
       "sprint_qualifying_phase_depth": null,
       "starts": 9,
       "team": "Mercedes",
-      "teammate_qualifying_gap_ms": -3448.540898
+      "teammate_qualifying_gap_ms": -3872.275382
     },
     {
       "dnf_rate": 0.333333,
@@ -98,8 +98,8 @@
       "practice_lap_pace_gap_seconds": null,
       "qualifying_avg_position": 14.829133,
       "qualifying_effective_starts": 8.094182,
-      "qualifying_gap_to_best_ms": 1958.381763,
-      "qualifying_phase_depth": 0.622961,
+      "qualifying_gap_to_best_ms": 2047.211742,
+      "qualifying_phase_depth": 0.631408,
       "race_avg_position": 13.764361,
       "race_effective_starts": 7.550704,
       "race_form_last3": 14.333333,
@@ -114,7 +114,7 @@
       "sprint_qualifying_phase_depth": null,
       "starts": 9,
       "team": "Haas F1 Team",
-      "teammate_qualifying_gap_ms": -1608.196502
+      "teammate_qualifying_gap_ms": -1920.288037
     },
     {
       "dnf_rate": 0.111111,
@@ -127,8 +127,8 @@
       "practice_lap_pace_gap_seconds": null,
       "qualifying_avg_position": 12.280081,
       "qualifying_effective_starts": 8.094182,
-      "qualifying_gap_to_best_ms": 1935.052751,
-      "qualifying_phase_depth": 0.622246,
+      "qualifying_gap_to_best_ms": 1805.938832,
+      "qualifying_phase_depth": 0.695254,
       "race_avg_position": 11.322442,
       "race_effective_starts": 7.550704,
       "race_form_last3": 10.0,
@@ -143,7 +143,7 @@
       "sprint_qualifying_phase_depth": null,
       "starts": 9,
       "team": "Audi",
-      "teammate_qualifying_gap_ms": -1631.525514
+      "teammate_qualifying_gap_ms": -2161.560948
     },
     {
       "dnf_rate": 0.444444,
@@ -156,7 +156,7 @@
       "practice_lap_pace_gap_seconds": null,
       "qualifying_avg_position": 19.535251,
       "qualifying_effective_starts": 8.094182,
-      "qualifying_gap_to_best_ms": 3337.024261,
+      "qualifying_gap_to_best_ms": 3361.178203,
       "qualifying_phase_depth": 0.333333,
       "race_avg_position": 18.682075,
       "race_effective_starts": 7.550704,
@@ -172,7 +172,7 @@
       "sprint_qualifying_phase_depth": null,
       "starts": 9,
       "team": "Cadillac F1 Team",
-      "teammate_qualifying_gap_ms": -229.554004
+      "teammate_qualifying_gap_ms": -606.321576
     },
     {
       "dnf_rate": 0.0,
@@ -185,8 +185,8 @@
       "practice_lap_pace_gap_seconds": null,
       "qualifying_avg_position": 14.084793,
       "qualifying_effective_starts": 8.094182,
-      "qualifying_gap_to_best_ms": 1985.64495,
-      "qualifying_phase_depth": 0.661325,
+      "qualifying_gap_to_best_ms": 1994.410677,
+      "qualifying_phase_depth": 0.662357,
       "race_avg_position": 11.096489,
       "race_effective_starts": 7.550704,
       "race_form_last3": 11.333333,
@@ -201,7 +201,7 @@
       "sprint_qualifying_phase_depth": null,
       "starts": 9,
       "team": "Alpine F1 Team",
-      "teammate_qualifying_gap_ms": -1580.933315
+      "teammate_qualifying_gap_ms": -1973.089103
     },
     {
       "dnf_rate": 0.111111,
@@ -214,8 +214,8 @@
       "practice_lap_pace_gap_seconds": null,
       "qualifying_avg_position": 11.313175,
       "qualifying_effective_starts": 8.094182,
-      "qualifying_gap_to_best_ms": 1408.517059,
-      "qualifying_phase_depth": 0.778535,
+      "qualifying_gap_to_best_ms": 1517.034333,
+      "qualifying_phase_depth": 0.756914,
       "race_avg_position": 9.519372,
       "race_effective_starts": 7.550704,
       "race_form_last3": 10.0,
@@ -230,7 +230,7 @@
       "sprint_qualifying_phase_depth": null,
       "starts": 9,
       "team": "Alpine F1 Team",
-      "teammate_qualifying_gap_ms": -2158.061206
+      "teammate_qualifying_gap_ms": -2450.465447
     },
     {
       "dnf_rate": 0.222222,
@@ -243,8 +243,8 @@
       "practice_lap_pace_gap_seconds": null,
       "qualifying_avg_position": 8.099781,
       "qualifying_effective_starts": 8.094182,
-      "qualifying_gap_to_best_ms": 626.625592,
-      "qualifying_phase_depth": 0.971766,
+      "qualifying_gap_to_best_ms": 788.077609,
+      "qualifying_phase_depth": 0.9128,
       "race_avg_position": 8.065688,
       "race_effective_starts": 7.550704,
       "race_form_last3": 5.666667,
@@ -259,7 +259,7 @@
       "sprint_qualifying_phase_depth": null,
       "starts": 9,
       "team": "Red Bull",
-      "teammate_qualifying_gap_ms": -2939.952673
+      "teammate_qualifying_gap_ms": -3179.422171
     },
     {
       "dnf_rate": 0.0,
@@ -272,7 +272,7 @@
       "practice_lap_pace_gap_seconds": null,
       "qualifying_avg_position": 4.167298,
       "qualifying_effective_starts": 8.094182,
-      "qualifying_gap_to_best_ms": 355.213714,
+      "qualifying_gap_to_best_ms": 389.767569,
       "qualifying_phase_depth": 1.0,
       "race_avg_position": 3.351533,
       "race_effective_starts": 7.550704,
@@ -288,7 +288,7 @@
       "sprint_qualifying_phase_depth": null,
       "starts": 9,
       "team": "Ferrari",
-      "teammate_qualifying_gap_ms": -3211.364551
+      "teammate_qualifying_gap_ms": -3577.73221
     },
     {
       "dnf_rate": 0.444444,
@@ -301,8 +301,8 @@
       "practice_lap_pace_gap_seconds": null,
       "qualifying_avg_position": 12.324851,
       "qualifying_effective_starts": 8.094182,
-      "qualifying_gap_to_best_ms": 1705.615777,
-      "qualifying_phase_depth": 0.71415,
+      "qualifying_gap_to_best_ms": 1822.424541,
+      "qualifying_phase_depth": 0.704973,
       "race_avg_position": 16.239348,
       "race_effective_starts": 7.550704,
       "race_form_last3": 18.0,
@@ -317,7 +317,7 @@
       "sprint_qualifying_phase_depth": null,
       "starts": 9,
       "team": "Audi",
-      "teammate_qualifying_gap_ms": -1860.962488
+      "teammate_qualifying_gap_ms": -2145.075239
     },
     {
       "dnf_rate": 0.111111,
@@ -330,8 +330,8 @@
       "practice_lap_pace_gap_seconds": null,
       "qualifying_avg_position": 10.399467,
       "qualifying_effective_starts": 8.094182,
-      "qualifying_gap_to_best_ms": 1469.823962,
-      "qualifying_phase_depth": 0.894485,
+      "qualifying_gap_to_best_ms": 1525.71274,
+      "qualifying_phase_depth": 0.850455,
       "race_avg_position": 8.705758,
       "race_effective_starts": 7.550704,
       "race_form_last3": 7.666667,
@@ -346,7 +346,7 @@
       "sprint_qualifying_phase_depth": null,
       "starts": 9,
       "team": "RB F1 Team",
-      "teammate_qualifying_gap_ms": -2096.754303
+      "teammate_qualifying_gap_ms": -2441.78704
     },
     {
       "dnf_rate": 0.222222,
@@ -359,8 +359,8 @@
       "practice_lap_pace_gap_seconds": null,
       "qualifying_avg_position": 4.541125,
       "qualifying_effective_starts": 8.094182,
-      "qualifying_gap_to_best_ms": 373.437736,
-      "qualifying_phase_depth": 0.952517,
+      "qualifying_gap_to_best_ms": 404.082913,
+      "qualifying_phase_depth": 0.961694,
       "race_avg_position": 7.414616,
       "race_effective_starts": 7.550704,
       "race_form_last3": 8.0,
@@ -375,7 +375,7 @@
       "sprint_qualifying_phase_depth": null,
       "starts": 9,
       "team": "Ferrari",
-      "teammate_qualifying_gap_ms": -3193.140529
+      "teammate_qualifying_gap_ms": -3563.416866
     },
     {
       "dnf_rate": 0.111111,
@@ -388,8 +388,8 @@
       "practice_lap_pace_gap_seconds": null,
       "qualifying_avg_position": 10.578716,
       "qualifying_effective_starts": 8.094182,
-      "qualifying_gap_to_best_ms": 1439.235924,
-      "qualifying_phase_depth": 0.836157,
+      "qualifying_gap_to_best_ms": 1312.212562,
+      "qualifying_phase_depth": 0.867823,
       "race_avg_position": 10.745318,
       "race_effective_starts": 7.550704,
       "race_form_last3": 8.666667,
@@ -404,7 +404,7 @@
       "sprint_qualifying_phase_depth": null,
       "starts": 9,
       "team": "RB F1 Team",
-      "teammate_qualifying_gap_ms": -2127.342341
+      "teammate_qualifying_gap_ms": -2655.287218
     },
     {
       "dnf_rate": 0.333333,
@@ -417,7 +417,7 @@
       "practice_lap_pace_gap_seconds": null,
       "qualifying_avg_position": 4.945725,
       "qualifying_effective_starts": 8.094182,
-      "qualifying_gap_to_best_ms": 525.148699,
+      "qualifying_gap_to_best_ms": 508.692091,
       "qualifying_phase_depth": 1.0,
       "race_avg_position": 8.483184,
       "race_effective_starts": 7.550704,
@@ -433,7 +433,7 @@
       "sprint_qualifying_phase_depth": null,
       "starts": 9,
       "team": "McLaren",
-      "teammate_qualifying_gap_ms": -3041.429566
+      "teammate_qualifying_gap_ms": -3458.807689
     },
     {
       "dnf_rate": 0.0,
@@ -446,8 +446,8 @@
       "practice_lap_pace_gap_seconds": null,
       "qualifying_avg_position": 16.071868,
       "qualifying_effective_starts": 8.094182,
-      "qualifying_gap_to_best_ms": 2159.409572,
-      "qualifying_phase_depth": 0.478528,
+      "qualifying_gap_to_best_ms": 2406.908066,
+      "qualifying_phase_depth": 0.450466,
       "race_avg_position": 12.875283,
       "race_effective_starts": 7.550704,
       "race_form_last3": 14.0,
@@ -462,7 +462,7 @@
       "sprint_qualifying_phase_depth": null,
       "starts": 9,
       "team": "Haas F1 Team",
-      "teammate_qualifying_gap_ms": -1407.168693
+      "teammate_qualifying_gap_ms": -1560.591714
     },
     {
       "dnf_rate": 0.222222,
@@ -475,7 +475,7 @@
       "practice_lap_pace_gap_seconds": null,
       "qualifying_avg_position": 19.513066,
       "qualifying_effective_starts": 8.094182,
-      "qualifying_gap_to_best_ms": 3264.090658,
+      "qualifying_gap_to_best_ms": 3330.944228,
       "qualifying_phase_depth": 0.333333,
       "race_avg_position": 16.151477,
       "race_effective_starts": 7.550704,
@@ -491,7 +491,7 @@
       "sprint_qualifying_phase_depth": null,
       "starts": 9,
       "team": "Cadillac F1 Team",
-      "teammate_qualifying_gap_ms": -302.487607
+      "teammate_qualifying_gap_ms": -636.555552
     },
     {
       "dnf_rate": 0.222222,
@@ -504,7 +504,7 @@
       "practice_lap_pace_gap_seconds": null,
       "qualifying_avg_position": 6.511009,
       "qualifying_effective_starts": 8.094182,
-      "qualifying_gap_to_best_ms": 557.787436,
+      "qualifying_gap_to_best_ms": 576.575616,
       "qualifying_phase_depth": 1.0,
       "race_avg_position": 7.904922,
       "race_effective_starts": 7.550704,
@@ -520,7 +520,7 @@
       "sprint_qualifying_phase_depth": null,
       "starts": 9,
       "team": "McLaren",
-      "teammate_qualifying_gap_ms": -3008.790829
+      "teammate_qualifying_gap_ms": -3390.924164
     },
     {
       "dnf_rate": 0.111111,
@@ -533,7 +533,7 @@
       "practice_lap_pace_gap_seconds": null,
       "qualifying_avg_position": 2.929638,
       "qualifying_effective_starts": 8.094182,
-      "qualifying_gap_to_best_ms": 190.050286,
+      "qualifying_gap_to_best_ms": 251.500125,
       "qualifying_phase_depth": 1.0,
       "race_avg_position": 5.002299,
       "race_effective_starts": 7.550704,
@@ -549,7 +549,7 @@
       "sprint_qualifying_phase_depth": null,
       "starts": 9,
       "team": "Mercedes",
-      "teammate_qualifying_gap_ms": -3376.527979
+      "teammate_qualifying_gap_ms": -3715.999655
     },
     {
       "dnf_rate": 0.222222,
@@ -562,8 +562,8 @@
       "practice_lap_pace_gap_seconds": null,
       "qualifying_avg_position": 15.120673,
       "qualifying_effective_starts": 7.550704,
-      "qualifying_gap_to_best_ms": 2258.063283,
-      "qualifying_phase_depth": 0.586182,
+      "qualifying_gap_to_best_ms": 2289.880281,
+      "qualifying_phase_depth": 0.602396,
       "race_avg_position": 14.470431,
       "race_effective_starts": 7.550704,
       "race_form_last3": 16.333333,
@@ -578,7 +578,7 @@
       "sprint_qualifying_phase_depth": null,
       "starts": 9,
       "team": "Williams",
-      "teammate_qualifying_gap_ms": -1280.914661
+      "teammate_qualifying_gap_ms": -1672.558604
     },
     {
       "dnf_rate": 0.555556,
@@ -591,7 +591,7 @@
       "practice_lap_pace_gap_seconds": null,
       "qualifying_avg_position": 21.290849,
       "qualifying_effective_starts": 7.550704,
-      "qualifying_gap_to_best_ms": 4126.3618,
+      "qualifying_gap_to_best_ms": 4466.746327,
       "qualifying_phase_depth": 0.333333,
       "race_avg_position": 18.717083,
       "race_effective_starts": 7.550704,
@@ -607,7 +607,7 @@
       "sprint_qualifying_phase_depth": null,
       "starts": 9,
       "team": "Aston Martin",
-      "teammate_qualifying_gap_ms": 587.383856
+      "teammate_qualifying_gap_ms": 504.307442
     },
     {
       "dnf_rate": 0.333333,
@@ -620,8 +620,8 @@
       "practice_lap_pace_gap_seconds": null,
       "qualifying_avg_position": 4.813734,
       "qualifying_effective_starts": 7.550704,
-      "qualifying_gap_to_best_ms": 507.357928,
-      "qualifying_phase_depth": 0.974999,
+      "qualifying_gap_to_best_ms": 469.009545,
+      "qualifying_phase_depth": 0.980036,
       "race_avg_position": 10.128909,
       "race_effective_starts": 7.550704,
       "race_form_last3": 8.666667,
@@ -636,7 +636,7 @@
       "sprint_qualifying_phase_depth": null,
       "starts": 9,
       "team": "Red Bull",
-      "teammate_qualifying_gap_ms": -3031.620016
+      "teammate_qualifying_gap_ms": -3493.42934
     }
   ],
   "fastf1_snapshot": "data/raw/fastf1/season_2026.json",
@@ -666,8 +666,8 @@
       "practice_lap_pace_gap_seconds": null,
       "qualifying_avg_position": 12.698984,
       "qualifying_effective_starts": 16.188365,
-      "qualifying_gap_to_best_ms": 1697.081004,
-      "qualifying_phase_depth": 0.71993,
+      "qualifying_gap_to_best_ms": 1755.722505,
+      "qualifying_phase_depth": 0.709636,
       "race_avg_position": 10.307931,
       "race_effective_starts": 15.101409,
       "race_gap_to_winner_seconds": 36.873818,
@@ -693,7 +693,7 @@
       "practice_lap_pace_gap_seconds": null,
       "qualifying_avg_position": 20.9293,
       "qualifying_effective_starts": 15.641816,
-      "qualifying_gap_to_best_ms": 3960.674004,
+      "qualifying_gap_to_best_ms": 4309.424894,
       "qualifying_phase_depth": 0.333333,
       "race_avg_position": 17.894354,
       "race_effective_starts": 15.101409,
@@ -720,8 +720,8 @@
       "practice_lap_pace_gap_seconds": null,
       "qualifying_avg_position": 12.302466,
       "qualifying_effective_starts": 16.188365,
-      "qualifying_gap_to_best_ms": 1820.334264,
-      "qualifying_phase_depth": 0.668198,
+      "qualifying_gap_to_best_ms": 1814.181686,
+      "qualifying_phase_depth": 0.700114,
       "race_avg_position": 13.780895,
       "race_effective_starts": 15.101409,
       "race_gap_to_winner_seconds": 27.743095,
@@ -747,7 +747,7 @@
       "practice_lap_pace_gap_seconds": null,
       "qualifying_avg_position": 19.524159,
       "qualifying_effective_starts": 16.188365,
-      "qualifying_gap_to_best_ms": 3300.55746,
+      "qualifying_gap_to_best_ms": 3346.061216,
       "qualifying_phase_depth": 0.333333,
       "race_avg_position": 17.416776,
       "race_effective_starts": 15.101409,
@@ -774,8 +774,8 @@
       "practice_lap_pace_gap_seconds": null,
       "qualifying_avg_position": 4.354211,
       "qualifying_effective_starts": 16.188365,
-      "qualifying_gap_to_best_ms": 364.325725,
-      "qualifying_phase_depth": 0.976258,
+      "qualifying_gap_to_best_ms": 396.925241,
+      "qualifying_phase_depth": 0.980847,
       "race_avg_position": 5.383075,
       "race_effective_starts": 15.101409,
       "race_gap_to_winner_seconds": 20.916632,
@@ -801,8 +801,8 @@
       "practice_lap_pace_gap_seconds": null,
       "qualifying_avg_position": 15.450501,
       "qualifying_effective_starts": 16.188365,
-      "qualifying_gap_to_best_ms": 2058.895668,
-      "qualifying_phase_depth": 0.550744,
+      "qualifying_gap_to_best_ms": 2227.059904,
+      "qualifying_phase_depth": 0.540937,
       "race_avg_position": 13.319822,
       "race_effective_starts": 15.101409,
       "race_gap_to_winner_seconds": 34.449353,
@@ -828,7 +828,7 @@
       "practice_lap_pace_gap_seconds": null,
       "qualifying_avg_position": 5.728367,
       "qualifying_effective_starts": 16.188365,
-      "qualifying_gap_to_best_ms": 541.468067,
+      "qualifying_gap_to_best_ms": 542.633853,
       "qualifying_phase_depth": 1.0,
       "race_avg_position": 8.194053,
       "race_effective_starts": 15.101409,
@@ -855,7 +855,7 @@
       "practice_lap_pace_gap_seconds": null,
       "qualifying_avg_position": 2.345675,
       "qualifying_effective_starts": 16.188365,
-      "qualifying_gap_to_best_ms": 154.043827,
+      "qualifying_gap_to_best_ms": 173.362261,
       "qualifying_phase_depth": 1.0,
       "race_avg_position": 5.674284,
       "race_effective_starts": 15.101409,
@@ -882,8 +882,8 @@
       "practice_lap_pace_gap_seconds": null,
       "qualifying_avg_position": 10.489091,
       "qualifying_effective_starts": 16.188365,
-      "qualifying_gap_to_best_ms": 1454.529943,
-      "qualifying_phase_depth": 0.865321,
+      "qualifying_gap_to_best_ms": 1418.962651,
+      "qualifying_phase_depth": 0.859139,
       "race_avg_position": 9.725538,
       "race_effective_starts": 15.101409,
       "race_gap_to_winner_seconds": 32.782884,
@@ -909,8 +909,8 @@
       "practice_lap_pace_gap_seconds": null,
       "qualifying_avg_position": 6.490828,
       "qualifying_effective_starts": 15.641816,
-      "qualifying_gap_to_best_ms": 568.532237,
-      "qualifying_phase_depth": 0.973341,
+      "qualifying_gap_to_best_ms": 631.8517,
+      "qualifying_phase_depth": 0.945721,
       "race_avg_position": 9.097298,
       "race_effective_starts": 15.101409,
       "race_gap_to_winner_seconds": 25.438773,
@@ -936,8 +936,8 @@
       "practice_lap_pace_gap_seconds": null,
       "qualifying_avg_position": 15.784272,
       "qualifying_effective_starts": 15.641816,
-      "qualifying_gap_to_best_ms": 2389.950295,
-      "qualifying_phase_depth": 0.534507,
+      "qualifying_gap_to_best_ms": 2428.92225,
+      "qualifying_phase_depth": 0.527699,
       "race_avg_position": 15.705975,
       "race_effective_starts": 15.101409,
       "race_gap_to_winner_seconds": 36.878587,

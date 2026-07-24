@@ -1,15 +1,15 @@
 {
   "data_freshness": {
-    "days_since_latest_event": 4,
-    "days_until_next_race": 3,
+    "days_since_latest_event": 5,
+    "days_until_next_race": 2,
     "is_stale": false,
     "latest_completed_date": "2026-07-19",
     "latest_completed_event": "Belgian Grand Prix",
     "next_race_date": "2026-07-26",
-    "reference_date": "2026-07-23",
+    "reference_date": "2026-07-24",
     "stale_threshold_days": 21.0
   },
-  "deterministic_run_id": "da20d8d470717cb7d3aa",
+  "deterministic_run_id": "4355482c3e8f84cef304",
   "drivers": [
     {
       "driver_share": 48.8,
@@ -254,7 +254,7 @@
       "weekend_form_delta": 0.0
     }
   ],
-  "generated_at": "2026-07-23T22:07:07Z",
+  "generated_at": "2026-07-24T00:03:40Z",
   "inputs_used": [
     {
       "source": "history_driver",
@@ -269,7 +269,7 @@
   ],
   "integrity": {
     "driver_ratings_hash": "d7d615f1de31",
-    "race_config_hash": "a3cae7b32dcf",
+    "race_config_hash": "a1bb19202074",
     "team_ratings_hash": "1177a04f875e"
   },
   "prediction_target": "qualifying",

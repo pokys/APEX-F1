@@ -1,15 +1,15 @@
 {
   "data_freshness": {
-    "days_since_latest_event": 5,
-    "days_until_next_race": 23,
+    "days_since_latest_event": 6,
+    "days_until_next_race": 22,
     "is_stale": false,
     "latest_completed_date": "2026-07-26",
     "latest_completed_event": "Hungarian Grand Prix",
     "next_race_date": "2026-08-23",
-    "reference_date": "2026-07-31",
+    "reference_date": "2026-08-01",
     "stale_threshold_days": 21.0
   },
-  "deterministic_run_id": "d5640f55be0a8896ded3",
+  "deterministic_run_id": "9b2c0a5645ffac189257",
   "drivers": [
     {
       "driver_share": 48.7,
@@ -254,7 +254,7 @@
       "weekend_form_delta": 0.0
     }
   ],
-  "generated_at": "2026-07-31T23:03:58Z",
+  "generated_at": "2026-08-01T02:59:01Z",
   "inputs_used": [
     {
       "source": "history_driver",
@@ -269,7 +269,7 @@
   ],
   "integrity": {
     "driver_ratings_hash": "f16ad0e93350",
-    "race_config_hash": "9906a62afc33",
+    "race_config_hash": "5ba2a7976f9a",
     "team_ratings_hash": "64c27ca81a99"
   },
   "prediction_target": "sprint_qualifying",

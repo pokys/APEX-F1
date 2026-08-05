@@ -1,5 +1,5 @@
 {
-  "inputs_hash": "2e8ab84d27be425c2923e6ddf8e33a0cea1003ad2362333bbcb5fc33d561ec73",
+  "inputs_hash": "3bff29445cd195cb36b0f25ccd9153ecf3e0ec7a5582440917964a4c5d5203d9",
   "season": 2026,
   "source_features": "data/processed/features_season_2026.json",
   "source_summary": "Full Season 2026 Data",
@@ -151,18 +151,18 @@
     {
       "components": {
         "qualifying_gap_proxy": 84.179431,
-        "qualifying_progression": 59.1207,
-        "qualifying_time_gap_proxy": 69.810742,
+        "qualifying_progression": 59.28892,
+        "qualifying_time_gap_proxy": 70.08912,
         "race_pace_proxy": 68.837807,
         "sector_dominance": 56.590553,
         "sprint_pace_proxy": 58.0,
         "upgrades_impact": 61.0,
         "weekend_pace_proxy": 53.0
       },
-      "qualifying_team_rating": 70.376623,
-      "race_team_rating": 63.549326,
+      "qualifying_team_rating": 70.512567,
+      "race_team_rating": 63.557483,
       "team": "Red Bull",
-      "team_rating": 66.62161
+      "team_rating": 66.687271
     },
     {
       "components": {

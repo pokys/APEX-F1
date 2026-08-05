@@ -208,7 +208,7 @@
       "round": 23
     }
   ],
-  "cutoff_date": "2026-08-04",
+  "cutoff_date": "2026-08-05",
   "events": [
     {
       "country": "Australia",
@@ -5925,8 +5925,8 @@
               "points": null,
               "position": 22,
               "q1": null,
-              "q2": "0 days 00:01:28.941000",
-              "q3": "0 days 00:01:28.789000",
+              "q2": null,
+              "q3": null,
               "status": null,
               "team_name": "Red Bull",
               "time": null

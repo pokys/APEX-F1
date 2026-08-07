@@ -150,6 +150,7 @@
 - [ ] Mercedes "closely monitoring" when to bring upgrades for the rest of F1 2026 (https://www.motorsport.com/f1/news/mercedes-closely-monitoring-when-to-bring-upgrades-for-rest-of-f1-2026/10844337/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Why F1 can't ban algorithms that drivers hate (https://www.the-race.com/formula-1/why-f1-cannot-remove-algorithms-drivers-hate/)
 - [ ] Why Honda only realised the scale of its F1 problems in January (https://www.autosport.com/f1/news/why-honda-only-realised-scale-of-f1-problems-in-january/10844237/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Why F1 can't just ban algorithms that drivers hate (https://www.the-race.com/formula-1/why-f1-cannot-remove-algorithms-drivers-hate/)
 
 ## 2026-08-06
 - [ ] Aston Martin unveils new limited-edition Glenfiddich whisky (https://www.motorsport.com/f1/news/aston-martin-unveils-new-limited-edition-glenfiddich-whisky/10844454/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
@@ -166,3 +167,8 @@
 - [ ] Silverstone and COTA team up for huge F1 fan giveaway (https://www.the-race.com/all/silverstone-and-cota-team-up-for-huge-f1-fan-giveaway/)
 - [ ] Valtteri Bottas celebrates major off-road cycling success during F1 summer break (https://www.motorsport.com/f1/news/valtteri-bottas-celebrates-major-off-road-cycling-success-during-f1-summer-break/10844506/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] What life is like as a Williams F1 simulator driver (https://www.motorsport.com/f1/news/what-life-is-like-as-a-williams-f1-simulator-driver/10843241/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] F1 reveals distorted 61% income loss in latest earnings report (https://www.the-race.com/business/f1-reveals-distorted-61-income-loss-in-latest-earnings-report/)
+- [ ] Lewis Hamilton backed for Ferrari F1 championship push by Emerson Fittipaldi (https://www.motorsport.com/f1/news/lewis-hamilton-backed-for-ferrari-f1-championship-push-by-emerson-fittipaldi/10844491/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Six things we learned from MotoGP's first day back (https://www.the-race.com/motogp/six-things-we-learned-motogp-first-day-back-silverstone/)
+- [ ] What is it like being a Williams F1 simulator driver? (https://www.autosport.com/f1/news/what-is-it-like-being-a-williams-f1-simulator-driver/10844546/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] What is the F1 summer break and why does it happen every year? (https://www.motorsport.com/f1/news/what-is-the-f1-summer-break-why-does-it-happen-how-long/10346924/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

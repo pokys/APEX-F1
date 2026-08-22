@@ -1,19 +1,35 @@
 {
   "available_sessions": [
+    "S",
     "FP1",
     "SQ"
   ],
   "available_sessions_by_calendar": [
     "FP1",
-    "SQ"
+    "SQ",
+    "S"
   ],
-  "available_sessions_ingested": [],
+  "available_sessions_ingested": [
+    "S"
+  ],
   "calibration_season": 2025,
   "calibration_source": "outputs/backtest/backtest_season_2025.json",
   "event_format": "sprint",
-  "generated_at": "2026-08-22T11:23:14Z",
+  "generated_at": "2026-08-22T12:43:03Z",
   "grid_source": "simulation",
   "inputs_status": [
+    {
+      "configured_weight": 0.2,
+      "source": "fp2",
+      "source_key": "FP2",
+      "status": "missing"
+    },
+    {
+      "configured_weight": 0.2,
+      "source": "fp3",
+      "source_key": "FP3",
+      "status": "missing"
+    },
     {
       "configured_weight": 0.15,
       "source": "signals",
@@ -27,13 +43,7 @@
       "status": "pending_ingest"
     },
     {
-      "configured_weight": 0.45,
-      "source": "sprint_qualifying",
-      "source_key": "SQ",
-      "status": "pending_ingest"
-    },
-    {
-      "configured_weight": 0.15,
+      "configured_weight": 0.2,
       "source": "history_driver",
       "source_key": "history_driver",
       "status": "used"
@@ -49,19 +59,19 @@
     {
       "source": "history_driver",
       "source_key": "history_driver",
-      "weight": 0.6
+      "weight": 0.666667
     },
     {
       "source": "history_team",
       "source_key": "history_team",
-      "weight": 0.4
+      "weight": 0.333333
     }
   ],
   "location": "Zandvoort",
   "next_round": 12,
   "overtaking_difficulty": 0.68,
-  "prediction_target": "sprint",
-  "prediction_target_label": "Sprint",
+  "prediction_target": "qualifying",
+  "prediction_target_label": "Qualifying",
   "qualifying_temperature": 1.6,
   "race": "Dutch Grand Prix",
   "race_date": "2026-08-23",
@@ -77,8 +87,8 @@
   },
   "signal_count": 0,
   "simulations": 6000,
-  "target_output_type": "race",
-  "target_session_code": "S",
+  "target_output_type": "qualifying",
+  "target_session_code": "Q",
   "track": {
     "qualifying_noise": 2.25,
     "race_noise": 3.35,

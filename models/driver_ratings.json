@@ -162,26 +162,6 @@
     },
     {
       "components": {
-        "consistency": 67.72728,
-        "qualifying_gap_pace": 63.541421,
-        "qualifying_pace": 61.666462,
-        "qualifying_progression": 62.00163,
-        "race_gap_pace": 64.006675,
-        "recent_race_form": 67.266666,
-        "sprint_lap_pace": 58.0,
-        "teammate_delta_performance": 50.940912,
-        "teammate_qualifying_gap": 80.0,
-        "weekend_practice_pace": 49.2,
-        "wet_performance_index": 50.0
-      },
-      "driver": "HAD",
-      "driver_rating": 61.786598,
-      "qualifying_rating": 61.666462,
-      "race_rating": 61.884892,
-      "team": "Red Bull"
-    },
-    {
-      "components": {
         "consistency": 75.0,
         "qualifying_gap_pace": 76.424935,
         "qualifying_pace": 69.998342,
@@ -238,7 +218,7 @@
       "driver_rating": 55.895902,
       "qualifying_rating": 51.402261,
       "race_rating": 59.572518,
-      "team": "RB F1 Team"
+      "team": "Red Bull"
     },
     {
       "components": {
@@ -422,6 +402,26 @@
     },
     {
       "components": {
+        "consistency": 69.0,
+        "qualifying_gap_pace": 50.0,
+        "qualifying_pace": 48.764,
+        "qualifying_progression": 54.0,
+        "race_gap_pace": 54.75,
+        "recent_race_form": 50.8,
+        "sprint_lap_pace": 58.0,
+        "teammate_delta_performance": 50.0,
+        "teammate_qualifying_gap": 50.0,
+        "weekend_practice_pace": 49.2,
+        "wet_performance_index": 50.0
+      },
+      "driver": "TSU",
+      "driver_rating": 52.141814,
+      "qualifying_rating": 48.764,
+      "race_rating": 54.90548,
+      "team": "RB F1 Team"
+    },
+    {
+      "components": {
         "consistency": 64.09092,
         "qualifying_gap_pace": 71.645664,
         "qualifying_pace": 67.201783,
@@ -441,7 +441,7 @@
       "team": "Red Bull"
     }
   ],
-  "inputs_hash": "3bff29445cd195cb36b0f25ccd9153ecf3e0ec7a5582440917964a4c5d5203d9",
+  "inputs_hash": "7f85aab39689c60a0e3d0bfab62f829a5d28675f0714203945eefc3f0f1f35c0",
   "season": 2026,
   "source_features": "data/processed/features_season_2026.json",
   "source_summary": "Full Season 2026 Data"

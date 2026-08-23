@@ -3,13 +3,15 @@
     "S",
     "Q",
     "FP1",
-    "SQ"
+    "SQ",
+    "R"
   ],
   "available_sessions_by_calendar": [
     "FP1",
     "SQ",
     "S",
-    "Q"
+    "Q",
+    "R"
   ],
   "available_sessions_ingested": [
     "S",
@@ -42,7 +44,7 @@
     "BOT",
     "PER"
   ],
-  "generated_at": "2026-08-23T14:26:08Z",
+  "generated_at": "2026-08-23T15:25:25Z",
   "grid_source": "qualifying",
   "inputs_status": [
     {

@@ -1,15 +1,15 @@
 {
   "data_freshness": {
-    "days_since_latest_event": 0,
-    "days_until_next_race": 14,
+    "days_since_latest_event": 1,
+    "days_until_next_race": 13,
     "is_stale": false,
     "latest_completed_date": "2026-08-23",
     "latest_completed_event": "Dutch Grand Prix",
     "next_race_date": "2026-09-06",
-    "reference_date": "2026-08-23",
+    "reference_date": "2026-08-24",
     "stale_threshold_days": 21.0
   },
-  "deterministic_run_id": "bb5e6861ec3f94bff738",
+  "deterministic_run_id": "9963a1319f2248c65194",
   "drivers": [
     {
       "driver_share": 48.6,
@@ -254,7 +254,7 @@
       "weekend_form_delta": 0.0
     }
   ],
-  "generated_at": "2026-08-23T23:24:12Z",
+  "generated_at": "2026-08-24T01:37:36Z",
   "inputs_used": [
     {
       "source": "history_driver",
@@ -269,7 +269,7 @@
   ],
   "integrity": {
     "driver_ratings_hash": "d5082f9e4f58",
-    "race_config_hash": "9219e8bef374",
+    "race_config_hash": "3c01c733a2f6",
     "team_ratings_hash": "7b9ea964da7c"
   },
   "prediction_target": "qualifying",

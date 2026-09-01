@@ -61,6 +61,10 @@
 - [ ] Why Gasly’s Monaco case is so complex – and why the outcome could take weeks (https://www.autosport.com/f1/news/why-pierre-gaslys-monaco-case-is-so-complex-and-why-the-outcome-could-take-weeks/10849761/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] Why McLaren thinks Norris is even better now than his F1 title-winning year (https://www.autosport.com/f1/news/why-mclaren-thinks-norris-is-even-better-now-than-his-f1-title-winning-year/10849744/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] Why Red Bull has F1's top-ranked engine, and what it reveals about ADUO (https://www.autosport.com/f1/news/why-red-bull-has-f1s-top-ranked-engine-and-what-it-reveals-about-aduo/10849694/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Featured Comment: When Schumacher returned to karting – against Hamilton | Brief (https://www.racefans.net/2026/08/27/featured-comment-when-schumacher-returned-to-karting-against-hamilton/)
+- [ ] No changes as FIA completes second ADUO power unit development analysis | Formula 1 (https://www.racefans.net/2026/08/27/no-changes-as-fia-completes-second-aduo-power-unit-development-analysis/)
+- [ ] On This Day: Massa takes first win and Turkish GP promoter fined $2.5m | Brief (https://www.racefans.net/2026/08/27/on-this-day-massa-takes-first-win-and-turkish-gp-promoter-fined-2-5m/)
+- [ ] Social Media: Tsolov makes Formula 1 test debut at Imola | Brief (https://www.racefans.net/2026/08/27/social-media-tsolov-makes-formula-1-test-debut-at-imola/)
 
 ## 2026-08-28
 - [ ] Ferrari to deliver upgraded F1 engine at Italian GP (https://www.autosport.com/f1/news/ferrari-to-deliver-upgraded-f1-engine-at-italian-gp/10850147/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
@@ -70,6 +74,8 @@
 - [ ] Naomi Schiff points to Red Bull advantage after Dutch GP driver change (https://www.motorsport.com/f1/news/naomi-schiff-points-to-red-bull-advantage-after-dutch-gp-driver-change/10850177/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Sergio Perez: I want three more years with Cadillac (https://www.motorsport.com/f1/news/perez-i-want-three-more-years-with-cadillac/10849768/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Ukraine files complaint to FIA ethics committee after Russian ban lift (https://www.autosport.com/general/news/ukraine-files-complaint-to-fia-ethics-committee-after-russian-ban-lift/10850119/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] On This Day: Rosberg wins at Spa as Verstappen tangles with both Ferraris | Brief (https://www.racefans.net/2026/08/28/on-this-day-rosberg-wins-at-spa-as-verstappen-tangles-with-both-ferraris/)
+- [ ] Why F1 team bosses believe refuelling “doesn’t add a lot to the spectacle” | Formula 1 (https://www.racefans.net/2026/08/28/why-f1-team-bosses-believe-refuelling-doesnt-add-a-lot-to-the-spectacle/)
 
 ## 2026-08-29
 - [ ] Audi F1 power unit facility branded "second to none" by Rob Smedley (https://www.motorsport.com/f1/news/audi-f1-power-unit-facility-branded-second-to-none-by-rob-smedley/10850522/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
@@ -94,6 +100,11 @@
 - [ ] When does each 2026 F1 driver's contract expire? (https://www.the-race.com/formula-1/f1-driver-contracts-when-do-they-expire/)
 - [ ] Winners and losers from MotoGP's Aragon sprint (https://www.the-race.com/motogp/winners-and-losers-from-motogps-aragon-sprint/)
 - [ ] Zak Brown explains why he chose to attend Washington D.C. IndyCar race over Dutch GP (https://www.motorsport.com/indycar/news/zak-brown-explains-why-he-chose-to-attend-washington-dc-indycar-race-over-dutch-gp/10850310/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Alpine confirm Colapinto will remain alongside Gasly in 2027 line-up | Formula 1 (https://www.racefans.net/2026/08/29/alpine-confirm-colapinto-will-remain-alongside-gasly-in-2027-line-up/)
+- [ ] Featured Comment: Reintroducing refuelling would bring more negatives than positives | Brief (https://www.racefans.net/2026/08/29/featured-comment-refuelling-brings-more-negatives-than-positives/)
+- [ ] Mercedes told Antonelli he would get F1 chance before Hamilton’s exit was announced | Formula 1 (https://www.racefans.net/2026/08/29/mercedes-told-antonelli-he-would-get-f1-chance-before-hamiltons-exit-was-announced/)
+- [ ] Norris extends McLaren contract until 2030 | Formula 1 (https://www.racefans.net/2026/08/29/norris-extends-mclaren-contract-until-2030/)
+- [ ] On This Day: Verstappen wins one-lap ‘race’ at Spa in dire conditions. | Brief (https://www.racefans.net/2026/08/29/on-this-day-verstappen-wins-one-lap-race-at-spa-in-dire-conditions/)
 
 ## 2026-08-30
 - [ ] "How can you allow this?" – Toto Wolff shares Niki Lauda story behind Lewis Hamilton's iconic F1 pole (https://www.motorsport.com/f1/news/how-can-you-allow-this-toto-wolff-shares-lauda-story-behind-lewis-hamiltons-iconic-f1-pole/10850151/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
@@ -118,6 +129,7 @@
 - [ ] Sir Jackie Stewart explains how improved F1 safety has changed racing (https://www.motorsport.com/f1/news/sir-jackie-stewart-explains-how-improved-f1-safety-has-changed-racing/10850674/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] The final verdict on Formula E's Gen3 era (https://www.the-race.com/formula-e/the-final-verdict-on-formula-es-gen3-era/)
 - [ ] What time is F1's 2026 Italian Grand Prix? Full weekend schedule (https://www.the-race.com/promoted/what-time-is-f1s-2026-italian-grand-prix-full-weekend-schedule/)
+- [ ] Poll: F1 is handing out far fewer penalty points: Is this a change for the better? | Debates and polls (https://www.racefans.net/2026/08/30/poll-f1-is-handing-out-far-fewer-penalty-points-is-this-a-change-for-the-better/)
 
 ## 2026-08-31
 - [ ] A year without a win – The ugly statistics of Oscar Piastri's 2026 F1 season (https://www.motorsport.com/f1/news/ugly-statistics-oscar-piastri-season/10851115/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
@@ -142,3 +154,19 @@
 - [ ] What's killed off the F1 driver market (https://www.the-race.com/formula-1/whats-killed-off-the-f1-driver-market/)
 - [ ] Why Quartararo is now refusing to help Yamaha (https://www.the-race.com/motogp/why-quartararo-is-now-refusing-to-help-yamaha/)
 - [ ] Williams called out for 'overpromising and underdelivering' amid 2026 F1 woes (https://www.motorsport.com/f1/news/williams-called-out-for-overpromising-and-underdelivering-amid-2026-f1-woes/10850788/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Argentina ready to host Formula 1 again, says president | Formula 1 (https://www.racefans.net/2026/08/31/argentina-ready-to-host-formula-1-again-says-president/)
+- [ ] Featured Comment: Expect a quiet ‘silly season’ after Verstappen deal | Brief (https://www.racefans.net/2026/08/31/featured-comment-expect-a-quiet-silly-season-after-verstappen-deal/)
+- [ ] Formula 1 fan’s video reveals the strange sound of super-clipping | Brief (https://www.racefans.net/2026/08/31/video-formula-1-fans-video-reveals-the-strange-sound-of-super-clipping/)
+- [ ] On This Day: Rahal wins at Mid-Ohio as Garza survives monumental crash | Brief (https://www.racefans.net/2026/08/31/on-this-day-rahal-wins-at-mid-ohio-as-garza-survives-monumental-crash/)
+- [ ] Palou clinches fifth IndyCar championship title in seven years | IndyCar (https://www.racefans.net/2026/08/31/palou-clinches-fifth-indycar-championship-title-in-seven-years/)
+- [ ] Social Media: “The car of my dreams” – Hamilton gets a Ferrari F40 | Formula 1 (https://www.racefans.net/2026/08/31/social-media-the-car-of-my-dreams-hamilton-gets-a-ferrari-f40/)
+
+## 2026-09-01
+- [ ] Ferrari reveals 1996 Schumacher tribute livery for home race at Monza | Formula 1 (https://www.racefans.net/2026/09/01/ferrari-reveals-1996-schumacher-tribute-livery-for-home-race-at-monza/)
+- [ ] Ferrari unveils Michael Schumacher-inspired F1 livery for Italian GP (https://www.motorsport.com/f1/news/ferrari-unveils-michael-schumacher-inspired-f1-livery-for-italian-gp/10851263/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] How Ferrari can "push until the end" with F1 2026 upgrades, and why it will (https://www.autosport.com/f1/news/how-ferrari-can-push-until-the-end-with-f1-2026-upgrades-and-why-it-will/10851266/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] How Ferrari can "push until the end" with F1 2026 upgrades, and why it will (https://www.motorsport.com/f1/news/how-ferrari-can-push-f1-2026-upgrades-and-why-it-will/10851258/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Mario Andretti and Jacky Ickx: A friendship that has endured for almost 60 years (https://www.autosport.com/wec/news/mario-andretti-and-jacky-ickx-a-friendship-that-has-endured-for-almost-60-years/10851260/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Mario Andretti and Jacky Ickx: A friendship that has endured for almost 60 years (https://www.motorsport.com/wec/news/mario-andretti-and-jacky-ickx-a-friendship-that-has-endured-for-almost-60-years/10850421/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Ukraine appeals to FIA Court of Appeal over lifting of Russia ban | Formula 1 (https://www.racefans.net/2026/09/01/ukraine-appeals-to-fia-court-of-appeal-over-lifting-of-russia-ban/)
+- [ ] What's gone wrong for this former F1 title contender (https://www.the-race.com/formula-1/what-has-gone-wrong-for-former-f1-title-contender-piastri/)

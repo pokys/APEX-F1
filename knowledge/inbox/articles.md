@@ -164,3 +164,6 @@
 - [ ] Temple of Speed or Cathedral of Clipping? Eight talking points for the 2026 Italian GP | Formula 1 (https://www.racefans.net/2026/09/02/temple-of-speed-or-cathedral-of-clipping-eight-talking-points-for-the-2026-italian-gp/)
 - [ ] ‘Dad was driving angry’: Jacques Villeneuve on his father Gilles’ fatal crash | Formula 1 (https://www.racefans.net/2026/09/02/dad-was-driving-angry-jacques-villeneuve-on-his-father-gilles-fatal-crash/)
 - [ ] ‘They think we're against the British’ - FIA president wades into F1 stewards debate (https://www.motorsport.com/f1/news/ben-sulayem-on-colapintos-f1-penalty-they-also-think-the-fia-is-against-the-british/10851615/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Lando Norris launches race team, young driver programme (https://www.motorsport.com/f1/news/lando-norris-launches-race-team-young-driver-programme/10851664/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Norris sets up racing team with ex-Prema chief (https://www.the-race.com/formula-1/norris-sets-up-racing-team-with-ex-prema-chief/)
+- [ ] Social Media: Norris forms junior team LN4Fusion to race in F3 and potentially F2 | Brief (https://www.racefans.net/2026/09/02/social-media-norris-forms-junior-team-ln4fusion-to-race-in-f3-and-potentially-f2/)

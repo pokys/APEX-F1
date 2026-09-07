@@ -1,15 +1,15 @@
 {
   "data_freshness": {
-    "days_since_latest_event": 0,
-    "days_until_next_race": 7,
+    "days_since_latest_event": 1,
+    "days_until_next_race": 6,
     "is_stale": false,
     "latest_completed_date": "2026-09-06",
     "latest_completed_event": "Italian Grand Prix",
     "next_race_date": "2026-09-13",
-    "reference_date": "2026-09-06",
+    "reference_date": "2026-09-07",
     "stale_threshold_days": 21.0
   },
-  "deterministic_run_id": "82c2dd9cca65db889e4d",
+  "deterministic_run_id": "2809121f9e362794db24",
   "drivers": [
     {
       "driver_share": 48.2,
@@ -254,7 +254,7 @@
       "weekend_form_delta": 0.0
     }
   ],
-  "generated_at": "2026-09-06T23:36:40Z",
+  "generated_at": "2026-09-07T03:46:49Z",
   "inputs_used": [
     {
       "source": "history_driver",
@@ -269,7 +269,7 @@
   ],
   "integrity": {
     "driver_ratings_hash": "3ece0f46f1f2",
-    "race_config_hash": "0dfa662cf1b2",
+    "race_config_hash": "3ea4478ba107",
     "team_ratings_hash": "bc32d725642d"
   },
   "prediction_target": "qualifying",

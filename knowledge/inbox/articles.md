@@ -160,3 +160,6 @@
 - [ ] Russell to get his own grandstand at the 2027 British GP (https://www.the-race.com/extra/russell-to-get-his-ownngrandstand-at-2027-british-gp/)
 - [ ] Why F1 pole shocks like Gasly's are close to extinct (https://www.the-race.com/formula-1/why-f1-pole-shocks-like-gaslys-are-close-to-extinct/)
 - [ ] Why Wolff compared Antonelli to an “AI agent" after Italian GP win (https://www.autosport.com/f1/news/why-wolff-compared-antonelli-to-an-ai-agent-after-italian-gp-win/10853713/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Featured Comment: Is F1’s racing in 2026 better or worse than the DRS era? | Brief (https://www.racefans.net/2026/09/08/featured-comment-is-f1s-racing-in-2026-better-or-worse-than-the-drs-era/)
+- [ ] Spotlight: Williams to run livery based on 1981 design at Spanish Grand Prix | Brief (https://www.racefans.net/2026/09/08/spotlight-williams-to-run-in-one-off-livery-at-spanish-grand-prix/)
+- [ ] The wider significance of Vettel's Schumacher run (https://www.the-race.com/formula-1/sebastian-vettel-michael-schumacher-ferrari-f1-demo-wider-significance/)

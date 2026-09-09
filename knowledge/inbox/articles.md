@@ -162,3 +162,5 @@
 - [ ] What to expect with Madrid set to make F1 return (https://www.autosport.com/f1/news/what-to-expect-with-madrid-set-to-make-f1-return/10853800/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] Why F1's new Madrid track is a 'car killer' (https://www.the-race.com/formula-1/why-f1s-new-madrid-track-is-a-car-killer/)
 - [ ] “Even a small mistake can cost you a lot” – How Madring will challenge F1 drivers (https://www.motorsport.com/f1/news/even-a-small-mistake-can-cost-you-a-lot-how-challenging-the-madring-f1-track-will-be/10853878/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Audi's first F1 protege is on the brink of extending his title streak (https://www.the-race.com/formula-1/audis-first-f1-protege-is-on-the-brink-of-extending-his-title-streak/)
+- [ ] The driver handling lessons Ferrari can take from two big rivals (https://www.the-race.com/formula-1/the-driver-handling-lessons-ferrari-can-take-from-two-big-rivals/)

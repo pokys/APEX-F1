@@ -156,3 +156,17 @@
 - [ ] What Colapinto learned from Gasly's Monza pole to make his Madrid breakthrough (https://www.motorsport.com/f1/news/colapinto-reveals-how-monza-lessons-helped-him-shine-at-madring/10856002/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Why Ferrari won't switch focus to 2027 F1 car yet (https://www.motorsport.com/f1/news/why-ferrari-wont-switch-focus-to-2027-f1-car-yet/10856168/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] ‘Realistically I’m not in the fight for the drivers’ championship’ admits Russell | Formula 1 (https://www.racefans.net/2026/09/15/realistically-im-not-in-the-fight-for-the-drivers-championship-admits-russell/)
+
+## 2026-09-16
+- [ ] F1 announces 2027 calendar - with Monaco among 10 sprint races (https://www.motorsport.com/f1/news/f1-announces-2027-calendar-with-monaco-among-10-sprint-races/10856260/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] F1 clash avoided but can Lando Norris or Max Verstappen race at Le Mans 2027? (https://www.motorsport.com/wec/news/f1-clash-avoided-but-can-lando-norris-or-max-verstappen-race-at-le-mans-2027/10856278/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] F1 reveals 2027 calendar as Monaco joins expanded sprint schedule (https://www.autosport.com/f1/news/f1-reveals-2027-calendar-as-monaco-joins-expanded-sprint-schedule/10856277/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] F1's huge dilemma over VSC lottery rule (https://www.the-race.com/formula-1/f1-virtual-safety-car-rule-lando-norris-no-easy-fix/)
+- [ ] Haas confident of getting 2027 F1 budget closer to cap with new partner talks (https://www.motorsport.com/f1/news/haas-confident-of-getting-2027-f1-budget-closer-to-cap-with-new-partner-talks/10856149/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Mir out of Austrian GP due to bloodwork anomalies (https://www.the-race.com/motogp/joan-mir-out-of-austrian-gp-to-bloodwork-anomalies/)
+- [ ] Monaco sprint and season opener Plan B - F1's 2027 calendar (https://www.the-race.com/formula-1/monaco-sprint-and-season-opener-plan-b-f1-2027-calendar-revealed/)
+- [ ] Monaco to hold first sprint race as F1 increases total to 10 on 2027 calendar | Formula 1 (https://www.racefans.net/2026/09/16/monaco-to-hold-first-sprint-race-as-f1-increases-total-to-10-on-2027-calendar/)
+- [ ] MotoGP's radically different 2027 rider line-up is complete (https://www.the-race.com/motogp/2027-motogp-line-up-complete/)
+- [ ] Sacrilege? Our verdict on 2027 F1 calendar + sprint expansion (https://www.the-race.com/formula-1/sacrilege-our-verdict-on-2027-f1-calendar-sprint-expansion/)
+- [ ] Sebastian Vettel: “I’d be very happy” for Kimi Antonelli to beat me as F1’s youngest champion (https://www.motorsport.com/f1/news/sebastian-vettel-id-be-very-happy-for-kimi-antonelli-to-beat-me-as-f1s-youngest-champion/10856263/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Stats: Mercedes equal Ferrari as Formula 1’s most successful engine builders | 2026 Spanish Grand Prix stats and facts (https://www.racefans.net/2026/09/16/2026-spanish-grand-prix-stats-and-facts/)

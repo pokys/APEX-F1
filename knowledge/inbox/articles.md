@@ -55,6 +55,9 @@
 - [ ] Honda replaces F1 power unit boss in organisation shuffle (https://www.autosport.com/f1/news/aston-martin-partner-honda-replaces-f1-power-unit-boss/10855755/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] Norris completes first full test in McLaren’s Le Mans Hypercar (https://www.autosport.com/wec/news/lando-norris-completes-first-full-test-in-mclarens-le-mans-hypercar/10855957/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] Spanish GP organisers promise Madring track changes following F1 criticism (https://www.autosport.com/f1/news/spanish-gp-organisers-promise-madring-track-changes-following-f1-criticism/10855769/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Featured Comment: Is the new Madrid’s circuit one of Formula 1’s worst tracks? | Brief (https://www.racefans.net/2026/09/14/featured-comment-is-the-new-madrids-circuit-one-of-formula-1s-worst-tracks/)
+- [ ] On This Day: Zanardi loses legs in Lausitzring horror crash | Brief (https://www.racefans.net/2026/09/15/on-this-day-zanardi-loses-legs-in-lausitzring-horror-crash/)
+- [ ] Pictures: Norris tests McLaren’s MCL-HY WEC hypercar at Algarve | Other Motorsport (https://www.racefans.net/2026/09/14/pictures-norris-tests-mclarens-mcl-hy-wec-hypercar-at-algarve/)
 
 ## 2026-09-15
 - [ ] Andrea Stella: McLaren must help Oscar Piastri stop "thinking" about how to drive '26 F1 car (https://www.motorsport.com/f1/news/stella-mclaren-must-help-piastri-stop-thinking-about-how-to-drive-26-f1-car/10856178/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
@@ -65,6 +68,7 @@
 - [ ] Russell and Hamilton concede F1 2026 title chances as Antonelli dominates (https://www.autosport.com/f1/news/russell-and-hamilton-concede-f1-2026-title-chances-as-antonelli-dominates/10856072/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] Slater to graduate from F3 to F2 for 2027 (https://www.autosport.com/formula2/news/slater-to-graduate-from-f3-to-f2-for-2027/10856041/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] Why Ferrari won't switch focus to 2027 F1 car yet (https://www.motorsport.com/f1/news/why-ferrari-wont-switch-focus-to-2027-f1-car-yet/10856168/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] ‘Realistically I’m not in the fight for the drivers’ championship’ admits Russell | Formula 1 (https://www.racefans.net/2026/09/15/realistically-im-not-in-the-fight-for-the-drivers-championship-admits-russell/)
 
 ## 2026-09-16
 - [ ] Bruising F1 2026 will not be the end for Russell - Wolff (https://www.autosport.com/f1/news/bruising-f1-2026-will-not-be-the-end-for-george-russell-toto-wolff/10856371/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
@@ -79,6 +83,9 @@
 - [ ] Sebastian Vettel: “I’d be very happy” for Kimi Antonelli to beat me as F1’s youngest champion (https://www.motorsport.com/f1/news/sebastian-vettel-id-be-very-happy-for-kimi-antonelli-to-beat-me-as-f1s-youngest-champion/10856263/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Was Cadillac “faster” than Williams in Madring F1 race? (https://www.motorsport.com/f1/news/was-cadillac-faster-than-williams-in-madring-f1-race/10856327/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] “I’m not enjoying life” – How Yuki Tsunoda’s Red Bull F1 stint “exhausted” him (https://www.motorsport.com/f1/news/im-not-enjoying-life-how-yuki-tunodas-red-bull-f1-stint-exhausted-him/10856377/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Featured Comment: 34 F1 races on 2027 calendar is too many | Brief (https://www.racefans.net/2026/09/16/featured-comment-34-f1-races-on-2027-calendar-is-too-many/)
+- [ ] Monaco to hold first sprint race as F1 increases total to 10 on 2027 calendar | Formula 1 (https://www.racefans.net/2026/09/16/monaco-to-hold-first-sprint-race-as-f1-increases-total-to-10-on-2027-calendar/)
+- [ ] Stats: Mercedes equal Ferrari as F1’s most successful engine builders by race wins | 2026 Spanish Grand Prix stats and facts (https://www.racefans.net/2026/09/16/2026-spanish-grand-prix-stats-and-facts/)
 
 ## 2026-09-17
 - [ ] Alpine hires former Mercedes F1 tech chief Mike Elliott as CTO (https://www.motorsport.com/f1/news/alpine-hires-former-mercedes-f1-tech-chief-mike-elliott-cto/10856493/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
@@ -96,6 +103,11 @@
 - [ ] Nico Rosberg proposes major F1 VSC rule change after Lando Norris Spanish GP setback (https://www.motorsport.com/f1/news/nico-rosberg-proposes-major-f1-vsc-rule-change-after-lando-norris-spanish-gp-setback/10856666/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Tsunoda's in-depth look at why he failed to master Red Bull’s F1 car in 2025 (https://www.autosport.com/f1/news/tsunoda-on-poor-f1-2025/10856471/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] Yuki Tsunoda reveals why he failed to master Red Bull's F1 car in 2025 (https://www.motorsport.com/f1/news/yuki-tsunoda-reveals-why-he-failed-to-master-red-bulls-f1-car-in-2025/10856416/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Mercedes risked ‘looking like idiots, like Ferrari did’ at Monza – Wolff | Formula 1 (https://www.racefans.net/2026/09/17/mercedes-risked-looking-like-idiots-like-ferrari-did-at-monza-wolff/)
+- [ ] On This Day: Crucial victory puts Rosberg back in the lead of 2016 title fight | Brief (https://www.racefans.net/2026/09/18/on-this-day-crucial-victory-puts-rosberg-back-in-the-lead-of-2016-title-fight/)
+- [ ] Social Media: Hamilton denies requesting staff changes at Ferrari | Brief (https://www.racefans.net/2026/09/17/social-media-hamilton-denies-requesting-staff-changes-at-ferrari/)
+- [ ] Tsunoda ‘wasn’t hugely disappointed’ when Red Bull dropped him last year | Formula 1 (https://www.racefans.net/2026/09/17/tsunoda-admits-he-wasnt-hugely-disappointed-when-red-bull-dropped-him-last-year/)
+- [ ] Video: Verstappen beats amateur rivals in ‘Max vs 100’ kart race | Brief (https://www.racefans.net/2026/09/17/video-verstappen-beats-amateur-rivals-in-max-vs-100-kart-race/)
 
 ## 2026-09-18
 - [ ] Cadillac F1 owners Mark Walter and TWG Global face class-action lawsuit (https://www.autosport.com/f1/news/cadillac-f1-owners-mark-walter-and-twg-global-face-class-action-lawsuit/10856873/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
@@ -115,6 +127,8 @@
 - [ ] Where the next leaps in F1 brake technology will come from (https://www.the-race.com/promoted/brembo-where-the-next-leaps-in-f1-brake-technology-will-come-from/)
 - [ ] Williams shares behind-the-scenes look at Alex Albon’s life away from F1 (https://www.motorsport.com/f1/news/williams-shares-behind-the-scenes-look-at-alex-albons-life-away-from-f1/10856966/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Williams upgrades "won't be enough" to fix 2026 F1 struggles, says James Vowles (https://www.motorsport.com/f1/news/williams-upgrades-wont-be-enough-to-fix-2026-f1-struggles-says-james-vowles/10856821/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] F1 drivers explain why Madring’s hyped Monumental corner failed to impress | Formula 1 (https://www.racefans.net/2026/09/18/f1-drivers-explain-why-madrings-hyped-monumental-corner-failed-to-impress/)
+- [ ] Featured Comment: Why F1’s sprint races are leading some fans to switch off | Brief (https://www.racefans.net/2026/09/18/featured-comment-why-f1s-sprint-races-are-leading-some-fans-to-switch-off/)
 
 ## 2026-09-19
 - [ ] 'I f***ed it up' - Acosta explains his crash from Austria sprint lead (https://www.the-race.com/motogp/i-f-ed-it-up-acosta-explains-his-crash-from-austria-sprint-lead/)
@@ -133,6 +147,7 @@
 - [ ] Who actually owns each F1 team? (https://www.the-race.com/business/who-actually-owns-each-f1-team/)
 - [ ] Williams accepts 2026 F1 development compromise as focus turns to 2027 (https://www.motorsport.com/f1/news/williams-accepts-2026-f1-development-compromise-as-focus-turns-to-2027/10857074/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Winners and losers from Austria MotoGP sprint 2026 (https://www.the-race.com/motogp/winners-and-losers-from-austria-motogp-sprint-2026/)
+- [ ] Antonelli ‘doing a scarily good job’, ‘beating much more experienced team mate’ – Norris | Formula 1 (https://www.racefans.net/2026/09/19/antonelli-doing-a-scarily-good-job-and-beating-a-much-more-experienced-team-mate-norris/)
 
 ## 2026-09-20
 - [ ] Acosta finally wins first GP, Marquez loses title race ground (https://www.the-race.com/motogp/acosta-finally-wins-first-gp-marquez-loses-title-race-ground/)
@@ -144,3 +159,19 @@
 - [ ] Marc Marquez explains his Austrian GP slump (https://www.the-race.com/motogp/marc-marquez-explains-his-austrian-gp-slump/)
 - [ ] Sebastian Vettel: F1 must combine “things we love” with sustainable future (https://www.motorsport.com/f1/news/sebastian-vettel-weighs-in-on-f1-2026-rules-debate-we-need-to-combine-things-we-love/10857419/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Why Ferrari has fallen back - and what it plans to do (https://www.the-race.com/formula-1/ferrari-f1-2026-development-latest-stalled-whats-going-on/)
+- [ ] On This Day: Mansell, Prost and Piquet leave Senna behind in title fight | Brief (https://www.racefans.net/2026/09/21/on-this-day-mansell-prost-and-piquet-leave-senna-behind-in-title-fight/)
+- [ ] Poll: Should F1 change its rules to make Virtual Safety Car periods fairer? | Debates and Polls (https://www.racefans.net/2026/09/20/poll-should-f1-change-its-rules-to-make-virtual-safety-car-periods-fairer/)
+
+## 2026-09-21
+- [ ] 2025 F1 Academy champion Doriane Pin sets timeline for Formula 1 race seat (https://www.motorsport.com/f1/news/2025-f1-academy-champion-doriane-pin-sets-timeline-for-formula-1-race-seat/10857711/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Featured Comment: Blame the track or F1’s 2026 rules for Madring’s dull debut? | Brief (https://www.racefans.net/2026/09/21/featured-comment-blame-the-track-or-f1s-2026-rules-for-madrings-dull-debut/)
+- [ ] Gabriel Bortoleto opens up on Fernando Alonso's personality away from F1 cameras (https://www.motorsport.com/f1/news/gabriel-bortoleto-opens-up-on-fernando-alonsos-personality-away-from-f1-cameras/10857688/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] How to watch the 2026 Azerbaijan GP and why it is being held on a Saturday | TV Times (https://www.racefans.net/2026/09/21/how-to-watch-the-2026-azerbaijan-gp-and-why-it-is-being-held-on-a-saturday/)
+- [ ] McLaren releases behind-the-scenes look at Lando Norris's hypercar test (https://www.motorsport.com/f1/news/mclaren-releases-behind-the-scenes-look-at-lando-norriss-hypercar-test/10857661/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Mercedes and Aston Martin go head-to-head in charity football match: Here are the results (https://www.motorsport.com/f1/news/mercedes-and-aston-martin-go-head-to-head-in-charity-football-match-here-are-the-results/10857645/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Otmar Szafnauer raises concern over Cadillac's "suboptimal" split US-UK structure (https://www.motorsport.com/f1/news/otmar-szafnauer-raises-concern-over-cadillacs-suboptimal-split-us-uk-structure/10857676/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Red Bull admits Max Verstappen's mysterious car issue cannot be fully fixed until 2027 (https://www.motorsport.com/f1/news/red-bull-admits-max-verstappens-mysterious-car-issue-cannot-be-fully-fixed-until-2027/10857381/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Red Bull admits Verstappen's mysterious car issue cannot be fully fixed until 2027 (https://www.autosport.com/f1/news/red-bull-admits-verstappens-mysterious-car-issue-cannot-be-fully-fixed-until-2027/10857621/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] What Mercedes' rivals got so badly wrong in F1 2026 (https://www.the-race.com/formula-1/what-mercedes-rivals-got-so-badly-wrong-in-f1-2026/)
+- [ ] Why Charles Leclerc didn’t copy Lewis Hamilton’s driving style amid F1 2026 struggle (https://www.motorsport.com/f1/news/why-charles-leclerc-didnt-copy-lewis-hamiltons-driving-style-amid-f1-2026-struggle/10857632/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Wolff tried to help Masi ‘for the good of the sport, and for us’ in 2021 | Formula 1 (https://www.racefans.net/2026/09/21/wolff-tried-to-help-masi-for-the-good-of-the-sport-and-for-us-in-2021/)

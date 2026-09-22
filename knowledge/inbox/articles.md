@@ -166,3 +166,13 @@
 - [ ] Why Charles Leclerc didn’t copy Lewis Hamilton’s driving style amid F1 2026 struggle (https://www.motorsport.com/f1/news/why-charles-leclerc-didnt-copy-lewis-hamiltons-driving-style-amid-f1-2026-struggle/10857632/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Why Leclerc didn’t copy Hamilton’s driving style amid F1 2026 struggle (https://www.autosport.com/f1/news/why-charles-leclerc-didnt-copy-lewis-hamiltons-driving-style-amid-f1-2026-struggle/10857642/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] Wolff tried to help Masi ‘for the good of the sport, and for us’ in 2021 | Formula 1 (https://www.racefans.net/2026/09/21/wolff-tried-to-help-masi-for-the-good-of-the-sport-and-for-us-in-2021/)
+
+## 2026-09-22
+- [ ] Doriane Pin shares powerful advice to young girls hoping to reach motorsport (https://www.motorsport.com/f1/news/doriane-pin-shares-powerful-advice-to-young-girls-hoping-to-reach-motorsport/10857714/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Hadjar cleared to return for Azerbaijan GP (https://www.the-race.com/formula-1/isack-hadjar-cleared-to-return-f1-azerbaijan-gp/)
+- [ ] Hadjar set to make Red Bull return at Azerbaijan GP after injury recovery (https://www.autosport.com/f1/news/hadjar-to-make-red-bull-return-in-baku/10857880/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Isack Hadjar to make Red Bull return at F1 Azerbaijan GP (https://www.motorsport.com/f1/news/isack-hadjar-to-make-red-bull-return-at-f1-azerbaijan-gp/10857869/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Mir ruled out of more MotoGP races as illness continues (https://www.the-race.com/motogp/mir-ruled-out-of-more-motogp-races-as-illness-continues/)
+- [ ] Saturday race, Williams’ upgrade, title fight fades and more Azerbaijan GP talking points | Formula 1 (https://www.racefans.net/2026/09/22/saturday-race-title-fight-fades-williams-big-upgrade-and-more-azerbaijan-gp-talking-points/)
+- [ ] Social Media: Red Bull confirms Hadjar’s return from injury in Azerbaijan GP | Brief (https://www.racefans.net/2026/09/22/social-media-red-bull-confirms-hadjars-return-from-injury-in-azerbaijan-gp/)
+- [ ] Where every Red Bull driver stands as Hadjar returns (https://www.the-race.com/formula-1/isack-hadjar-injury-return-where-every-red-bull-f1-driver-stands/)

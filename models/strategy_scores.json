@@ -1,5 +1,5 @@
 {
-  "inputs_hash": "b3cf698bd46617b13b555b5e89d309084ee23d747ede207d0484c66b84fbc5ea",
+  "inputs_hash": "f4f3246f5df3953c8b82b8b8013cd3b2f45c8be92dd880bd41d0eda16ac40579",
   "season": 2026,
   "source_features": "data/processed/features_season_2026.json",
   "source_summary": "Full Season 2026 Data",
@@ -26,22 +26,22 @@
     },
     {
       "components": {
-        "pit_stop_performance": 57.306968,
+        "pit_stop_performance": 55.931936,
         "safety_car_reactions": 60.0,
         "sprint_execution": 19.335227,
         "strategic_success_history": 42.266667
       },
-      "strategy_score": 46.885708,
+      "strategy_score": 46.473198,
       "team": "Audi"
     },
     {
       "components": {
-        "pit_stop_performance": 68.300528,
+        "pit_stop_performance": 68.988048,
         "safety_car_reactions": 60.0,
         "sprint_execution": 5.0,
         "strategic_success_history": 40.0
       },
-      "strategy_score": 47.240158,
+      "strategy_score": 47.446414,
       "team": "Cadillac F1 Team"
     },
     {
@@ -66,12 +66,12 @@
     },
     {
       "components": {
-        "pit_stop_performance": 20.599584,
+        "pit_stop_performance": 21.287096,
         "safety_car_reactions": 60.0,
         "sprint_execution": 95.0,
         "strategic_success_history": 73.733333
       },
-      "strategy_score": 58.236542,
+      "strategy_score": 58.442795,
       "team": "McLaren"
     },
     {

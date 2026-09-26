@@ -86,18 +86,18 @@
         "qualifying_gap_pace": 31.716703,
         "qualifying_pace": 46.48817,
         "qualifying_progression": 56.77434,
-        "race_gap_pace": 57.897017,
-        "recent_race_form": 49.933334,
+        "race_gap_pace": 56.759251,
+        "recent_race_form": 48.2,
         "sprint_lap_pace": 58.0,
-        "teammate_delta_performance": 53.540684,
+        "teammate_delta_performance": 51.134378,
         "teammate_qualifying_gap": 80.0,
         "weekend_practice_pace": 49.2,
         "wet_performance_index": 50.0
       },
       "driver": "BOR",
-      "driver_rating": 51.933709,
+      "driver_rating": 51.369438,
       "qualifying_rating": 46.48817,
-      "race_rating": 56.38915,
+      "race_rating": 55.363203,
       "team": "Audi"
     },
     {
@@ -109,15 +109,15 @@
         "race_gap_pace": 59.184656,
         "recent_race_form": 36.066666,
         "sprint_lap_pace": 58.0,
-        "teammate_delta_performance": 43.39592,
+        "teammate_delta_performance": 42.192774,
         "teammate_qualifying_gap": 38.809598,
         "weekend_practice_pace": 49.2,
         "wet_performance_index": 50.0
       },
       "driver": "BOT",
-      "driver_rating": 38.628227,
+      "driver_rating": 38.535585,
       "qualifying_rating": 27.49144,
-      "race_rating": 47.740144,
+      "race_rating": 47.571704,
       "team": "Cadillac F1 Team"
     },
     {
@@ -209,15 +209,15 @@
         "race_gap_pace": 59.048024,
         "recent_race_form": 53.4,
         "sprint_lap_pace": 58.0,
-        "teammate_delta_performance": 46.459316,
+        "teammate_delta_performance": 48.865622,
         "teammate_qualifying_gap": 80.0,
         "weekend_practice_pace": 49.2,
         "wet_performance_index": 50.0
       },
       "driver": "HUL",
-      "driver_rating": 50.6889,
+      "driver_rating": 50.874185,
       "qualifying_rating": 45.429671,
-      "race_rating": 54.991905,
+      "race_rating": 55.328787,
       "team": "Audi"
     },
     {
@@ -289,15 +289,15 @@
         "race_gap_pace": 76.254836,
         "recent_race_form": 59.466666,
         "sprint_lap_pace": 58.0,
-        "teammate_delta_performance": 62.414864,
+        "teammate_delta_performance": 61.211704,
         "teammate_qualifying_gap": 80.0,
         "weekend_practice_pace": 49.2,
         "wet_performance_index": 50.0
       },
       "driver": "NOR",
-      "driver_rating": 66.202466,
+      "driver_rating": 66.109822,
       "qualifying_rating": 68.383386,
-      "race_rating": 64.418076,
+      "race_rating": 64.249634,
       "team": "McLaren"
     },
     {
@@ -327,17 +327,17 @@
         "qualifying_pace": 31.28712,
         "qualifying_progression": 50.999994,
         "race_gap_pace": 52.317486,
-        "recent_race_form": 36.066666,
+        "recent_race_form": 36.933334,
         "sprint_lap_pace": 58.0,
-        "teammate_delta_performance": 56.60408,
+        "teammate_delta_performance": 57.80724,
         "teammate_qualifying_gap": 64.114135,
         "weekend_practice_pace": 49.2,
         "wet_performance_index": 50.0
       },
       "driver": "PER",
-      "driver_rating": 41.120981,
+      "driver_rating": 41.328025,
       "qualifying_rating": 31.28712,
-      "race_rating": 49.166868,
+      "race_rating": 49.543311,
       "team": "Cadillac F1 Team"
     },
     {
@@ -347,17 +347,17 @@
         "qualifying_pace": 66.829813,
         "qualifying_progression": 63.0,
         "race_gap_pace": 59.460282,
-        "recent_race_form": 58.6,
+        "recent_race_form": 59.466666,
         "sprint_lap_pace": 58.0,
-        "teammate_delta_performance": 37.585136,
+        "teammate_delta_performance": 38.788282,
         "teammate_qualifying_gap": 80.0,
         "weekend_practice_pace": 49.2,
         "wet_performance_index": 50.0
       },
       "driver": "PIA",
-      "driver_rating": 61.464377,
+      "driver_rating": 61.671419,
       "qualifying_rating": 66.829813,
-      "race_rating": 57.074474,
+      "race_rating": 57.450914,
       "team": "McLaren"
     },
     {
@@ -441,7 +441,7 @@
       "team": "Red Bull"
     }
   ],
-  "inputs_hash": "b3cf698bd46617b13b555b5e89d309084ee23d747ede207d0484c66b84fbc5ea",
+  "inputs_hash": "f4f3246f5df3953c8b82b8b8013cd3b2f45c8be92dd880bd41d0eda16ac40579",
   "season": 2026,
   "source_features": "data/processed/features_season_2026.json",
   "source_summary": "Full Season 2026 Data"

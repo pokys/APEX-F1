@@ -135,6 +135,7 @@
 - [ ] Why Verstappen says 0.196s Baku finish-line gap to Russell is slightly misleading (https://www.autosport.com/f1/news/why-max-verstappen-says-0196s-baku-finish-line-gap-to-george-russell-is-slightly-misleading/10859367/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] Winners and losers from F1's 2026 Azerbaijan Grand Prix (https://www.the-race.com/formula-1/winners-and-losers-from-f1s-2026-azerbaijan-grand-prix/)
 - [ ] Winners and losers from F1's Azerbaijan Grand Prix street brawl (https://www.motorsport.com/f1/news/winners-losers-f1-azerbaijan-grand-prix-street-brawl/10859378/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Mercedes overtake Ferrari to become F1’s most successful engine builder | Formula 1 (https://www.racefans.net/2026/09/26/mercedes-overtake-ferrari-f1-most-successful-engine-builder/)
 
 ## 2026-09-27
 - [ ] Alpine condemn online abuse again: “It has become a regular occurrence” | Formula 1 (https://www.racefans.net/2026/09/27/alpine-condemn-online-abuse-again-it-has-become-a-regular-occurrence/)
@@ -160,3 +161,21 @@
 - [ ] Who slept worst last night: Lewis Hamilton (https://www.motorsport.com/f1/news/who-slept-worst-last-night-lewis-hamilton-10859438/10859438/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Why is the 2026 Bahrain Grand Prix taking place in Malaysia? (https://www.motorsport.com/f1/news/why-is-the-2026-bahrain-grand-prix-taking-place-in-malaysia/10859526/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Why Mercedes didn’t expect “Monza 2.0” from Kimi Antonelli in Baku (https://www.motorsport.com/f1/news/why-mercedes-didnt-expect-monza-20-from-kimi-antonelli-in-baku/10859479/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Colapinto penalty exposes a big F1 blindspot (https://www.the-race.com/formula-1/f1-penalty-points-system-big-blindspot/)
+
+## 2026-09-28
+- [ ] F1 pundit slams Franco Colapinto's "outrageous" Baku crash but rejects Lando Norris's race ban call (https://www.motorsport.com/f1/news/f1-pundit-slams-franco-colapintos-outrageous-baku-crash-but-rejects-lando-norriss-race-ban-call/10859752/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] F1's plan for higher-degradation tyres in 2027 (https://www.the-race.com/formula-1/f1-plan-higher-degradation-tyres-2027-pirelli/)
+- [ ] Flavio Briatore apologises to Lando Norris after Azerbaijan GP crash (https://www.motorsport.com/f1/news/flavio-briatore-apologises-to-lando-norris-after-azerbaijan-gp-crash/10859734/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Has George Russell hit his stride too late? 'With this form I would have been in the fight' (https://www.motorsport.com/f1/news/has-george-russell-hit-his-stride-too-late-with-this-form-i-would-have-been-in-the-fight/10859731/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Horner to Ferrari rumours: What's really going on (https://www.the-race.com/formula-1/christian-horner-to-ferrari-f1-rumours-whats-really-going-on/)
+- [ ] Lando Norris apologises to Franco Colapinto over F1 race ban comments (https://www.motorsport.com/f1/news/lando-norris-apologises-to-franco-colapinto-over-f1-race-ban-comments/10859736/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Norris apologised to Colapinto for saying he “shouldn’t be in Formula 1” | Formula 1 (https://www.racefans.net/2026/09/28/norris-apologised-to-colapinto-for-saying-he-shouldnt-be-in-formula-1/)
+- [ ] Norris apologises to Colapinto for race ban demand (https://www.the-race.com/formula-1/norris-apologises-colapinto-for-race-ban-demand-f1-baku-crash/)
+- [ ] Norris apologises to Colapinto over F1 race ban comments (https://www.autosport.com/f1/news/norris-apologises-to-colapinto-over-f1-race-ban-comments/10859741/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Red Bull ordered Hadjar not to pass Verstappen in unbroadcast message | Formula 1 (https://www.racefans.net/2026/09/28/red-bull-ordered-hadjar-not-to-pass-verstappen-in-unbroadcast-message/)
+- [ ] Sebastian Vettel gives update on F1 future as he opens up on life after retirement (https://www.motorsport.com/f1/news/sebastian-vettel-addresses-f1-future-after-retirement-always-open/10859651/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] What made Red Bull so fast in the Azerbaijan GP after Max Verstappen’s qualifying issue (https://www.motorsport.com/f1/news/what-made-red-bull-so-fast-in-the-azerbaijan-gp-after-max-verstappens-qualifying-issue/10859776/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] What time is F1's 2026 Bahrain GP in Malaysia? Full weekend schedule (https://www.the-race.com/promoted/what-time-is-f1-2026-bahrain-grand-prix-in-malaysia-full-weekend-schedule/)
+- [ ] Why McLaren was so much slower than Mercedes on Baku's straights (https://www.autosport.com/f1/news/why-mclaren-was-so-much-slower-than-mercedes-on-bakus-straights/10859723/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Why McLaren was so much slower than Mercedes on Baku's straights (https://www.motorsport.com/f1/news/why-mclaren-was-so-much-slower-than-mercedes-on-baku-straights/10859545/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

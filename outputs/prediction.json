@@ -1,15 +1,15 @@
 {
   "data_freshness": {
-    "days_since_latest_event": 3,
-    "days_until_next_race": 5,
+    "days_since_latest_event": 4,
+    "days_until_next_race": 4,
     "is_stale": false,
     "latest_completed_date": "2026-09-26",
     "latest_completed_event": "Azerbaijan Grand Prix",
     "next_race_date": "2026-10-04",
-    "reference_date": "2026-09-29",
+    "reference_date": "2026-09-30",
     "stale_threshold_days": 21.0
   },
-  "deterministic_run_id": "97cfb991b8499770cadd",
+  "deterministic_run_id": "8648fb460316f5c05056",
   "drivers": [
     {
       "driver_share": 48.9,
@@ -254,7 +254,7 @@
       "weekend_form_delta": 0.0
     }
   ],
-  "generated_at": "2026-09-29T23:34:51Z",
+  "generated_at": "2026-09-30T04:50:32Z",
   "inputs_used": [
     {
       "source": "history_driver",
@@ -269,7 +269,7 @@
   ],
   "integrity": {
     "driver_ratings_hash": "a21a741acf68",
-    "race_config_hash": "58c2cd1033b8",
+    "race_config_hash": "c22bb7d9a9e2",
     "team_ratings_hash": "694c0105f685"
   },
   "prediction_target": "qualifying",

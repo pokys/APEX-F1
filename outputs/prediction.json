@@ -9,7 +9,7 @@
     "reference_date": "2026-10-02",
     "stale_threshold_days": 21.0
   },
-  "deterministic_run_id": "0a9ba11ce900ed9d72c5",
+  "deterministic_run_id": "f3bb199d9224e64deedd",
   "drivers": [
     {
       "driver_share": 48.9,
@@ -254,7 +254,7 @@
       "weekend_form_delta": 0.0
     }
   ],
-  "generated_at": "2026-10-02T04:40:02Z",
+  "generated_at": "2026-10-02T10:57:40Z",
   "inputs_used": [
     {
       "source": "history_driver",
@@ -269,7 +269,7 @@
   ],
   "integrity": {
     "driver_ratings_hash": "a21a741acf68",
-    "race_config_hash": "8d50110e4737",
+    "race_config_hash": "1c4e7e84d25b",
     "team_ratings_hash": "694c0105f685"
   },
   "prediction_target": "qualifying",

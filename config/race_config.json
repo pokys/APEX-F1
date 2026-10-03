@@ -2,11 +2,13 @@
   "available_sessions": [
     "Q",
     "FP1",
-    "FP2"
+    "FP2",
+    "FP3"
   ],
   "available_sessions_by_calendar": [
     "FP1",
-    "FP2"
+    "FP2",
+    "FP3"
   ],
   "available_sessions_ingested": [
     "Q"
@@ -38,15 +40,9 @@
     "BOT",
     "PER"
   ],
-  "generated_at": "2026-10-03T17:04:13Z",
+  "generated_at": "2026-10-03T20:45:37Z",
   "grid_source": "qualifying",
   "inputs_status": [
-    {
-      "configured_weight": 0.1,
-      "source": "fp3",
-      "source_key": "FP3",
-      "status": "missing"
-    },
     {
       "configured_weight": 0.15,
       "source": "signals",
@@ -57,6 +53,12 @@
       "configured_weight": 0.1,
       "source": "fp2",
       "source_key": "FP2",
+      "status": "pending_ingest"
+    },
+    {
+      "configured_weight": 0.1,
+      "source": "fp3",
+      "source_key": "FP3",
       "status": "pending_ingest"
     },
     {

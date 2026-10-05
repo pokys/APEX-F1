@@ -1,15 +1,15 @@
 {
   "data_freshness": {
-    "days_since_latest_event": 0,
-    "days_until_next_race": 7,
+    "days_since_latest_event": 1,
+    "days_until_next_race": 6,
     "is_stale": false,
     "latest_completed_date": "2026-10-04",
     "latest_completed_event": "Bahrain Grand Prix in Malaysia",
     "next_race_date": "2026-10-11",
-    "reference_date": "2026-10-04",
+    "reference_date": "2026-10-05",
     "stale_threshold_days": 21.0
   },
-  "deterministic_run_id": "9e60a097ca140576214c",
+  "deterministic_run_id": "a684a280afc4148381c5",
   "drivers": [
     {
       "driver_share": 48.4,
@@ -254,7 +254,7 @@
       "weekend_form_delta": 0.0
     }
   ],
-  "generated_at": "2026-10-04T22:53:37Z",
+  "generated_at": "2026-10-05T01:44:24Z",
   "inputs_used": [
     {
       "source": "history_driver",
@@ -269,7 +269,7 @@
   ],
   "integrity": {
     "driver_ratings_hash": "7ceb52e1cc3f",
-    "race_config_hash": "c1be098acde5",
+    "race_config_hash": "18422f3a475e",
     "team_ratings_hash": "3d94c6cbb32f"
   },
   "prediction_target": "sprint_qualifying",

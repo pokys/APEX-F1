@@ -20,7 +20,7 @@ if __package__ is None or __package__ == "":
     sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from pipeline.build_features import DEFAULT_SIGNAL_GUARDRAILS, build_features, load_recency_config
-from pipeline.prediction_targeting import build_inputs_manifest, load_session_weights
+from pipeline.prediction_targeting import build_inputs_manifest, load_session_weights, session_has_classification
 from pipeline.select_next_gp import apply_track_profile, load_track_profiles
 from pipeline.simulate_race import load_json, load_or_default_config
 from pipeline.simulate_target_prediction import run_target_prediction
@@ -124,8 +124,7 @@ def available_sessions_for_event(event: dict[str, Any]) -> list[str]:
     for session in sessions:
         if not isinstance(session, dict):
             continue
-        results = session.get("results")
-        if not isinstance(results, list) or not results:
+        if not session_has_classification(session.get("results")):
             continue
         code = str(session.get("session_code") or "").strip().upper()
         if code and code not in out:

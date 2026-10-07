@@ -19,6 +19,11 @@ from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Any, Callable, Iterable
 
+if __package__ is None or __package__ == "":
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from pipeline.prediction_targeting import session_has_classification  # noqa: E402
+
 try:
     import fastf1  # type: ignore
 except ModuleNotFoundError:
@@ -34,6 +39,15 @@ SESSION_ALIASES = {
     "SPRINT_QUALIFYING": "SQ",
 }
 VALID_SESSIONS = {"FP1", "FP2", "FP3", "SQ", "S", "Q", "R"}
+# Ergast/Jolpica provides no classification for practice and sprint
+# qualifying. FastF1 can only derive SQ results from timing data and never
+# classifies practice, so these sessions always need lap data loaded.
+LAP_DATA_SESSIONS = {"FP1", "FP2", "FP3", "SQ"}
+PRACTICE_SESSIONS = {"FP1", "FP2", "FP3"}
+# Results of a finished weekend can still change (stewards' decisions,
+# disqualifications). Sessions are re-fetched until the event is this many
+# days older than the cutoff; afterwards a complete stored copy is reused.
+REUSE_AFTER_DAYS = 3
 SCHEDULE_BACKENDS = ("f1timing", "ergast")
 SCHEDULE_RETRIES = 3
 SCHEDULE_RETRY_BASE_SECONDS = 2.0
@@ -337,6 +351,77 @@ def extract_lap_metrics(session: Any) -> list[dict[str, Any]]:
     return metrics
 
 
+def format_duration(seconds: float) -> str:
+    """Render seconds in the same textual form pandas uses for Timedelta,
+    which every downstream duration parser already understands."""
+    total = max(0.0, float(seconds))
+    days = int(total // 86400)
+    rest = total - days * 86400
+    hours = int(rest // 3600)
+    rest -= hours * 3600
+    minutes = int(rest // 60)
+    rest -= minutes * 60
+    return f"{days} days {hours:02d}:{minutes:02d}:{rest:09.6f}"
+
+
+def best_lap_seconds_by_driver(session: Any) -> dict[str, float]:
+    """Fastest non-deleted lap per driver abbreviation."""
+    laps = getattr(session, "laps", None)
+    if laps is None or getattr(laps, "empty", True):
+        return {}
+    best: dict[str, float] = {}
+    for _, row in laps.iterrows():
+        lap_time = duration_seconds(row.get("LapTime"))
+        if lap_time is None or lap_time <= 0:
+            continue
+        if str(row.get("Deleted") or "").strip().lower() in {"true", "1"}:
+            continue
+        driver = str(row.get("Driver") or "").strip().upper()
+        if not driver:
+            continue
+        if driver not in best or lap_time < best[driver]:
+            best[driver] = lap_time
+    return best
+
+
+def classify_by_best_lap(records: list[dict[str, Any]], best_laps: dict[str, float]) -> list[dict[str, Any]]:
+    """Fill positions from fastest laps when the session has no official
+    classification (practice, or SQ when FastF1 could not compute it).
+
+    Drivers without a timed lap keep position None. Existing positions are
+    never overwritten."""
+    if not records or not best_laps:
+        return records
+    if any(record.get("position") is not None for record in records):
+        for record in records:
+            abbr = str(record.get("abbreviation") or "").strip().upper()
+            if abbr in best_laps and record.get("best_lap_seconds") is None:
+                record["best_lap_seconds"] = round(best_laps[abbr], 6)
+        return records
+
+    timed: list[tuple[float, str, dict[str, Any]]] = []
+    for record in records:
+        abbr = str(record.get("abbreviation") or "").strip().upper()
+        if abbr in best_laps:
+            timed.append((best_laps[abbr], abbr, record))
+    timed.sort(key=lambda item: (item[0], item[1]))
+    for position, (seconds, _, record) in enumerate(timed, start=1):
+        record["position"] = position
+        record["best_lap_seconds"] = round(seconds, 6)
+        if record.get("time") is None:
+            record["time"] = format_duration(seconds)
+        record["position_source"] = "best_lap"
+
+    records.sort(
+        key=lambda x: (
+            x["position"] if x.get("position") is not None else 999,
+            str(x.get("abbreviation") or ""),
+            str(x.get("driver_number") or ""),
+        )
+    )
+    return records
+
+
 def load_session(season: int, round_number: int, session_code: str, cutoff: date, include_lap_metrics: bool = False) -> dict[str, Any] | None:
     try:
         session = fastf1.get_session(season, round_number, session_code)
@@ -348,17 +433,31 @@ def load_session(season: int, round_number: int, session_code: str, cutoff: date
     if session_date and session_date > cutoff:
         return None
 
+    load_laps = include_lap_metrics or session_code in LAP_DATA_SESSIONS
+    # Race control messages mark deleted laps; FastF1 needs them to compute
+    # a correct sprint qualifying classification.
+    load_messages = session_code == "SQ"
     try:
-        session.load(laps=include_lap_metrics, telemetry=False, weather=False, messages=False)
+        session.load(laps=load_laps, telemetry=False, weather=False, messages=load_messages)
     except TypeError:
         # Compatibility with older FastF1 versions.
-        session.load(laps=include_lap_metrics, telemetry=False, weather=False)
+        session.load(laps=load_laps, telemetry=False, weather=False)
     except Exception as exc:
         LOGGER.warning("Session load failed (%s round %s %s): %s", season, round_number, session_code, exc)
         return None
 
     results = extract_results(session)
     if not results:
+        return None
+    if load_laps and session_code in LAP_DATA_SESSIONS:
+        results = classify_by_best_lap(results, best_lap_seconds_by_driver(session))
+    if not session_has_classification(results):
+        LOGGER.warning(
+            "Session %s round %s %s has an entry list but no classification yet; skipping.",
+            season,
+            round_number,
+            session_code,
+        )
         return None
 
     payload = {
@@ -367,7 +466,7 @@ def load_session(season: int, round_number: int, session_code: str, cutoff: date
         "session_date": to_json_scalar(getattr(session, "date", None)),
         "results": results,
     }
-    if include_lap_metrics:
+    if load_laps:
         lap_metrics = extract_lap_metrics(session)
         if lap_metrics:
             payload["lap_metrics"] = lap_metrics
@@ -418,6 +517,53 @@ def _default_schedule_fetcher(season: int, backend: str) -> Any:
     return fastf1.get_event_schedule(season, include_testing=False, backend=backend)
 
 
+def load_previous_sessions(snapshot_path: Path) -> dict[tuple[int, str], dict[str, Any]]:
+    """Index sessions of an existing snapshot by (round, session_code)."""
+    if not snapshot_path.exists():
+        return {}
+    try:
+        payload = json.loads(snapshot_path.read_text(encoding="utf-8"))
+    except Exception as exc:
+        LOGGER.warning("Could not read previous snapshot %s: %s", snapshot_path, exc)
+        return {}
+    out: dict[tuple[int, str], dict[str, Any]] = {}
+    for event in payload.get("events") or []:
+        if not isinstance(event, dict):
+            continue
+        round_number = normalize_position(event.get("round"))
+        if round_number is None:
+            continue
+        for session in event.get("sessions") or []:
+            if not isinstance(session, dict):
+                continue
+            code = str(session.get("session_code") or "").strip().upper()
+            if code:
+                out[(round_number, code)] = session
+    return out
+
+
+def reusable_session(
+    previous: dict[str, Any] | None,
+    session_code: str,
+    event_date: date | None,
+    cutoff: date,
+    include_lap_metrics: bool,
+) -> bool:
+    """A stored session can be reused instead of downloading it again when it
+    is fully classified, carries the lap data this run would extract, and the
+    event is old enough that results are final."""
+    if not isinstance(previous, dict):
+        return False
+    if event_date is None or (cutoff - event_date).days < REUSE_AFTER_DAYS:
+        return False
+    if not session_has_classification(previous.get("results")):
+        return False
+    needs_laps = include_lap_metrics or session_code in LAP_DATA_SESSIONS
+    if needs_laps and not previous.get("lap_metrics"):
+        return False
+    return True
+
+
 def ingest(season: int, sessions: list[str], cutoff: date, output_dir: Path, cache_dir: Path, include_lap_metrics: bool = False) -> Path | None:
     if fastf1 is None:
         raise RuntimeError("fastf1 is not installed. Install dependencies from requirements.txt first.")
@@ -436,6 +582,7 @@ def ingest(season: int, sessions: list[str], cutoff: date, output_dir: Path, cac
         )
         return None
     schedule = schedule.sort_values(by=["EventDate", "RoundNumber"], kind="stable")
+    previous_sessions = load_previous_sessions(output_dir / f"season_{season}.json")
 
     calendar_payload: list[dict[str, Any]] = []
     for _, row in schedule.iterrows():
@@ -461,8 +608,13 @@ def ingest(season: int, sessions: list[str], cutoff: date, output_dir: Path, cac
         if round_number is None:
             continue
 
+        event_date = to_utc_date(row.get("EventDate"))
         sessions_payload: list[dict[str, Any]] = []
         for session_code in sessions:
+            stored = previous_sessions.get((round_number, session_code))
+            if reusable_session(stored, session_code, event_date, cutoff, include_lap_metrics):
+                sessions_payload.append(stored)
+                continue
             loaded = load_session(season, round_number, session_code, cutoff=cutoff, include_lap_metrics=include_lap_metrics)
             if loaded is not None:
                 sessions_payload.append(loaded)

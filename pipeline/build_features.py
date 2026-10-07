@@ -212,6 +212,74 @@ def representative_qualifying_time(row: dict[str, Any]) -> float | None:
     return None
 
 
+QUALIFYING_SEGMENTS = ("q1", "q2", "q3")
+
+
+def qualifying_segment_times(row: dict[str, Any]) -> dict[str, float]:
+    """Lap time per qualifying segment. Rows without segment times (older
+    snapshots) fall back to the single session time as a pseudo-segment."""
+    out: dict[str, float] = {}
+    for key in QUALIFYING_SEGMENTS:
+        seconds = duration_to_seconds(row.get(key))
+        if seconds is not None and seconds > 0:
+            out[key] = seconds
+    if not out:
+        seconds = duration_to_seconds(row.get("time"))
+        if seconds is not None and seconds > 0:
+            out["time"] = seconds
+    return out
+
+
+def qualifying_field_gaps_ms(results: list[Any]) -> dict[int, float]:
+    """Gap to the fastest lap of the same segment (Q1 vs Q1, Q2 vs Q2, ...),
+    averaged over the segments a driver took part in. Comparing laps from
+    different segments would mix in track evolution and engine modes."""
+    times = {
+        idx: qualifying_segment_times(row)
+        for idx, row in enumerate(results)
+        if isinstance(row, dict)
+    }
+    best: dict[str, float] = {}
+    for segs in times.values():
+        for key, seconds in segs.items():
+            if key not in best or seconds < best[key]:
+                best[key] = seconds
+    gaps: dict[int, float] = {}
+    for idx, segs in times.items():
+        diffs = [(seconds - best[key]) * 1000.0 for key, seconds in segs.items()]
+        if diffs:
+            gaps[idx] = round(statistics.fmean(diffs), 6)
+    return gaps
+
+
+def qualifying_teammate_gaps_ms(results: list[Any]) -> dict[int, float]:
+    """Gap to the faster teammate in the deepest segment both drivers ran.
+    The faster driver gets 0.0; the result is never negative."""
+    by_team: dict[str, list[tuple[int, dict[str, float]]]] = {}
+    for idx, row in enumerate(results):
+        if not isinstance(row, dict):
+            continue
+        team_key = slug(str(row.get("team_name") or ""))
+        segs = qualifying_segment_times(row)
+        if team_key and segs:
+            by_team.setdefault(team_key, []).append((idx, segs))
+    gaps: dict[int, float] = {}
+    order = ("time",) + QUALIFYING_SEGMENTS
+    for members in by_team.values():
+        if len(members) < 2:
+            continue
+        for idx, segs in members:
+            for key in reversed(order):
+                if key not in segs:
+                    continue
+                rivals = [other[key] for other_idx, other in members if other_idx != idx and key in other]
+                if not rivals:
+                    continue
+                gaps[idx] = round(max(0.0, (segs[key] - min(rivals + [segs[key]])) * 1000.0), 6)
+                break
+    return gaps
+
+
 def race_gap_to_winner_seconds(row: dict[str, Any]) -> float | None:
     position = to_float(row.get("position"))
     if position is None:
@@ -713,22 +781,11 @@ def build_features(
                         driver_state["practice_lap_pace_gaps"].append((event_idx, pace_gap))
                         team_state["practice_lap_pace_gaps"].append((event_idx, pace_gap))
 
-            representative_times: dict[int, float] = {}
-            team_best_times: dict[str, float] = {}
+            field_gaps: dict[int, float] = {}
+            teammate_gaps: dict[int, float] = {}
             if code in {"Q", "SQ"}:
-                for row_index, row in enumerate(results):
-                    if not isinstance(row, dict):
-                        continue
-                    seconds = representative_qualifying_time(row)
-                    if seconds is None:
-                        continue
-                    representative_times[row_index] = seconds
-                    team_key = slug(str(row.get("team_name") or ""))
-                    if team_key:
-                        current_best = team_best_times.get(team_key)
-                        if current_best is None or seconds < current_best:
-                            team_best_times[team_key] = seconds
-            session_best_time = min(representative_times.values()) if representative_times else None
+                field_gaps = qualifying_field_gaps_ms(results)
+                teammate_gaps = qualifying_teammate_gaps_ms(results)
 
             for row_index, row in enumerate(results):
                 if not isinstance(row, dict):
@@ -764,14 +821,13 @@ def build_features(
                     if position is not None:
                         driver_state["qualifying_positions"].append((event_idx, position))
                         team_state["qualifying_positions"].append((event_idx, position))
-                    representative_time = representative_times.get(row_index)
-                    if representative_time is not None and session_best_time is not None:
-                        gap_ms = (representative_time - session_best_time) * 1000.0
+                    gap_ms = field_gaps.get(row_index)
+                    if gap_ms is not None:
                         driver_state["qualifying_time_gaps"].append((event_idx, gap_ms))
                         team_state["qualifying_time_gaps"].append((event_idx, gap_ms))
-                        team_best = team_best_times.get(team_key)
-                        if team_best is not None:
-                            driver_state["teammate_qualifying_time_gaps"].append((event_idx, (representative_time - team_best) * 1000.0))
+                    teammate_gap_ms = teammate_gaps.get(row_index)
+                    if teammate_gap_ms is not None:
+                        driver_state["teammate_qualifying_time_gaps"].append((event_idx, teammate_gap_ms))
                     if phase_depth is not None:
                         driver_state["qualifying_phase_depths"].append((event_idx, phase_depth))
                         team_state["qualifying_phase_depths"].append((event_idx, phase_depth))
@@ -779,9 +835,8 @@ def build_features(
                     if position is not None:
                         driver_state["sprint_qualifying_positions"].append((event_idx, position))
                         team_state["sprint_qualifying_positions"].append((event_idx, position))
-                    representative_time = representative_times.get(row_index)
-                    if representative_time is not None and session_best_time is not None:
-                        gap_ms = (representative_time - session_best_time) * 1000.0
+                    gap_ms = field_gaps.get(row_index)
+                    if gap_ms is not None:
                         driver_state["sprint_qualifying_time_gaps"].append((event_idx, gap_ms))
                         team_state["sprint_qualifying_time_gaps"].append((event_idx, gap_ms))
                     if phase_depth is not None:

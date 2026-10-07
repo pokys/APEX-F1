@@ -140,10 +140,12 @@ def test_build_features_collects_timing_gap_metrics() -> None:
     team = features["teams"][0]
 
     assert by_driver["RUS"]["qualifying_gap_to_best_ms"] == 0.0
-    assert by_driver["ANT"]["qualifying_gap_to_best_ms"] == 300.0
+    # Mean of same-segment gaps: Q1 100 ms, Q2 200 ms, Q3 300 ms.
+    assert by_driver["ANT"]["qualifying_gap_to_best_ms"] == 200.0
+    # Teammate gap uses the deepest segment both drivers ran (Q3).
     assert by_driver["ANT"]["teammate_qualifying_gap_ms"] == 300.0
     assert by_driver["ANT"]["race_gap_to_winner_seconds"] == 3.5
-    assert team["qualifying_gap_to_best_ms"] == 150.0
+    assert team["qualifying_gap_to_best_ms"] == 100.0
 
 
 def test_build_features_collects_lap_pace_metrics_when_present() -> None:
@@ -335,3 +337,44 @@ def test_load_recency_config_overrides_only_valid_keys(tmp_path: Path) -> None:
     # arbitrary keys are tolerated
     assert cfg["half_life_events"]["bogus"] == 9.0
     assert cfg["stale_threshold_days"] == 14.0
+
+
+def _q_row(position, abbr, team, q1=None, q2=None, q3=None):
+    row = {"position": position, "abbreviation": abbr, "team_name": team}
+    for key, value in (("q1", q1), ("q2", q2), ("q3", q3)):
+        if value is not None:
+            row[key] = f"0 days 00:01:{value:09.6f}"
+    return row
+
+
+def test_teammate_gap_is_measured_against_own_team() -> None:
+    # Regression: team_key leaked from a previous loop, so every driver was
+    # compared to the best time of the team in the last result row.
+    results = [
+        _q_row(1, "RUS", "Mercedes", 20.0, 19.0, 18.0),
+        _q_row(2, "ANT", "Mercedes", 20.2, 19.3, 18.4),
+        _q_row(19, "ALB", "Williams", 22.0),
+        _q_row(20, "SAI", "Williams", 22.5),
+    ]
+    snapshot = {"season": 2026, "events": [{"event_date": "2026-03-08", "sessions": [{"session_code": "Q", "results": results}]}]}
+    by_driver = {row["driver"]: row for row in build_features(snapshot, [], DEFAULT_SIGNAL_GUARDRAILS)["drivers"]}
+
+    assert by_driver["RUS"]["teammate_qualifying_gap_ms"] == 0.0
+    assert by_driver["ANT"]["teammate_qualifying_gap_ms"] == 400.0
+    assert by_driver["ALB"]["teammate_qualifying_gap_ms"] == 0.0
+    assert by_driver["SAI"]["teammate_qualifying_gap_ms"] == 500.0
+    assert all(row["teammate_qualifying_gap_ms"] >= 0 for row in by_driver.values())
+
+
+def test_qualifying_gap_compares_same_segments_only() -> None:
+    # A Q1-eliminated driver is compared with the best Q1 lap, not with the
+    # (faster, later) Q3 pole lap.
+    results = [
+        _q_row(1, "RUS", "Mercedes", 20.0, 19.0, 18.0),
+        _q_row(20, "SAI", "Williams", 20.8),
+    ]
+    snapshot = {"season": 2026, "events": [{"event_date": "2026-03-08", "sessions": [{"session_code": "Q", "results": results}]}]}
+    by_driver = {row["driver"]: row for row in build_features(snapshot, [], DEFAULT_SIGNAL_GUARDRAILS)["drivers"]}
+
+    assert by_driver["SAI"]["qualifying_gap_to_best_ms"] == 800.0
+    assert by_driver["RUS"]["qualifying_gap_to_best_ms"] == 0.0

@@ -103,3 +103,118 @@ def test_extract_lap_metrics_filters_unclean_laps_and_computes_gaps() -> None:
     assert by_driver["RUS"]["pace_gap_to_best_seconds"] == 0.0
     assert by_driver["ANT"]["pace_gap_to_best_seconds"] == 0.0
     assert by_driver["ANT"]["clean_lap_count"] == 1
+
+
+from datetime import date
+
+import pipeline.ingest_fastf1 as ingest_module
+from pipeline.ingest_fastf1 import classify_by_best_lap, load_session, reusable_session
+
+
+class FakeFrame:
+    def __init__(self, rows: list[dict]) -> None:
+        self.rows = rows
+        self.empty = not rows
+
+    def iterrows(self):
+        for index, row in enumerate(self.rows):
+            yield index, row
+
+
+class FakeLoadableSession:
+    def __init__(self, results: list[dict], laps: list[dict]) -> None:
+        self.results = FakeFrame(results)
+        self._laps_rows = laps
+        self.laps = FakeFrame([])
+        self.name = "Practice 1"
+        self.date = None
+        self.load_kwargs: dict = {}
+
+    def load(self, **kwargs) -> None:
+        self.load_kwargs = kwargs
+        if kwargs.get("laps"):
+            self.laps = FakeFrame(self._laps_rows)
+
+
+def _entry(abbr: str, team: str) -> dict:
+    return {"Abbreviation": abbr, "TeamName": team, "Position": None, "DriverNumber": abbr}
+
+
+def _lap(abbr: str, team: str, seconds: float, deleted: bool = False) -> dict:
+    return {
+        "Driver": abbr,
+        "Team": team,
+        "LapTime": seconds,
+        "Deleted": deleted,
+        "IsAccurate": True,
+        "PitInTime": None,
+        "PitOutTime": None,
+        "TrackStatus": "1",
+    }
+
+
+def test_load_session_classifies_practice_from_laps(monkeypatch) -> None:
+    session = FakeLoadableSession(
+        results=[_entry("RUS", "Mercedes"), _entry("VER", "Red Bull"), _entry("ALB", "Williams")],
+        laps=[
+            _lap("RUS", "Mercedes", 81.0),
+            _lap("VER", "Red Bull", 80.5),
+            _lap("VER", "Red Bull", 79.0, deleted=True),
+        ],
+    )
+
+    class FakeFastF1:
+        @staticmethod
+        def get_session(season, round_number, code):
+            return session
+
+    monkeypatch.setattr(ingest_module, "fastf1", FakeFastF1)
+    payload = load_session(2026, 1, "FP1", cutoff=date(2026, 12, 31))
+
+    assert session.load_kwargs["laps"] is True
+    assert payload is not None
+    by_driver = {row["abbreviation"]: row for row in payload["results"]}
+    assert by_driver["VER"]["position"] == 1
+    assert by_driver["VER"]["best_lap_seconds"] == 80.5
+    assert by_driver["RUS"]["position"] == 2
+    assert by_driver["ALB"]["position"] is None
+    assert payload["lap_metrics"]
+
+
+def test_load_session_skips_entry_list_without_classification(monkeypatch) -> None:
+    session = FakeLoadableSession(results=[_entry("RUS", "Mercedes")], laps=[])
+
+    class FakeFastF1:
+        @staticmethod
+        def get_session(season, round_number, code):
+            return session
+
+    monkeypatch.setattr(ingest_module, "fastf1", FakeFastF1)
+    assert load_session(2026, 1, "SQ", cutoff=date(2026, 12, 31)) is None
+    assert session.load_kwargs["laps"] is True
+    assert session.load_kwargs["messages"] is True
+
+
+def test_classify_by_best_lap_keeps_official_positions() -> None:
+    records = [
+        {"abbreviation": "RUS", "position": 2},
+        {"abbreviation": "VER", "position": 1},
+    ]
+    out = classify_by_best_lap(records, {"RUS": 80.0, "VER": 81.0})
+    assert {row["abbreviation"]: row["position"] for row in out} == {"RUS": 2, "VER": 1}
+    assert {row["abbreviation"]: row["best_lap_seconds"] for row in out} == {"RUS": 80.0, "VER": 81.0}
+
+
+def test_reusable_session_requires_final_classified_data() -> None:
+    classified = {"results": [{"abbreviation": "RUS", "position": 1}], "lap_metrics": [{"abbreviation": "RUS"}]}
+    entry_list = {"results": [{"abbreviation": "RUS", "position": None}]}
+    cutoff = date(2026, 10, 7)
+
+    assert reusable_session(classified, "R", date(2026, 9, 1), cutoff, include_lap_metrics=False)
+    assert reusable_session(classified, "FP1", date(2026, 9, 1), cutoff, include_lap_metrics=False)
+    # Practice stored without positions (old snapshots) must be fetched again.
+    assert not reusable_session(entry_list, "FP1", date(2026, 9, 1), cutoff, include_lap_metrics=False)
+    # Recent events can still change (stewards), so they are re-fetched.
+    assert not reusable_session(classified, "R", date(2026, 10, 5), cutoff, include_lap_metrics=False)
+    # Lap-data sessions without stored lap metrics are re-fetched.
+    assert not reusable_session({"results": classified["results"]}, "SQ", date(2026, 9, 1), cutoff, include_lap_metrics=False)

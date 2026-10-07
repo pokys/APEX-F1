@@ -122,3 +122,23 @@ def test_extract_sessions_schedule_falls_back_to_local_date_when_utc_missing() -
     }
     schedule = extract_sessions_schedule(row)
     assert schedule == {"FP1": "2026-05-01T20:30:00+00:00"}
+
+
+def test_get_available_sessions_ignores_entry_lists(tmp_path) -> None:
+    import json
+
+    from pipeline.select_next_gp import get_available_sessions
+
+    snapshot = {
+        "events": [
+            {
+                "event_name": "Singapore Grand Prix",
+                "sessions": [
+                    {"session_code": "FP1", "results": [{"abbreviation": "RUS", "position": None}]},
+                    {"session_code": "SQ", "results": [{"abbreviation": "RUS", "position": 1}]},
+                ],
+            }
+        ]
+    }
+    (tmp_path / "season_2026.json").write_text(json.dumps(snapshot), encoding="utf-8")
+    assert get_available_sessions(tmp_path, 2026, "Singapore Grand Prix") == ["SQ"]

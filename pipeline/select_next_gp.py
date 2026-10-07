@@ -17,6 +17,11 @@ from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Any
 
+if __package__ is None or __package__ == "":
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from pipeline.prediction_targeting import session_has_classification  # noqa: E402
+
 try:
     import fastf1  # type: ignore
 except ModuleNotFoundError:
@@ -625,8 +630,7 @@ def get_available_sessions(raw_dir: Path, season: int, event_name: str) -> list[
     for event in events:
         if str(event.get("event_name") or "").strip().lower() == event_name_lower:
             for session in event.get("sessions", []):
-                results = session.get("results", [])
-                if results and len(results) > 0:
+                if session_has_classification(session.get("results")):
                     code = str(session.get("session_code") or "").upper()
                     if code:
                         available.append(code)

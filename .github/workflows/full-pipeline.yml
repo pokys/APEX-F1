@@ -82,6 +82,16 @@ jobs:
         run: |
           python pipeline/collect_articles.py --log-level INFO
 
+      - name: Restore FastF1 HTTP cache
+        uses: actions/cache@v4
+        with:
+          path: data/raw/fastf1_cache
+          # Caches are immutable, so every run saves a new entry and the
+          # next run restores the most recent one via the prefix.
+          key: fastf1-cache-${{ github.run_id }}
+          restore-keys: |
+            fastf1-cache-
+
       - name: Run FastF1 ingest
         env:
           SEASON: ${{ github.event.inputs.season }}

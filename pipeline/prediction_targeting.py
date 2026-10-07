@@ -364,6 +364,26 @@ def find_calendar_entry(snapshot: dict[str, Any], event_name: str) -> dict[str, 
     return None
 
 
+CLASSIFICATION_FIELDS = ("position", "time", "q1", "q2", "q3", "best_lap_seconds")
+
+
+def session_has_classification(results: Any) -> bool:
+    """True when at least one result row carries a position or a lap/session
+    time. A bare entry list (driver names only, as FastF1 returns for
+    practice sessions without timing data) does not count as a usable
+    session result."""
+    if not isinstance(results, list):
+        return False
+    for row in results:
+        if not isinstance(row, dict):
+            continue
+        for field in CLASSIFICATION_FIELDS:
+            value = row.get(field)
+            if value is not None and str(value).strip() not in {"", "nan", "NaT", "None"}:
+                return True
+    return False
+
+
 def available_sessions_for_event(event: dict[str, Any]) -> list[str]:
     sessions = event.get("sessions")
     if not isinstance(sessions, list):
@@ -373,7 +393,7 @@ def available_sessions_for_event(event: dict[str, Any]) -> list[str]:
         if not isinstance(session, dict):
             continue
         results = session.get("results")
-        if not isinstance(results, list) or not results:
+        if not session_has_classification(results):
             continue
         code = str(session.get("session_code") or "").upper().strip()
         if code and code not in available:

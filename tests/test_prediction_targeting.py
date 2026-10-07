@@ -450,3 +450,23 @@ def test_sessions_completed_by_calendar_full_day_advance() -> None:
     )
     # Race start hasn't occurred yet (20:00 UTC).
     assert completed == ["FP1", "SQ", "S", "Q"]
+
+
+def test_entry_list_without_positions_is_not_an_available_session() -> None:
+    from pipeline.prediction_targeting import available_sessions_for_event, build_inputs_manifest
+
+    event = {
+        "sessions": [
+            {"session_code": "FP1", "results": [{"abbreviation": "RUS", "position": None, "time": None}]},
+            {"session_code": "FP2", "results": [{"abbreviation": "RUS", "position": 3}]},
+        ]
+    }
+    available = available_sessions_for_event(event)
+    assert available == ["FP2"]
+    manifest = build_inputs_manifest(
+        target="qualifying",
+        available_sessions=available,
+        session_weights={"qualifying": {"history_driver": 0.2, "fp1": 0.15, "fp2": 0.2}},
+        active_signal_count=0,
+    )
+    assert {row["source"] for row in manifest} == {"history_driver", "fp2"}

@@ -2,10 +2,12 @@
   "available_sessions": [],
   "available_sessions_by_calendar": [],
   "available_sessions_ingested": [],
-  "calibration_season": 2025,
-  "calibration_source": "outputs/backtest/backtest_season_2025.json",
+  "calibration_season": 2026,
+  "calibration_source": "outputs/backtest/backtest_season_2026.json",
   "event_format": "sprint",
-  "generated_at": "2026-10-08T00:13:11Z",
+  "event_signal_count": 0,
+  "generated_at": "2026-10-08T00:30:29Z",
+  "grid_penalties": [],
   "grid_source": "simulation",
   "inputs_status": [
     {
@@ -50,9 +52,11 @@
   "overtaking_difficulty": 0.79,
   "prediction_target": "sprint_qualifying",
   "prediction_target_label": "Sprint Qualifying",
-  "qualifying_temperature": 1.6,
+  "qualifying_noise_scale": 2.0,
   "race": "Singapore Grand Prix",
   "race_date": "2026-10-11",
+  "race_grid_penalties": [],
+  "race_noise_scale": 1.5,
   "safety_car_probability": 0.52,
   "season": 2026,
   "seed": 202617,
@@ -65,6 +69,9 @@
   },
   "signal_count": 0,
   "simulations": 6000,
+  "sprint_grid_penalties": [],
+  "standings_blend_qualifying": 0.5,
+  "standings_blend_race": 0.5,
   "target_output_type": "qualifying",
   "target_session_code": "SQ",
   "track": {
@@ -75,6 +82,5 @@
   "track_profile": "country:singapore",
   "weather": "dry",
   "weather_modifier": 0.0,
-  "weekend_format": "sprint",
-  "win_temperature": 1.2
+  "weekend_format": "sprint"
 }

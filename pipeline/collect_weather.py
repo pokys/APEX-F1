@@ -7,7 +7,7 @@ from config/circuits.json and the exact session start times from
 config/race_config.json. For each session the highest hourly precipitation
 probability and the summed precipitation over the session window are
 stored in outputs/weather_forecast.json. The dashboard shows them and
-pre-selects the wet scenario when rain is likely for the predicted session.
+mixes the dry and wet scenario by the chance of a wet session.
 
 Best effort: a missing circuit, a session beyond the forecast horizon or a
 network failure never fails the pipeline.
@@ -42,6 +42,11 @@ SESSION_DURATION_MINUTES = {"FP1": 60, "FP2": 60, "FP3": 60, "SQ": 45, "S": 40, 
 # so probability alone flags every drizzle as a wet session.
 WET_SCENARIO_THRESHOLD = 0.5
 WET_SCENARIO_MIN_MM = 0.5
+
+# For the dry/wet mix: this much rain over a session counts as a fully wet
+# session; less rain scales the wet share down (a 90 % chance of 0.2 mm is
+# a damp track for a few minutes, not a wet race).
+WET_TRACK_MM = 1.0
 
 Fetcher = Callable[[str, dict[str, Any]], Any]
 
@@ -160,17 +165,16 @@ def build_forecast(race_config: dict[str, Any], circuits: dict[str, Any], fetch:
     }
 
 
-def recommended_scenario(forecast: dict[str, Any] | None, race_name: str, session_code: str) -> tuple[str, float | None]:
-    """('wet' | 'dry', rain probability of the predicted session)."""
-    if not isinstance(forecast, dict) or str(forecast.get("race") or "").lower() != race_name.lower():
-        return "dry", None
-    session = (forecast.get("sessions") or {}).get(session_code.upper())
-    probability = session.get("rain_probability") if isinstance(session, dict) else None
-    if probability is None:
-        return "dry", None
-    amount = session.get("precipitation_mm")
-    wet = probability >= WET_SCENARIO_THRESHOLD and (amount is None or amount >= WET_SCENARIO_MIN_MM)
-    return ("wet" if wet else "dry"), float(probability)
+def wet_session_probability(info: dict[str, Any] | None) -> float | None:
+    """Estimated chance that the session runs in wet conditions: the rain
+    probability scaled down when only a little rain is expected."""
+    if not isinstance(info, dict) or info.get("rain_probability") is None:
+        return None
+    probability = max(0.0, min(1.0, float(info["rain_probability"])))
+    amount = info.get("precipitation_mm")
+    if amount is None:
+        return probability
+    return round(probability * min(1.0, max(0.0, float(amount)) / WET_TRACK_MM), 3)
 
 
 def is_wet_session(info: dict[str, Any] | None) -> bool:

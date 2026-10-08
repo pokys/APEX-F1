@@ -111,7 +111,7 @@ Kanonické výstupy jsou:
 2. [`pipeline/ingest_fastf1.py`](pipeline/ingest_fastf1.py) vytvoří raw FastF1 snapshot sezony.
 3. [`pipeline/select_next_gp.py`](pipeline/select_next_gp.py) vybere další GP a traťový profil.
 4. [`pipeline/select_prediction_target.py`](pipeline/select_prediction_target.py) vybere `SQ`, `Sprint`, `Qualifying` nebo `Race`.
-5. [`pipeline/collect_weather.py`](pipeline/collect_weather.py) stáhne předpověď deště pro každou session z Open-Meteo (souřadnice tratí v [`config/circuits.json`](config/circuits.json)); best effort.
+5. [`pipeline/collect_weather.py`](pipeline/collect_weather.py) stáhne předpověď deště pro každou session z Open-Meteo (souřadnice tratí v [`config/circuits.json`](config/circuits.json)); best effort. Šance na mokrou session = pravděpodobnost deště × min(1, očekávané mm / 1 mm), takže slabé mrholení se počítá jen zčásti.
 6. [`pipeline/collect_tyre_compounds.py`](pipeline/collect_tyre_compounds.py) doplní Pirelli compound data, když jsou dostupná.
 7. [`pipeline/validate_signals.py`](pipeline/validate_signals.py) ověří strukturu soft signálů.
 8. [`pipeline/build_features.py`](pipeline/build_features.py) vytvoří driver/team features z hard dat a guardrailovaných signálů.
@@ -120,7 +120,7 @@ Kanonické výstupy jsou:
 11. [`pipeline/simulate_weather_scenarios.py`](pipeline/simulate_weather_scenarios.py) spustí suchý a mokrý scénář.
 12. [`pipeline/publish_prediction.py`](pipeline/publish_prediction.py) zapíše finální kanonický JSON.
 13. [`pipeline/prediction_history.py`](pipeline/prediction_history.py) uloží headline pravděpodobnosti aktuální fáze víkendu (cíl + odjeté session) do `outputs/prediction_history.json`.
-14. [`pipeline/render_prediction_page.py`](pipeline/render_prediction_page.py) vygeneruje HTML dashboard (pruhy pravděpodobností, timeline víkendu v lokálním čase s odpočtem, ▲▼ změny proti stavu před poslední session, riziko deště a doporučený suchý/mokrý scénář).
+14. [`pipeline/render_prediction_page.py`](pipeline/render_prediction_page.py) vygeneruje HTML dashboard (pruhy pravděpodobností, timeline víkendu v lokálním čase s odpočtem, ▲▼ změny proti stavu před poslední session, riziko deště a výchozí mix suchého a mokrého scénáře vážený šancí na mokrou session – přepínač Dry/Wet zůstává).
 15. [`pipeline/render_accuracy_page.py`](pipeline/render_accuracy_page.py) vygeneruje stránku `accuracy.html` (odkaz z dashboardu): úspěšnost modelu v backtestu sezony a živých predikcí, porovnaná s jednoduchým odhadem „rozhoduje pořadí šampionátu“.
 16. [`pipeline/validate_outputs.py`](pipeline/validate_outputs.py) ověří matematickou konzistenci výstupů.
 

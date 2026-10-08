@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from datetime import datetime, timezone
 
-from pipeline.collect_weather import build_forecast, recommended_scenario, session_forecast
+from pipeline.collect_weather import build_forecast, session_forecast
 from pipeline.prediction_history import phase_changes, record_phase
 from pipeline.render_prediction_page import odds_bar_html, render_page, timeline_html
 
@@ -126,12 +126,10 @@ def test_build_forecast_queries_open_meteo_for_the_circuit() -> None:
     forecast = build_forecast(CONFIG, circuits, fetch, datetime(2026, 10, 8, 8, 0, tzinfo=timezone.utc))
     assert calls[0]["latitude"] == 1.2914 and calls[0]["start_date"] == "2026-10-09"
     assert forecast["sessions"]["Q"]["rain_probability"] == 0.55
-    assert recommended_scenario(forecast, "Singapore Grand Prix", "Q") == ("wet", 0.55)
-    assert recommended_scenario(forecast, "Japanese Grand Prix", "Q") == ("dry", None)
     assert build_forecast(dict(CONFIG, race="Unknown GP"), circuits, fetch, datetime(2026, 10, 8, tzinfo=timezone.utc)) is None
 
 
-def test_page_opens_wet_scenario_when_rain_is_likely_and_shows_changes() -> None:
+def test_page_mixes_dry_and_wet_by_chance_of_a_wet_session() -> None:
     history: dict = {}
     record_phase(history, dict(CONFIG, available_sessions_ingested=["FP1", "SQ"]), _prediction({"RUS": 0.30, "NOR": 0.20}), _prediction({"RUS": 0.2, "NOR": 0.3}))
     record_phase(history, dict(CONFIG, available_sessions_ingested=["FP1", "SQ", "S"]), _prediction({"RUS": 0.22, "NOR": 0.35}), _prediction({"RUS": 0.2, "NOR": 0.3}))
@@ -140,19 +138,39 @@ def test_page_opens_wet_scenario_when_rain_is_likely_and_shows_changes() -> None
     weather = {"race": "Singapore Grand Prix", "sessions": {"Q": {"rain_probability": 0.7, "precipitation_mm": 3.0}}}
 
     page = render_page(dry, CONFIG, prediction_wet=wet, weather=weather, history=history)
-    assert 'class="scenario-panel is-active" data-scenario="wet"' in page
-    assert 'class="toggle-btn is-active" data-target="wet"' in page
+    assert 'class="scenario-panel is-active" data-scenario="mixed"' in page
+    assert 'class="toggle-btn is-active" data-target="mixed"' in page
+    assert 'data-target="dry"' in page and 'data-target="wet"' in page  # the toggle stays
+    assert "Forecast mix (30% dry / 70% wet)" in page
+    assert "31.5%" in page  # NOR: 0.3 * 35 % + 0.7 * 30 %
     assert "Rain risk for Qualifying: <strong>70%</strong>, 3.0 mm expected" in page
-    assert "&#9650; 15.0" in page and "&#9660; 8.0" in page
+    # Changes mix too: dry NOR +15 pp, wet 0 pp -> +4.5 pp.
+    assert "&#9650; 4.5" in page and "&#9650; 15.0" in page
     assert "change before S" in page
 
-    dry_page = render_page(dry, CONFIG, prediction_wet=wet, weather={"race": "Singapore Grand Prix", "sessions": {"Q": {"rain_probability": 0.1}}})
-    assert 'class="scenario-panel is-active" data-scenario="dry"' in dry_page
+    soaked = render_page(dry, CONFIG, prediction_wet=wet, weather={"race": "Singapore Grand Prix", "sessions": {"Q": {"rain_probability": 1.0, "precipitation_mm": 5.0}}})
+    assert 'class="scenario-panel is-active" data-scenario="wet"' in soaked and 'data-scenario="mixed"' not in soaked
+    dry_page = render_page(dry, CONFIG, prediction_wet=wet, weather={"race": "Singapore Grand Prix", "sessions": {"Q": {"rain_probability": 0.02}}})
+    assert 'class="scenario-panel is-active" data-scenario="dry"' in dry_page and 'data-scenario="mixed"' not in dry_page
+    other_gp = render_page(dry, CONFIG, prediction_wet=wet, weather=dict(weather, race="Japanese Grand Prix"))
+    assert 'class="scenario-panel is-active" data-scenario="dry"' in other_gp
 
 
-def test_drizzle_does_not_switch_to_the_wet_scenario() -> None:
-    drizzle = {"race": "Singapore Grand Prix", "sessions": {"Q": {"rain_probability": 0.96, "precipitation_mm": 0.2}}}
-    assert recommended_scenario(drizzle, "Singapore Grand Prix", "Q") == ("dry", 0.96)
+def test_drizzle_counts_only_partly_as_wet() -> None:
+    from pipeline.collect_weather import wet_session_probability
+
+    assert wet_session_probability({"rain_probability": 0.96, "precipitation_mm": 0.2}) == 0.192
+    assert wet_session_probability({"rain_probability": 0.7, "precipitation_mm": 3.0}) == 0.7
+    assert wet_session_probability({"rain_probability": 0.4}) == 0.4
+    assert wet_session_probability(None) is None
+
+
+def test_blend_keeps_a_consistent_distribution() -> None:
+    from pipeline.render_prediction_page import blend_predictions
+
+    mixed = blend_predictions(_prediction({"RUS": 0.6, "NOR": 0.4}), _prediction({"RUS": 0.2, "NOR": 0.8}), 0.25)
+    probs = {row["name"]: row["pole_probability"] for row in mixed["drivers"]}
+    assert abs(probs["RUS"] - 0.5) < 1e-9 and abs(sum(probs.values()) - 1.0) < 1e-9
 
 
 def test_penalty_badges_next_to_driver() -> None:

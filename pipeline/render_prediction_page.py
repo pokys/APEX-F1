@@ -17,7 +17,7 @@ from typing import Any
 if __package__ is None or __package__ == "":
     sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from pipeline.collect_weather import is_wet_session, recommended_scenario  # noqa: E402
+from pipeline.collect_weather import is_wet_session, wet_session_probability  # noqa: E402
 from pipeline.prediction_history import phase_changes  # noqa: E402
 
 
@@ -343,6 +343,43 @@ def delta_html(name: str, changes: dict[str, Any] | None) -> str:
     return f'<span class="delta {css}" title="{points:+.1f} pp {label}">{arrow} {abs(points):.1f}</span>'
 
 
+# Below / above these wet shares the mix is shown as the plain dry / wet
+# scenario instead.
+MIX_MIN_WET_SHARE = 0.03
+MIX_MAX_WET_SHARE = 0.97
+
+
+def blend_predictions(dry: dict[str, Any], wet: dict[str, Any], wet_share: float) -> dict[str, Any]:
+    """Per-driver mix of the dry and wet scenario weighted by the chance of
+    a wet session. Probabilities and expected positions mix linearly, so
+    the result is still a consistent distribution."""
+    wet_rows = {str(row.get("name")): row for row in wet.get("drivers") or [] if isinstance(row, dict)}
+    drivers = []
+    for row in dry.get("drivers") or []:
+        if not isinstance(row, dict):
+            continue
+        other = wet_rows.get(str(row.get("name")), row)
+        mixed = dict(row)
+        for key, value in row.items():
+            if key in {"driver_share", "team_share", "weekend_form_delta"}:
+                continue
+            if isinstance(value, (int, float)) and not isinstance(value, bool) and isinstance(other.get(key), (int, float)):
+                mixed[key] = (1.0 - wet_share) * value + wet_share * float(other[key])
+        drivers.append(mixed)
+    return {**dry, "drivers": drivers}
+
+
+def blend_changes(dry: dict[str, Any] | None, wet: dict[str, Any] | None, wet_share: float) -> dict[str, Any] | None:
+    if not isinstance(dry, dict) or not isinstance(wet, dict):
+        return dry
+    names = set(dry.get("deltas") or {}) | set(wet.get("deltas") or {})
+    deltas = {
+        name: (1.0 - wet_share) * (dry.get("deltas") or {}).get(name, 0.0) + wet_share * (wet.get("deltas") or {}).get(name, 0.0)
+        for name in names
+    }
+    return {**dry, "deltas": deltas}
+
+
 def penalty_badges(race_config: dict[str, Any] | None) -> dict[str, str]:
     """Short badges per driver code: grid penalties ("-25 grid") and
     substitutes ("sub for STR")."""
@@ -575,17 +612,24 @@ def render_page(
 
     if isinstance(weather, dict) and str(weather.get("race") or "").lower() != str(prediction.get("race") or race_config.get("race") or "").lower():
         weather = None
-    recommended, rain_probability = recommended_scenario(
-        weather, str(prediction.get("race") or race_config.get("race") or ""), str(target_session_code)
-    )
-    if not isinstance(prediction_wet, dict):
+    session_info = ((weather or {}).get("sessions") or {}).get(str(target_session_code).upper()) if isinstance(weather, dict) else None
+    rain_probability = session_info.get("rain_probability") if isinstance(session_info, dict) else None
+    wet_share = wet_session_probability(session_info) if isinstance(prediction_wet, dict) else None
+    if wet_share is None or wet_share < MIX_MIN_WET_SHARE:
         recommended = "dry"
+    elif wet_share > MIX_MAX_WET_SHARE:
+        recommended = "wet"
+    else:
+        recommended = "mixed"
     weather_banner = ""
     if rain_probability is not None:
-        session_info = ((weather or {}).get("sessions") or {}).get(str(target_session_code).upper()) or {}
         amount = session_info.get("precipitation_mm")
         amount_text = f", {amount:.1f} mm expected" if amount is not None else ""
-        advice = "showing the wet scenario first" if recommended == "wet" else "the dry scenario is the main one"
+        advice = {
+            "dry": "the dry scenario is the main one",
+            "wet": "showing the wet scenario first",
+            "mixed": f"chance of a wet session about {(wet_share or 0.0) * 100:.0f}%, showing the dry/wet mix",
+        }[recommended]
         weather_banner = (
             f'<p class="weather-banner weather-{recommended}">Rain risk for {html.escape(SESSION_NAMES.get(str(target_session_code), str(target_session_code)))}: '
             f"<strong>{rain_probability * 100:.0f}%</strong>{html.escape(amount_text)} &middot; {advice} (Open-Meteo forecast)</p>"
@@ -596,11 +640,17 @@ def render_page(
     if isinstance(prediction_wet, dict):
         dry_active = " is-active" if recommended == "dry" else ""
         wet_active = " is-active" if recommended == "wet" else ""
+        mixed_button = (
+            f'<button class="toggle-btn is-active" data-target="mixed" type="button">Mix &middot; {(wet_share or 0.0) * 100:.0f}% wet</button>'
+            if recommended == "mixed"
+            else ""
+        )
         toggle_html = (
             '<div class="scenario-toggle">'
-            f'<button class="toggle-btn{dry_active}" data-target="dry" type="button">Dry</button>'
-            f'<button class="toggle-btn{wet_active}" data-target="wet" type="button">Wet</button>'
-            "</div>"
+            + mixed_button
+            + f'<button class="toggle-btn{dry_active}" data-target="dry" type="button">Dry</button>'
+            + f'<button class="toggle-btn{wet_active}" data-target="wet" type="button">Wet</button>'
+            + "</div>"
         )
         script_html = """
     <script>
@@ -622,9 +672,24 @@ def render_page(
 
     phase_config = {"season": prediction.get("season") or race_config.get("season"), "next_round": race_config.get("next_round")}
     badges = penalty_badges(race_config)
-    dry_panel = scenario_panel_html(prediction, "dry", "Dry", recommended == "dry", phase_changes(history, phase_config, "dry"), badges)
+    dry_changes = phase_changes(history, phase_config, "dry")
+    wet_changes = phase_changes(history, phase_config, "wet")
+    dry_panel = scenario_panel_html(prediction, "dry", "Dry", recommended == "dry", dry_changes, badges)
+    if recommended == "mixed" and isinstance(prediction_wet, dict):
+        share = float(wet_share or 0.0)
+        dry_panel = (
+            scenario_panel_html(
+                blend_predictions(prediction, prediction_wet, share),
+                "mixed",
+                f"Forecast mix ({(1 - share) * 100:.0f}% dry / {share * 100:.0f}% wet)",
+                True,
+                blend_changes(dry_changes, wet_changes, share),
+                badges,
+            )
+            + dry_panel
+        )
     wet_panel = (
-        scenario_panel_html(prediction_wet, "wet", "Wet", recommended == "wet", phase_changes(history, phase_config, "wet"), badges)
+        scenario_panel_html(prediction_wet, "wet", "Wet", recommended == "wet", wet_changes, badges)
         if isinstance(prediction_wet, dict)
         else ""
     )

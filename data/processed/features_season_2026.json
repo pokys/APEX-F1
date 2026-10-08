@@ -27,7 +27,9 @@
       "sprint_qualifying_phase_depth": 0.647841,
       "starts": 16,
       "team": "Williams",
-      "teammate_qualifying_gap_ms": 397.597533
+      "teammate_qualifying_gap_ms": 397.597533,
+      "wet_position_delta": -3.267688,
+      "wet_sessions": 2
     },
     {
       "dnf_rate": 0.375,
@@ -56,7 +58,9 @@
       "sprint_qualifying_phase_depth": 0.333333,
       "starts": 16,
       "team": "Aston Martin",
-      "teammate_qualifying_gap_ms": 11.767988
+      "teammate_qualifying_gap_ms": 11.767988,
+      "wet_position_delta": 1.69212,
+      "wet_sessions": 2
     },
     {
       "dnf_rate": 0.0625,
@@ -85,7 +89,9 @@
       "sprint_qualifying_phase_depth": 1.0,
       "starts": 16,
       "team": "Mercedes",
-      "teammate_qualifying_gap_ms": 326.695666
+      "teammate_qualifying_gap_ms": 326.695666,
+      "wet_position_delta": 1.807111,
+      "wet_sessions": 2
     },
     {
       "dnf_rate": null,
@@ -114,7 +120,9 @@
       "sprint_qualifying_phase_depth": null,
       "starts": 0,
       "team": "Audi",
-      "teammate_qualifying_gap_ms": null
+      "teammate_qualifying_gap_ms": null,
+      "wet_position_delta": null,
+      "wet_sessions": 0
     },
     {
       "dnf_rate": 0.25,
@@ -143,7 +151,9 @@
       "sprint_qualifying_phase_depth": 0.427844,
       "starts": 16,
       "team": "Haas F1 Team",
-      "teammate_qualifying_gap_ms": 51.95823
+      "teammate_qualifying_gap_ms": 51.95823,
+      "wet_position_delta": 2.519115,
+      "wet_sessions": 2
     },
     {
       "dnf_rate": null,
@@ -172,7 +182,9 @@
       "sprint_qualifying_phase_depth": null,
       "starts": 0,
       "team": "Ferrari",
-      "teammate_qualifying_gap_ms": null
+      "teammate_qualifying_gap_ms": null,
+      "wet_position_delta": null,
+      "wet_sessions": 0
     },
     {
       "dnf_rate": 0.0625,
@@ -201,7 +213,9 @@
       "sprint_qualifying_phase_depth": 0.837159,
       "starts": 16,
       "team": "Audi",
-      "teammate_qualifying_gap_ms": 184.804488
+      "teammate_qualifying_gap_ms": 184.804488,
+      "wet_position_delta": -2.430721,
+      "wet_sessions": 2
     },
     {
       "dnf_rate": 0.5,
@@ -230,7 +244,9 @@
       "sprint_qualifying_phase_depth": 0.333333,
       "starts": 16,
       "team": "Cadillac F1 Team",
-      "teammate_qualifying_gap_ms": 543.457683
+      "teammate_qualifying_gap_ms": 543.457683,
+      "wet_position_delta": -0.049418,
+      "wet_sessions": 2
     },
     {
       "dnf_rate": null,
@@ -259,7 +275,9 @@
       "sprint_qualifying_phase_depth": null,
       "starts": 0,
       "team": "Williams",
-      "teammate_qualifying_gap_ms": null
+      "teammate_qualifying_gap_ms": null,
+      "wet_position_delta": null,
+      "wet_sessions": 0
     },
     {
       "dnf_rate": 0.0625,
@@ -288,7 +306,9 @@
       "sprint_qualifying_phase_depth": 0.693517,
       "starts": 16,
       "team": "Alpine F1 Team",
-      "teammate_qualifying_gap_ms": 332.594964
+      "teammate_qualifying_gap_ms": 332.594964,
+      "wet_position_delta": 2.517988,
+      "wet_sessions": 2
     },
     {
       "dnf_rate": null,
@@ -317,7 +337,9 @@
       "sprint_qualifying_phase_depth": null,
       "starts": 0,
       "team": "Aston Martin",
-      "teammate_qualifying_gap_ms": null
+      "teammate_qualifying_gap_ms": null,
+      "wet_position_delta": null,
+      "wet_sessions": 0
     },
     {
       "dnf_rate": null,
@@ -346,7 +368,9 @@
       "sprint_qualifying_phase_depth": null,
       "starts": 0,
       "team": "McLaren",
-      "teammate_qualifying_gap_ms": null
+      "teammate_qualifying_gap_ms": null,
+      "wet_position_delta": null,
+      "wet_sessions": 0
     },
     {
       "dnf_rate": 0.125,
@@ -375,7 +399,9 @@
       "sprint_qualifying_phase_depth": 0.847094,
       "starts": 16,
       "team": "Alpine F1 Team",
-      "teammate_qualifying_gap_ms": 97.643241
+      "teammate_qualifying_gap_ms": 97.643241,
+      "wet_position_delta": 0.299548,
+      "wet_sessions": 2
     },
     {
       "dnf_rate": 0.153846,
@@ -404,7 +430,9 @@
       "sprint_qualifying_phase_depth": 1.0,
       "starts": 13,
       "team": "Red Bull",
-      "teammate_qualifying_gap_ms": 177.731877
+      "teammate_qualifying_gap_ms": 177.731877,
+      "wet_position_delta": 0.840866,
+      "wet_sessions": 2
     },
     {
       "dnf_rate": 0.0625,
@@ -433,7 +461,9 @@
       "sprint_qualifying_phase_depth": 1.0,
       "starts": 16,
       "team": "Ferrari",
-      "teammate_qualifying_gap_ms": 96.064786
+      "teammate_qualifying_gap_ms": 96.064786,
+      "wet_position_delta": 3.886533,
+      "wet_sessions": 2
     },
     {
       "dnf_rate": null,
@@ -462,7 +492,9 @@
       "sprint_qualifying_phase_depth": null,
       "starts": 0,
       "team": "Cadillac",
-      "teammate_qualifying_gap_ms": null
+      "teammate_qualifying_gap_ms": null,
+      "wet_position_delta": null,
+      "wet_sessions": 0
     },
     {
       "dnf_rate": null,
@@ -491,7 +523,9 @@
       "sprint_qualifying_phase_depth": null,
       "starts": 0,
       "team": "Haas F1 Team",
-      "teammate_qualifying_gap_ms": null
+      "teammate_qualifying_gap_ms": null,
+      "wet_position_delta": null,
+      "wet_sessions": 0
     },
     {
       "dnf_rate": 0.25,
@@ -520,7 +554,9 @@
       "sprint_qualifying_phase_depth": 0.666667,
       "starts": 16,
       "team": "Audi",
-      "teammate_qualifying_gap_ms": 309.202723
+      "teammate_qualifying_gap_ms": 309.202723,
+      "wet_position_delta": 0.515858,
+      "wet_sessions": 2
     },
     {
       "dnf_rate": null,
@@ -549,7 +585,9 @@
       "sprint_qualifying_phase_depth": null,
       "starts": 0,
       "team": "Red Bull Racing",
-      "teammate_qualifying_gap_ms": null
+      "teammate_qualifying_gap_ms": null,
+      "wet_position_delta": null,
+      "wet_sessions": 0
     },
     {
       "dnf_rate": 0.0625,
@@ -578,7 +616,9 @@
       "sprint_qualifying_phase_depth": 0.731658,
       "starts": 16,
       "team": "RB F1 Team",
-      "teammate_qualifying_gap_ms": 210.662535
+      "teammate_qualifying_gap_ms": 210.662535,
+      "wet_position_delta": 2.068493,
+      "wet_sessions": 2
     },
     {
       "dnf_rate": 0.1875,
@@ -607,7 +647,9 @@
       "sprint_qualifying_phase_depth": 1.0,
       "starts": 16,
       "team": "Ferrari",
-      "teammate_qualifying_gap_ms": 67.747614
+      "teammate_qualifying_gap_ms": 67.747614,
+      "wet_position_delta": 2.636448,
+      "wet_sessions": 2
     },
     {
       "dnf_rate": 0.0625,
@@ -636,7 +678,9 @@
       "sprint_qualifying_phase_depth": 0.956234,
       "starts": 16,
       "team": "RB F1 Team",
-      "teammate_qualifying_gap_ms": 190.734619
+      "teammate_qualifying_gap_ms": 190.734619,
+      "wet_position_delta": -6.483574,
+      "wet_sessions": 2
     },
     {
       "dnf_rate": 0.25,
@@ -665,7 +709,9 @@
       "sprint_qualifying_phase_depth": 1.0,
       "starts": 16,
       "team": "McLaren",
-      "teammate_qualifying_gap_ms": 84.458143
+      "teammate_qualifying_gap_ms": 84.458143,
+      "wet_position_delta": -5.796604,
+      "wet_sessions": 2
     },
     {
       "dnf_rate": 0.0625,
@@ -694,7 +740,9 @@
       "sprint_qualifying_phase_depth": 0.55457,
       "starts": 16,
       "team": "Haas F1 Team",
-      "teammate_qualifying_gap_ms": 280.347302
+      "teammate_qualifying_gap_ms": 280.347302,
+      "wet_position_delta": -0.879433,
+      "wet_sessions": 2
     },
     {
       "dnf_rate": 0.3125,
@@ -723,7 +771,9 @@
       "sprint_qualifying_phase_depth": 0.333333,
       "starts": 16,
       "team": "Cadillac F1 Team",
-      "teammate_qualifying_gap_ms": 177.902621
+      "teammate_qualifying_gap_ms": 177.902621,
+      "wet_position_delta": -0.484588,
+      "wet_sessions": 2
     },
     {
       "dnf_rate": 0.1875,
@@ -752,7 +802,9 @@
       "sprint_qualifying_phase_depth": 1.0,
       "starts": 16,
       "team": "McLaren",
-      "teammate_qualifying_gap_ms": 135.650363
+      "teammate_qualifying_gap_ms": 135.650363,
+      "wet_position_delta": 0.024117,
+      "wet_sessions": 2
     },
     {
       "dnf_rate": 0.1875,
@@ -781,7 +833,9 @@
       "sprint_qualifying_phase_depth": 1.0,
       "starts": 16,
       "team": "Mercedes",
-      "teammate_qualifying_gap_ms": 176.542166
+      "teammate_qualifying_gap_ms": 176.542166,
+      "wet_position_delta": -11.834306,
+      "wet_sessions": 2
     },
     {
       "dnf_rate": 0.1875,
@@ -810,7 +864,9 @@
       "sprint_qualifying_phase_depth": 0.51309,
       "starts": 16,
       "team": "Williams",
-      "teammate_qualifying_gap_ms": 3.349102
+      "teammate_qualifying_gap_ms": 3.349102,
+      "wet_position_delta": 2.130356,
+      "wet_sessions": 2
     },
     {
       "dnf_rate": 0.625,
@@ -839,7 +895,9 @@
       "sprint_qualifying_phase_depth": 0.333333,
       "starts": 16,
       "team": "Aston Martin",
-      "teammate_qualifying_gap_ms": 366.092146
+      "teammate_qualifying_gap_ms": 366.092146,
+      "wet_position_delta": 4.726943,
+      "wet_sessions": 2
     },
     {
       "dnf_rate": 0.0,
@@ -868,7 +926,9 @@
       "sprint_qualifying_phase_depth": 0.666667,
       "starts": 3,
       "team": "RB F1 Team",
-      "teammate_qualifying_gap_ms": 712.937256
+      "teammate_qualifying_gap_ms": 712.937256,
+      "wet_position_delta": null,
+      "wet_sessions": 0
     },
     {
       "dnf_rate": 0.25,
@@ -897,7 +957,9 @@
       "sprint_qualifying_phase_depth": 1.0,
       "starts": 16,
       "team": "Red Bull",
-      "teammate_qualifying_gap_ms": 96.410659
+      "teammate_qualifying_gap_ms": 96.410659,
+      "wet_position_delta": 3.724234,
+      "wet_sessions": 2
     },
     {
       "dnf_rate": null,
@@ -926,7 +988,9 @@
       "sprint_qualifying_phase_depth": null,
       "starts": 0,
       "team": "Mercedes",
-      "teammate_qualifying_gap_ms": null
+      "teammate_qualifying_gap_ms": null,
+      "wet_position_delta": null,
+      "wet_sessions": 0
     }
   ],
   "fastf1_snapshot": "data/raw/fastf1/season_2026.json",

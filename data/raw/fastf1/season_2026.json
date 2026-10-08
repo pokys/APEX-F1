@@ -1783,7 +1783,8 @@
           ],
           "session_code": "Q",
           "session_date": "2026-03-07T05:00:00+00:00",
-          "session_name": "Qualifying"
+          "session_name": "Qualifying",
+          "wet": false
         },
         {
           "results": [
@@ -2120,7 +2121,8 @@
           ],
           "session_code": "R",
           "session_date": "2026-03-08T04:00:00+00:00",
-          "session_name": "Race"
+          "session_name": "Race",
+          "wet": false
         }
       ]
     },
@@ -2859,7 +2861,8 @@
           "session_code": "SQ",
           "session_date": "2026-03-13T07:30:00+00:00",
           "session_name": null,
-          "source": "openf1"
+          "source": "openf1",
+          "wet": false
         },
         {
           "results": [
@@ -3196,7 +3199,8 @@
           ],
           "session_code": "S",
           "session_date": "2026-03-14T03:00:00+00:00",
-          "session_name": "Sprint"
+          "session_name": "Sprint",
+          "wet": false
         },
         {
           "results": [
@@ -3533,7 +3537,8 @@
           ],
           "session_code": "Q",
           "session_date": "2026-03-14T07:00:00+00:00",
-          "session_name": "Qualifying"
+          "session_name": "Qualifying",
+          "wet": false
         },
         {
           "results": [
@@ -3870,7 +3875,8 @@
           ],
           "session_code": "R",
           "session_date": "2026-03-15T07:00:00+00:00",
-          "session_name": "Race"
+          "session_name": "Race",
+          "wet": false
         }
       ]
     },
@@ -5366,7 +5372,8 @@
           ],
           "session_code": "Q",
           "session_date": "2026-03-28T06:00:00+00:00",
-          "session_name": "Qualifying"
+          "session_name": "Qualifying",
+          "wet": false
         },
         {
           "results": [
@@ -5703,7 +5710,8 @@
           ],
           "session_code": "R",
           "session_date": "2026-03-29T05:00:00+00:00",
-          "session_name": "Race"
+          "session_name": "Race",
+          "wet": false
         }
       ]
     },
@@ -6442,7 +6450,8 @@
           "session_code": "SQ",
           "session_date": "2026-05-01T20:30:00+00:00",
           "session_name": null,
-          "source": "openf1"
+          "source": "openf1",
+          "wet": false
         },
         {
           "results": [
@@ -6779,7 +6788,8 @@
           ],
           "session_code": "S",
           "session_date": "2026-05-02T16:00:00+00:00",
-          "session_name": "Sprint"
+          "session_name": "Sprint",
+          "wet": false
         },
         {
           "results": [
@@ -7116,7 +7126,8 @@
           ],
           "session_code": "Q",
           "session_date": "2026-05-02T20:00:00+00:00",
-          "session_name": "Qualifying"
+          "session_name": "Qualifying",
+          "wet": false
         },
         {
           "results": [
@@ -7453,7 +7464,8 @@
           ],
           "session_code": "R",
           "session_date": "2026-05-03T17:00:00+00:00",
-          "session_name": "Race"
+          "session_name": "Race",
+          "wet": false
         }
       ]
     },
@@ -8175,7 +8187,8 @@
           "session_code": "SQ",
           "session_date": "2026-05-22T20:30:00+00:00",
           "session_name": null,
-          "source": "openf1"
+          "source": "openf1",
+          "wet": false
         },
         {
           "results": [
@@ -8512,7 +8525,8 @@
           ],
           "session_code": "S",
           "session_date": "2026-05-23T16:00:00+00:00",
-          "session_name": "Sprint"
+          "session_name": "Sprint",
+          "wet": false
         },
         {
           "results": [
@@ -8849,7 +8863,8 @@
           ],
           "session_code": "Q",
           "session_date": "2026-05-23T20:00:00+00:00",
-          "session_name": "Qualifying"
+          "session_name": "Qualifying",
+          "wet": false
         },
         {
           "results": [
@@ -9186,7 +9201,8 @@
           ],
           "session_code": "R",
           "session_date": "2026-05-24T20:00:00+00:00",
-          "session_name": "Race"
+          "session_name": "Race",
+          "wet": true
         }
       ]
     },
@@ -10683,7 +10699,8 @@
           ],
           "session_code": "Q",
           "session_date": "2026-06-06T14:00:00+00:00",
-          "session_name": "Qualifying"
+          "session_name": "Qualifying",
+          "wet": false
         },
         {
           "results": [
@@ -11020,7 +11037,8 @@
           ],
           "session_code": "R",
           "session_date": "2026-06-07T13:00:00+00:00",
-          "session_name": "Race"
+          "session_name": "Race",
+          "wet": false
         }
       ]
     },
@@ -12500,7 +12518,8 @@
           ],
           "session_code": "Q",
           "session_date": "2026-06-13T14:00:00+00:00",
-          "session_name": "Qualifying"
+          "session_name": "Qualifying",
+          "wet": false
         },
         {
           "results": [
@@ -12837,7 +12856,8 @@
           ],
           "session_code": "R",
           "session_date": "2026-06-14T13:00:00+00:00",
-          "session_name": "Race"
+          "session_name": "Race",
+          "wet": false
         }
       ]
     },
@@ -14333,7 +14353,8 @@
           ],
           "session_code": "Q",
           "session_date": "2026-06-27T14:00:00+00:00",
-          "session_name": "Qualifying"
+          "session_name": "Qualifying",
+          "wet": false
         },
         {
           "results": [
@@ -14670,7 +14691,8 @@
           ],
           "session_code": "R",
           "session_date": "2026-06-28T13:00:00+00:00",
-          "session_name": "Race"
+          "session_name": "Race",
+          "wet": false
         }
       ]
     },
@@ -15425,7 +15447,8 @@
           "session_code": "SQ",
           "session_date": "2026-07-03T15:30:00+00:00",
           "session_name": null,
-          "source": "openf1"
+          "source": "openf1",
+          "wet": false
         },
         {
           "results": [
@@ -15762,7 +15785,8 @@
           ],
           "session_code": "S",
           "session_date": "2026-07-04T11:00:00+00:00",
-          "session_name": "Sprint"
+          "session_name": "Sprint",
+          "wet": false
         },
         {
           "results": [
@@ -16099,7 +16123,8 @@
           ],
           "session_code": "Q",
           "session_date": "2026-07-04T15:00:00+00:00",
-          "session_name": "Qualifying"
+          "session_name": "Qualifying",
+          "wet": false
         },
         {
           "results": [
@@ -16436,7 +16461,8 @@
           ],
           "session_code": "R",
           "session_date": "2026-07-05T14:00:00+00:00",
-          "session_name": "Race"
+          "session_name": "Race",
+          "wet": false
         }
       ]
     },
@@ -17933,7 +17959,8 @@
           ],
           "session_code": "Q",
           "session_date": "2026-07-18T14:00:00+00:00",
-          "session_name": "Qualifying"
+          "session_name": "Qualifying",
+          "wet": false
         },
         {
           "results": [
@@ -18270,7 +18297,8 @@
           ],
           "session_code": "R",
           "session_date": "2026-07-19T13:00:00+00:00",
-          "session_name": "Race"
+          "session_name": "Race",
+          "wet": false
         }
       ]
     },
@@ -19749,7 +19777,8 @@
           ],
           "session_code": "Q",
           "session_date": "2026-07-25T14:00:00+00:00",
-          "session_name": "Qualifying"
+          "session_name": "Qualifying",
+          "wet": false
         },
         {
           "results": [
@@ -21178,7 +21207,8 @@
           ],
           "session_code": "S",
           "session_date": "2026-08-22T10:00:00+00:00",
-          "session_name": "Sprint"
+          "session_name": "Sprint",
+          "wet": false
         },
         {
           "results": [
@@ -21515,7 +21545,8 @@
           ],
           "session_code": "Q",
           "session_date": "2026-08-22T14:00:00+00:00",
-          "session_name": "Qualifying"
+          "session_name": "Qualifying",
+          "wet": false
         },
         {
           "results": [
@@ -21852,7 +21883,8 @@
           ],
           "session_code": "R",
           "session_date": "2026-08-23T13:00:00+00:00",
-          "session_name": "Race"
+          "session_name": "Race",
+          "wet": false
         }
       ]
     },
@@ -23349,7 +23381,8 @@
           ],
           "session_code": "Q",
           "session_date": "2026-09-05T14:00:00+00:00",
-          "session_name": "Qualifying"
+          "session_name": "Qualifying",
+          "wet": false
         },
         {
           "results": [
@@ -23686,7 +23719,8 @@
           ],
           "session_code": "R",
           "session_date": "2026-09-06T13:00:00+00:00",
-          "session_name": "Race"
+          "session_name": "Race",
+          "wet": false
         }
       ]
     },
@@ -25151,7 +25185,8 @@
           ],
           "session_code": "Q",
           "session_date": "2026-09-12T14:00:00+00:00",
-          "session_name": "Qualifying"
+          "session_name": "Qualifying",
+          "wet": false
         },
         {
           "results": [
@@ -25488,7 +25523,8 @@
           ],
           "session_code": "R",
           "session_date": "2026-09-13T13:00:00+00:00",
-          "session_name": "Race"
+          "session_name": "Race",
+          "wet": false
         }
       ]
     },
@@ -26985,7 +27021,8 @@
           ],
           "session_code": "Q",
           "session_date": "2026-09-25T12:00:00+00:00",
-          "session_name": "Qualifying"
+          "session_name": "Qualifying",
+          "wet": false
         },
         {
           "results": [
@@ -27322,7 +27359,8 @@
           ],
           "session_code": "R",
           "session_date": "2026-09-26T11:00:00+00:00",
-          "session_name": "Race"
+          "session_name": "Race",
+          "wet": false
         }
       ]
     },
@@ -28819,7 +28857,8 @@
           ],
           "session_code": "Q",
           "session_date": "2026-10-03T08:00:00+00:00",
-          "session_name": "Qualifying"
+          "session_name": "Qualifying",
+          "wet": false
         },
         {
           "results": [
@@ -29156,7 +29195,8 @@
           ],
           "session_code": "R",
           "session_date": "2026-10-04T07:00:00+00:00",
-          "session_name": "Race"
+          "session_name": "Race",
+          "wet": true
         }
       ]
     }

@@ -6,7 +6,7 @@
   "calibration_source": "outputs/backtest/backtest_season_2026.json",
   "event_format": "sprint",
   "event_signal_count": 0,
-  "generated_at": "2026-10-08T05:05:00Z",
+  "generated_at": "2026-10-08T08:00:01Z",
   "grid_penalties": [],
   "grid_source": "simulation",
   "inputs_status": [

@@ -162,3 +162,5 @@
 ## 2026-10-08
 - [ ] Our verdict on MotoGP's huge 2027 qualifying revamp (https://www.the-race.com/motogp/our-verdict-on-motogps-huge-2027-qualifying-revamp/)
 - [ ] What's really going on with F1's cooling vest dilemma (https://www.the-race.com/formula-1/whats-really-going-on-with-f1s-cooling-vest-dilemma/)
+- [ ] FIA to introduce further F1 software update after farcical start to Sepang race | Formula 1 (https://www.racefans.net/2026/10/08/fia-to-make-further-f1-software-changes-after-farcical-start-to-sepang-race/)
+- [ ] What’s being changed after F1's Malaysia software bug debacle (https://www.the-race.com/formula-1/whats-being-changed-after-f1s-malaysia-software-bug-debacle/)

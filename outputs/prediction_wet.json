@@ -9,14 +9,14 @@
     "reference_date": "2026-10-08",
     "stale_threshold_days": 21.0
   },
-  "deterministic_run_id": "7cda13c827ef06ce194a",
+  "deterministic_run_id": "af021db6e200eb8f89ae",
   "drivers": [
     {
       "driver_share": 46.4,
-      "expected_position": 3.754833,
-      "front_row_probability": 0.363167,
+      "expected_position": 3.750667,
+      "front_row_probability": 0.364333,
       "name": "HAM",
-      "pole_probability": 0.196667,
+      "pole_probability": 0.1975,
       "team": "Ferrari",
       "team_share": 53.6,
       "top10_probability": 0.997333,
@@ -24,8 +24,8 @@
     },
     {
       "driver_share": 45.6,
-      "expected_position": 3.725833,
-      "front_row_probability": 0.3605,
+      "expected_position": 3.723667,
+      "front_row_probability": 0.361,
       "name": "ANT",
       "pole_probability": 0.188833,
       "team": "Mercedes",
@@ -35,10 +35,10 @@
     },
     {
       "driver_share": 46.7,
-      "expected_position": 4.128833,
-      "front_row_probability": 0.328333,
+      "expected_position": 4.126167,
+      "front_row_probability": 0.329,
       "name": "LEC",
-      "pole_probability": 0.1745,
+      "pole_probability": 0.175,
       "team": "Ferrari",
       "team_share": 53.3,
       "top10_probability": 0.990667,
@@ -46,30 +46,30 @@
     },
     {
       "driver_share": 46.9,
-      "expected_position": 4.155833,
-      "front_row_probability": 0.294333,
+      "expected_position": 4.1525,
+      "front_row_probability": 0.294667,
       "name": "RUS",
-      "pole_probability": 0.146833,
+      "pole_probability": 0.147167,
       "team": "Mercedes",
       "team_share": 53.1,
-      "top10_probability": 0.996167,
+      "top10_probability": 0.996333,
       "weekend_form_delta": 0.0
     },
     {
-      "driver_share": 47.5,
-      "expected_position": 5.243,
-      "front_row_probability": 0.223167,
+      "driver_share": 47.6,
+      "expected_position": 5.255,
+      "front_row_probability": 0.2205,
       "name": "VER",
-      "pole_probability": 0.101667,
+      "pole_probability": 0.100167,
       "team": "Red Bull",
-      "team_share": 52.5,
+      "team_share": 52.4,
       "top10_probability": 0.959667,
       "weekend_form_delta": 0.0
     },
     {
       "driver_share": 46.3,
-      "expected_position": 5.553667,
-      "front_row_probability": 0.143667,
+      "expected_position": 5.550667,
+      "front_row_probability": 0.144,
       "name": "NOR",
       "pole_probability": 0.066,
       "team": "McLaren",
@@ -79,8 +79,8 @@
     },
     {
       "driver_share": 45.6,
-      "expected_position": 6.177,
-      "front_row_probability": 0.129833,
+      "expected_position": 6.174167,
+      "front_row_probability": 0.130333,
       "name": "PIA",
       "pole_probability": 0.057833,
       "team": "McLaren",
@@ -90,10 +90,10 @@
     },
     {
       "driver_share": 45.6,
-      "expected_position": 6.9585,
-      "front_row_probability": 0.085167,
+      "expected_position": 6.966,
+      "front_row_probability": 0.084333,
       "name": "HAD",
-      "pole_probability": 0.0365,
+      "pole_probability": 0.036333,
       "team": "Red Bull",
       "team_share": 54.4,
       "top10_probability": 0.869667,
@@ -101,7 +101,7 @@
     },
     {
       "driver_share": 49.3,
-      "expected_position": 9.762333,
+      "expected_position": 9.762,
       "front_row_probability": 0.024167,
       "name": "LAW",
       "pole_probability": 0.009167,
@@ -112,7 +112,7 @@
     },
     {
       "driver_share": 50.2,
-      "expected_position": 10.4175,
+      "expected_position": 10.417,
       "front_row_probability": 0.014833,
       "name": "GAS",
       "pole_probability": 0.007333,
@@ -123,7 +123,7 @@
     },
     {
       "driver_share": 48.5,
-      "expected_position": 11.5085,
+      "expected_position": 11.508833,
       "front_row_probability": 0.009667,
       "name": "LIN",
       "pole_probability": 0.004167,
@@ -134,13 +134,13 @@
     },
     {
       "driver_share": 47.0,
-      "expected_position": 11.951667,
+      "expected_position": 11.952,
       "front_row_probability": 0.0075,
       "name": "COL",
       "pole_probability": 0.003833,
       "team": "Alpine F1 Team",
       "team_share": 53.0,
-      "top10_probability": 0.288667,
+      "top10_probability": 0.2885,
       "weekend_form_delta": 0.0
     },
     {
@@ -156,7 +156,7 @@
     },
     {
       "driver_share": 47.6,
-      "expected_position": 14.352667,
+      "expected_position": 14.352333,
       "front_row_probability": 0.002,
       "name": "HUL",
       "pole_probability": 0.0015,
@@ -178,7 +178,7 @@
     },
     {
       "driver_share": 49.2,
-      "expected_position": 13.419,
+      "expected_position": 13.418333,
       "front_row_probability": 0.002167,
       "name": "BOR",
       "pole_probability": 0.000833,
@@ -189,7 +189,7 @@
     },
     {
       "driver_share": 55.0,
-      "expected_position": 16.559,
+      "expected_position": 16.558833,
       "front_row_probability": 0.000667,
       "name": "SAI",
       "pole_probability": 0.000333,
@@ -211,7 +211,7 @@
     },
     {
       "driver_share": 57.3,
-      "expected_position": 20.013667,
+      "expected_position": 20.013833,
       "front_row_probability": 0.000333,
       "name": "PER",
       "pole_probability": 0.000167,
@@ -244,7 +244,7 @@
     },
     {
       "driver_share": 54.8,
-      "expected_position": 20.0975,
+      "expected_position": 20.097333,
       "front_row_probability": 0.0,
       "name": "STR",
       "pole_probability": 0.0,
@@ -254,7 +254,7 @@
       "weekend_form_delta": 0.0
     }
   ],
-  "generated_at": "2026-10-08T05:05:04Z",
+  "generated_at": "2026-10-08T08:00:05Z",
   "inputs_used": [
     {
       "source": "history_driver",
@@ -268,9 +268,9 @@
     }
   ],
   "integrity": {
-    "driver_ratings_hash": "59c500cc0f83",
-    "race_config_hash": "3e6dcaec1405",
-    "team_ratings_hash": "a33ffde31d69"
+    "driver_ratings_hash": "65f1e194c3bd",
+    "race_config_hash": "cf8b97b06479",
+    "team_ratings_hash": "bc323951edd4"
   },
   "prediction_target": "sprint_qualifying",
   "prediction_target_label": "Sprint Qualifying",

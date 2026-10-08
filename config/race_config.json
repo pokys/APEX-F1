@@ -5,7 +5,7 @@
   "calibration_season": 2025,
   "calibration_source": "outputs/backtest/backtest_season_2025.json",
   "event_format": "sprint",
-  "generated_at": "2026-10-07T21:08:28Z",
+  "generated_at": "2026-10-08T00:01:13Z",
   "grid_source": "simulation",
   "inputs_status": [
     {
@@ -57,11 +57,11 @@
   "season": 2026,
   "seed": 202617,
   "sessions_schedule": {
-    "FP1": "2026-10-09T00:00:00+00:00",
-    "Q": "2026-10-10T00:00:00+00:00",
+    "FP1": "2026-10-09T08:30:00+00:00",
+    "Q": "2026-10-10T13:00:00+00:00",
     "R": "2026-10-11T12:00:00+00:00",
-    "S": "2026-10-10T00:00:00+00:00",
-    "SQ": "2026-10-09T00:00:00+00:00"
+    "S": "2026-10-10T09:00:00+00:00",
+    "SQ": "2026-10-09T12:30:00+00:00"
   },
   "signal_count": 0,
   "simulations": 6000,
@@ -74,7 +74,7 @@
   },
   "track_profile": "country:singapore",
   "weather": "dry",
-  "weather_modifier": 0.14,
+  "weather_modifier": 0.0,
   "weekend_format": "sprint",
   "win_temperature": 1.2
 }

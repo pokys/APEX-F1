@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       season:
-        description: "Season year to evaluate (e.g. 2025)"
+        description: "Season year to evaluate (default: current year)"
         required: false
         type: string
       simulations:
@@ -64,19 +64,19 @@ jobs:
           SEASON: ${{ github.event.inputs.season }}
           SIMULATIONS: ${{ github.event.inputs.simulations }}
         run: |
-          TARGET_SEASON="${SEASON:-2025}"
+          TARGET_SEASON="${SEASON:-$(date -u +%Y)}"
           TARGET_SIMS="${SIMULATIONS:-2000}"
           python pipeline/backtest_simulation.py --season "$TARGET_SEASON" --simulations "$TARGET_SIMS" --log-level INFO
+
+      - name: Commit report
+        run: bash scripts/commit_bot_outputs.sh "Update simulation backtest report" outputs/backtest
 
       - name: Validate backtest quality
         env:
           SEASON: ${{ github.event.inputs.season }}
         run: |
-          TARGET_SEASON="${SEASON:-2025}"
+          TARGET_SEASON="${SEASON:-$(date -u +%Y)}"
           python pipeline/validate_backtest_quality.py \
             --report "outputs/backtest/backtest_season_${TARGET_SEASON}.json" \
             --gate-config config/backtest_quality_gates.json \
             --log-level INFO
-
-      - name: Commit report
-        run: bash scripts/commit_bot_outputs.sh "Update simulation backtest report" outputs/backtest

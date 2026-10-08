@@ -855,3 +855,63 @@ def compute_weekend_form(driver_name: str, event: dict[str, Any], manifest: list
         "delta": round(max(-5.0, min(5.0, delta)), 6),
         "sources": source_rows,
     }
+
+
+STANDINGS_DECAY = 3.0
+
+
+def championship_points_before(snapshot: dict[str, Any], before_date: Any) -> dict[str, float]:
+    """Driver points from race and sprint results of events strictly before
+    `before_date` (YYYY-MM-DD...)."""
+    cutoff = _parse_iso_date(before_date)
+    points: dict[str, float] = {}
+    for event in snapshot.get("events") or []:
+        if not isinstance(event, dict):
+            continue
+        event_date = _parse_iso_date(event.get("event_date"))
+        if cutoff is not None and (event_date is None or event_date >= cutoff):
+            continue
+        for session in event.get("sessions") or []:
+            if not isinstance(session, dict) or str(session.get("session_code") or "").upper() not in {"R", "S"}:
+                continue
+            for row in session.get("results") or []:
+                if not isinstance(row, dict):
+                    continue
+                abbr = str(row.get("abbreviation") or "").strip().upper()
+                try:
+                    value = float(row.get("points") or 0.0)
+                except (TypeError, ValueError):
+                    value = 0.0
+                if abbr:
+                    points[abbr] = points.get(abbr, 0.0) + value
+    return points
+
+
+def standings_weights(names: list[str], points: dict[str, float], decay: float = STANDINGS_DECAY) -> dict[str, float]:
+    """Championship-order model: weight decays exponentially with the rank
+    in the standings. Normalised, so it is also the win/pole distribution."""
+    if not names:
+        return {}
+    ranked = sorted(names, key=lambda name: (-points.get(name.upper(), 0.0), name))
+    weights = {name: math.exp(-rank / decay) for rank, name in enumerate(ranked)}
+    total = sum(weights.values())
+    return {name: weight / total for name, weight in weights.items()}
+
+
+def plackett_luce_order(rng: Any, weights: dict[str, float]) -> list[str]:
+    """Sample a full finishing order: repeatedly pick the next driver with
+    probability proportional to their weight."""
+    remaining = sorted(weights.items())
+    order: list[str] = []
+    while remaining:
+        total = sum(weight for _, weight in remaining)
+        pick = rng.random() * total
+        acc = 0.0
+        index = len(remaining) - 1
+        for idx, (_, weight) in enumerate(remaining):
+            acc += weight
+            if pick < acc:
+                index = idx
+                break
+        order.append(remaining.pop(index)[0])
+    return order

@@ -177,6 +177,10 @@ jobs:
           python pipeline/publish_prediction.py --input outputs/prediction_wet.json --output outputs/prediction_wet.json --allow-missing-input --log-level INFO
           python pipeline/publish_prediction.py --allow-missing-input --log-level INFO
 
+      - name: Archive and score predictions
+        run: |
+          python pipeline/track_record.py --prediction outputs/prediction.json --race-config config/race_config.json --archive-dir outputs/archive --raw-dir data/raw/fastf1 --output outputs/track_record.json --log-level INFO
+
       - name: Render prediction page
         run: |
           python pipeline/render_prediction_page.py --prediction outputs/prediction.json --prediction-dry outputs/prediction_dry.json --prediction-wet outputs/prediction_wet.json --race-config config/race_config.json --tyres-input data/raw/tyres --output outputs/prediction_report.html --allow-missing-input --log-level INFO
@@ -200,4 +204,6 @@ jobs:
             outputs/prediction_dry.json \
             outputs/prediction_wet.json \
             outputs/prediction_report.html \
+            outputs/archive \
+            outputs/track_record.json \
             config/race_config.json

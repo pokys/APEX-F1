@@ -9,7 +9,14 @@ import re
 from pathlib import Path
 from typing import Any
 
-from pipeline.prediction_targeting import compute_weekend_form, find_event, load_json
+from pipeline.prediction_targeting import (
+    championship_points_before,
+    compute_weekend_form,
+    find_event,
+    load_json,
+    plackett_luce_order,
+    standings_weights,
+)
 from pipeline.simulate_race import WET_SETTINGS
 from pipeline.simulate_race import (
     MIN_SIMULATIONS,
@@ -138,6 +145,7 @@ def run_qualifying_prediction(
     driver_ratings: dict[str, Any],
     team_ratings: dict[str, Any],
     form_by_driver: dict[str, dict[str, Any]],
+    standings: dict[str, float] | None = None,
 ) -> dict[str, Any]:
     if not entries:
         raise ValueError("No drivers available for qualifying prediction.")
@@ -166,8 +174,13 @@ def run_qualifying_prediction(
     if wet:
         adjusted_noise *= WET_SETTINGS["noise_factor"]
 
+    blend = clamp(safe_float(config.get("standings_blend_qualifying"), 0.0), 0.0, 1.0) if standings else 0.0
+
     for _ in range(simulations):
-        grid = simulate_qualifying(entries, rng, qualifying_noise=adjusted_noise, wet=wet)
+        if blend > 0 and rng.random() < blend:
+            grid = plackett_luce_order(rng, standings or {})
+        else:
+            grid = simulate_qualifying(entries, rng, qualifying_noise=adjusted_noise, wet=wet)
         for idx, name in enumerate(grid, start=1):
             pos_sum[name] += float(idx)
             if idx == 1:
@@ -220,6 +233,7 @@ def run_qualifying_prediction(
         "available_sessions": config.get("available_sessions", []),
         "qualifying_noise": round(adjusted_noise, 6),
         "qualifying_noise_scale": round(noise_scale, 6),
+        "standings_blend": round(blend, 6),
     }
     payload["drivers"] = rows
     return payload
@@ -231,6 +245,7 @@ def run_race_or_sprint_prediction(
     driver_ratings: dict[str, Any],
     team_ratings: dict[str, Any],
     form_by_driver: dict[str, dict[str, Any]],
+    standings: dict[str, float] | None = None,
 ) -> dict[str, Any]:
     import random
 
@@ -260,8 +275,18 @@ def run_race_or_sprint_prediction(
     podium_count = {name: 0 for name in driver_names}
 
     fixed_grid_config = config.get("fixed_grid")
+    blend = clamp(safe_float(config.get("standings_blend_race"), 0.0), 0.0, 1.0) if standings else 0.0
 
     for _ in range(simulations):
+        if blend > 0 and rng.random() < blend:
+            order = plackett_luce_order(rng, standings or {})
+            for idx, name in enumerate(order, start=1):
+                finish_sum[name] += float(idx)
+                if idx == 1:
+                    win_count[name] += 1
+                if idx <= 3:
+                    podium_count[name] += 1
+            continue
         if isinstance(fixed_grid_config, list) and fixed_grid_config:
             grid = fixed_grid_config
         else:
@@ -333,6 +358,7 @@ def run_race_or_sprint_prediction(
         "race_kind": race_kind,
         "race_noise_scale": round(noise_scale, 6),
         "qualifying_noise_scale": round(qualifying_scale, 6),
+        "standings_blend": round(blend, 6),
     }
     payload["drivers"] = rows
     return payload
@@ -352,7 +378,27 @@ def run_target_prediction(
 
     adjusted_entries, form_by_driver = apply_weekend_adjustments(entries, config, raw_dir=raw_dir)
     target = str(config.get("prediction_target") or "race")
+    standings = standings_for_config(adjusted_entries, config, raw_dir)
 
     if target in {"qualifying", "sprint_qualifying"}:
-        return run_qualifying_prediction(adjusted_entries, config, driver_ratings, team_ratings, form_by_driver)
-    return run_race_or_sprint_prediction(adjusted_entries, config, driver_ratings, team_ratings, form_by_driver)
+        return run_qualifying_prediction(adjusted_entries, config, driver_ratings, team_ratings, form_by_driver, standings)
+    return run_race_or_sprint_prediction(adjusted_entries, config, driver_ratings, team_ratings, form_by_driver, standings)
+
+
+def standings_for_config(entries: list[dict[str, Any]], config: dict[str, Any], raw_dir: Path) -> dict[str, float] | None:
+    """Championship-order weights from events before this GP; None when no
+    blend is configured or no points exist yet."""
+    if max(safe_float(config.get("standings_blend_qualifying"), 0.0), safe_float(config.get("standings_blend_race"), 0.0)) <= 0:
+        return None
+    season = int(safe_float(config.get("season"), 0))
+    path = raw_dir / f"season_{season}.json"
+    if season <= 0 or not path.exists():
+        return None
+    try:
+        snapshot = load_json(path)
+    except Exception:
+        return None
+    points = championship_points_before(snapshot, config.get("race_date"))
+    if not points:
+        return None
+    return standings_weights([entry["name"] for entry in entries], points)

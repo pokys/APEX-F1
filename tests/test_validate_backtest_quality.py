@@ -46,3 +46,10 @@ def test_validate_backtest_quality_rejects_low_sample_count() -> None:
 
     with pytest.raises(ValueError, match="races_evaluated below quality gate"):
         validate_backtest_quality(report, gates)
+
+
+def test_quality_gate_requires_beating_best_baseline() -> None:
+    gates = {"summary_less_than": {"calibrated_win_log_loss": "best_baseline_win_log_loss"}}
+    validate_backtest_quality({"summary": {"calibrated_win_log_loss": 1.7, "best_baseline_win_log_loss": 1.8}}, gates)
+    with pytest.raises(ValueError, match="does not beat"):
+        validate_backtest_quality({"summary": {"calibrated_win_log_loss": 1.9, "best_baseline_win_log_loss": 1.8}}, gates)

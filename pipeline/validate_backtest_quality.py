@@ -73,6 +73,14 @@ def validate_backtest_quality(report: dict[str, Any], gates: dict[str, Any]) -> 
             raise ValueError(f"{metric} below quality gate: expected >= {limit}, got {actual}")
 
 
+    beat = require_mapping(gates.get("summary_less_than", {}), "gates.summary_less_than")
+    for metric, reference in beat.items():
+        actual = require_number(summary.get(metric), f"report.summary.{metric}")
+        limit = require_number(summary.get(reference), f"report.summary.{reference}")
+        if actual >= limit:
+            raise ValueError(f"{metric} does not beat {reference}: {actual} >= {limit}")
+
+
 def main() -> int:
     args = parse_args()
     logging.basicConfig(

@@ -42,6 +42,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--prediction-wet", default="outputs/prediction_wet.json", help="Wet scenario prediction JSON input path.")
     parser.add_argument("--race-config", default="config/race_config.json", help="Race config JSON input path.")
     parser.add_argument("--tyres-input", default="data/raw/tyres", help="Weekend tyre compounds file or directory.")
+    parser.add_argument("--track-record", default="outputs/track_record.json", help="Track record JSON (optional).")
     parser.add_argument("--output", default="outputs/prediction_report.html", help="Rendered HTML output path.")
     parser.add_argument("--allow-missing-input", action="store_true", help="Exit 0 if prediction input is missing.")
     parser.add_argument(
@@ -308,11 +309,48 @@ def scenario_panel_html(prediction: dict[str, Any], scenario_key: str, scenario_
     )
 
 
+def track_record_html(track_record: dict[str, Any] | None) -> str:
+    """Scores of archived pre-session predictions once results are in."""
+    if not isinstance(track_record, dict):
+        return ""
+    summary = track_record.get("summary") if isinstance(track_record.get("summary"), dict) else {}
+    entries = [row for row in track_record.get("entries") or [] if isinstance(row, dict)]
+    if not summary.get("count"):
+        return (
+            '<section class="explain-card"><h2>Track Record</h2>'
+            "<p>No archived prediction has been scored yet. Predictions are archived before each session starts and scored once results are in.</p>"
+            "</section>"
+        )
+    rows = []
+    for row in entries[-12:][::-1]:
+        hit = "&#10003;" if row.get("hit") else "&#10007;"
+        rows.append(
+            "<tr>"
+            f"<td>{html.escape(str(row.get('season')))} R{html.escape(str(row.get('round')))}</td>"
+            f"<td>{html.escape(str(row.get('race') or ''))}</td>"
+            f"<td>{html.escape(str(row.get('session_code') or ''))}</td>"
+            f"<td>{html.escape(str(row.get('predicted_winner') or ''))}</td>"
+            f"<td>{html.escape(str(row.get('actual_winner') or ''))} {hit}</td>"
+            f"<td>{to_float(row.get('winner_probability')) * 100:.1f}%</td>"
+            "</tr>"
+        )
+    return (
+        '<section class="explain-card"><h2>Track Record</h2>'
+        f"<p>{int(summary.get('count', 0))} scored predictions &middot; favourite correct {to_float(summary.get('hit_rate')) * 100:.0f}% "
+        f"&middot; mean probability on the actual winner {to_float(summary.get('mean_winner_probability')) * 100:.1f}% "
+        f"&middot; mean log loss {to_float(summary.get('mean_log_loss')):.2f}</p>"
+        '<section class="desktop-table"><table><thead><tr><th>Event</th><th>GP</th><th>Session</th><th>Favourite</th><th>Actual</th><th>P(actual)</th></tr></thead>'
+        f"<tbody>{''.join(rows)}</tbody></table></section>"
+        "</section>"
+    )
+
+
 def render_page(
     prediction: dict[str, Any],
     race_config: dict[str, Any],
     prediction_wet: dict[str, Any] | None = None,
     tyre_compounds: dict[str, Any] | None = None,
+    track_record: dict[str, Any] | None = None,
 ) -> str:
     target = str(prediction.get("prediction_target") or race_config.get("prediction_target") or "race")
     target_theme = "quali" if target in QUALIFYING_TARGETS else "race"
@@ -956,6 +994,8 @@ def render_page(
       <section class="timeline-grid">{weekend_timeline}</section>
 
       {compounds_html}
+
+      {track_record_html(track_record)}
     </main>
 {script_html}
   </body>
@@ -1012,7 +1052,15 @@ def main() -> int:
         season = int(to_float(prediction.get("season"), to_float(race_config.get("season"), 0)))
         race_name = str(prediction.get("race") or race_config.get("race") or "")
         tyre_compounds = load_tyre_compounds(Path(args.tyres_input), season, race_name) if season > 0 and race_name else None
-        rendered = render_page(prediction, race_config, prediction_wet=prediction_wet, tyre_compounds=tyre_compounds)
+        track_record_path = Path(args.track_record)
+        track_record = load_json(track_record_path) if track_record_path.exists() else None
+        rendered = render_page(
+            prediction,
+            race_config,
+            prediction_wet=prediction_wet,
+            tyre_compounds=tyre_compounds,
+            track_record=track_record if isinstance(track_record, dict) else None,
+        )
         output_path = Path(args.output)
         output_path.parent.mkdir(parents=True, exist_ok=True)
         output_path.write_text(rendered, encoding="utf-8")

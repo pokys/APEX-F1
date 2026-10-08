@@ -118,3 +118,16 @@ def test_qualifying_probabilities_are_scaled_consistently() -> None:
         assert row["front_row_probability"] <= row["top10_probability"] + 1e-9
     assert abs(sum(row["pole_probability"] for row in rows) - 1.0) < 1e-6
     assert abs(sum(row["front_row_probability"] for row in rows) - 2.0) < 1e-6
+
+
+def test_standings_blend_mixes_whole_outcomes_consistently() -> None:
+    from pipeline.simulate_target_prediction import run_qualifying_prediction
+
+    entries = [_entry("FAST", rating=90.0), _entry("SLOW", rating=10.0)]
+    standings = {"FAST": 0.2, "SLOW": 0.8}
+    config = {"seed": 1, "simulations": 6000, "standings_blend_qualifying": 0.5, "track": {"qualifying_noise": 1.0}}
+    rows = {row["name"]: row for row in run_qualifying_prediction(entries, config, {}, {}, {}, standings)["drivers"]}
+    # Model gives FAST pole ~always; standings model gives SLOW 80 %.
+    assert abs(rows["SLOW"]["pole_probability"] - 0.4) < 0.03
+    # Half model (always 2nd), half standings (1st with 0.8): 0.5*2 + 0.5*1.2.
+    assert abs(rows["SLOW"]["expected_position"] - 1.6) < 0.03

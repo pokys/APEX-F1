@@ -52,6 +52,22 @@ def season_from_backtest_filename(path: Path) -> int | None:
     return int(match.group(1))
 
 
+# A season report needs this many evaluated races before it is preferred
+# over the previous season's (larger) report.
+MIN_RACES_FOR_SEASON_REPORT = 8
+
+
+def report_race_count(path: Path) -> int:
+    try:
+        payload = load_json(path)
+    except Exception:
+        return 0
+    try:
+        return int(payload.get("races_evaluated") or 0)
+    except (TypeError, ValueError, AttributeError):
+        return 0
+
+
 def choose_backtest_file(backtest_dir: Path, season: int | None) -> Path | None:
     if not backtest_dir.exists():
         return None
@@ -61,6 +77,15 @@ def choose_backtest_file(backtest_dir: Path, season: int | None) -> Path | None:
 
     if season is not None:
         preferred = backtest_dir / f"backtest_season_{season}.json"
+        if preferred.exists() and report_race_count(preferred) >= MIN_RACES_FOR_SEASON_REPORT:
+            return preferred
+        older = sorted(
+            (p for p in candidates if (season_from_backtest_filename(p) or 0) < season),
+            key=lambda p: season_from_backtest_filename(p) or -1,
+            reverse=True,
+        )
+        if older:
+            return older[0]
         if preferred.exists():
             return preferred
 
@@ -99,6 +124,38 @@ def load_or_default_race_config(path: Path) -> dict[str, Any]:
     return merged
 
 
+CALIBRATION_KEYS = {
+    # summary key -> (config key, lower bound, upper bound)
+    "recommended_qualifying_noise_scale": ("qualifying_noise_scale", 0.25, 24.0),
+    "recommended_race_noise_scale": ("race_noise_scale", 0.25, 24.0),
+    "recommended_standings_blend_qualifying": ("standings_blend_qualifying", 0.0, 1.0),
+    "recommended_standings_blend_race": ("standings_blend_race", 0.0, 1.0),
+}
+
+
+def apply_calibration(config: dict[str, Any], summary: dict[str, Any], args: argparse.Namespace) -> dict[str, float]:
+    """Copy calibrated noise scales and standings blends into the race
+    config. Reports from before the noise-scale calibration only carry
+    temperatures, which the simulation treats as noise scales."""
+    applied: dict[str, float] = {}
+    for summary_key, (config_key, lo, hi) in CALIBRATION_KEYS.items():
+        value = summary.get(summary_key)
+        if isinstance(value, (int, float)) and not isinstance(value, bool):
+            applied[config_key] = round(clamp(float(value), lo, hi), 6)
+    if applied:
+        config.pop("win_temperature", None)
+        config.pop("qualifying_temperature", None)
+    else:
+        win = summary.get("recommended_win_temperature")
+        qualifying = summary.get("recommended_qualifying_temperature")
+        if isinstance(win, (int, float)):
+            applied["win_temperature"] = round(clamp(float(win), args.min_temp, args.max_temp), 6)
+        if isinstance(qualifying, (int, float)):
+            applied["qualifying_temperature"] = round(clamp(float(qualifying), args.min_qualifying_temp, args.max_qualifying_temp), 6)
+    config.update(applied)
+    return applied
+
+
 def main() -> int:
     args = parse_args()
     logging.basicConfig(
@@ -121,19 +178,11 @@ def main() -> int:
         summary = report.get("summary")
         if not isinstance(summary, dict):
             raise ValueError(f"Backtest report missing summary: {backtest_path}")
-        recommended = summary.get("recommended_win_temperature")
-        if not isinstance(recommended, (int, float)):
-            raise ValueError(f"Backtest report missing numeric recommended_win_temperature: {backtest_path}")
-        recommended_qualifying = summary.get("recommended_qualifying_temperature")
-
-        win_temp = round(clamp(float(recommended), args.min_temp, args.max_temp), 6)
         race_config_path = Path(args.race_config)
         config = load_or_default_race_config(race_config_path)
-        config["win_temperature"] = win_temp
-        qualifying_temp = None
-        if isinstance(recommended_qualifying, (int, float)):
-            qualifying_temp = round(clamp(float(recommended_qualifying), args.min_qualifying_temp, args.max_qualifying_temp), 6)
-            config["qualifying_temperature"] = qualifying_temp
+        applied = apply_calibration(config, summary, args)
+        if not applied:
+            raise ValueError(f"Backtest report has no usable calibration: {backtest_path}")
         config["calibration_source"] = str(backtest_path.as_posix())
         config["calibration_season"] = int(report.get("season", args.season or 0))
 
@@ -146,10 +195,7 @@ def main() -> int:
         LOGGER.error("apply_backtest_calibration failed: %s", exc)
         return 1
 
-    if qualifying_temp is None:
-        LOGGER.info("Applied win_temperature=%s from %s", win_temp, backtest_path)
-    else:
-        LOGGER.info("Applied win_temperature=%s and qualifying_temperature=%s from %s", win_temp, qualifying_temp, backtest_path)
+    LOGGER.info("Applied calibration %s from %s", applied, backtest_path)
     return 0
 
 

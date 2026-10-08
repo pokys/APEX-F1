@@ -971,6 +971,54 @@ def current_season_blend_weight(max_starts: float) -> float:
     return 1.0
 
 
+def max_effective_starts(features: dict[str, Any]) -> float:
+    """Largest recency-weighted effective sample (Kish ESS) of race starts,
+    falling back to plain starts for older feature files."""
+    best = 0.0
+    for row in features.get("drivers", []):
+        if not isinstance(row, dict):
+            continue
+        ess = safe_float(row.get("race_effective_starts"))
+        if ess is None:
+            ess = safe_float(row.get("starts")) or 0.0
+        best = max(best, ess)
+    return best
+
+
+def blend_with_previous_season(features: dict[str, Any], previous_features: dict[str, Any] | None) -> tuple[dict[str, Any], str]:
+    """Early in a season (< 5 effective starts) blend in the previous
+    season's features. Shared by production ratings and the backtest so both
+    build models the same way. Returns (features, source_summary)."""
+    season = features.get("season")
+    starts = max_effective_starts(features)
+    if 0 < starts < 5 and previous_features:
+        weight = current_season_blend_weight(starts)
+        prev_season = previous_features.get("season", (season or 1) - 1)
+        blended = blend_features(features, previous_features, weight)
+        return blended, f"Blended Data: {int(weight * 100)}% Season {season}, {int((1 - weight) * 100)}% Season {prev_season}"
+    if starts >= 5:
+        return features, f"Full Season {season} Data"
+    return features, f"Season {season} data"
+
+
+def build_rating_models(
+    features: dict[str, Any],
+    active_drivers: dict[str, str],
+    active_teams: list[str],
+    signals: list[dict[str, Any]],
+    guardrails: dict[str, Any],
+    metadata: dict[str, Any],
+) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any], dict[str, Any]]:
+    """Driver, team, strategy and reliability models from features. The one
+    code path used by update_ratings and backtest_simulation."""
+    wet_by_team, safety_by_team, penalties_by_team = aggregate_optional_signal_indexes(signals, guardrails=guardrails)
+    drivers = {**metadata, **compute_driver_ratings(features, wet_by_team, active_drivers)}
+    teams = {**metadata, **compute_team_ratings(features, active_teams)}
+    strategy = {**metadata, **compute_strategy_scores(features, safety_by_team, active_teams)}
+    reliability = {**metadata, **compute_reliability_scores(features, penalties_by_team, active_teams)}
+    return drivers, teams, strategy, reliability
+
+
 def main() -> int:
     args = parse_args()
     logging.basicConfig(
@@ -992,34 +1040,12 @@ def main() -> int:
         season = int(features.get("season"))
         target_season = args.season if args.season is not None else season
 
-        # SYSTEMIC FIX: Early season blending
-        source_summary = f"Season {season} data"
-        # 1. Determine the effective sample size of the current season.
-        #    Prefer race_effective_starts (recency-weighted ESS produced by
-        #    build_features) so a stale 5-race season counts less than a
-        #    fresh 5-race season. Fall back to integer starts when ESS
-        #    is missing for backward compatibility with old features files.
-        max_starts = 0.0
-        for dr in features.get("drivers", []):
-            ess = safe_float(dr.get("race_effective_starts"))
-            if ess is None:
-                ess = safe_float(dr.get("starts")) or 0.0
-            if ess > max_starts:
-                max_starts = ess
-
-        # 2. If it's early (e.g. < 5 races), try to load previous season for blending
-        if 0 < max_starts < 5 and target_season == season:
-            prev_season = season - 1
-            prev_path = Path(args.features_input) / f"features_season_{prev_season}.json"
-            if prev_path.exists():
-                previous_features = load_json(prev_path)
-                weight = current_season_blend_weight(max_starts)
-                LOGGER.info("Blending features: season %s (weight %.1f) + season %s (weight %.1f)", 
-                            season, weight, prev_season, 1.0 - weight)
-                features = blend_features(features, previous_features, weight)
-                source_summary = f"Blended Data: {int(weight*100)}% Season {season}, {int((1-weight)*100)}% Season {prev_season}"
-        elif max_starts >= 5:
-            source_summary = f"Full Season {season} Data"
+        previous_features = None
+        prev_path = Path(args.features_input) / f"features_season_{season - 1}.json"
+        if target_season == season and prev_path.exists():
+            previous_features = load_json(prev_path)
+        features, source_summary = blend_with_previous_season(features, previous_features)
+        LOGGER.info("Rating inputs: %s", source_summary)
 
         # Load master list of active drivers/teams from the current season snapshot
         active_drivers, active_teams = load_current_entry_list(Path("data/raw/fastf1"), target_season)
@@ -1032,12 +1058,6 @@ def main() -> int:
 
         signals = load_signals(Path(args.signals_dir))
         guardrails = load_signal_guardrails(Path(args.guardrails_config))
-        wet_by_team, safety_by_team, penalties_by_team = aggregate_optional_signal_indexes(signals, guardrails=guardrails)
-
-        drivers = compute_driver_ratings(features, wet_by_team, active_drivers)
-        teams = compute_team_ratings(features, active_teams)
-        strategy = compute_strategy_scores(features, safety_by_team, active_teams)
-        reliability = compute_reliability_scores(features, penalties_by_team, active_teams)
 
         metadata = {
             "season": season,
@@ -1045,6 +1065,9 @@ def main() -> int:
             "source_summary": source_summary,
             "inputs_hash": stable_hash_json({"features": features, "signals": signals}),
         }
+        drivers, teams, strategy, reliability = build_rating_models(
+            features, active_drivers, active_teams, signals, guardrails, metadata={}
+        )
 
         models_dir = Path(args.models_dir)
         models_dir.mkdir(parents=True, exist_ok=True)

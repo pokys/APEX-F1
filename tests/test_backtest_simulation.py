@@ -83,3 +83,11 @@ def test_event_config_does_not_inherit_live_gp_parameters() -> None:
     assert cfg["overtaking_difficulty"] == 0.5
     assert "qualifying_noise_scale" not in cfg
     assert "fixed_grid" not in cfg
+
+
+def test_baseline_favourite_is_standings_leader() -> None:
+    from pipeline.backtest_simulation import baseline_favourite
+
+    assert baseline_favourite({"VER": 0.2, "NOR": 0.5, "LEC": 0.3}, "NOR") == {"baseline_favourite": "NOR", "baseline_hit": True}
+    assert baseline_favourite({"VER": 0.2, "NOR": 0.5}, "VER")["baseline_hit"] is False
+    assert baseline_favourite({}, "VER") == {}

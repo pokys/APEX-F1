@@ -1151,6 +1151,8 @@ def render_page(
       .delta-up {{ color: #3ddc84; }}
       .delta-down {{ color: #ff6b6b; }}
       .delta-flat {{ color: var(--muted); }}
+      .chip-link {{ color: var(--ink); text-decoration: none; border-color: rgba(76, 154, 255, 0.6); }}
+      .chip-link:hover {{ background: rgba(76, 154, 255, 0.15); }}
       .penalty-badge {{
         display: inline-block;
         margin-left: 6px;
@@ -1271,6 +1273,7 @@ def render_page(
         <div class="meta-strip">
           <span class="chip">Generated: {generated_at}</span>
           <span class="chip">{html.escape(signals_chip(signal_count))}</span>
+          <a class="chip chip-link" href="accuracy.html">How accurate is it? &rarr;</a>
         </div>
         <section class="explain-card">
           <h2>Why This Is Active Now</h2>

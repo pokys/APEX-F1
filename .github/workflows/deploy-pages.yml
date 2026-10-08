@@ -7,6 +7,7 @@ on:
       - main
     paths:
       - "outputs/prediction_report.html"
+      - "outputs/accuracy.html"
       - "outputs/prediction.json"
       - "outputs/prediction_dry.json"
       - "outputs/prediction_wet.json"
@@ -53,6 +54,9 @@ jobs:
           cp outputs/prediction_report.html _site/index.html
           cp outputs/prediction_report.html _site/prediction_report.html
 
+          if [ -f outputs/accuracy.html ]; then
+            cp outputs/accuracy.html _site/accuracy.html
+          fi
           if [ -f outputs/prediction.json ]; then
             cp outputs/prediction.json _site/prediction.json
           fi

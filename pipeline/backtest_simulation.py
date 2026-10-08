@@ -343,6 +343,16 @@ def repeat_baseline(names: list[str], previous: str | None) -> dict[str, float]:
     return {name: (BASELINE_REPEAT_MASS if name == previous else rest) for name in names}
 
 
+def baseline_favourite(distribution: dict[str, float], actual: str) -> dict[str, Any]:
+    """Favourite of the championship-order baseline (the current standings
+    leader) and whether it was right; shown next to the model on the
+    accuracy page."""
+    if not distribution:
+        return {}
+    favourite = max(distribution, key=lambda name: (distribution[name], name))
+    return {"baseline_favourite": favourite, "baseline_hit": favourite == actual}
+
+
 def championship_points(events: list[dict[str, Any]]) -> dict[str, float]:
     return championship_points_before({"events": events}, None)
 
@@ -621,6 +631,7 @@ def main() -> int:
                 "actual_pole": case["pole"],
                 "predicted_pole": predicted,
                 "pole_hit": predicted == case["pole"],
+                **baseline_favourite(case["pole_baselines"]["championship_order"], case["pole"]),
                 "pole_log_loss": round(log_loss(probs, case["pole"]), 6),
                 "model_only_log_loss": round(log_loss(model_probs, case["pole"]), 6),
                 "baseline_log_loss": {name: round(log_loss(dist, case["pole"]), 6) for name, dist in case["pole_baselines"].items()},
@@ -658,6 +669,7 @@ def main() -> int:
                 "actual_winner": case["winner"],
                 "predicted_winner": predicted,
                 "winner_hit": predicted == case["winner"],
+                **baseline_favourite(case["win_baselines"]["championship_order"], case["winner"]),
                 "podium_overlap": len(predicted_podium.intersection(case["podium"])),
                 "brier_win": round(score_brier(probs, {case["winner"]}), 6),
                 "brier_podium": round(score_brier(podium_prob, case["podium"]), 6),
@@ -684,6 +696,8 @@ def main() -> int:
         "mean_winner_log_loss": round(mean(raw_win_losses), 6),
         "calibrated_win_log_loss": round(calibrated_win, 6),
         "pole_accuracy": round(mean([1.0 if r["pole_hit"] else 0.0 for r in per_qualifying]), 6),
+        "baseline_winner_accuracy": round(mean([1.0 if r.get("baseline_hit") else 0.0 for r in per_race]), 6),
+        "baseline_pole_accuracy": round(mean([1.0 if r.get("baseline_hit") else 0.0 for r in per_qualifying]), 6),
         "mean_pole_log_loss": round(mean(raw_pole_losses), 6),
         "calibrated_pole_log_loss": round(calibrated_pole, 6),
         "win_ece_10_bins": round(expected_calibration_error(winner_conf_outcomes), 6),

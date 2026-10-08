@@ -121,7 +121,8 @@ Kanonické výstupy jsou:
 12. [`pipeline/publish_prediction.py`](pipeline/publish_prediction.py) zapíše finální kanonický JSON.
 13. [`pipeline/prediction_history.py`](pipeline/prediction_history.py) uloží headline pravděpodobnosti aktuální fáze víkendu (cíl + odjeté session) do `outputs/prediction_history.json`.
 14. [`pipeline/render_prediction_page.py`](pipeline/render_prediction_page.py) vygeneruje HTML dashboard (pruhy pravděpodobností, timeline víkendu v lokálním čase s odpočtem, ▲▼ změny proti stavu před poslední session, riziko deště a doporučený suchý/mokrý scénář).
-15. [`pipeline/validate_outputs.py`](pipeline/validate_outputs.py) ověří matematickou konzistenci výstupů.
+15. [`pipeline/render_accuracy_page.py`](pipeline/render_accuracy_page.py) vygeneruje stránku `accuracy.html` (odkaz z dashboardu): úspěšnost modelu v backtestu sezony a živých predikcí, porovnaná s jednoduchým odhadem „rozhoduje pořadí šampionátu“.
+16. [`pipeline/validate_outputs.py`](pipeline/validate_outputs.py) ověří matematickou konzistenci výstupů.
 
 ## Backtest a kalibrace
 

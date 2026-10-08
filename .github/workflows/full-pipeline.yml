@@ -201,6 +201,7 @@ jobs:
       - name: Render prediction page
         run: |
           python pipeline/render_prediction_page.py --prediction outputs/prediction.json --prediction-dry outputs/prediction_dry.json --prediction-wet outputs/prediction_wet.json --race-config config/race_config.json --tyres-input data/raw/tyres --output outputs/prediction_report.html --allow-missing-input --log-level INFO
+          python pipeline/render_accuracy_page.py --log-level INFO
 
       - name: Validate outputs
         run: |
@@ -220,6 +221,7 @@ jobs:
             outputs/prediction_dry.json \
             outputs/prediction_wet.json \
             outputs/prediction_report.html \
+            outputs/accuracy.html \
             outputs/archive \
             outputs/track_record.json \
             outputs/prediction_history.json \

@@ -307,16 +307,21 @@ def render(backtest: dict[str, Any] | None, track_record: dict[str, Any] | None,
 def main() -> int:
     args = parse_args()
     logging.basicConfig(level=getattr(logging, args.log_level), format="%(asctime)s | %(levelname)s | %(message)s")
-    config_path = Path(args.race_config)
-    config = load_json(config_path) if config_path.exists() else {}
-    season = config.get("season")
-    backtest_path = Path(args.backtest_dir) / f"backtest_season_{season}.json"
-    backtest = load_json(backtest_path) if backtest_path.exists() else None
-    track_path = Path(args.track_record)
-    track_record = load_json(track_path) if track_path.exists() else None
-    output = Path(args.output)
-    output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(render(backtest, track_record, season), encoding="utf-8")
+    try:
+        config_path = Path(args.race_config)
+        config = load_json(config_path) if config_path.exists() else {}
+        season = config.get("season")
+        backtest_path = Path(args.backtest_dir) / f"backtest_season_{season}.json"
+        backtest = load_json(backtest_path) if backtest_path.exists() else None
+        track_path = Path(args.track_record)
+        track_record = load_json(track_path) if track_path.exists() else None
+        output = Path(args.output)
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(render(backtest, track_record, season), encoding="utf-8")
+    except Exception as exc:
+        # The accuracy page is secondary; never block the prediction pipeline.
+        LOGGER.warning("Accuracy page skipped: %s", exc)
+        return 0
     LOGGER.info("Wrote accuracy page: %s", output)
     return 0
 

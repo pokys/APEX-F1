@@ -56,3 +56,13 @@ def test_page_without_baseline_fields_or_backtest() -> None:
         del row["baseline_favourite"], row["baseline_hit"]
     assert "Championship leader as favourite" not in acc.render(data, None, 2026)
     assert "No evaluated event yet" in acc.render(None, None, 2026)
+
+
+def test_main_never_fails_the_pipeline(tmp_path, monkeypatch) -> None:
+    import sys
+
+    (tmp_path / "race_config.json").write_text('{"season": 2026}')
+    (tmp_path / "backtest_season_2026.json").write_text("not json")
+    monkeypatch.setattr(sys, "argv", ["x", "--race-config", str(tmp_path / "race_config.json"), "--backtest-dir", str(tmp_path),
+                                      "--output", str(tmp_path / "accuracy.html")])
+    assert acc.main() == 0

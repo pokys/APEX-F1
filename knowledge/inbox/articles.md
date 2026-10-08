@@ -158,3 +158,6 @@
 - [ ] Spotlight: Formula E’s chief executive says he can’t sit through a Formula 1 race | Briefs (https://www.racefans.net/2026/10/07/spotlight-formula-es-chief-executive-says-he-cant-sit-through-a-formula-1-race/)
 - [ ] The under-reported factor in Red Bull's F1 surge (https://www.the-race.com/formula-1/under-reported-factor-in-red-bull-f1-surge/)
 - [ ] Toto Wolff confirms George Russell engine penalty for Singapore GP: "Particularly frustrating" (https://www.motorsport.com/f1/news/toto-wolff-confirms-george-russell-engine-penalty-for-singapore-gp-particularly-frustrating/10862664/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+
+## 2026-10-08
+- [ ] Our verdict on MotoGP's huge 2027 qualifying revamp (https://www.the-race.com/motogp/our-verdict-on-motogps-huge-2027-qualifying-revamp/)

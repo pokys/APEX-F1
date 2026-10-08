@@ -1,15 +1,5 @@
 {
-  "data_freshness": {
-    "days_since_latest_event": 4,
-    "days_until_next_race": 3,
-    "is_stale": false,
-    "latest_completed_date": "2026-10-04",
-    "latest_completed_event": "Bahrain Grand Prix",
-    "next_race_date": "2026-10-11",
-    "reference_date": "2026-10-08",
-    "stale_threshold_days": 21.0
-  },
-  "deterministic_run_id": "c608b1ccbf317c74278a",
+  "archived_at": "2026-10-08T05:05:05+00:00",
   "drivers": [
     {
       "driver_share": 46.9,
@@ -254,45 +244,11 @@
       "weekend_form_delta": 0.0
     }
   ],
-  "generated_at": "2026-10-08T05:05:04Z",
-  "inputs_used": [
-    {
-      "source": "history_driver",
-      "source_key": "history_driver",
-      "weight": 0.666667
-    },
-    {
-      "source": "history_team",
-      "source_key": "history_team",
-      "weight": 0.333333
-    }
-  ],
-  "integrity": {
-    "driver_ratings_hash": "59c500cc0f83",
-    "race_config_hash": "e88bb43c071c",
-    "team_ratings_hash": "a33ffde31d69"
-  },
   "prediction_target": "sprint_qualifying",
-  "prediction_target_label": "Sprint Qualifying",
   "race": "Singapore Grand Prix",
-  "season_blend": {
-    "current_season": 2026,
-    "current_weight": 100,
-    "previous_season": 2025,
-    "previous_weight": 0,
-    "summary": "100% Season 2026"
-  },
-  "simulation": {
-    "available_sessions": [],
-    "grid_source": "simulation",
-    "qualifying_noise": 4.4,
-    "qualifying_noise_scale": 2.0,
-    "seed": 202617,
-    "simulations": 6000,
-    "standings_blend": 0.5,
-    "weather": "dry"
-  },
-  "target_output_type": "qualifying",
-  "target_session_code": "SQ",
-  "weekend_format": "sprint"
+  "round": 17,
+  "season": 2026,
+  "session_code": "SQ",
+  "session_start": "2026-10-09T12:30:00+00:00",
+  "target_output_type": "qualifying"
 }

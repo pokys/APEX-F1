@@ -415,12 +415,79 @@ def load_current_entry_list(raw_dir: Path, season: int) -> tuple[dict[str, str],
     return mapping, teams
 
 
+def component(value: float) -> float:
+    """Every rating component lives on a 0-100 scale."""
+    return round(clamp(value, 0.0, 100.0), 6)
+
+
+def weighted_component_mean(parts: list[tuple[float | None, float]], fallback: float = 50.0) -> float:
+    """Weighted mean over the components that have a real input. Missing
+    inputs are dropped and the remaining weights renormalised, instead of
+    being replaced by a constant that is identical for every driver/team."""
+    total = 0.0
+    weight_sum = 0.0
+    for value, weight in parts:
+        if value is None or weight <= 0:
+            continue
+        total += weight * value
+        weight_sum += weight
+    if weight_sum <= 0:
+        return fallback
+    return total / weight_sum
+
+
+def percentile(values: list[float], q: float) -> float | None:
+    data = sorted(v for v in values if v is not None)
+    if not data:
+        return None
+    if len(data) == 1:
+        return data[0]
+    pos = clamp(q, 0.0, 1.0) * (len(data) - 1)
+    lo = int(math.floor(pos))
+    hi = int(math.ceil(pos))
+    return data[lo] + (data[hi] - data[lo]) * (pos - lo)
+
+
+def linear_fit(points: list[tuple[float, float]]) -> tuple[float, float] | None:
+    """Least squares y = a + b*x. None when x has no spread."""
+    if len(points) < 2:
+        return None
+    mean_x = statistics.fmean(x for x, _ in points)
+    mean_y = statistics.fmean(y for _, y in points)
+    var_x = sum((x - mean_x) ** 2 for x, _ in points)
+    if var_x <= 1e-9:
+        return None
+    slope = sum((x - mean_x) * (y - mean_y) for x, y in points) / var_x
+    return mean_y - slope * mean_x, slope
+
+
+def race_position_gain_by_team(rows: list[dict[str, Any]]) -> dict[str, float]:
+    """Places gained from qualifying to the race, relative to what the field
+    trend predicts for that qualifying position. Raw (q_avg - race_avg)
+    punishes front-runners, who cannot gain places, so the regression
+    residual is used instead. Positive = better than expected in races."""
+    points: dict[str, tuple[float, float]] = {}
+    for row in rows:
+        if not isinstance(row, dict):
+            continue
+        q_avg = safe_float(row.get("qualifying_avg_position"))
+        race_avg = safe_float(row.get("race_avg_position"))
+        team = str(row.get("team") or "").strip()
+        if team and q_avg is not None and race_avg is not None:
+            points[team] = (q_avg, race_avg)
+    fit = linear_fit(list(points.values()))
+    out: dict[str, float] = {}
+    for team, (q_avg, race_avg) in points.items():
+        expected = fit[0] + fit[1] * q_avg if fit else q_avg
+        out[team] = round(expected - race_avg, 6)
+    return out
+
+
 def compute_driver_ratings(features: dict[str, Any], wet_by_team: dict[str, float], active_drivers: dict[str, str]) -> dict[str, Any]:
     rows = features.get("drivers", [])
     if not isinstance(rows, list):
         rows = []
 
-    # Map existing feature data for quick lookup
     feature_map = {str(row.get("driver") or "").strip().upper(): row for row in rows if isinstance(row, dict)}
 
     # Teammate deltas based on average race position.
@@ -430,7 +497,6 @@ def compute_driver_ratings(features: dict[str, Any], wet_by_team: dict[str, floa
             continue
         team_key = slug(str(row.get("team") or ""))
         driver_name = str(row.get("driver") or "").strip().upper()
-        # Only include in teammate delta calculation if they are in the feature set
         race_avg = safe_float(row.get("race_avg_position"))
         if not team_key or not driver_name or race_avg is None:
             continue
@@ -439,18 +505,18 @@ def compute_driver_ratings(features: dict[str, Any], wet_by_team: dict[str, floa
     teammate_delta: dict[str, float] = {}
     for team_key, pairs in by_team.items():
         if len(pairs) < 2:
-            for driver_name, _ in pairs:
-                teammate_delta[driver_name] = 0.0
             continue
         team_mean = statistics.fmean(v for _, v in pairs)
         for driver_name, race_avg in pairs:
             teammate_delta[driver_name] = round(team_mean - race_avg, 6)
 
-    payload_rows: list[dict[str, Any]] = []
-    # Use active_drivers as the master list
+    rated: dict[str, dict[str, Any]] = {}
+    rookies: list[tuple[str, str]] = []
     for driver_name, team_name in sorted(active_drivers.items()):
-        team_key = slug(team_name)
-        row = feature_map.get(driver_name, {})
+        row = feature_map.get(driver_name)
+        if row is None:
+            rookies.append((driver_name, team_name))
+            continue
 
         race_avg = safe_float(row.get("race_avg_position"))
         race_gap = safe_float(row.get("race_gap_to_winner_seconds"))
@@ -464,89 +530,118 @@ def compute_driver_ratings(features: dict[str, Any], wet_by_team: dict[str, floa
         sprint_q_gap_ms = safe_float(row.get("sprint_qualifying_gap_to_best_ms"))
         sprint_lap_gap = safe_float(row.get("sprint_lap_pace_gap_seconds"))
         q_phase = safe_float(row.get("qualifying_phase_depth"))
-        sprint_q_phase = safe_float(row.get("sprint_qualifying_phase_depth"))
         dnf_rate = safe_float(row.get("dnf_rate"))
         starts = safe_float(row.get("starts")) or 0.0
         recent_race_form = safe_float(row.get("race_form_last3"))
         signal_conf = safe_float(row.get("signal_driver_confidence_delta")) or 0.0
 
-        # Baseline for rookies or missing data
-        t_delta = teammate_delta.get(driver_name, 0.0)
         sample_scale = clamp(starts / 5.0, 0.0, 1.0)
-        teammate_component = 50.0 + 14.0 * clamp(t_delta, -2.0, 2.0) * sample_scale
-        consistency_component = 75.0 - 40.0 * clamp((dnf_rate if dnf_rate is not None else 0.15), 0.0, 1.0)
-        wet_index = wet_by_team.get(team_key, 0.5)
-        wet_component = 35.0 + 30.0 * clamp(wet_index, 0.0, 1.0)
-        base_quali_component = 80.0 - 2.8 * clamp((q_avg if q_avg is not None else 12.0), 1.0, 20.0)
-        q_gap_component = 86.0 - 0.030 * clamp((q_gap_ms if q_gap_ms is not None else 1200.0), 0.0, 2400.0)
-        teammate_q_gap_component = 50.0 - 0.050 * clamp((teammate_q_gap_ms if teammate_q_gap_ms is not None else 0.0), -600.0, 600.0)
-        race_form_component = 82.0 - 2.6 * clamp((recent_race_form if recent_race_form is not None else (race_avg if race_avg is not None else 12.0)), 1.0, 20.0)
+        t_delta = teammate_delta.get(driver_name)
+        teammate_component = component(50.0 + 14.0 * clamp(t_delta, -2.0, 2.0) * sample_scale) if t_delta is not None else None
+        consistency_component = component(75.0 - 40.0 * clamp(dnf_rate, 0.0, 1.0)) if dnf_rate is not None else None
+        base_quali_component = component(80.0 - 2.8 * clamp(q_avg, 1.0, 20.0)) if q_avg is not None else None
+        q_gap_component = component(86.0 - 0.030 * clamp(q_gap_ms, 0.0, 2400.0)) if q_gap_ms is not None else None
+        # Gap to the faster teammate (>= 0): the faster driver scores 60.
+        teammate_q_gap_component = (
+            component(60.0 - 0.05 * clamp(teammate_q_gap_ms, 0.0, 800.0)) if teammate_q_gap_ms is not None else None
+        )
+        form_reference = recent_race_form if recent_race_form is not None else race_avg
+        race_form_component = component(82.0 - 2.6 * clamp(form_reference, 1.0, 20.0)) if form_reference is not None else None
         race_pace_reference = race_lap_gap if race_lap_gap is not None else race_gap
-        race_gap_component = 84.0 - 0.65 * clamp((race_pace_reference if race_pace_reference is not None else 45.0), 0.0, 90.0)
-        practice_component = 78.0 - 2.4 * clamp((practice_avg if practice_avg is not None else 12.0), 1.0, 20.0)
-        if practice_lap_gap is not None:
-            practice_component = 0.45 * practice_component + 0.55 * (82.0 - 4.0 * clamp(practice_lap_gap, 0.0, 12.0))
-        sprint_quali_component = 78.0 - 2.6 * clamp((sprint_q_avg if sprint_q_avg is not None else (q_avg if q_avg is not None else 12.0)), 1.0, 20.0)
-        sprint_q_gap_component = 84.0 - 0.030 * clamp((sprint_q_gap_ms if sprint_q_gap_ms is not None else (q_gap_ms if q_gap_ms is not None else 1200.0)), 0.0, 2400.0)
-        sprint_pace_component = 82.0 - 4.0 * clamp((sprint_lap_gap if sprint_lap_gap is not None else 6.0), 0.0, 12.0)
-        phase_score = q_phase if q_phase is not None else sprint_q_phase if sprint_q_phase is not None else 0.5
-        progression_component = 45.0 + 18.0 * clamp(phase_score, 0.0, 1.0)
-        qualifying_component = (
-            0.25 * base_quali_component
-            + 0.30 * q_gap_component
-            + 0.15 * teammate_q_gap_component
-            + 0.15 * practice_component
-            + 0.08 * sprint_quali_component
-            + 0.04 * sprint_q_gap_component
-            + 0.03 * progression_component
+        race_gap_component = component(84.0 - 0.65 * clamp(race_pace_reference, 0.0, 90.0)) if race_pace_reference is not None else None
+        practice_component = None
+        if practice_avg is not None or practice_lap_gap is not None:
+            practice_component = component(
+                weighted_component_mean(
+                    [
+                        (78.0 - 2.4 * clamp(practice_avg, 1.0, 20.0) if practice_avg is not None else None, 0.45),
+                        (82.0 - 4.0 * clamp(practice_lap_gap, 0.0, 12.0) if practice_lap_gap is not None else None, 0.55),
+                    ]
+                )
+            )
+        sprint_quali_component = component(78.0 - 2.6 * clamp(sprint_q_avg, 1.0, 20.0)) if sprint_q_avg is not None else None
+        sprint_q_gap_component = component(84.0 - 0.030 * clamp(sprint_q_gap_ms, 0.0, 2400.0)) if sprint_q_gap_ms is not None else None
+        sprint_pace_component = component(82.0 - 4.0 * clamp(sprint_lap_gap, 0.0, 12.0)) if sprint_lap_gap is not None else None
+        progression_component = component(45.0 + 18.0 * clamp(q_phase, 0.0, 1.0)) if q_phase is not None else None
+
+        qualifying_component = weighted_component_mean(
+            [
+                (base_quali_component, 0.25),
+                (q_gap_component, 0.30),
+                (teammate_q_gap_component, 0.15),
+                (practice_component, 0.15),
+                (sprint_quali_component, 0.08),
+                (sprint_q_gap_component, 0.04),
+                (progression_component, 0.03),
+            ]
         )
-        race_component = (
-            0.24 * race_form_component
-            + 0.24 * race_gap_component
-            + 0.18 * consistency_component
-            + 0.14 * teammate_component
-            + 0.07 * qualifying_component
-            + 0.03 * sprint_pace_component
-            + 0.10 * wet_component
-        )
-
-        # Small adjustment for rookies to not be absolute last if they show promise in signals
-        if driver_name not in feature_map:
-            # Default rookie rating baseline.
-            qualifying_rating = 68.0 + 5.0 * clamp(signal_conf, -1.0, 1.0)
-            race_rating = 66.0 + 5.0 * clamp(signal_conf, -1.0, 1.0)
-        else:
-            signal_component = 5.0 * clamp(signal_conf, -1.0, 1.0)
-            qualifying_rating = qualifying_component + signal_component
-            race_rating = race_component + signal_component
-
-        qualifying_rating = round(clamp(qualifying_rating, 0.0, 100.0), 6)
-        race_rating = round(clamp(race_rating, 0.0, 100.0), 6)
-        rating = round(clamp(0.45 * qualifying_rating + 0.55 * race_rating, 0.0, 100.0), 6)
-
-        payload_rows.append(
-            {
-                "driver": driver_name,
-                "team": team_name,
-                "driver_rating": rating,
-                "qualifying_rating": qualifying_rating,
-                "race_rating": race_rating,
-                "components": {
-                    "teammate_delta_performance": round(teammate_component, 6),
-                    "consistency": round(consistency_component, 6),
-                    "wet_performance_index": round(wet_component, 6),
-                    "qualifying_pace": round(qualifying_component, 6),
-                    "qualifying_gap_pace": round(q_gap_component, 6),
-                    "teammate_qualifying_gap": round(teammate_q_gap_component, 6),
-                    "recent_race_form": round(race_form_component, 6),
-                    "race_gap_pace": round(race_gap_component, 6),
-                    "sprint_lap_pace": round(sprint_pace_component, 6),
-                    "weekend_practice_pace": round(practice_component, 6),
-                    "qualifying_progression": round(progression_component, 6),
-                },
-            }
+        race_component = weighted_component_mean(
+            [
+                (race_form_component, 0.27),
+                (race_gap_component, 0.27),
+                (consistency_component, 0.18),
+                (teammate_component, 0.14),
+                (qualifying_component, 0.10),
+                (sprint_pace_component, 0.04),
+            ]
         )
 
+        signal_component = 5.0 * clamp(signal_conf, -1.0, 1.0)
+        qualifying_rating = round(clamp(qualifying_component + signal_component, 0.0, 100.0), 6)
+        race_rating = round(clamp(race_component + signal_component, 0.0, 100.0), 6)
+        components = {
+            "teammate_delta_performance": teammate_component,
+            "consistency": consistency_component,
+            "qualifying_pace": round(qualifying_component, 6),
+            "qualifying_gap_pace": q_gap_component,
+            "teammate_qualifying_gap": teammate_q_gap_component,
+            "recent_race_form": race_form_component,
+            "race_gap_pace": race_gap_component,
+            "sprint_lap_pace": sprint_pace_component,
+            "weekend_practice_pace": practice_component,
+            "qualifying_progression": progression_component,
+        }
+        rated[driver_name] = {
+            "driver": driver_name,
+            "team": team_name,
+            "qualifying_rating": qualifying_rating,
+            "race_rating": race_rating,
+            "components": {key: value for key, value in components.items() if value is not None},
+        }
+
+    # New drivers (e.g. a reserve driver called up): teammate level shifted
+    # by how far the field's 25th percentile sits below its median. Without
+    # a rated teammate, the field's 25th percentile itself.
+    for driver_name, team_name in rookies:
+        signal_conf = 0.0
+        row = feature_map.get(driver_name) or {}
+        signal_conf = safe_float(row.get("signal_driver_confidence_delta")) or 0.0
+        values: dict[str, float] = {}
+        for key in ("qualifying_rating", "race_rating"):
+            field = [entry[key] for entry in rated.values()]
+            p25 = percentile(field, 0.25)
+            median = percentile(field, 0.5)
+            mates = [entry[key] for entry in rated.values() if entry["team"] == team_name]
+            if p25 is None or median is None:
+                base = 50.0
+            elif mates:
+                base = statistics.fmean(mates) + (p25 - median)
+            else:
+                base = p25
+            values[key] = round(clamp(base + 5.0 * clamp(signal_conf, -1.0, 1.0), 0.0, 100.0), 6)
+        rated[driver_name] = {
+            "driver": driver_name,
+            "team": team_name,
+            "qualifying_rating": values["qualifying_rating"],
+            "race_rating": values["race_rating"],
+            "components": {"new_driver_baseline": True},
+        }
+
+    payload_rows: list[dict[str, Any]] = []
+    for driver_name in sorted(rated):
+        entry = rated[driver_name]
+        entry["driver_rating"] = round(clamp(0.45 * entry["qualifying_rating"] + 0.55 * entry["race_rating"], 0.0, 100.0), 6)
+        payload_rows.append(entry)
     return {"drivers": payload_rows}
 
 
@@ -556,6 +651,7 @@ def compute_team_ratings(features: dict[str, Any], active_teams: list[str]) -> d
         rows = []
 
     feature_map = {str(row.get("team") or "").strip(): row for row in rows if isinstance(row, dict)}
+    position_gain = race_position_gain_by_team(rows)
 
     q_values = [
         safe_float(row.get("qualifying_avg_position"))
@@ -564,9 +660,13 @@ def compute_team_ratings(features: dict[str, Any], active_teams: list[str]) -> d
     ]
     field_q_mean = statistics.fmean(q_values) if q_values else 10.5
 
-    payload_rows: list[dict[str, Any]] = []
+    rated: dict[str, dict[str, Any]] = {}
+    new_teams: list[str] = []
     for team_name in sorted(active_teams):
-        row = feature_map.get(team_name, {})
+        row = feature_map.get(team_name)
+        if row is None:
+            new_teams.append(team_name)
+            continue
 
         q_avg = safe_float(row.get("qualifying_avg_position"))
         q_gap_ms = safe_float(row.get("qualifying_gap_to_best_ms"))
@@ -582,68 +682,82 @@ def compute_team_ratings(features: dict[str, Any], active_teams: list[str]) -> d
         upgrade_score = safe_float(row.get("signal_upgrade_score"))
 
         q_inputs = [value for value in (q_avg, sprint_q_avg, practice_avg) if value is not None]
-        q_reference = statistics.fmean(q_inputs) if q_inputs else field_q_mean
-        q_gap_proxy = 50.0 + 7.0 * clamp(field_q_mean - q_reference, -6.0, 6.0)
-        quali_time_proxy = 86.0 - 0.026 * clamp((q_gap_ms if q_gap_ms is not None else 1200.0), 0.0, 2600.0)
-        sprint_quali_time_proxy = 84.0 - 0.026 * clamp((sprint_q_gap_ms if sprint_q_gap_ms is not None else (q_gap_ms if q_gap_ms is not None else 1200.0)), 0.0, 2600.0)
+        q_gap_proxy = component(50.0 + 7.0 * clamp(field_q_mean - statistics.fmean(q_inputs), -6.0, 6.0)) if q_inputs else None
+        quali_time_proxy = component(86.0 - 0.026 * clamp(q_gap_ms, 0.0, 2600.0)) if q_gap_ms is not None else None
+        sprint_quali_time_proxy = component(84.0 - 0.026 * clamp(sprint_q_gap_ms, 0.0, 2600.0)) if sprint_q_gap_ms is not None else None
         race_pace_reference = race_lap_gap if race_lap_gap is not None else race_gap
-        race_pace_proxy = 84.0 - 0.58 * clamp((race_pace_reference if race_pace_reference is not None else 45.0), 0.0, 90.0)
-        sprint_pace_proxy = 82.0 - 4.0 * clamp((sprint_lap_gap if sprint_lap_gap is not None else 6.0), 0.0, 12.0)
-        race_position_proxy = 82.0 - 2.4 * clamp((race_avg if race_avg is not None else 12.0), 1.0, 20.0)
-        sector_dominance = 52.0 + 5.5 * clamp((race_avg if race_avg is not None else 12.0) - (q_avg if q_avg is not None else 12.0), -6.0, 6.0)
-        upgrades_impact = 45.0 + 16.0 * clamp((upgrade_score if upgrade_score is not None else 1.0), 0.0, 3.0)
-        weekend_pace_proxy = 45.0 + 20.0 * clamp(1.0 - ((practice_avg if practice_avg is not None else 12.0) / 20.0), 0.0, 1.0)
-        if practice_lap_gap is not None:
-            weekend_pace_proxy = 0.45 * weekend_pace_proxy + 0.55 * (82.0 - 4.0 * clamp(practice_lap_gap, 0.0, 12.0))
-        progression_proxy = 40.0 + 20.0 * clamp((q_phase if q_phase is not None else 0.5), 0.0, 1.0)
-
-        if team_name not in feature_map:
-            # Baseline for new teams (e.g. Cadillac)
-            qualifying_rating = 55.0 + upgrades_impact * 0.1
-            race_rating = 55.0 + upgrades_impact * 0.1
-        else:
-            qualifying_rating = (
-                0.28 * q_gap_proxy
-                + 0.34 * quali_time_proxy
-                + 0.10 * sprint_quali_time_proxy
-                + 0.12 * upgrades_impact
-                + 0.08 * weekend_pace_proxy
-                + 0.08 * progression_proxy
+        race_pace_proxy = component(84.0 - 0.58 * clamp(race_pace_reference, 0.0, 90.0)) if race_pace_reference is not None else None
+        sprint_pace_proxy = component(82.0 - 4.0 * clamp(sprint_lap_gap, 0.0, 12.0)) if sprint_lap_gap is not None else None
+        race_position_proxy = component(82.0 - 2.4 * clamp(race_avg, 1.0, 20.0)) if race_avg is not None else None
+        gain = position_gain.get(team_name)
+        race_position_gain = component(50.0 + 6.0 * clamp(gain, -5.0, 5.0)) if gain is not None else None
+        upgrades_impact = component(45.0 + 16.0 * clamp(upgrade_score, 0.0, 3.0)) if upgrade_score is not None else None
+        weekend_pace_proxy = None
+        if practice_avg is not None or practice_lap_gap is not None:
+            weekend_pace_proxy = component(
+                weighted_component_mean(
+                    [
+                        (45.0 + 20.0 * clamp(1.0 - practice_avg / 20.0, 0.0, 1.0) if practice_avg is not None else None, 0.45),
+                        (82.0 - 4.0 * clamp(practice_lap_gap, 0.0, 12.0) if practice_lap_gap is not None else None, 0.55),
+                    ]
+                )
             )
-            race_rating = (
-                0.34 * race_pace_proxy
-                + 0.21 * race_position_proxy
-                + 0.14 * sector_dominance
-                + 0.03 * sprint_pace_proxy
-                + 0.14 * upgrades_impact
-                + 0.08 * weekend_pace_proxy
-                + 0.06 * qualifying_rating
-            )
+        progression_proxy = component(40.0 + 20.0 * clamp(q_phase, 0.0, 1.0)) if q_phase is not None else None
 
-        qualifying_rating = round(clamp(qualifying_rating, 0.0, 100.0), 6)
-        race_rating = round(clamp(race_rating, 0.0, 100.0), 6)
-        rating = 0.45 * qualifying_rating + 0.55 * race_rating
-        rating = round(clamp(rating, 0.0, 100.0), 6)
-
-        payload_rows.append(
-            {
-                "team": team_name,
-                "team_rating": rating,
-                "qualifying_team_rating": qualifying_rating,
-                "race_team_rating": race_rating,
-                "components": {
-                    "qualifying_gap_proxy": round(q_gap_proxy, 6),
-                    "qualifying_time_gap_proxy": round(quali_time_proxy, 6),
-                    "sector_dominance": round(sector_dominance, 6),
-                    "race_pace_proxy": round(race_pace_proxy, 6),
-                    "sprint_pace_proxy": round(sprint_pace_proxy, 6),
-                    "upgrades_impact": round(upgrades_impact, 6),
-                    "weekend_pace_proxy": round(weekend_pace_proxy, 6),
-                    "qualifying_progression": round(progression_proxy, 6),
-                },
-            }
+        qualifying_rating = weighted_component_mean(
+            [
+                (q_gap_proxy, 0.28),
+                (quali_time_proxy, 0.34),
+                (sprint_quali_time_proxy, 0.10),
+                (upgrades_impact, 0.12),
+                (weekend_pace_proxy, 0.08),
+                (progression_proxy, 0.08),
+            ]
         )
+        race_rating = weighted_component_mean(
+            [
+                (race_pace_proxy, 0.34),
+                (race_position_proxy, 0.21),
+                (race_position_gain, 0.14),
+                (sprint_pace_proxy, 0.03),
+                (upgrades_impact, 0.14),
+                (weekend_pace_proxy, 0.08),
+                (qualifying_rating, 0.06),
+            ]
+        )
+        components = {
+            "qualifying_gap_proxy": q_gap_proxy,
+            "qualifying_time_gap_proxy": quali_time_proxy,
+            "sprint_qualifying_time_gap_proxy": sprint_quali_time_proxy,
+            "race_position_gain": race_position_gain,
+            "race_pace_proxy": race_pace_proxy,
+            "race_position_proxy": race_position_proxy,
+            "sprint_pace_proxy": sprint_pace_proxy,
+            "upgrades_impact": upgrades_impact,
+            "weekend_pace_proxy": weekend_pace_proxy,
+            "qualifying_progression": progression_proxy,
+        }
+        rated[team_name] = {
+            "team": team_name,
+            "qualifying_team_rating": round(clamp(qualifying_rating, 0.0, 100.0), 6),
+            "race_team_rating": round(clamp(race_rating, 0.0, 100.0), 6),
+            "components": {key: value for key, value in components.items() if value is not None},
+        }
 
+    # A team without any data (new entrant) starts at the field's 25th
+    # percentile rather than above the median.
+    for team_name in new_teams:
+        values = {}
+        for key in ("qualifying_team_rating", "race_team_rating"):
+            p25 = percentile([entry[key] for entry in rated.values()], 0.25)
+            values[key] = round(p25 if p25 is not None else 50.0, 6)
+        rated[team_name] = {"team": team_name, **values, "components": {"new_team_baseline": True}}
+
+    payload_rows: list[dict[str, Any]] = []
+    for team_name in sorted(rated):
+        entry = rated[team_name]
+        entry["team_rating"] = round(clamp(0.45 * entry["qualifying_team_rating"] + 0.55 * entry["race_team_rating"], 0.0, 100.0), 6)
+        payload_rows.append(entry)
     return {"teams": payload_rows}
 
 
@@ -653,50 +767,54 @@ def compute_strategy_scores(features: dict[str, Any], safety_by_team: dict[str, 
         rows = []
 
     feature_map = {str(row.get("team") or "").strip(): row for row in rows if isinstance(row, dict)}
+    position_gain = race_position_gain_by_team(rows)
 
     payload_rows: list[dict[str, Any]] = []
     for team_name in sorted(active_teams):
         team_key = slug(team_name)
         row = feature_map.get(team_name, {})
 
-        q_avg = safe_float(row.get("qualifying_avg_position"))
-        race_avg = safe_float(row.get("race_avg_position"))
         sprint_q_avg = safe_float(row.get("sprint_qualifying_avg_position"))
         sprint_avg = safe_float(row.get("sprint_avg_position"))
-        starts = safe_float(row.get("starts")) or 0.0
-        points = safe_float(row.get("points_total")) or 0.0
+        gain = position_gain.get(team_name)
+        safety = safety_by_team.get(team_key)
 
-        delta = (q_avg if q_avg is not None else 12.0) - (race_avg if race_avg is not None else 12.0)
-        pit_stop_perf = 50.0 + 8.0 * clamp(delta, -5.0, 5.0)
-        strategic_history = 40.0 + 4.0 * clamp((points / max(starts, 1.0)), 0.0, 20.0)
-        safety_reaction = 40.0 + 40.0 * clamp(safety_by_team.get(team_key, 0.5), 0.0, 1.0)
-        sprint_execution = 50.0 + 9.0 * clamp(
-            (sprint_q_avg if sprint_q_avg is not None else 12.0) - (sprint_avg if sprint_avg is not None else (race_avg if race_avg is not None else 12.0)),
-            -5.0,
-            5.0,
-        )
-
-        if team_name not in feature_map:
-            score = 50.0 + 10.0 * clamp(safety_by_team.get(team_key, 0.5) - 0.5, -0.5, 0.5)
+        race_position_gain = component(50.0 + 8.0 * clamp(gain, -5.0, 5.0)) if gain is not None else None
+        safety_reaction = component(40.0 + 40.0 * clamp(safety, 0.0, 1.0)) if safety is not None else None
+        # Only real sprint qualifying vs sprint data says anything about
+        # sprint execution; otherwise stay neutral.
+        if sprint_q_avg is not None and sprint_avg is not None:
+            sprint_execution = component(50.0 + 9.0 * clamp(sprint_q_avg - sprint_avg, -5.0, 5.0))
         else:
-            score = 0.30 * pit_stop_perf + 0.35 * strategic_history + 0.20 * safety_reaction + 0.15 * sprint_execution
+            sprint_execution = 50.0
 
-        score = round(clamp(score, 0.0, 100.0), 6)
-
+        score = weighted_component_mean(
+            [
+                (race_position_gain, 0.60),
+                (safety_reaction, 0.20),
+                (sprint_execution, 0.20),
+            ]
+        )
+        components = {
+            "race_position_gain": race_position_gain,
+            "safety_car_reactions": safety_reaction,
+            "sprint_execution": sprint_execution,
+        }
         payload_rows.append(
             {
                 "team": team_name,
-                "strategy_score": score,
-                "components": {
-                    "pit_stop_performance": round(pit_stop_perf, 6),
-                    "strategic_success_history": round(strategic_history, 6),
-                    "safety_car_reactions": round(safety_reaction, 6),
-                    "sprint_execution": round(sprint_execution, 6),
-                },
+                "strategy_score": round(clamp(score, 0.0, 100.0), 6),
+                "components": {key: value for key, value in components.items() if value is not None},
             }
         )
 
     return {"teams": payload_rows}
+
+
+# Prior strength (in race starts) used to shrink a team's observed DNF rate
+# towards the field average.
+DNF_SHRINKAGE_STARTS = 8.0
+DNF_PROBABILITY_BOUNDS = (0.01, 0.45)
 
 
 def compute_reliability_scores(features: dict[str, Any], penalties_by_team: dict[str, float], active_teams: list[str]) -> dict[str, Any]:
@@ -706,35 +824,47 @@ def compute_reliability_scores(features: dict[str, Any], penalties_by_team: dict
 
     feature_map = {str(row.get("team") or "").strip(): row for row in rows if isinstance(row, dict)}
 
+    total_starts = 0.0
+    total_dnfs = 0.0
+    for row in feature_map.values():
+        starts = safe_float(row.get("starts")) or 0.0
+        dnf_rate = safe_float(row.get("dnf_rate"))
+        if starts > 0 and dnf_rate is not None:
+            total_starts += starts
+            total_dnfs += dnf_rate * starts
+    field_rate = total_dnfs / total_starts if total_starts > 0 else 0.1
+
     payload_rows: list[dict[str, Any]] = []
     for team_name in sorted(active_teams):
         team_key = slug(team_name)
         row = feature_map.get(team_name, {})
 
+        starts = safe_float(row.get("starts")) or 0.0
         dnf_rate = safe_float(row.get("dnf_rate"))
+        dnfs = (dnf_rate or 0.0) * starts
+        shrunk = (dnfs + DNF_SHRINKAGE_STARTS * field_rate) / (starts + DNF_SHRINKAGE_STARTS)
+
         signal_rel = safe_float(row.get("signal_reliability_concern"))
-        penalty_idx = penalties_by_team.get(team_key, 0.0)
+        penalty_idx = penalties_by_team.get(team_key)
+        adjustment = 0.0
+        if signal_rel is not None:
+            adjustment += 0.08 * clamp(signal_rel, 0.0, 1.0)
+        if penalty_idx is not None:
+            adjustment += 0.04 * clamp(penalty_idx, 0.0, 1.0)
 
-        dnf_component = 85.0 - 70.0 * clamp((dnf_rate if dnf_rate is not None else 0.1), 0.0, 1.0)
-        pu_component = 80.0 - 55.0 * clamp((signal_rel if signal_rel is not None else 0.2), 0.0, 1.0)
-        penalty_component = 85.0 - 45.0 * clamp(penalty_idx, 0.0, 1.0)
-
-        if team_name not in feature_map:
-            score = 70.0 - 20.0 * clamp(penalty_idx, 0.0, 1.0)
-        else:
-            score = 0.45 * dnf_component + 0.35 * pu_component + 0.20 * penalty_component
-
-        score = round(clamp(score, 0.0, 100.0), 6)
-
+        dnf_probability = clamp(shrunk + adjustment, *DNF_PROBABILITY_BOUNDS)
+        components = {
+            "observed_dnf_rate": round(dnf_rate, 6) if dnf_rate is not None else None,
+            "field_dnf_rate": round(field_rate, 6),
+            "starts": starts,
+            "signal_adjustment": round(adjustment, 6),
+        }
         payload_rows.append(
             {
                 "team": team_name,
-                "reliability_score": score,
-                "components": {
-                    "dnf_history": round(dnf_component, 6),
-                    "power_unit_reliability": round(pu_component, 6),
-                    "new_component_penalties": round(penalty_component, 6),
-                },
+                "dnf_probability": round(dnf_probability, 6),
+                "reliability_score": round(100.0 * (1.0 - dnf_probability), 6),
+                "components": {key: value for key, value in components.items() if value is not None},
             }
         )
 

@@ -208,3 +208,117 @@ def test_load_current_entry_list_falls_back_to_practice_when_no_competitive_sess
 
     assert drivers == {"ANT": "Mercedes", "RUS": "Mercedes"}
     assert teams == ["Mercedes"]
+
+
+def _team_row(team, q_avg, race_avg, **extra):
+    row = {"team": team, "qualifying_avg_position": q_avg, "race_avg_position": race_avg, "starts": 32, "dnf_rate": 0.1}
+    row.update(extra)
+    return row
+
+
+def test_race_position_gain_rewards_gaining_places_against_field_trend() -> None:
+    from pipeline.update_ratings import compute_strategy_scores, compute_team_ratings
+
+    features = {
+        "teams": [
+            _team_row("Front", 2.0, 3.0),
+            _team_row("Mid", 10.0, 10.0),
+            _team_row("Charger", 15.0, 11.0),
+            _team_row("Back", 18.0, 18.5),
+        ]
+    }
+    teams = {row["team"]: row for row in compute_team_ratings(features, ["Front", "Mid", "Charger", "Back"])["teams"]}
+    strategy = {row["team"]: row for row in compute_strategy_scores(features, {}, ["Front", "Mid", "Charger", "Back"])["teams"]}
+
+    # Gaining places is positive in both team and strategy ratings.
+    assert teams["Charger"]["components"]["race_position_gain"] > 50.0
+    assert strategy["Charger"]["components"]["race_position_gain"] > 50.0
+    assert teams["Charger"]["components"]["race_position_gain"] > teams["Back"]["components"]["race_position_gain"]
+    # A front-runner losing one place is not punished like a backmarker.
+    assert teams["Front"]["components"]["race_position_gain"] >= teams["Back"]["components"]["race_position_gain"]
+    assert "sector_dominance" not in teams["Front"]["components"]
+    assert "pit_stop_performance" not in strategy["Front"]["components"]
+
+
+def test_rating_components_have_real_inputs_and_stay_in_range() -> None:
+    from pipeline.update_ratings import compute_strategy_scores, compute_team_ratings
+
+    features = {"teams": [_team_row("Mercedes", 4.5, 5.5, points_total=496.0), _team_row("Williams", 15.6, 16.4, points_total=12.0)]}
+    teams = compute_team_ratings(features, ["Mercedes", "Williams"])["teams"]
+    strategy = compute_strategy_scores(features, {}, ["Mercedes", "Williams"])["teams"]
+    for row in teams + strategy:
+        for name in ("upgrades_impact", "weekend_pace_proxy", "sprint_pace_proxy", "safety_car_reactions", "strategic_success_history"):
+            assert name not in row["components"], (row["team"], name)
+        for value in row["components"].values():
+            if isinstance(value, (int, float)) and not isinstance(value, bool):
+                assert 0.0 <= value <= 100.0
+
+
+def test_sprint_execution_is_neutral_without_sprint_qualifying_data() -> None:
+    from pipeline.update_ratings import compute_strategy_scores
+
+    features = {"teams": [_team_row("Top", 3.0, 3.0, sprint_avg_position=3.0), _team_row("Low", 18.0, 18.0, sprint_avg_position=18.0)]}
+    rows = {row["team"]: row for row in compute_strategy_scores(features, {}, ["Top", "Low"])["teams"]}
+    assert rows["Top"]["components"]["sprint_execution"] == 50.0
+    assert rows["Low"]["components"]["sprint_execution"] == 50.0
+
+    features["teams"][0]["sprint_qualifying_avg_position"] = 5.0
+    rows = {row["team"]: row for row in compute_strategy_scores(features, {}, ["Top", "Low"])["teams"]}
+    assert rows["Top"]["components"]["sprint_execution"] > 50.0
+
+
+def test_new_driver_starts_below_teammate_and_field_median() -> None:
+    def driver(name, team, q_avg, race_avg):
+        return {"driver": name, "team": team, "qualifying_avg_position": q_avg, "race_avg_position": race_avg, "starts": 10, "dnf_rate": 0.1}
+
+    features = {
+        "drivers": [
+            driver("AAA", "Fast", 2.0, 2.0),
+            driver("BBB", "Fast", 3.0, 3.0),
+            driver("CCC", "Mid", 9.0, 9.0),
+            driver("DDD", "Mid", 11.0, 11.0),
+            driver("EEE", "Slow", 18.0, 18.0),
+        ]
+    }
+    active = {"AAA": "Fast", "NEW": "Fast", "CCC": "Mid", "DDD": "Mid", "EEE": "Slow", "ROK": "Slow"}
+    rows = {row["driver"]: row for row in compute_driver_ratings(features, wet_by_team={}, active_drivers=active)["drivers"]}
+
+    assert rows["NEW"]["qualifying_rating"] < rows["AAA"]["qualifying_rating"]
+    assert rows["ROK"]["qualifying_rating"] < rows["EEE"]["qualifying_rating"]
+    median_q = sorted(row["qualifying_rating"] for name, row in rows.items() if name not in {"NEW", "ROK"})[2]
+    assert rows["ROK"]["qualifying_rating"] < median_q
+    assert rows["NEW"]["components"] == {"new_driver_baseline": True}
+
+
+def test_dnf_probability_follows_observed_rate_with_shrinkage() -> None:
+    from pipeline.update_ratings import compute_reliability_scores
+
+    features = {
+        "teams": [
+            {"team": "Fragile", "starts": 32, "dnf_rate": 0.5},
+            {"team": "Solid", "starts": 32, "dnf_rate": 0.125},
+            {"team": "Steady", "starts": 32, "dnf_rate": 0.1},
+            {"team": "Calm", "starts": 32, "dnf_rate": 0.1},
+            {"team": "Rookie", "starts": 2, "dnf_rate": 1.0},
+        ]
+    }
+    names = ["Fragile", "Solid", "Steady", "Calm", "Rookie"]
+    rows = {row["team"]: row for row in compute_reliability_scores(features, {}, names)["teams"]}
+    assert 0.4 < rows["Fragile"]["dnf_probability"] <= 0.45
+    assert 0.12 < rows["Solid"]["dnf_probability"] < 0.2
+    # Two DNFs in two starts are shrunk heavily towards the field rate.
+    assert rows["Rookie"]["dnf_probability"] < 0.45
+    assert rows["Fragile"]["dnf_probability"] > rows["Solid"]["dnf_probability"]
+
+
+def test_simulation_uses_dnf_probability() -> None:
+    import random
+
+    from pipeline.simulate_race import simulate_single_race
+
+    entries = [
+        {"name": "AAA", "team": "A", "driver_rating": 60.0, "team_rating": 60.0, "strategy_score": 50.0, "reliability_score": 99.0, "dnf_probability": 1.0},
+        {"name": "BBB", "team": "B", "driver_rating": 40.0, "team_rating": 40.0, "strategy_score": 50.0, "reliability_score": 99.0, "dnf_probability": 0.0},
+    ]
+    result = simulate_single_race(entries, ["AAA", "BBB"], random.Random(1), 0.0, 0.5, 0.0, 0.5, 3.0)
+    assert result == {"BBB": 1, "AAA": 3}

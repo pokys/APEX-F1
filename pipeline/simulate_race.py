@@ -133,6 +133,11 @@ def build_entries(driver_ratings: dict[str, Any], team_ratings: dict[str, Any], 
         for row in reliability_scores.get("teams", [])
         if isinstance(row, dict)
     }
+    dnf_probability_by_name = {
+        str(row.get("team") or ""): safe_float(row.get("dnf_probability"), -1.0)
+        for row in reliability_scores.get("teams", [])
+        if isinstance(row, dict) and row.get("dnf_probability") is not None
+    }
 
     entries: list[dict[str, Any]] = []
     for row in driver_ratings.get("drivers", []):
@@ -154,11 +159,17 @@ def build_entries(driver_ratings: dict[str, Any], team_ratings: dict[str, Any], 
                 "race_team_rating": race_team_rating_by_name.get(team, team_rating_by_name.get(team, 50.0)),
                 "strategy_score": strategy_by_name.get(team, 50.0),
                 "reliability_score": reliability_by_name.get(team, 60.0),
+                "dnf_probability": dnf_probability_by_name.get(team, dnf_probability_from_reliability(reliability_by_name.get(team, 60.0))),
             }
         )
 
     entries.sort(key=lambda x: x["name"].lower())
     return entries
+
+
+def dnf_probability_from_reliability(reliability_score: float) -> float:
+    """Legacy mapping for reliability files without dnf_probability."""
+    return clamp(0.01 + (100.0 - reliability_score) / 170.0, 0.01, 0.35)
 
 
 def simulate_qualifying(entries: list[dict[str, Any]], rng: random.Random, qualifying_noise: float) -> list[str]:
@@ -207,7 +218,9 @@ def simulate_single_race(
         overtaking_recovery = 4.5 * (1.0 - overtaking_difficulty) * (entry.get("race_rating", entry["driver_rating"]) / 100.0)
         pure_noise = rng.gauss(0.0, race_noise)
 
-        reliability_fail_prob = clamp(0.01 + (100.0 - entry["reliability_score"]) / 170.0, 0.01, 0.35)
+        reliability_fail_prob = entry.get("dnf_probability")
+        if reliability_fail_prob is None:
+            reliability_fail_prob = dnf_probability_from_reliability(entry["reliability_score"])
         if rng.random() < reliability_fail_prob:
             dnf_drivers.append(name)
             continue

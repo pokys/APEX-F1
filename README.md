@@ -71,14 +71,13 @@ Inbox článků se nemaže: sekce starší než 14 dní se i se stavem zaškrtá
 
 ### Penalizace, výměny pohonné jednotky, tresty a náhradníci
 
-Fakta o konkrétní GP se zapisují jako typované signály (`grid_penalty`, `pu_element_change`, `race_ban`, `driver_substitution`), schéma je v [`AI_EXTRACTION_GUIDE.md`](knowledge/processed/AI_EXTRACTION_GUIDE.md). Penalizace se aplikují na startovní grid závodu/sprintu (posun o N míst, konec roštu, start z boxů) i na simulované gridy před kvalifikací; náhradníci a tresty mění seznam jezdců dané GP. Dashboard ukazuje každou penalizaci se zdrojem.
+Fakta o konkrétní GP se zapisují jako typované signály (`grid_penalty`, `pu_element_change`, `race_ban`, `driver_substitution`), schéma je v [`AI_EXTRACTION_GUIDE.md`](knowledge/processed/AI_EXTRACTION_GUIDE.md). Penalizace se aplikují na startovní grid závodu/sprintu (posun o N míst, konec roštu, start z boxů) i na simulované gridy před kvalifikací; náhradníci a tresty mění seznam jezdců dané GP. Dashboard ukazuje penalizaci přímo u jezdce červeným štítkem („−10 grid“, „pit start“, „Sprint −3 grid“) a v souhrnu se zdrojem.
 
 Zdroje a jejich spolehlivost:
 
 - **Historie (spolehlivé):** z rozdílu startovní pozice a pozice v kvalifikaci (≥ 3 místa nebo start z boxů) se počítá `grid_penalty_rate` týmu; backtest používá skutečný startovní grid.
 - **OpenF1 race control (best effort, automaticky):** `pipeline/import_penalties.py` čte zprávy race control aktuální GP a přenesené tresty z minulé GP a zapisuje `knowledge/processed/penalties_<sezona>_auto.json`. Zachytí jen rozhodnutí, která race control zveřejní textem („3 PLACE GRID PENALTY FOR CAR 23 (ALB)“, „WILL START FROM THE PIT LANE“); formulace se mezi sezonami mění.
-- **Dokumenty FIA (nejúplnější, automaticky):** `pipeline/import_fia_documents.py` stahuje z fia.com PDF rozhodnutí stewardů („Infringement“/„Decision“) aktuální GP a závodní rozhodnutí minulé GP (přenesené tresty) a čte z nich posuny na roštu, start z boxů a konec roštu – hlavně penalizace za výměny prvků pohonné jednotky a změny v parc fermé, které race control nehlásí. Čistý textový parser (pypdf), žádná AI; už přečtené dokumenty si pamatuje, takže každou hodinu stahuje jen nové. Zapisuje `knowledge/processed/penalties_<sezona>_fia.json`. Když stejný trest zachytí i race control, počítá se jen verze z FIA dokumentu.
-- **Ruční signály:** cokoli, co automatika nezachytí (zákaz startu, náhradník), patří do `knowledge/processed/penalties_<sezona>.json`.
+- **Dokumenty FIA (nejúplnější, automaticky):** `pipeline/import_fia_documents.py` stahuje z fia.com PDF rozhodnutí stewardů („Infringement“/„Decision“) aktuální GP a závodní rozhodnutí minulé GP (přenesené tresty) a čte z nich posuny na roštu, start z boxů a konec roštu – hlavně penalizace za výměny prvků pohonné jednotky a změny v parc fermé, které race control nehlásí. Čistý textový parser (pypdf), žádná AI. Na fia.com se ptá jen během závodního víkendu (od 24 h před 1. tréninkem do startu závodu) a nejvýš jednou za 2 hodiny; už přečtené dokumenty si pamatuje a stahuje jen nové. Zapisuje `knowledge/processed/penalties_<sezona>_fia.json`. Když stejný trest zachytí i race control, počítá se jen verze z FIA dokumentu.
 
 ## Výstupy
 

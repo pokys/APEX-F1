@@ -13,6 +13,10 @@ grid_penalty event signals to knowledge/processed/penalties_<season>_fia.json.
 
 Plain text parsing with pypdf, no AI involved. Already processed documents
 are remembered in the output file, so each run downloads only new PDFs.
+
+To stay polite to fia.com the site is only checked during the race weekend
+(from a day before the first session until the race start), at most once
+every CHECK_INTERVAL_HOURS. Outside that window nothing is requested.
 """
 
 from __future__ import annotations
@@ -28,14 +32,14 @@ import time
 import unicodedata
 import urllib.parse
 import urllib.request
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Callable
 
 if __package__ is None or __package__ == "":
     sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from pipeline.prediction_targeting import load_json  # noqa: E402
+from pipeline.prediction_targeting import _parse_iso_datetime, load_json  # noqa: E402
 
 LOGGER = logging.getLogger("import_fia_documents")
 
@@ -43,6 +47,8 @@ FIA_BASE = "https://www.fia.com"
 CHAMPIONSHIP_PATH = "/documents/championships/fia-formula-one-world-championship-14"
 SOURCE_NAME = "fia_decision_documents"
 SOURCE_CONFIDENCE = 0.98
+CHECK_INTERVAL_HOURS = 2
+WINDOW_BEFORE_FIRST_SESSION = timedelta(hours=24)
 USER_AGENT = "APEX-F1 prediction pipeline (+https://github.com/pokys/apex-f1)"
 
 OPTION_RE = re.compile(r'<option[^>]*value="([^"]+)"[^>]*>([^<]+)')
@@ -82,8 +88,25 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--calendar-cache-dir", default="data/raw/calendars", help="Calendar cache directory.")
     parser.add_argument("--raw-dir", default="data/raw/fastf1", help="FastF1 snapshots (car number -> driver code).")
     parser.add_argument("--signals-dir", default="knowledge/processed", help="Signals directory to write into.")
+    parser.add_argument("--now", default=None, help="UTC ISO time used as 'now' (default: current time).")
     parser.add_argument("--log-level", default="INFO", choices=["DEBUG", "INFO", "WARNING", "ERROR"])
     return parser.parse_args()
+
+
+def should_check(schedule: dict[str, Any], last_checked: Any, now: datetime) -> tuple[bool, str]:
+    """Whether to contact fia.com now, and why (for the log)."""
+    starts = [s for s in (_parse_iso_datetime(v) for v in (schedule or {}).values()) if s is not None]
+    if not starts:
+        return False, "no session schedule"
+    race_start = _parse_iso_datetime((schedule or {}).get("R")) or max(starts)
+    if now < min(starts) - WINDOW_BEFORE_FIRST_SESSION:
+        return False, "race weekend has not started yet"
+    if now > race_start:
+        return False, "race already started"
+    last = _parse_iso_datetime(last_checked)
+    if last is not None and now - last < timedelta(hours=CHECK_INTERVAL_HOURS):
+        return False, f"checked less than {CHECK_INTERVAL_HOURS} h ago"
+    return True, "race weekend"
 
 
 def http_fetch(url: str, attempts: int = 3) -> bytes:
@@ -314,16 +337,25 @@ def main() -> int:
         existing = load_json(out_path) if out_path.exists() else {}
         existing_signals = [s for s in existing.get("signals") or [] if isinstance(s, dict)]
         processed = {str(u) for u in existing.get("processed_documents") or []}
+        now = _parse_iso_datetime(args.now) if args.now else datetime.now(timezone.utc)
+        schedule = config.get("sessions_schedule") if isinstance(config.get("sessions_schedule"), dict) else {}
+        check, reason = should_check(schedule, existing.get("last_checked"), now)
+        if not check:
+            LOGGER.info("FIA documents not checked: %s.", reason)
+            return 0
         by_number, by_name = driver_codes(Path(args.raw_dir), season)
         previous_name = str(previous.get("event_name") or "") or None if previous else None
         found, done = collect(http_fetch, season, event_name, sprint_weekend, previous_name, processed, by_number, by_name)
         if not found and not done:
             LOGGER.info("No new FIA decision documents for %s.", event_name)
-            return 0
         known = {(s.get("source_url"), s.get("event"), s.get("driver")) for s in existing_signals}
         merged = existing_signals + [s for s in found if (s["source_url"], s["event"], s["driver"]) not in known]
         merged.sort(key=lambda s: (str(s.get("event")), str(s.get("timestamp")), str(s.get("driver"))))
-        payload = {"signals": merged, "processed_documents": sorted(processed | done)}
+        payload = {
+            "signals": merged,
+            "processed_documents": sorted(processed | done),
+            "last_checked": now.replace(microsecond=0).isoformat(),
+        }
         out_path.parent.mkdir(parents=True, exist_ok=True)
         out_path.write_text(json.dumps(payload, indent=2, sort_keys=True, ensure_ascii=True) + "\n", encoding="utf-8")
         LOGGER.info("FIA documents: %s new decisions read, %s new penalties, written to %s", len(done), len(found), out_path)

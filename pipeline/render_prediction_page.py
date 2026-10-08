@@ -343,18 +343,46 @@ def delta_html(name: str, changes: dict[str, Any] | None) -> str:
     return f'<span class="delta {css}" title="{points:+.1f} pp {label}">{arrow} {abs(points):.1f}</span>'
 
 
+def penalty_badges(race_config: dict[str, Any] | None) -> dict[str, str]:
+    """Short grid penalty badge per driver code, e.g. "-25 grid"."""
+    badges: dict[str, list[str]] = {}
+    for key, start in (("race_grid_penalties", ""), ("sprint_grid_penalties", "Sprint ")):
+        for penalty in (race_config or {}).get(key) or []:
+            if not isinstance(penalty, dict) or not penalty.get("driver"):
+                continue
+            if penalty.get("excluded"):
+                short, long = "out", "excluded"
+            elif penalty.get("pit_lane"):
+                short, long = "pit start", "starts from the pit lane"
+            elif penalty.get("back_of_grid"):
+                short, long = "back of grid", "starts from the back of the grid"
+            else:
+                places = int(to_float(penalty.get("places")))
+                short, long = f"&minus;{places} grid", f"{places} place grid drop"
+            what = "sprint" if start else "race"
+            badges.setdefault(str(penalty["driver"]).upper(), []).append(
+                f'<span class="penalty-badge" title="{html.escape(what.capitalize())} grid penalty: {long}">{start}{short}</span>'
+            )
+    return {driver: " ".join(items) for driver, items in badges.items()}
+
+
 def scenario_panel_html(
     prediction: dict[str, Any],
     scenario_key: str,
     scenario_label: str,
     active: bool,
     changes: dict[str, Any] | None = None,
+    penalties: dict[str, str] | None = None,
 ) -> str:
     target = str(prediction.get("prediction_target") or "race")
     rows = parse_prediction_rows(prediction)
     primary_label, secondary_label, tertiary_label = metric_labels(target)
     qualifying = target in QUALIFYING_TARGETS
     change_label = html.escape(str(changes.get("label"))) if isinstance(changes, dict) else ""
+    penalties = penalties or {}
+
+    def badge(name: str) -> str:
+        return (" " + penalties[name.upper()]) if name.upper() in penalties else ""
 
     top_cards = []
     for idx, row in enumerate(rows[:3], start=1):
@@ -362,7 +390,7 @@ def scenario_panel_html(
         top_cards.append(
             '<article class="hero-card" style="--team-color: {color}">'.format(color=color)
             + f'<p class="hero-rank">P{idx} {delta_html(row["name"], changes)}</p>'
-            + f'<h3>{html.escape(row["name"])}</h3>'
+            + f'<h3>{html.escape(row["name"])}{badge(row["name"])}</h3>'
             + f'<p class="hero-team">{html.escape(row["team"])}</p>'
             + f'<p class="hero-big">{row["headline_probability"] * 100:.1f}%<small>{primary_label.lower()}</small></p>'
             + odds_bar_html(row, target)
@@ -380,7 +408,7 @@ def scenario_panel_html(
         table_rows.append(
             '<tr style="--team-color: {color}">'.format(color=color)
             + f"<td>{idx}</td>"
-            + f'<td><strong>{html.escape(row["name"])}</strong><small>{html.escape(row["team"])}</small></td>'
+            + f'<td><strong>{html.escape(row["name"])}</strong>{badge(row["name"])}<small>{html.escape(row["team"])}</small></td>'
             + f'<td class="odds-cell">{odds_bar_html(row, target)}<small>{numbers}</small></td>'
             + f"<td>{delta_html(row['name'], changes)}</td>"
             + f"<td>{row['expected_metric']:.1f}</td>"
@@ -393,7 +421,7 @@ def scenario_panel_html(
         color = get_team_color(row["team"])
         mobile_cards.append(
             '<article class="mobile-driver-card" style="--team-color: {color}">'.format(color=color)
-            + f'<div class="mobile-top"><h4>{html.escape(row["name"])} {delta_html(row["name"], changes)}</h4><span>{html.escape(row["team"])}</span></div>'
+            + f'<div class="mobile-top"><h4>{html.escape(row["name"])}{badge(row["name"])} {delta_html(row["name"], changes)}</h4><span>{html.escape(row["team"])}</span></div>'
             + odds_bar_html(row, target)
             + f'<p>{primary_label} {row["headline_probability"] * 100:.1f}% · {secondary_label} {row["secondary_probability"] * 100:.1f}%'
             + (f' · {tertiary_label} {row["third_probability"] * 100:.1f}%' if qualifying else "")
@@ -453,7 +481,7 @@ def penalties_html(race_config: dict[str, Any]) -> str:
     if not sections:
         return (
             '<section class="explain-card"><h2>Grid Penalties</h2>'
-            "<p>No grid penalty is known for this GP (race control import + manual signals).</p></section>"
+            "<p>No grid penalty is known for this GP (FIA stewards' documents + race control).</p></section>"
         )
     return '<section class="explain-card"><h2>Grid Penalties</h2>' + "".join(sections) + "</section>"
 
@@ -586,9 +614,10 @@ def render_page(
 """
 
     phase_config = {"season": prediction.get("season") or race_config.get("season"), "next_round": race_config.get("next_round")}
-    dry_panel = scenario_panel_html(prediction, "dry", "Dry", recommended == "dry", phase_changes(history, phase_config, "dry"))
+    badges = penalty_badges(race_config)
+    dry_panel = scenario_panel_html(prediction, "dry", "Dry", recommended == "dry", phase_changes(history, phase_config, "dry"), badges)
     wet_panel = (
-        scenario_panel_html(prediction_wet, "wet", "Wet", recommended == "wet", phase_changes(history, phase_config, "wet"))
+        scenario_panel_html(prediction_wet, "wet", "Wet", recommended == "wet", phase_changes(history, phase_config, "wet"), badges)
         if isinstance(prediction_wet, dict)
         else ""
     )
@@ -1122,6 +1151,20 @@ def render_page(
       .delta-up {{ color: #3ddc84; }}
       .delta-down {{ color: #ff6b6b; }}
       .delta-flat {{ color: var(--muted); }}
+      .penalty-badge {{
+        display: inline-block;
+        margin-left: 6px;
+        padding: 1px 6px;
+        border-radius: 4px;
+        background: #ff3b30;
+        color: #fff;
+        font-size: 0.68em;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        vertical-align: middle;
+        white-space: nowrap;
+        cursor: help;
+      }}
       .next-session {{
         margin: 0 0 12px;
         color: var(--muted);

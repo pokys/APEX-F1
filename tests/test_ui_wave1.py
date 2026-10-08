@@ -153,3 +153,28 @@ def test_page_opens_wet_scenario_when_rain_is_likely_and_shows_changes() -> None
 def test_drizzle_does_not_switch_to_the_wet_scenario() -> None:
     drizzle = {"race": "Singapore Grand Prix", "sessions": {"Q": {"rain_probability": 0.96, "precipitation_mm": 0.2}}}
     assert recommended_scenario(drizzle, "Singapore Grand Prix", "Q") == ("dry", 0.96)
+
+
+def test_penalty_badges_next_to_driver() -> None:
+    from pipeline.render_prediction_page import penalty_badges, scenario_panel_html
+
+    config = {
+        "race_grid_penalties": [
+            {"driver": "ALO", "places": 25, "back_of_grid": False, "pit_lane": False},
+            {"driver": "LAW", "places": 0, "pit_lane": True},
+        ],
+        "sprint_grid_penalties": [{"driver": "ALO", "places": 3}],
+    }
+    badges = penalty_badges(config)
+    assert "&minus;25 grid" in badges["ALO"] and "Sprint &minus;3 grid" in badges["ALO"]
+    assert "pit start" in badges["LAW"]
+    prediction = {
+        "prediction_target": "race",
+        "drivers": [
+            {"name": "ALO", "team": "Aston Martin", "win_probability": 0.1, "podium_probability": 0.2, "expected_finish": 5.0},
+            {"name": "VER", "team": "Red Bull Racing", "win_probability": 0.2, "podium_probability": 0.4, "expected_finish": 3.0},
+        ],
+    }
+    page = scenario_panel_html(prediction, "dry", "Dry", True, None, badges)
+    assert page.count("penalty-badge") == 3 * 2  # hero card, table row, mobile card; two badges for ALO
+    assert "VER</strong><small>" in page

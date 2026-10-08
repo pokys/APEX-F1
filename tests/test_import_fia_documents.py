@@ -167,3 +167,19 @@ def test_race_control_copy_is_not_counted_twice() -> None:
     manual = {"type": "grid_penalty", "driver": "PIA", "places": 10, "applies_to": "race", "source_name": "manual"}
     penalties = {p["driver"]: p["places"] for p in grid_penalties_from_signals([race_control, fia_doc, other, manual])}
     assert penalties == {"PIA": 13, "NOR": 5}
+
+
+def test_fia_site_is_checked_only_during_race_weekend_and_rarely() -> None:
+    from datetime import datetime, timezone
+
+    schedule = {"FP1": "2026-10-09T09:30:00+00:00", "Q": "2026-10-10T13:00:00+00:00", "R": "2026-10-11T12:00:00+00:00"}
+
+    def at(text: str) -> datetime:
+        return datetime.fromisoformat(text).replace(tzinfo=timezone.utc)
+
+    assert fia.should_check(schedule, None, at("2026-10-06T12:00:00"))[0] is False  # days before
+    assert fia.should_check(schedule, None, at("2026-10-08T12:00:00"))[0] is True  # day before FP1
+    assert fia.should_check(schedule, "2026-10-10T11:00:00+00:00", at("2026-10-10T12:00:00"))[0] is False
+    assert fia.should_check(schedule, "2026-10-10T09:59:00+00:00", at("2026-10-10T12:00:00"))[0] is True
+    assert fia.should_check(schedule, None, at("2026-10-11T13:00:00"))[0] is False  # after race start
+    assert fia.should_check({}, None, at("2026-10-10T12:00:00"))[0] is False

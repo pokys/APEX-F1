@@ -158,6 +158,8 @@
 - [ ] Spotlight: Formula E’s chief executive says he can’t sit through a Formula 1 race | Briefs (https://www.racefans.net/2026/10/07/spotlight-formula-es-chief-executive-says-he-cant-sit-through-a-formula-1-race/)
 - [ ] The under-reported factor in Red Bull's F1 surge (https://www.the-race.com/formula-1/under-reported-factor-in-red-bull-f1-surge/)
 - [ ] Toto Wolff confirms George Russell engine penalty for Singapore GP: "Particularly frustrating" (https://www.motorsport.com/f1/news/toto-wolff-confirms-george-russell-engine-penalty-for-singapore-gp-particularly-frustrating/10862664/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] The plan to fix F1's 'cost cap trap' revealed (https://www.the-race.com/formula-1/formula1-cost-cap-fix-f1-williams-2027-2028/)
+- [ ] Where Red Bull's 'best engine' fits into 2026 turnaround (https://www.the-race.com/formula-1/under-reported-factor-in-red-bull-f1-surge/)
 
 ## 2026-10-08
 - [ ] Our verdict on MotoGP's huge 2027 qualifying revamp (https://www.the-race.com/motogp/our-verdict-on-motogps-huge-2027-qualifying-revamp/)
@@ -175,3 +177,13 @@
 - [ ] 'Your mind starts to play games' - Bottas's jungle ride to Singapore (https://www.the-race.com/extra/your-mind-starts-to-play-games-bottass-jungle-ride-to-singapore/)
 - [ ] Christian Horner's nine-figure Red Bull exit payout revealed in financial filings (https://www.motorsport.com/f1/news/christian-horners-nine-figure-red-bull-exit-payout-revealed-in-financial-filings/10862962/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] McLaren F1 announces deal with major company behind household brands (https://www.motorsport.com/f1/news/mclaren-f1-announces-deal-with-major-company-behind-household-brands/10862954/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Antonelli was so quick in Formula 4 Mercedes swapped his engine to check | Other motorsport (https://www.racefans.net/2026/10/08/antonelli-was-so-quick-in-formula-4-mercedes-swapped-his-engine-to-check/)
+- [ ] George Russell: "No-brainer" to run previous car as Mercedes splits specifications for Singapore (https://www.motorsport.com/f1/news/russell-no-brainer-to-run-previous-car-as-mercedes-splits-specifications-for-singapore/10863042/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Guenther Steiner reveals key to Laurent Mekies' Red Bull F1 success (https://www.motorsport.com/f1/news/guenther-steiner-reveals-key-to-laurent-mekies-red-bull-f1-success/10863008/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Lando Norris casts doubt on Singapore GP sprint excitement: "I don't think it is" (https://www.motorsport.com/f1/news/lando-norris-casts-doubt-on-singapore-gp-sprint-excitement-i-dont-think-it-is/10863040/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Lewis Hamilton reacts to stunning fan-made Ferrari helmet inspired by "Star Wars" (https://www.motorsport.com/f1/news/lewis-hamilton-reacts-to-stunning-fan-made-ferrari-helmet-inspired-by-star-wars/10863012/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Norris says fuel system problem has “cost me quite a lot” in recent races | Formula 1 (https://www.racefans.net/2026/10/08/norris-says-fuel-system-problem-has-cost-me-quite-a-lot-in-recent-races/)
+- [ ] Oscar Piastri leaves F1 Fans in stitches with unexpected Singapore GP answer (https://www.motorsport.com/f1/news/oscar-piastri-leaves-f1-fans-in-stitches-with-unexpected-singapore-gp-answer/10862989/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Why 2027 format revamp has divided MotoGP riders (https://www.the-race.com/motogp/why-2027-format-revamp-has-divided-motogp-riders/)
+- [ ] “I deserve to be in Formula 1”: Ocon rules out racing elsewhere in 2027 | Formula 1 (https://www.racefans.net/2026/10/08/i-deserve-to-be-in-formula-1-ocon-rules-out-racing-elsewhere-in-2027/)
+- [ ] “They built the best engines” – Audi F1 drivers reveal biggest limitation and how to address it (https://www.motorsport.com/f1/news/they-built-the-best-engines-audi-f1-drivers-reveal-biggest-limitation-and-how-to-address-it/10863053/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

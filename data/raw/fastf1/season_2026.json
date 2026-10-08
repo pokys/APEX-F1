@@ -20115,7 +20115,8 @@
           ],
           "session_code": "R",
           "session_date": "2026-07-26T13:00:00+00:00",
-          "session_name": "Race"
+          "session_name": "Race",
+          "wet": false
         }
       ]
     },
@@ -20870,7 +20871,8 @@
           "session_code": "SQ",
           "session_date": "2026-08-21T14:30:00+00:00",
           "session_name": null,
-          "source": "openf1"
+          "source": "openf1",
+          "wet": false
         },
         {
           "results": [

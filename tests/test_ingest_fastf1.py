@@ -241,3 +241,38 @@ def test_load_session_survives_missing_timing_data(monkeypatch) -> None:
 
     monkeypatch.setattr(ingest_module, "fastf1", FakeFastF1)
     assert load_session(2026, 1, "FP1", cutoff=date(2026, 12, 31)) is None
+
+
+def test_ingest_workflows_restore_fastf1_cache_before_ingest() -> None:
+    from pathlib import Path
+
+    for name in ("ingest-fastf1.yml", "full-pipeline.yml"):
+        text = Path(".github/workflows", name).read_text(encoding="utf-8")
+        assert "actions/cache@" in text and "path: data/raw/fastf1_cache" in text, name
+        assert text.index("actions/cache@") < text.index("pipeline/ingest_fastf1.py \"${ARGS[@]}\""), name
+
+
+def test_annotate_wet_flag_stores_openf1_result_once() -> None:
+    from pipeline.ingest_fastf1 import annotate_wet_flag
+    from pipeline.openf1_client import OpenF1Client
+
+    calls: list[str] = []
+
+    def fetch(endpoint, params):
+        calls.append(endpoint)
+        if endpoint == "sessions":
+            return [{"session_key": 7, "session_name": "Race", "date_start": "2026-07-05T14:00:00+00:00"}]
+        if endpoint == "stints":
+            return [{"driver_number": 1, "compound": "INTERMEDIATE"}, {"driver_number": 4, "compound": "WET"}]
+        return []
+
+    client = OpenF1Client(fetcher=fetch)
+    session = {"session_code": "R", "results": []}
+    annotate_wet_flag(session, client, 2026, "R", "2026-07-05T14:00:00+00:00")
+    assert session["wet"] is True
+    calls.clear()
+    annotate_wet_flag(session, client, 2026, "R", "2026-07-05T14:00:00+00:00")
+    assert calls == []  # already known, no new request
+    practice = {"session_code": "FP1"}
+    annotate_wet_flag(practice, client, 2026, "FP1", "2026-07-03T11:30:00+00:00")
+    assert "wet" not in practice

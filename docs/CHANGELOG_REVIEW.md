@@ -1,6 +1,6 @@
 # Code review APEX-F1: shrnutí implementace
 
-Implementace všech 28 bodů z code review. Práce šla přímo do `main` po fázích; každá fáze byla pushnutá samostatně, až když prošly testy a lokální běh pipeline (`build_features` → `validate_outputs`). Testy (`python -m pytest -q`) mají 143 položek a všechny procházejí. Testy uvedené níže na původním kódu selžou.
+Implementace všech 28 bodů z code review. Práce šla přímo do `main` po fázích; každá fáze byla pushnutá samostatně, až když prošly testy a lokální běh pipeline (`build_features` → `validate_outputs`). Testy (`python -m pytest -q`) mají 145 položek a všechny procházejí. Kroky z README (`build_features` → `validate_outputs`) prošly i přímo v repozitáři nad commitnutými daty (vygenerované soubory se pak vrátily do commitnutého stavu). Testy uvedené níže na původním kódu selžou.
 
 ## Commity
 
@@ -23,7 +23,7 @@ Implementace všech 28 bodů z code review. Práce šla přímo do `main` po fá
 | # | Bod | Commit | Testy |
 |---|---|---|---|
 | 1 | FP1–FP3 a SQ s pozicemi a časy | `61a2048`, `e9c8d8b`, `f18c9a6`, `8f65c42` | `test_ingest_fastf1.py::test_load_session_classifies_practice_from_laps`, `::test_load_session_skips_entry_list_without_classification`, `::test_load_session_survives_missing_timing_data`, `test_openf1_client.py::test_sprint_qualifying_results_keep_segment_times`, `::test_practice_without_results_is_ranked_by_fastest_lap`, `::test_align_team_names_maps_reserve_drivers_via_teammates` |
-| 2 | Cache FastF1 a znovupoužití hotových session | `61a2048` | `test_ingest_fastf1.py::test_reusable_session_requires_final_classified_data` |
+| 2 | Cache FastF1 a znovupoužití hotových session | `61a2048` | `test_ingest_fastf1.py::test_reusable_session_requires_final_classified_data`, `::test_ingest_workflows_restore_fastf1_cache_before_ingest` |
 | 3 | Session je dostupná jen s pozicí nebo časem | `61a2048` | `test_prediction_targeting.py::test_entry_list_without_positions_is_not_an_available_session`, `test_select_next_gp.py::test_get_available_sessions_ignores_entry_lists` |
 | 4 | Gap na týmového kolegu z vlastního týmu, ≥ 0 | `61a2048` | `test_build_features.py::test_teammate_gap_is_measured_against_own_team` |
 | 5 | Kvalifikační gap po segmentech | `61a2048` | `test_build_features.py::test_qualifying_gap_compares_same_segments_only`, `::test_build_features_collects_timing_gap_metrics` |
@@ -37,7 +37,7 @@ Implementace všech 28 bodů z code review. Práce šla přímo do `main` po fá
 | 13 | Výchozí rating nového jezdce | `dab8251` | `test_update_ratings.py::test_new_driver_starts_below_teammate_and_field_median` |
 | 14 | Pravděpodobnost DNF z `dnf_rate` se shrinkage | `dab8251` | `test_update_ratings.py::test_dnf_probability_follows_observed_rate_with_shrinkage`, `::test_simulation_uses_dnf_probability` |
 | 15 | Samostatná simulace sprintu | `aeda6c5` | `test_simulate_race.py::test_sprint_has_a_third_of_race_dnf_exposure`, `::test_sprint_ignores_pit_strategy` |
-| 16 | `wet_rating`; suchý scénář drží `weather_modifier` | `aeda6c5` | `test_simulate_race.py::test_wet_rating_only_matters_in_the_wet`, `::test_dry_scenario_keeps_track_weather_modifier`, `test_build_features.py::test_wet_sessions_produce_wet_position_delta`, `test_update_ratings.py::test_wet_rating_from_history_and_signals`, `test_openf1_client.py::test_session_is_wet_from_tyre_stints` |
+| 16 | `wet_rating`; suchý scénář drží `weather_modifier` | `aeda6c5` | `test_simulate_race.py::test_wet_rating_only_matters_in_the_wet`, `::test_dry_scenario_keeps_track_weather_modifier`, `test_build_features.py::test_wet_sessions_produce_wet_position_delta`, `test_update_ratings.py::test_wet_rating_from_history_and_signals`, `test_openf1_client.py::test_session_is_wet_from_tyre_stints`, `test_ingest_fastf1.py::test_annotate_wet_flag_stores_openf1_result_once` |
 | 17 | Stejné škálování všech pravděpodobností | `aeda6c5`, `14d64a0` | `test_simulate_race.py::test_qualifying_probabilities_are_scaled_consistently`, `::test_standings_blend_mixes_whole_outcomes_consistently` |
 | 18 | Backtest používá produkční kód a aktuální sezonu | `14d64a0` | `test_backtest_simulation.py::test_event_config_does_not_inherit_live_gp_parameters`; sdílené `update_ratings.build_rating_models` a `blend_with_previous_season`; výchozí sezona workflow `$(date -u +%Y)` |
 | 19 | Kalibrace škály šumu, rozšiřování mřížky | `14d64a0` | `test_backtest_simulation.py::test_noise_scale_search_extends_past_grid_boundary`, `test_apply_backtest_calibration.py::test_apply_calibration_prefers_noise_scales`, `::test_choose_backtest_file_needs_enough_races_in_current_season` |
@@ -53,8 +53,8 @@ Implementace všech 28 bodů z code review. Práce šla přímo do `main` po fá
 
 ## Co neplatí úplně nebo se ověřilo jen v produkci
 
-- **Bod 1, ověření přes síť:** sandbox, ve kterém změny vznikly, nemá přístup k F1 live timing ani k OpenF1 (proxy 403). Ověřilo se to proto v produkci. Po nasazení zapsal bot snapshot sezony 2026, ve kterém je 16× FP1, 11× FP2, 11× FP3 a všech 5 SQ z OpenF1, všechny s pozicemi u 22 jezdců. Zároveň se ukázalo, že F1 live timing pro 2026 v GitHub Actions nevrací žádná data. Kvůli tomu vznikla oprava `e9c8d8b` a fallback na OpenF1 `f18c9a6`.
-- **Bod 2, `actions/cache`:** ověřeno jen syntaxí workflow a prvním během (cache miss, uložení); unit test to nepokrývá.
+- **Bod 1, ověření přes síť:** sandbox, ve kterém změny vznikly, nemá přístup k F1 live timing ani k OpenF1 (proxy 403), takže lokální ingest se sítí spustit nešel; podmínka „pokud je dostupná síť“ tu nebyla splněná. Ověřilo se to proto v produkci, kde síť je. Po nasazení zapsal bot snapshot sezony 2026, ve kterém je 16× FP1, 11× FP2, 11× FP3 a všech 5 SQ z OpenF1, všechny s pozicemi u 22 jezdců. Zároveň se ukázalo, že F1 live timing pro 2026 v GitHub Actions nevrací žádná data. Kvůli tomu vznikla oprava `e9c8d8b` a fallback na OpenF1 `f18c9a6`.
+- **Bod 2, `actions/cache`:** test kontroluje, že oba workflow s ingestem obnovují `data/raw/fastf1_cache` před spuštěním ingestu; na původních workflow selže. Samotné uložení a obnovení cache v Actions unit test nepokryje.
 - **Bod 16, příznak `wet`:** plní ho ingest z OpenF1 (stinty INTERMEDIATE/WET nebo déšť). Po nasazení ho má 42 session sezony 2026, z toho 2 mokré. `wet_rating` proto zatím stojí na velmi malém vzorku a je silně stažený k neutrální hodnotě 50.
 - **Bod 25, dokumenty FIA:** automatický import není. FIA zveřejňuje výměny prvků PU a jejich penalizace jen jako PDF na fia.com bez API a parser takových dokumentů by byl křehký. Tyto údaje se zadávají ručně jako signály `pu_element_change` (README, `AI_EXTRACTION_GUIDE.md` sekce 10). Import z OpenF1 race control je best effort: zachytí jen rozhodnutí, která race control zveřejní textem.
 - **Migrace formátu:** `outputs/backtest/backtest_season_2025.json` a nový `backtest_season_2026.json` se v `14d64a0` přegenerovaly, protože se změnily kalibrační klíče (škály šumu místo teplot). Jiná vygenerovaná data se ručně necommitovala.

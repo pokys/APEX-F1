@@ -30,11 +30,15 @@ Aktuální model se snaží méně hádat z pořadí v kalendáři a více praco
 - eventy řadí podle `event_date`, ne jen podle `round`, takže zrušené nebo neodjeté závody nerozhodí chronologii sezony,
 - klasifikované výsledky typu `Lapped` nebo `+1 Lap` bere jako dokončený závod, ne jako DNF,
 - počítá oddělené ratingy pro kvalifikaci a závod: `qualifying_rating`, `race_rating`, `qualifying_team_rating`, `race_team_rating`,
-- do feature engineeringu přidává časové rozdíly: kvalifikační gap na nejlepší čas, gap na týmového kolegu, sprint kvalifikační gap a závodní gap na vítěze,
-- umí volitelně přidat clean-lap pace metriky z FastF1 přes `--include-lap-metrics`,
+- do feature engineeringu přidává časové rozdíly: kvalifikační gap na nejlepší čas (vždy Q1 vs Q1, Q2 vs Q2…), gap na rychlejšího týmového kolegu, sprint kvalifikační gap a závodní gap na vítěze,
+- tréninky a sprint kvalifikace mají skutečné pořadí a časy (FastF1 lap data, záložně OpenF1),
+- komponenty ratingů se počítají jen z reálných vstupů; chybějící vstup se z váženého průměru vynechá místo konstanty,
+- spolehlivost je přímo pravděpodobnost DNF z pozorovaného podílu odstoupení se shrinkage k průměru pole,
+- sprint se simuluje jako sprint (třetinové riziko DNF, bez strategie zastávek), mokrý scénář používá `wet_rating` jezdců,
+- známé penalizace na roštu (FIA/race control, ruční signály) se aplikují na startovní grid,
 - používá recency weighting s efektivním počtem startů, takže novější závody váží víc, ale starší data nezmizí úplně,
-- backtest běží walk-forward stylem: každá historická predikce používá jen data dostupná před daným eventem,
-- kalibrace nastavuje zvlášť teplotu pro race winner predikce a kvalifikační predikce.
+- backtest běží walk-forward stylem stejným kódem jako produkce a porovnává model s baseline modely,
+- kalibrace ladí škálu šumu simulace (ne až výsledné pravděpodobnosti), takže všechny výstupy zůstávají konzistentní.
 
 ## Data
 
@@ -48,14 +52,32 @@ Aktuální model se snaží méně hádat z pořadí v kalendáři a více praco
 
 Výchozí ingest pracuje se session `FP1`, `FP2`, `FP3`, `SQ`, `S`, `Q` a `R`.
 
-Lap metrics jsou záměrně vypnuté ve výchozím běhu, protože jsou pomalejší a dražší na načtení. Pro cílený refresh je lze zapnout ručně ve workflow inputu `include_lap_metrics` nebo lokálně přes `--include-lap-metrics`.
+Pro `FP1`–`FP3` a `SQ` ingest vždy načítá lap/timing data: Ergast/Jolpica pro ně klasifikaci nemá, FastF1 ji umí spočítat jen z timing dat (SQ) a u tréninků ji pipeline dopočítá z nejrychlejšího platného kola. Pokud F1 live timing pro session data nevrací (stav sezony 2026 v GitHub Actions), použije se [OpenF1](https://openf1.org) (`pipeline/openf1_client.py`): výsledky session, případně nejrychlejší kola. Názvy týmů se sjednotí s FastF1. Session, která má jen seznam jezdců bez pozic a časů, se nepovažuje za dostupnou.
+
+Hotové session starší než 3 dny se z minulého snapshotu přebírají bez stahování a FastF1 HTTP cache se v Actions ukládá přes `actions/cache`.
+
+Kalendář bere přesné UTC začátky session z FastF1 backendu `fastf1`; tabulky časových pásem v `prediction_targeting.py` jsou jen záloha pro kalendář bez časů.
+
+Lap metrics pro `R`/`S` jsou ve výchozím běhu vypnuté. Pro cílený refresh je lze zapnout ve workflow inputu `include_lap_metrics` nebo lokálně přes `--include-lap-metrics`.
 
 ### Soft data
 
 - RSS zdroje v [`knowledge/feeds.yaml`](knowledge/feeds.yaml),
 - zpracované signály v `knowledge/processed/*.json`.
 
-Soft signály mají omezený vliv přes guardrails v [`config/signal_guardrails.json`](config/signal_guardrails.json). Nemají přebíjet tvrdá timing data.
+Soft signály mají omezený vliv přes guardrails v [`config/signal_guardrails.json`](config/signal_guardrails.json). Nemají přebíjet tvrdá timing data. Pokud žádné nejsou, jejich váha se přerozdělí na timing data a dashboard to uvádí.
+
+Inbox článků se nemaže: sekce starší než 14 dní se i se stavem zaškrtávacích políček přesouvají do `knowledge/inbox/archive/`.
+
+### Penalizace, výměny pohonné jednotky, tresty a náhradníci
+
+Fakta o konkrétní GP se zapisují jako typované signály (`grid_penalty`, `pu_element_change`, `race_ban`, `driver_substitution`), schéma je v [`AI_EXTRACTION_GUIDE.md`](knowledge/processed/AI_EXTRACTION_GUIDE.md). Penalizace se aplikují na startovní grid závodu/sprintu (posun o N míst, konec roštu, start z boxů) i na simulované gridy před kvalifikací; náhradníci a tresty mění seznam jezdců dané GP. Dashboard ukazuje každou penalizaci se zdrojem.
+
+Zdroje a jejich spolehlivost:
+
+- **Historie (spolehlivé):** z rozdílu startovní pozice a pozice v kvalifikaci (≥ 3 místa nebo start z boxů) se počítá `grid_penalty_rate` týmu; backtest používá skutečný startovní grid.
+- **OpenF1 race control (best effort, automaticky):** `pipeline/import_penalties.py` čte zprávy race control aktuální GP a přenesené tresty z minulé GP a zapisuje `knowledge/processed/penalties_<sezona>_auto.json`. Zachytí jen rozhodnutí, která race control zveřejní textem („3 PLACE GRID PENALTY FOR CAR 23 (ALB)“, „WILL START FROM THE PIT LANE“); formulace se mezi sezonami mění.
+- **Dokumenty FIA (nejúplnější, ručně):** výměny prvků pohonné jednotky a z nich plynoucí penalizace FIA publikuje jen jako PDF na fia.com bez API. Automatický parser by byl křehký, proto se zadávají jako ruční signály do `knowledge/processed/penalties_<sezona>.json`.
 
 ## Výstupy
 
@@ -106,11 +128,18 @@ Backtest je v [`pipeline/backtest_simulation.py`](pipeline/backtest_simulation.p
 - seřadí eventy podle skutečného `event_date`,
 - sestaví features jen z předchozích eventů,
 - vyrobí in-memory ratingy,
-- simuluje kvalifikaci i závod,
-- vyhodnotí pole/winner kvalitu,
-- doporučí `recommended_win_temperature` a `recommended_qualifying_temperature`.
+- vyrobí ratingy stejným kódem jako produkce (`update_ratings.build_rating_models`, včetně blendingu s minulou sezonou),
+- simuluje kvalifikaci i závod (závod ze skutečného startovního gridu),
+- najde škálu šumu simulace (`recommended_qualifying_noise_scale`, `recommended_race_noise_scale`) mřížkovým hledáním, které mřížku rozšíří, když optimum leží na jejím okraji,
+- porovná model s baseline modely: rovnoměrné rozdělení, poleman/vítěz minulé GP, pořadí v šampionátu.
 
-Kalibrace se následně aplikuje do [`config/race_config.json`](config/race_config.json). Díky tomu se pravděpodobnosti dají držet realističtější, místo aby model přehnaně věřil favoritům.
+Samotný model na sezoně 2026 baseline „pořadí v šampionátu“ nepřekonal. Publikovaná predikce je proto pevná směs 50/50 s modelem pořadí šampionátu, losovaná v každé simulaci (všechny výstupy zůstávají konzistentní). Váha je zvolená předem, ne laděná: laděná váha v leave-one-out neobstála.
+
+Kalibrace se aplikuje do [`config/race_config.json`](config/race_config.json) z reportu aktuální sezony, pokud má aspoň 8 závodů, jinak z minulé sezony. Brány kvality ([`config/backtest_quality_gates.json`](config/backtest_quality_gates.json)) vyžadují, aby kalibrovaný log-loss byl nižší než u nejlepší baseline.
+
+### Track record
+
+`pipeline/track_record.py` archivuje poslední predikci před začátkem každé session do `outputs/archive/<sezona>/<kolo>_<session>.json` a po zveřejnění výsledků ji vyhodnotí do `outputs/track_record.json`. Dashboard ukazuje úspěšnost favorita a pravděpodobnost, kterou model dal skutečnému vítězi.
 
 ## GitHub Actions
 
@@ -150,6 +179,7 @@ Plný lokální přepočet:
 python pipeline/collect_articles.py --log-level INFO
 python pipeline/ingest_fastf1.py --log-level INFO
 python pipeline/select_next_gp.py --race-config config/race_config.json --log-level INFO
+python pipeline/import_penalties.py --race-config config/race_config.json --log-level INFO
 python pipeline/select_prediction_target.py --race-config config/race_config.json --raw-dir data/raw/fastf1 --calendar-cache-dir data/raw/calendars --session-weights config/session_weights.json --signals-dir knowledge/processed --log-level INFO
 python pipeline/collect_tyre_compounds.py --calendar-cache-dir data/raw/calendars --source-config config/tyre_sources.json --output-dir data/raw/tyres --log-level INFO
 python pipeline/validate_signals.py --signals-dir knowledge/processed --allow-empty --log-level INFO
@@ -158,6 +188,7 @@ python pipeline/update_ratings.py --guardrails-config config/signal_guardrails.j
 python pipeline/apply_backtest_calibration.py --race-config config/race_config.json --allow-missing-report --log-level INFO
 python pipeline/simulate_weather_scenarios.py --raw-dir data/raw/fastf1 --recency-config config/recency.json --allow-missing-models --log-level INFO
 python pipeline/publish_prediction.py --allow-missing-input --log-level INFO
+python pipeline/track_record.py --log-level INFO
 python pipeline/render_prediction_page.py --prediction outputs/prediction.json --prediction-dry outputs/prediction_dry.json --prediction-wet outputs/prediction_wet.json --race-config config/race_config.json --tyres-input data/raw/tyres --output outputs/prediction_report.html --allow-missing-input --log-level INFO
 python pipeline/validate_outputs.py --log-level INFO
 ```
@@ -177,7 +208,9 @@ python pipeline/apply_backtest_calibration.py --season 2026 --race-config config
 
 ## Známé limity
 
-- Lap metrics nejsou ve výchozím GitHub běhu zapnuté kvůli rychlosti a stabilitě.
+- F1 live timing pro sezonu 2026 v GitHub Actions nevrací data; tréninky a SQ proto závisí na OpenF1.
+- Výměny prvků pohonné jednotky z dokumentů FIA je nutné zadávat ručně.
+- Na sezoně 2026 je přínos modelu oproti pořadí v šampionátu malý (log-loss 1,95 vs 1,97 pro pole, 1,73 vs 1,77 pro vítěze); backtest má jen 15 závodů.
 - Soft signály jsou pomocný vstup, ne náhrada za timing data.
 - Kvalita predikce bude pořád kolísat u nových jezdců, změn týmů a víkendů s málo odjetými session.
 - Automatizace je navržená tak, aby po výpadku dat nebo zrušeném závodě pokračovala z dalšího reálně dostupného eventu.

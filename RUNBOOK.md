@@ -108,6 +108,11 @@ Výchozí ingest načítá:
 
 To je důležité pro automatické přepínání cíle predikce i pro víkendové úpravy simulace.
 
+- `FP1`–`FP3` a `SQ` se načítají s lap daty (jinak nemají pozice). Když F1 live timing data nemá, ingest použije OpenF1; vypnout lze `--no-openf1`.
+- Session se jen seznamem jezdců (bez pozic a časů) se do snapshotu neuloží.
+- Hotové session starší než 3 dny se přebírají z minulého snapshotu; FastF1 cache se v Actions ukládá přes `actions/cache`.
+- U `Q`, `R`, `S`, `SQ` se z OpenF1 (směsi pneumatik, déšť) zapisuje příznak `wet`, ze kterého vzniká `wet_rating`.
+
 ## 6. Human-in-the-loop signály
 
 Signály z článků nejsou generované v GitHub Actions. GitHub Actions je jen konzumují.
@@ -118,7 +123,16 @@ Postup:
 3. JSON se uloží do `knowledge/processed/`.
 4. Pipeline signály zvaliduje a započítá.
 
-Signal count se propisuje i do `race_config` a webu.
+Signal count se propisuje i do `race_config` a webu. Když žádné signály nejsou, web to uvádí a jejich váha se přerozdělí.
+
+Inbox se nemaže: sekce starší než 14 dní přesouvá `collect_articles.py` do `knowledge/inbox/archive/articles_YYYY-MM.md` i se zaškrtnutím.
+
+### Penalizace, výměny PU, tresty, náhradníci
+
+- Automaticky: krok `Import grid penalties from race control` (`pipeline/import_penalties.py`) zapisuje `knowledge/processed/penalties_<sezona>_auto.json`.
+- Ručně: výměny prvků PU a penalizace z dokumentů FIA zapsat do `knowledge/processed/penalties_<sezona>.json` podle sekce 10 v `AI_EXTRACTION_GUIDE.md` a zvalidovat `python pipeline/validate_signals.py`.
+- Náhradník za jezdce: signál `driver_substitution`; nový jezdec dostane výchozí rating (úroveň týmového kolegy posunutá o rozdíl 25. percentilu a mediánu pole).
+- `select_prediction_target.py` zapíše do `race_config` `race_grid_penalties`, `sprint_grid_penalties` a pro aktuální cíl `grid_penalties`; pevný grid pak má `grid_source` `qualifying+penalties`.
 
 ## 7. Běžné workflow
 
@@ -133,6 +147,15 @@ Spouští:
 - push relevantních souborů
 
 Dělá kompletní end-to-end běh.
+
+Mezi kroky jsou i `Archive and score predictions` (track record v `outputs/track_record.json`) a import penalizací.
+
+### Backtest Simulation
+
+Soubor:
+- [`.github/workflows/backtest.yml`](.github/workflows/backtest.yml)
+
+Běží pro aktuální sezonu, report commitne a teprve potom spustí brány kvality. Červený běh znamená, že kalibrovaný model nepřekonal nejlepší baseline; report je i tak uložený a kalibrace se z něj použije.
 
 ### Simulate Prediction
 
@@ -154,12 +177,14 @@ Plný lokální běh:
 python pipeline/collect_articles.py --log-level INFO
 python pipeline/ingest_fastf1.py --log-level INFO
 python pipeline/select_next_gp.py --race-config config/race_config.json --log-level INFO
+python pipeline/import_penalties.py --race-config config/race_config.json --log-level INFO
 python pipeline/select_prediction_target.py --race-config config/race_config.json --raw-dir data/raw/fastf1 --session-weights config/session_weights.json --signals-dir knowledge/processed --log-level INFO
 python pipeline/build_features.py --guardrails-config config/signal_guardrails.json --allow-missing-fastf1 --log-level INFO
 python pipeline/update_ratings.py --guardrails-config config/signal_guardrails.json --allow-missing-features --log-level INFO
 python pipeline/apply_backtest_calibration.py --race-config config/race_config.json --allow-missing-report --log-level INFO
 python pipeline/simulate_weather_scenarios.py --raw-dir data/raw/fastf1 --allow-missing-models --log-level INFO
 python pipeline/publish_prediction.py --allow-missing-input --log-level INFO
+python pipeline/track_record.py --log-level INFO
 python pipeline/render_prediction_page.py --prediction outputs/prediction.json --prediction-dry outputs/prediction_dry.json --prediction-wet outputs/prediction_wet.json --race-config config/race_config.json --output outputs/prediction_report.html --allow-missing-input --log-level INFO
 python pipeline/validate_outputs.py --log-level INFO
 ```
@@ -190,5 +215,8 @@ Pokud workflow failne na `git push` HTTP 500:
 
 ## 10. Co ještě chybí
 
-Největší další krok:
-- hlouběji zapojit `FP1/FP2/FP3`, `SQ` a `Q1/Q2/Q3` přímo do `build_features.py`, aby jejich vliv nebyl jen v target selection a víkendových simulovaných úpravách, ale i v samotných rating/features vrstvách.
+Další kroky:
+- long-run tempo z tréninků (medián čistých kol podle směsi a stáří pneumatik z OpenF1 laps/stints) jako vstup závodní predikce,
+- nahradit ručně laděné koeficienty ratingů fitovaným modelem (Bradley–Terry / Plackett–Luce),
+- automatický parser dokumentů FIA (PDF) pro výměny prvků pohonné jednotky,
+- vyhodnotit sprint a sprint kvalifikaci v backtestu zvlášť.

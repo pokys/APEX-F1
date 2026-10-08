@@ -11289,7 +11289,7 @@
               "q3": null,
               "source": "openf1",
               "status": null,
-              "team_name": "Red Bull Racing",
+              "team_name": "Red Bull",
               "time": "0 days 00:01:18.298000"
             },
             {
@@ -11408,7 +11408,7 @@
               "q3": null,
               "source": "openf1",
               "status": null,
-              "team_name": "Cadillac",
+              "team_name": "Cadillac F1 Team",
               "time": "0 days 00:01:20.697000"
             }
           ],
@@ -13125,7 +13125,7 @@
               "q3": null,
               "source": "openf1",
               "status": null,
-              "team_name": "Racing Bulls",
+              "team_name": "RB F1 Team",
               "time": "0 days 00:01:09.637000"
             },
             {
@@ -18634,7 +18634,7 @@
               "q3": null,
               "source": "openf1",
               "status": null,
-              "team_name": "Alpine",
+              "team_name": "Alpine F1 Team",
               "time": "0 days 00:01:22.168000"
             },
             {
@@ -18651,7 +18651,7 @@
               "q3": null,
               "source": "openf1",
               "status": null,
-              "team_name": "Cadillac",
+              "team_name": "Cadillac F1 Team",
               "time": "0 days 00:01:23.118000"
             },
             {
@@ -22069,7 +22069,7 @@
               "q3": null,
               "source": "openf1",
               "status": null,
-              "team_name": "Alpine",
+              "team_name": "Alpine F1 Team",
               "time": "0 days 00:01:24.177000"
             },
             {
@@ -22188,7 +22188,7 @@
               "q3": null,
               "source": "openf1",
               "status": null,
-              "team_name": "Red Bull Racing",
+              "team_name": "Red Bull",
               "time": "0 days 00:01:24.873000"
             },
             {
@@ -22273,7 +22273,7 @@
               "q3": null,
               "source": "openf1",
               "status": null,
-              "team_name": "Cadillac",
+              "team_name": "Cadillac F1 Team",
               "time": "0 days 00:01:29.922000"
             }
           ],

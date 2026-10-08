@@ -40,6 +40,7 @@ on:
       - "data/raw/calendars/**"
       - "data/raw/tyres/**"
       - "config/track_profiles.json"
+      - "config/circuits.json"
       - "config/signal_guardrails.json"
       - "config/recency.json"
       - "requirements.txt"
@@ -129,6 +130,10 @@ jobs:
         run: |
           python pipeline/select_prediction_target.py --race-config config/race_config.json --raw-dir data/raw/fastf1 --calendar-cache-dir data/raw/calendars --session-weights config/session_weights.json --signals-dir knowledge/processed --log-level INFO
 
+      - name: Collect rain forecast
+        run: |
+          python pipeline/collect_weather.py --race-config config/race_config.json --circuits config/circuits.json --output outputs/weather_forecast.json --log-level INFO
+
       - name: Collect Pirelli weekend compounds
         env:
           SEASON: ${{ github.event.inputs.season }}
@@ -181,6 +186,10 @@ jobs:
           python pipeline/publish_prediction.py --input outputs/prediction_wet.json --output outputs/prediction_wet.json --allow-missing-input --log-level INFO
           python pipeline/publish_prediction.py --allow-missing-input --log-level INFO
 
+      - name: Record prediction phase history
+        run: |
+          python pipeline/prediction_history.py --log-level INFO
+
       - name: Archive and score predictions
         run: |
           python pipeline/track_record.py --prediction outputs/prediction.json --race-config config/race_config.json --archive-dir outputs/archive --raw-dir data/raw/fastf1 --output outputs/track_record.json --log-level INFO
@@ -209,4 +218,6 @@ jobs:
             outputs/prediction_report.html \
             outputs/archive \
             outputs/track_record.json \
+            outputs/prediction_history.json \
+            outputs/weather_forecast.json \
             config/race_config.json

@@ -111,15 +111,17 @@ Kanonické výstupy jsou:
 2. [`pipeline/ingest_fastf1.py`](pipeline/ingest_fastf1.py) vytvoří raw FastF1 snapshot sezony.
 3. [`pipeline/select_next_gp.py`](pipeline/select_next_gp.py) vybere další GP a traťový profil.
 4. [`pipeline/select_prediction_target.py`](pipeline/select_prediction_target.py) vybere `SQ`, `Sprint`, `Qualifying` nebo `Race`.
-5. [`pipeline/collect_tyre_compounds.py`](pipeline/collect_tyre_compounds.py) doplní Pirelli compound data, když jsou dostupná.
-6. [`pipeline/validate_signals.py`](pipeline/validate_signals.py) ověří strukturu soft signálů.
-7. [`pipeline/build_features.py`](pipeline/build_features.py) vytvoří driver/team features z hard dat a guardrailovaných signálů.
-8. [`pipeline/update_ratings.py`](pipeline/update_ratings.py) přepočítá ratingy jezdců, týmů, strategie a reliability.
-9. [`pipeline/apply_backtest_calibration.py`](pipeline/apply_backtest_calibration.py) aplikuje kalibraci z backtestu.
-10. [`pipeline/simulate_weather_scenarios.py`](pipeline/simulate_weather_scenarios.py) spustí suchý a mokrý scénář.
-11. [`pipeline/publish_prediction.py`](pipeline/publish_prediction.py) zapíše finální kanonický JSON.
-12. [`pipeline/render_prediction_page.py`](pipeline/render_prediction_page.py) vygeneruje HTML dashboard.
-13. [`pipeline/validate_outputs.py`](pipeline/validate_outputs.py) ověří matematickou konzistenci výstupů.
+5. [`pipeline/collect_weather.py`](pipeline/collect_weather.py) stáhne předpověď deště pro každou session z Open-Meteo (souřadnice tratí v [`config/circuits.json`](config/circuits.json)); best effort.
+6. [`pipeline/collect_tyre_compounds.py`](pipeline/collect_tyre_compounds.py) doplní Pirelli compound data, když jsou dostupná.
+7. [`pipeline/validate_signals.py`](pipeline/validate_signals.py) ověří strukturu soft signálů.
+8. [`pipeline/build_features.py`](pipeline/build_features.py) vytvoří driver/team features z hard dat a guardrailovaných signálů.
+9. [`pipeline/update_ratings.py`](pipeline/update_ratings.py) přepočítá ratingy jezdců, týmů, strategie a reliability.
+10. [`pipeline/apply_backtest_calibration.py`](pipeline/apply_backtest_calibration.py) aplikuje kalibraci z backtestu.
+11. [`pipeline/simulate_weather_scenarios.py`](pipeline/simulate_weather_scenarios.py) spustí suchý a mokrý scénář.
+12. [`pipeline/publish_prediction.py`](pipeline/publish_prediction.py) zapíše finální kanonický JSON.
+13. [`pipeline/prediction_history.py`](pipeline/prediction_history.py) uloží headline pravděpodobnosti aktuální fáze víkendu (cíl + odjeté session) do `outputs/prediction_history.json`.
+14. [`pipeline/render_prediction_page.py`](pipeline/render_prediction_page.py) vygeneruje HTML dashboard (pruhy pravděpodobností, timeline víkendu v lokálním čase s odpočtem, ▲▼ změny proti stavu před poslední session, riziko deště a doporučený suchý/mokrý scénář).
+15. [`pipeline/validate_outputs.py`](pipeline/validate_outputs.py) ověří matematickou konzistenci výstupů.
 
 ## Backtest a kalibrace
 
@@ -179,6 +181,7 @@ Plný lokální přepočet:
 python pipeline/collect_articles.py --log-level INFO
 python pipeline/ingest_fastf1.py --log-level INFO
 python pipeline/select_next_gp.py --race-config config/race_config.json --log-level INFO
+python pipeline/collect_weather.py --race-config config/race_config.json --log-level INFO
 python pipeline/import_penalties.py --race-config config/race_config.json --log-level INFO
 python pipeline/select_prediction_target.py --race-config config/race_config.json --raw-dir data/raw/fastf1 --calendar-cache-dir data/raw/calendars --session-weights config/session_weights.json --signals-dir knowledge/processed --log-level INFO
 python pipeline/collect_tyre_compounds.py --calendar-cache-dir data/raw/calendars --source-config config/tyre_sources.json --output-dir data/raw/tyres --log-level INFO
@@ -189,6 +192,7 @@ python pipeline/apply_backtest_calibration.py --race-config config/race_config.j
 python pipeline/simulate_weather_scenarios.py --raw-dir data/raw/fastf1 --recency-config config/recency.json --allow-missing-models --log-level INFO
 python pipeline/publish_prediction.py --allow-missing-input --log-level INFO
 python pipeline/track_record.py --log-level INFO
+python pipeline/prediction_history.py --log-level INFO
 python pipeline/render_prediction_page.py --prediction outputs/prediction.json --prediction-dry outputs/prediction_dry.json --prediction-wet outputs/prediction_wet.json --race-config config/race_config.json --tyres-input data/raw/tyres --output outputs/prediction_report.html --allow-missing-input --log-level INFO
 python pipeline/validate_outputs.py --log-level INFO
 ```

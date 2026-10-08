@@ -10,8 +10,15 @@ import html
 import json
 import logging
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+
+if __package__ is None or __package__ == "":
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from pipeline.collect_weather import is_wet_session, recommended_scenario  # noqa: E402
+from pipeline.prediction_history import phase_changes  # noqa: E402
 
 
 LOGGER = logging.getLogger("render_prediction_page")
@@ -33,6 +40,8 @@ TEAM_COLORS = {
 }
 
 QUALIFYING_TARGETS = {"qualifying", "sprint_qualifying"}
+# Smallest change (in percentage points) shown as a move up or down.
+DELTA_THRESHOLD_PP = 0.5
 
 
 def parse_args() -> argparse.Namespace:
@@ -43,6 +52,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--race-config", default="config/race_config.json", help="Race config JSON input path.")
     parser.add_argument("--tyres-input", default="data/raw/tyres", help="Weekend tyre compounds file or directory.")
     parser.add_argument("--track-record", default="outputs/track_record.json", help="Track record JSON (optional).")
+    parser.add_argument("--weather", default="outputs/weather_forecast.json", help="Weather forecast JSON (optional).")
+    parser.add_argument("--history", default="outputs/prediction_history.json", help="Prediction phase history JSON (optional).")
     parser.add_argument("--output", default="outputs/prediction_report.html", help="Rendered HTML output path.")
     parser.add_argument("--allow-missing-input", action="store_true", help="Exit 0 if prediction input is missing.")
     parser.add_argument(
@@ -189,24 +200,85 @@ def metric_labels(target: str) -> tuple[str, str, str]:
     return ("Win", "Podium", "Expected")
 
 
-def timeline_html(weekend_format: str, available_sessions: list[str], target_session_code: str) -> str:
-    steps = ["FP1", "SQ", "S", "Q", "R"] if weekend_format == "sprint" else ["FP1", "FP2", "FP3", "Q", "R"]
+def timeline_html(
+    weekend_format: str,
+    available_sessions: list[str],
+    target_session_code: str,
+    sessions_schedule: dict[str, Any] | None = None,
+    weather: dict[str, Any] | None = None,
+) -> str:
+    """Weekend sessions in chronological order with their start (shown in
+    the visitor's local time by a small script, UTC as fallback), status,
+    rain forecast and a countdown to the next session."""
+    schedule: dict[str, datetime] = {}
+    for code, value in (sessions_schedule or {}).items():
+        start = parse_utc(value)
+        if start is not None:
+            schedule[str(code).upper()] = start
+    default_steps = ["FP1", "SQ", "S", "Q", "R"] if weekend_format == "sprint" else ["FP1", "FP2", "FP3", "Q", "R"]
+    steps = sorted(schedule, key=lambda code: schedule[code]) if schedule else default_steps
     available = {str(code).upper() for code in available_sessions}
+    rain = {}
+    if isinstance(weather, dict):
+        rain = {str(code).upper(): info for code, info in (weather.get("sessions") or {}).items() if isinstance(info, dict)}
+
     cards = []
+    next_code = None
     for step in steps:
         if step in available:
-            status = "done"
-            label = "completed"
+            status, label = "done", "completed"
         elif step == target_session_code.upper():
-            status = "current"
-            label = "current target"
+            status, label = "current", "predicting now"
         else:
-            status = "upcoming"
-            label = "upcoming"
+            status, label = "upcoming", "upcoming"
+        if next_code is None and step not in available:
+            next_code = step
+        start = schedule.get(step)
+        time_html = ""
+        if start is not None:
+            iso = start.isoformat()
+            time_html = f'<time datetime="{iso}" data-local-time="{iso}">{start.strftime("%a %H:%M")} UTC</time>'
+        rain_html = ""
+        info = rain.get(step, {})
+        probability = info.get("rain_probability")
+        if probability is not None and status != "done":
+            wet_class = " rain-high" if is_wet_session(info) else ""
+            amount = info.get("precipitation_mm")
+            amount_text = f" · {amount:.1f} mm" if amount is not None else ""
+            rain_html = f'<em class="rain-chip{wet_class}" title="Open-Meteo forecast: chance of rain and expected amount">Rain {probability * 100:.0f}%{amount_text}</em>'
         cards.append(
-            f'<article class="timeline-step timeline-{status}"><p>{html.escape(step)}</p><span>{html.escape(label)}</span></article>'
+            f'<article class="timeline-step timeline-{status}">'
+            f'<p>{html.escape(SESSION_NAMES.get(step, step))}</p>{time_html}<span>{html.escape(label)}</span>{rain_html}</article>'
         )
-    return "".join(cards)
+    countdown = ""
+    if next_code and next_code in schedule:
+        countdown = (
+            f'<p class="next-session" data-countdown="{schedule[next_code].isoformat()}">'
+            f'Next: <strong>{html.escape(SESSION_NAMES.get(next_code, next_code))}</strong> '
+            f'<span class="countdown-value">{schedule[next_code].strftime("%a %d %b %H:%M")} UTC</span></p>'
+        )
+    return countdown + f'<section class="timeline-grid">{"".join(cards)}</section>'
+
+
+SESSION_NAMES = {
+    "FP1": "Practice 1",
+    "FP2": "Practice 2",
+    "FP3": "Practice 3",
+    "SQ": "Sprint Qualifying",
+    "S": "Sprint",
+    "Q": "Qualifying",
+    "R": "Race",
+}
+
+
+def parse_utc(value: Any) -> datetime | None:
+    try:
+        parsed = datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+    except (TypeError, ValueError):
+        return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    return parsed.astimezone(timezone.utc)
 
 
 def why_active_now(target: str, weekend_format: str, available_sessions: list[str]) -> str:
@@ -239,41 +311,79 @@ def season_blend_note(season_blend: dict[str, Any]) -> str:
     )
 
 
-def scenario_panel_html(prediction: dict[str, Any], scenario_key: str, scenario_label: str, active: bool) -> str:
+def odds_bar_html(row: dict[str, Any], target: str) -> str:
+    """Nested bars on one track: the darkest segment is the headline
+    probability (pole / win), lighter ones the wider outcomes (front row and
+    top 10 / podium). Each segment starts at zero, so lengths read directly."""
+    qualifying = target in QUALIFYING_TARGETS
+    layers = [("l1", row["headline_probability"])]
+    layers.append(("l2", row["secondary_probability"]))
+    if qualifying:
+        layers.append(("l3", row["third_probability"]))
+    labels = ("Pole", "Front row", "Top 10") if qualifying else ("Win", "Podium")
+    title = " · ".join(f"{label} {value * 100:.1f}%" for label, (_, value) in zip(labels, layers))
+    spans = "".join(
+        f'<span class="odds-{name}" style="width:{max(0.0, min(1.0, value)) * 100:.2f}%"></span>'
+        for name, value in reversed(layers)
+    )
+    return f'<div class="odds-bar" style="--team-color: {get_team_color(row["team"])}" title="{html.escape(title)}" role="img" aria-label="{html.escape(title)}">{spans}</div>'
+
+
+def delta_html(name: str, changes: dict[str, Any] | None) -> str:
+    if not isinstance(changes, dict):
+        return ""
+    delta = (changes.get("deltas") or {}).get(name)
+    if delta is None:
+        return ""
+    points = delta * 100.0
+    label = html.escape(str(changes.get("label") or "previous phase"))
+    if abs(points) < DELTA_THRESHOLD_PP:
+        return f'<span class="delta delta-flat" title="No change {label}">&ndash;</span>'
+    arrow, css = ("&#9650;", "delta-up") if points > 0 else ("&#9660;", "delta-down")
+    return f'<span class="delta {css}" title="{points:+.1f} pp {label}">{arrow} {abs(points):.1f}</span>'
+
+
+def scenario_panel_html(
+    prediction: dict[str, Any],
+    scenario_key: str,
+    scenario_label: str,
+    active: bool,
+    changes: dict[str, Any] | None = None,
+) -> str:
     target = str(prediction.get("prediction_target") or "race")
     rows = parse_prediction_rows(prediction)
     primary_label, secondary_label, tertiary_label = metric_labels(target)
+    qualifying = target in QUALIFYING_TARGETS
+    change_label = html.escape(str(changes.get("label"))) if isinstance(changes, dict) else ""
 
     top_cards = []
     for idx, row in enumerate(rows[:3], start=1):
         color = get_team_color(row["team"])
         top_cards.append(
             '<article class="hero-card" style="--team-color: {color}">'.format(color=color)
-            + f'<p class="hero-rank">P{idx}</p>'
+            + f'<p class="hero-rank">P{idx} {delta_html(row["name"], changes)}</p>'
             + f'<h3>{html.escape(row["name"])}</h3>'
             + f'<p class="hero-team">{html.escape(row["team"])}</p>'
-            + f'<p class="hero-metric">{primary_label}: {row["headline_probability"] * 100:.2f}%</p>'
-            + f'<p class="hero-metric">{secondary_label}: {row["secondary_probability"] * 100:.2f}%</p>'
+            + f'<p class="hero-big">{row["headline_probability"] * 100:.1f}%<small>{primary_label.lower()}</small></p>'
+            + odds_bar_html(row, target)
+            + f'<p class="hero-metric">{secondary_label}: {row["secondary_probability"] * 100:.1f}%</p>'
             + "</article>"
         )
 
+    expected_label = "Expected Position" if qualifying else "Expected Finish"
     table_rows = []
     for idx, row in enumerate(rows, start=1):
         color = get_team_color(row["team"])
-        tertiary = (
-            f'{row["third_probability"] * 100:.2f}%'
-            if target in QUALIFYING_TARGETS
-            else f'{row["expected_metric"]:.2f}'
-        )
-        expected_label = "Expected Position" if target in QUALIFYING_TARGETS else "Expected Finish"
+        numbers = f"{row['headline_probability'] * 100:.1f}% / {row['secondary_probability'] * 100:.1f}%"
+        if qualifying:
+            numbers += f" / {row['third_probability'] * 100:.1f}%"
         table_rows.append(
             '<tr style="--team-color: {color}">'.format(color=color)
             + f"<td>{idx}</td>"
             + f'<td><strong>{html.escape(row["name"])}</strong><small>{html.escape(row["team"])}</small></td>'
-            + f"<td>{row['headline_probability'] * 100:.2f}%</td>"
-            + f"<td>{row['secondary_probability'] * 100:.2f}%</td>"
-            + f"<td>{tertiary}</td>"
-            + f"<td>{row['expected_metric']:.2f}</td>"
+            + f'<td class="odds-cell">{odds_bar_html(row, target)}<small>{numbers}</small></td>'
+            + f"<td>{delta_html(row['name'], changes)}</td>"
+            + f"<td>{row['expected_metric']:.1f}</td>"
             + f"<td>{row['weekend_form_delta']:+.2f}</td>"
             + "</tr>"
         )
@@ -283,26 +393,26 @@ def scenario_panel_html(prediction: dict[str, Any], scenario_key: str, scenario_
         color = get_team_color(row["team"])
         mobile_cards.append(
             '<article class="mobile-driver-card" style="--team-color: {color}">'.format(color=color)
-            + f'<div class="mobile-top"><h4>{html.escape(row["name"])}</h4><span>{html.escape(row["team"])}</span></div>'
-            + f'<p>{primary_label}: {row["headline_probability"] * 100:.2f}%</p>'
-            + f'<p>{secondary_label}: {row["secondary_probability"] * 100:.2f}%</p>'
-            + (
-                f'<p>{tertiary_label}: {row["third_probability"] * 100:.2f}%</p>'
-                if target in QUALIFYING_TARGETS
-                else f'<p>{tertiary_label}: {row["expected_metric"]:.2f}</p>'
-            )
-            + f'<p>{expected_label}: {row["expected_metric"]:.2f}</p>'
-            + f'<p>Weekend Delta: {row["weekend_form_delta"]:+.2f}</p>'
+            + f'<div class="mobile-top"><h4>{html.escape(row["name"])} {delta_html(row["name"], changes)}</h4><span>{html.escape(row["team"])}</span></div>'
+            + odds_bar_html(row, target)
+            + f'<p>{primary_label} {row["headline_probability"] * 100:.1f}% · {secondary_label} {row["secondary_probability"] * 100:.1f}%'
+            + (f' · {tertiary_label} {row["third_probability"] * 100:.1f}%' if qualifying else "")
+            + f" · {expected_label} {row['expected_metric']:.1f}</p>"
             + "</article>"
         )
 
+    legend_items = [("l1", primary_label), ("l2", secondary_label)] + ([("l3", tertiary_label)] if qualifying else [])
+    legend = "".join(f'<span class="legend-item"><i class="legend-{key}"></i>{html.escape(label)}</span>' for key, label in legend_items)
+    change_note = f'<span class="legend-item">&#9650;&#9660; change {change_label}</span>' if change_label else ""
+    odds_header = " / ".join(label for _, label in legend_items)
     active_class = " is-active" if active else ""
     return (
         f'<section class="scenario-panel{active_class}" data-scenario="{scenario_key}">'
         f'<div class="scenario-heading">{html.escape(scenario_label)} scenario</div>'
         f'<section class="hero-grid">{"".join(top_cards)}</section>'
+        f'<p class="odds-legend">{legend}{change_note}</p>'
         f'<section class="desktop-table"><table>'
-        f"<thead><tr><th>#</th><th>Driver</th><th>{primary_label}</th><th>{secondary_label}</th><th>{tertiary_label}</th><th>Expected</th><th>Weekend Delta</th></tr></thead>"
+        f"<thead><tr><th>#</th><th>Driver</th><th>{odds_header}</th><th>Change</th><th>{expected_label}</th><th>Weekend Delta</th></tr></thead>"
         f"<tbody>{''.join(table_rows)}</tbody></table></section>"
         f'<section class="mobile-list">{"".join(mobile_cards)}</section>'
         "</section>"
@@ -390,6 +500,8 @@ def render_page(
     prediction_wet: dict[str, Any] | None = None,
     tyre_compounds: dict[str, Any] | None = None,
     track_record: dict[str, Any] | None = None,
+    weather: dict[str, Any] | None = None,
+    history: dict[str, Any] | None = None,
 ) -> str:
     target = str(prediction.get("prediction_target") or race_config.get("prediction_target") or "race")
     target_theme = "quali" if target in QUALIFYING_TARGETS else "race"
@@ -426,13 +538,33 @@ def render_page(
             "</section>"
         )
 
+    if isinstance(weather, dict) and str(weather.get("race") or "").lower() != str(prediction.get("race") or race_config.get("race") or "").lower():
+        weather = None
+    recommended, rain_probability = recommended_scenario(
+        weather, str(prediction.get("race") or race_config.get("race") or ""), str(target_session_code)
+    )
+    if not isinstance(prediction_wet, dict):
+        recommended = "dry"
+    weather_banner = ""
+    if rain_probability is not None:
+        session_info = ((weather or {}).get("sessions") or {}).get(str(target_session_code).upper()) or {}
+        amount = session_info.get("precipitation_mm")
+        amount_text = f", {amount:.1f} mm expected" if amount is not None else ""
+        advice = "showing the wet scenario first" if recommended == "wet" else "the dry scenario is the main one"
+        weather_banner = (
+            f'<p class="weather-banner weather-{recommended}">Rain risk for {html.escape(SESSION_NAMES.get(str(target_session_code), str(target_session_code)))}: '
+            f"<strong>{rain_probability * 100:.0f}%</strong>{html.escape(amount_text)} &middot; {advice} (Open-Meteo forecast)</p>"
+        )
+
     toggle_html = ""
     script_html = ""
     if isinstance(prediction_wet, dict):
+        dry_active = " is-active" if recommended == "dry" else ""
+        wet_active = " is-active" if recommended == "wet" else ""
         toggle_html = (
             '<div class="scenario-toggle">'
-            '<button class="toggle-btn is-active" data-target="dry" type="button">Dry</button>'
-            '<button class="toggle-btn" data-target="wet" type="button">Wet</button>'
+            f'<button class="toggle-btn{dry_active}" data-target="dry" type="button">Dry</button>'
+            f'<button class="toggle-btn{wet_active}" data-target="wet" type="button">Wet</button>'
             "</div>"
         )
         script_html = """
@@ -453,11 +585,22 @@ def render_page(
     </script>
 """
 
-    dry_panel = scenario_panel_html(prediction, "dry", "Dry", True)
-    wet_panel = scenario_panel_html(prediction_wet, "wet", "Wet", False) if isinstance(prediction_wet, dict) else ""
+    phase_config = {"season": prediction.get("season") or race_config.get("season"), "next_round": race_config.get("next_round")}
+    dry_panel = scenario_panel_html(prediction, "dry", "Dry", recommended == "dry", phase_changes(history, phase_config, "dry"))
+    wet_panel = (
+        scenario_panel_html(prediction_wet, "wet", "Wet", recommended == "wet", phase_changes(history, phase_config, "wet"))
+        if isinstance(prediction_wet, dict)
+        else ""
+    )
     manifest_cards = manifest_html(inputs_used if isinstance(inputs_used, list) else [])
     input_status_cards = input_status_html(inputs_status if isinstance(inputs_status, list) else [])
-    weekend_timeline = timeline_html(str(prediction.get("weekend_format") or race_config.get("weekend_format") or "standard"), list(available_sessions), target_session_code)
+    weekend_timeline = timeline_html(
+        str(prediction.get("weekend_format") or race_config.get("weekend_format") or "standard"),
+        list(available_sessions),
+        target_session_code,
+        race_config.get("sessions_schedule") if isinstance(race_config.get("sessions_schedule"), dict) else None,
+        weather,
+    )
 
     target_blurb = {
         "qualifying": "System is automatically estimating the next qualifying order from history, practice data and signals.",
@@ -917,6 +1060,103 @@ def render_page(
         margin: 8px 0 0;
         color: var(--muted);
       }}
+      .odds-bar {{
+        position: relative;
+        height: 12px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.06);
+        overflow: hidden;
+        min-width: 160px;
+      }}
+      .odds-bar span {{
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        border-radius: 999px;
+        background: var(--team-color);
+      }}
+      .odds-bar .odds-l3 {{ opacity: 0.22; }}
+      .odds-bar .odds-l2 {{ opacity: 0.5; }}
+      .odds-bar .odds-l1 {{ opacity: 1; }}
+      .odds-cell small {{
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.78rem;
+      }}
+      .hero-card .odds-bar {{ margin-top: 10px; }}
+      .hero-big {{
+        margin: 10px 0 0;
+        font-size: 2rem;
+        font-weight: 800;
+      }}
+      .hero-big small {{
+        margin-left: 6px;
+        font-size: 0.8rem;
+        font-weight: 400;
+        color: var(--muted);
+      }}
+      .mobile-driver-card .odds-bar {{ margin-top: 10px; }}
+      .odds-legend {{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin: 14px 0 0;
+        color: var(--muted);
+        font-size: 0.82rem;
+      }}
+      .legend-item i {{
+        display: inline-block;
+        width: 14px;
+        height: 8px;
+        margin-right: 6px;
+        border-radius: 999px;
+        background: var(--ink);
+      }}
+      .legend-l2 {{ opacity: 0.5; }}
+      .legend-l3 {{ opacity: 0.22; }}
+      .delta {{
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.82rem;
+        white-space: nowrap;
+      }}
+      .delta-up {{ color: #3ddc84; }}
+      .delta-down {{ color: #ff6b6b; }}
+      .delta-flat {{ color: var(--muted); }}
+      .next-session {{
+        margin: 0 0 12px;
+        color: var(--muted);
+      }}
+      .next-session strong {{ color: var(--ink); }}
+      .timeline-step time {{
+        display: block;
+        margin-top: 6px;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.85rem;
+      }}
+      .rain-chip {{
+        display: inline-block;
+        margin-top: 8px;
+        padding: 2px 8px;
+        border-radius: 999px;
+        font-style: normal;
+        font-size: 0.78rem;
+        background: rgba(80, 160, 255, 0.14);
+        color: #9cc9ff;
+      }}
+      .rain-chip.rain-high {{
+        background: rgba(80, 160, 255, 0.35);
+        color: #e4f1ff;
+      }}
+      .weather-banner {{
+        margin: 0 0 12px;
+        padding: 10px 14px;
+        border-radius: 12px;
+        border: 1px solid var(--grid);
+        background: var(--panel);
+      }}
+      .weather-banner.weather-wet {{
+        border-color: rgba(80, 160, 255, 0.6);
+      }}
       @media (max-width: 980px) {{
         .status-grid {{
           grid-template-columns: 1fr 1fr;
@@ -953,7 +1193,15 @@ def render_page(
           grid-template-columns: 1fr;
         }}
         .timeline-grid {{
-          grid-template-columns: 1fr;
+          grid-template-columns: 1fr 1fr;
+          gap: 8px;
+        }}
+        .timeline-step {{
+          padding: 10px;
+        }}
+        .timeline-step span {{
+          margin-top: 4px;
+          font-size: 0.72rem;
         }}
       }}
     </style>
@@ -1026,12 +1274,13 @@ def render_page(
         {toggle_html}
       </section>
 
+      <h2 class="section-title">Weekend Timeline</h2>
+      {weekend_timeline}
+
       <h2 class="section-title">Predictions</h2>
+      {weather_banner}
       {dry_panel}
       {wet_panel}
-
-      <h2 class="section-title">Weekend Timeline</h2>
-      <section class="timeline-grid">{weekend_timeline}</section>
 
       {compounds_html}
 
@@ -1040,9 +1289,39 @@ def render_page(
       {track_record_html(track_record)}
     </main>
 {script_html}
+    <script>
+      // Session times in the visitor's local time, and a countdown to the next one.
+      for (const el of document.querySelectorAll('[data-local-time]')) {{
+        const d = new Date(el.dataset.localTime);
+        if (!isNaN(d)) el.textContent = d.toLocaleString([], {{ weekday: 'short', hour: '2-digit', minute: '2-digit' }});
+      }}
+      const countdownEl = document.querySelector('[data-countdown]');
+      function tick() {{
+        if (!countdownEl) return;
+        const target = new Date(countdownEl.dataset.countdown);
+        const value = countdownEl.querySelector('.countdown-value');
+        const ms = target - new Date();
+        if (isNaN(target) || !value) return;
+        if (ms <= 0) {{ value.textContent = 'in progress or finished'; return; }}
+        const d = Math.floor(ms / 86400000), h = Math.floor(ms / 3600000) % 24, m = Math.floor(ms / 60000) % 60;
+        const when = target.toLocaleString([], {{ weekday: 'short', hour: '2-digit', minute: '2-digit' }});
+        value.textContent = 'in ' + (d ? d + 'd ' : '') + h + 'h ' + m + 'm (' + when + ')';
+      }}
+      tick();
+      setInterval(tick, 30000);
+    </script>
   </body>
 </html>
 """
+
+
+def load_optional_json(path: Path) -> dict[str, Any] | None:
+    try:
+        payload = load_json(path) if path.exists() else None
+    except Exception as exc:
+        LOGGER.warning("Ignoring unreadable %s: %s", path, exc)
+        return None
+    return payload if isinstance(payload, dict) else None
 
 
 def load_prediction_for_render(args: argparse.Namespace) -> tuple[dict[str, Any], dict[str, Any] | None]:
@@ -1102,6 +1381,8 @@ def main() -> int:
             prediction_wet=prediction_wet,
             tyre_compounds=tyre_compounds,
             track_record=track_record if isinstance(track_record, dict) else None,
+            weather=load_optional_json(Path(args.weather)),
+            history=load_optional_json(Path(args.history)),
         )
         output_path = Path(args.output)
         output_path.parent.mkdir(parents=True, exist_ok=True)

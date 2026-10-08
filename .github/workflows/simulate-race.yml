@@ -80,6 +80,10 @@ jobs:
           python pipeline/publish_prediction.py --input outputs/prediction_wet.json --output outputs/prediction_wet.json --allow-missing-input --log-level INFO
           python pipeline/publish_prediction.py --allow-missing-input --log-level INFO
 
+      - name: Record prediction phase history
+        run: |
+          python pipeline/prediction_history.py --log-level INFO
+
       - name: Render prediction page
         run: |
           python pipeline/render_prediction_page.py --prediction outputs/prediction.json --prediction-dry outputs/prediction_dry.json --prediction-wet outputs/prediction_wet.json --race-config config/race_config.json --tyres-input data/raw/tyres --output outputs/prediction_report.html --allow-missing-input --log-level INFO
@@ -91,4 +95,5 @@ jobs:
             outputs/prediction_dry.json \
             outputs/prediction_wet.json \
             outputs/prediction_report.html \
+            outputs/prediction_history.json \
             config/race_config.json

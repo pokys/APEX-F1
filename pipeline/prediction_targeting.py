@@ -135,6 +135,30 @@ SESSION_ORDER = {"FP1": 0, "FP2": 1, "FP3": 2, "SQ": 3, "S": 4, "Q": 5, "R": 6}
 # (c) full TZ data would pull pytz/zoneinfo dependencies into a small
 # pure-stdlib module. Errs on the conservative side; consumers always
 # fall back to DATE_ONLY_EARLY_SESSION_HOURS when a country is missing.
+COUNTRY_ALIASES: dict[str, str] = {
+    "usa": "united states",
+    "us": "united states",
+    "united states of america": "united states",
+    "uk": "united kingdom",
+    "great britain": "united kingdom",
+    "britain": "united kingdom",
+    "england": "united kingdom",
+    "uae": "united arab emirates",
+    "abu dhabi": "united arab emirates",
+    "ksa": "saudi arabia",
+    "the netherlands": "netherlands",
+    "holland": "netherlands",
+}
+
+
+def normalize_country(name: Any) -> str:
+    """Canonical lower-case country key. FastF1 reports e.g. "USA", "UK" and
+    "UAE" while profiles and timezone tables use full names; every lookup
+    must go through this function."""
+    key = " ".join(str(name or "").strip().lower().split())
+    return COUNTRY_ALIASES.get(key, key)
+
+
 COUNTRY_UTC_OFFSET_HOURS: dict[str, float] = {
     "australia": 11.0,
     "china": 8.0,
@@ -154,10 +178,30 @@ COUNTRY_UTC_OFFSET_HOURS: dict[str, float] = {
     "azerbaijan": 4.0,
     "singapore": 8.0,
     "qatar": 3.0,
-    "mexico": -5.0,
+    # Mexico abolished DST in 2022.
+    "mexico": -6.0,
     "brazil": -3.0,
     "abu dhabi": 4.0,
     "united arab emirates": 4.0,
+    "malaysia": 8.0,
+}
+
+# Event-specific offsets where a country spans several timezones.
+EVENT_UTC_OFFSET_HOURS: dict[str, float] = {
+    "las vegas grand prix": -8.0,
+    "united states grand prix": -5.0,
+    "miami grand prix": -4.0,
+}
+
+# Night and twilight events run their whole programme later than the
+# SESSION_END_LOCAL_HOUR defaults below. Only used for date-only schedules.
+NIGHT_EVENT_SHIFT_HOURS: dict[str, float] = {
+    "singapore": 5.0,
+    "bahrain": 3.0,
+    "saudi arabia": 3.0,
+    "qatar": 3.0,
+    "united arab emirates": 2.0,
+    "las vegas grand prix": 6.0,
 }
 
 # Conservative typical session end times in race-weekend LOCAL time
@@ -228,6 +272,7 @@ def sessions_completed_by_calendar(
     buffer_minutes: float = DEFAULT_SESSION_COMPLETION_BUFFER_MINUTES,
     country: str | None = None,
     weekend_format: str | None = None,
+    event_name: str | None = None,
 ) -> list[str]:
     """Return session codes whose scheduled completion is at or before
     `reference_time`.
@@ -269,8 +314,12 @@ def sessions_completed_by_calendar(
         return []
     buffer = timedelta(minutes=max(0.0, float(buffer_minutes)))
 
-    country_key = (country or "").strip().lower() or None
-    country_offset = COUNTRY_UTC_OFFSET_HOURS.get(country_key) if country_key else None
+    country_key = normalize_country(country) or None
+    event_key = str(event_name or "").strip().lower()
+    country_offset = EVENT_UTC_OFFSET_HOURS.get(event_key)
+    if country_offset is None and country_key:
+        country_offset = COUNTRY_UTC_OFFSET_HOURS.get(country_key)
+    night_shift = NIGHT_EVENT_SHIFT_HOURS.get(event_key, NIGHT_EVENT_SHIFT_HOURS.get(country_key or "", 0.0))
     if not weekend_format:
         weekend_format = _weekend_format_from_schedule(sessions_schedule)
     end_hours_map = SESSION_END_LOCAL_HOUR.get(str(weekend_format).strip().lower(), {})
@@ -307,7 +356,7 @@ def sessions_completed_by_calendar(
                 # Tier 2: derive UTC end time from country timezone offset
                 # and typical local end hour.
                 completion = scheduled_start + timedelta(
-                    hours=float(local_end_hour) - float(country_offset)
+                    hours=float(local_end_hour) + float(night_shift) - float(country_offset)
                 )
             else:
                 # Tier 3: per-day position fallback.

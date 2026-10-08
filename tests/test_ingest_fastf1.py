@@ -50,7 +50,7 @@ def test_fetch_schedule_falls_back_to_next_backend() -> None:
 
 def test_fetch_schedule_retries_within_backend_before_falling_back() -> None:
     attempts: list[str] = []
-    failures = {"f1timing": 2}  # fail twice, succeed on attempt 3
+    failures = {"fastf1": 2}  # fail twice, succeed on attempt 3
 
     def fetcher(season: int, backend: str) -> str:
         attempts.append(backend)
@@ -60,8 +60,8 @@ def test_fetch_schedule_retries_within_backend_before_falling_back() -> None:
         return f"ok-{backend}"
 
     result = fetch_schedule(2026, fetcher=fetcher, retries=3, sleep_fn=lambda _: None)
-    assert result == "ok-f1timing"
-    assert attempts == ["f1timing", "f1timing", "f1timing"]
+    assert result == "ok-fastf1"
+    assert attempts == ["fastf1", "fastf1", "fastf1"]
 
 
 def test_fetch_schedule_raises_after_all_backends_exhausted() -> None:

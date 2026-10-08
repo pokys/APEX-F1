@@ -142,3 +142,102 @@ def test_get_available_sessions_ignores_entry_lists(tmp_path) -> None:
     }
     (tmp_path / "season_2026.json").write_text(json.dumps(snapshot), encoding="utf-8")
     assert get_available_sessions(tmp_path, 2026, "Singapore Grand Prix") == ["SQ"]
+
+
+def test_live_calendar_prefers_fastf1_backend_with_exact_times(monkeypatch) -> None:
+    import pipeline.select_next_gp as module
+
+    calls: list[str] = []
+
+    class FakeSchedule:
+        def __init__(self, rows):
+            self.rows = rows
+
+        def sort_values(self, **kwargs):
+            return self
+
+        def iterrows(self):
+            for idx, row in enumerate(self.rows):
+                yield idx, row
+
+    class FakeFastF1:
+        @staticmethod
+        def get_event_schedule(season, include_testing=False, backend=None):
+            calls.append(backend)
+            return FakeSchedule(
+                [
+                    {
+                        "EventDate": "2026-10-11",
+                        "RoundNumber": 17,
+                        "EventName": "Singapore Grand Prix",
+                        "EventFormat": "sprint_qualifying",
+                        "Country": "Singapore",
+                        "Session1": "Practice 1",
+                        "Session1DateUtc": "2026-10-09 08:30:00",
+                        "Session2": "Sprint Qualifying",
+                        "Session2DateUtc": "2026-10-09 12:30:00",
+                    }
+                ]
+            )
+
+    monkeypatch.setattr(module, "fastf1", FakeFastF1)
+    calendar = module.fetch_live_calendar(2026)
+    assert calls == ["fastf1"]
+    assert calendar[0]["sessions_schedule"]["SQ"].startswith("2026-10-09T12:30:00")
+
+
+def test_merge_calendars_keeps_exact_times_over_date_only_values() -> None:
+    from pipeline.select_next_gp import merge_calendars
+
+    old = [{"round": 17, "event_name": "Singapore Grand Prix", "sessions_schedule": {"SQ": "2026-10-09T12:30:00+00:00", "Q": "2026-10-10T13:00:00+00:00"}}]
+    new = [{"round": 17, "event_name": "Singapore Grand Prix", "sessions_schedule": {"SQ": "2026-10-09T00:00:00+00:00", "Q": "2026-10-11T00:00:00+00:00"}}]
+    merged = merge_calendars(new, old)[0]["sessions_schedule"]
+    assert merged["SQ"] == "2026-10-09T12:30:00+00:00"
+    # A moved session (different day) is taken from the fresh schedule.
+    assert merged["Q"] == "2026-10-11T00:00:00+00:00"
+
+
+def test_track_params_reset_between_events_and_country_alias() -> None:
+    from pipeline.select_next_gp import DEFAULT_TRACK_PARAMS, apply_track_profile, reset_track_params
+
+    profiles = {
+        "by_event_name": {},
+        "by_country": {
+            "singapore": {"safety_car_probability": 0.52, "overtaking_difficulty": 0.79, "track": {"race_noise": 3.5}},
+            "united kingdom": {"safety_car_probability": 0.3, "track": {"race_noise": 3.2}},
+        },
+    }
+    config: dict = {}
+    reset_track_params(config)
+    assert apply_track_profile(config, {"event_name": "Singapore Grand Prix", "country": "Singapore"}, profiles) == "country:singapore"
+    config["track_profile"] = "country:singapore"
+
+    # Next GP without any profile must not inherit Singapore's parameters.
+    reset_track_params(config)
+    assert apply_track_profile(config, {"event_name": "Mystery Grand Prix", "country": "Atlantis"}, profiles) is None
+    assert config["safety_car_probability"] == DEFAULT_TRACK_PARAMS["safety_car_probability"]
+    assert config["overtaking_difficulty"] == DEFAULT_TRACK_PARAMS["overtaking_difficulty"]
+    assert "track_profile" not in config
+
+    # FastF1 reports "UK"; the profile key is the full name.
+    reset_track_params(config)
+    assert apply_track_profile(config, {"event_name": "British Grand Prix", "country": "UK"}, profiles) == "country:united kingdom"
+    assert config["track"]["race_noise"] == 3.2
+
+
+def test_every_2026_calendar_event_has_a_track_profile() -> None:
+    import json
+    from pathlib import Path
+
+    from pipeline.select_next_gp import apply_track_profile, load_track_profiles, reset_track_params
+
+    root = Path(__file__).resolve().parents[1]
+    profiles = load_track_profiles(root / "config" / "track_profiles.json")
+    calendar = json.loads((root / "data" / "raw" / "calendars" / "season_2026.json").read_text(encoding="utf-8"))
+    missing = []
+    for event in calendar:
+        config: dict = {}
+        reset_track_params(config)
+        if apply_track_profile(config, event, profiles) is None:
+            missing.append(event["event_name"])
+    assert missing == []

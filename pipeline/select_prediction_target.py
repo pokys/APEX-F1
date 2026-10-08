@@ -162,6 +162,7 @@ def main() -> int:
             buffer_minutes=args.calendar_completion_buffer_minutes,
             country=country,
             weekend_format=provisional_format,
+            event_name=race_name,
         )
 
         seen: set[str] = set()

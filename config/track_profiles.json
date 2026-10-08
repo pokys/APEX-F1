@@ -102,6 +102,16 @@
         "tyre_degradation_factor": 0.62
       }
     },
+    "malaysia": {
+      "overtaking_difficulty": 0.4,
+      "safety_car_probability": 0.25,
+      "track": {
+        "qualifying_noise": 2.3,
+        "race_noise": 3.5,
+        "tyre_degradation_factor": 0.75
+      },
+      "weather_modifier": 0.25
+    },
     "mexico": {
       "overtaking_difficulty": 0.45,
       "safety_car_probability": 0.2,
@@ -206,6 +216,52 @@
       },
       "weather": "dry",
       "weather_modifier": 0.05
+    },
+    "barcelona grand prix": {
+      "overtaking_difficulty": 0.6,
+      "safety_car_probability": 0.2,
+      "track": {
+        "qualifying_noise": 2.2,
+        "race_noise": 3.3,
+        "tyre_degradation_factor": 0.65
+      }
+    },
+    "las vegas grand prix": {
+      "overtaking_difficulty": 0.35,
+      "safety_car_probability": 0.35,
+      "track": {
+        "qualifying_noise": 2.4,
+        "race_noise": 3.6,
+        "tyre_degradation_factor": 0.35
+      }
+    },
+    "miami grand prix": {
+      "overtaking_difficulty": 0.5,
+      "safety_car_probability": 0.35,
+      "track": {
+        "qualifying_noise": 2.35,
+        "race_noise": 3.5,
+        "tyre_degradation_factor": 0.55
+      },
+      "weather_modifier": 0.1
+    },
+    "spanish grand prix": {
+      "overtaking_difficulty": 0.6,
+      "safety_car_probability": 0.4,
+      "track": {
+        "qualifying_noise": 2.35,
+        "race_noise": 3.55,
+        "tyre_degradation_factor": 0.5
+      }
+    },
+    "united states grand prix": {
+      "overtaking_difficulty": 0.45,
+      "safety_car_probability": 0.25,
+      "track": {
+        "qualifying_noise": 2.35,
+        "race_noise": 3.45,
+        "tyre_degradation_factor": 0.6
+      }
     }
   }
 }

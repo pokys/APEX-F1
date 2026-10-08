@@ -23,6 +23,7 @@ if __package__ is None or __package__ == "":
     sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from pipeline.prediction_targeting import session_has_classification  # noqa: E402
+from pipeline.select_next_gp import extract_sessions_schedule  # noqa: E402
 
 try:
     import fastf1  # type: ignore
@@ -48,7 +49,7 @@ PRACTICE_SESSIONS = {"FP1", "FP2", "FP3"}
 # disqualifications). Sessions are re-fetched until the event is this many
 # days older than the cutoff; afterwards a complete stored copy is reused.
 REUSE_AFTER_DAYS = 3
-SCHEDULE_BACKENDS = ("f1timing", "ergast")
+SCHEDULE_BACKENDS = ("fastf1", "f1timing", "ergast")
 SCHEDULE_RETRIES = 3
 SCHEDULE_RETRY_BASE_SECONDS = 2.0
 
@@ -599,6 +600,7 @@ def ingest(season: int, sessions: list[str], cutoff: date, output_dir: Path, cac
                 "country": to_json_scalar(row.get("Country")),
                 "location": to_json_scalar(row.get("Location")),
                 "event_date": event_date.isoformat() if event_date else None,
+                "sessions_schedule": extract_sessions_schedule(row),
             }
         )
 

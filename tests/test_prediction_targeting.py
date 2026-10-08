@@ -470,3 +470,73 @@ def test_entry_list_without_positions_is_not_an_available_session() -> None:
         active_signal_count=0,
     )
     assert {row["source"] for row in manifest} == {"history_driver", "fp2"}
+
+
+SINGAPORE_EXACT = {
+    "FP1": "2026-10-09T08:30:00+00:00",
+    "SQ": "2026-10-09T12:30:00+00:00",
+    "S": "2026-10-10T09:00:00+00:00",
+    "Q": "2026-10-10T13:00:00+00:00",
+    "R": "2026-10-11T12:00:00+00:00",
+}
+SINGAPORE_DATE_ONLY = {
+    "FP1": "2026-10-09T00:00:00+00:00",
+    "SQ": "2026-10-09T00:00:00+00:00",
+    "S": "2026-10-10T00:00:00+00:00",
+    "Q": "2026-10-10T00:00:00+00:00",
+    "R": "2026-10-11T12:00:00+00:00",
+}
+# Real session ends (UTC) for the 2026 Singapore sprint weekend.
+SINGAPORE_REAL_END = {
+    "FP1": "2026-10-09T09:30:00+00:00",
+    "SQ": "2026-10-09T13:15:00+00:00",
+    "S": "2026-10-10T09:40:00+00:00",
+    "Q": "2026-10-10T14:00:00+00:00",
+}
+
+
+def _target_at(schedule, when, country="Singapore", event_name="Singapore Grand Prix"):
+    from pipeline.prediction_targeting import select_prediction_target, sessions_completed_by_calendar
+
+    done = sessions_completed_by_calendar(schedule, reference_time=when, country=country, weekend_format="sprint", event_name=event_name)
+    return done, select_prediction_target("sprint", done)
+
+
+def test_singapore_exact_times_follow_real_weekend() -> None:
+    assert _target_at(SINGAPORE_EXACT, "2026-10-09T11:00:00+00:00")[1] == "sprint_qualifying"
+    assert _target_at(SINGAPORE_EXACT, "2026-10-09T14:05:00+00:00")[1] == "sprint"
+    assert _target_at(SINGAPORE_EXACT, "2026-10-10T13:30:00+00:00")[1] == "qualifying"
+    assert _target_at(SINGAPORE_EXACT, "2026-10-10T14:35:00+00:00")[1] == "race"
+
+
+def test_singapore_date_only_fallback_never_switches_before_session_end() -> None:
+    from datetime import datetime, timedelta
+
+    start = datetime.fromisoformat("2026-10-09T00:00:00+00:00")
+    for step in range(0, 2 * 24 * 4):
+        now = start + timedelta(minutes=15 * step)
+        done, _ = _target_at(SINGAPORE_DATE_ONLY, now.isoformat())
+        for code in done:
+            if code in SINGAPORE_REAL_END:
+                assert now >= datetime.fromisoformat(SINGAPORE_REAL_END[code]), (code, now)
+
+
+def test_american_country_aliases_resolve_like_full_names() -> None:
+    from pipeline.prediction_targeting import normalize_country, sessions_completed_by_calendar
+
+    assert normalize_country("USA") == "united states"
+    assert normalize_country("UK") == "united kingdom"
+    assert normalize_country("UAE") == "united arab emirates"
+    schedule = {
+        "FP1": "2026-10-23T00:00:00+00:00",
+        "FP2": "2026-10-23T00:00:00+00:00",
+        "FP3": "2026-10-24T00:00:00+00:00",
+        "Q": "2026-10-24T00:00:00+00:00",
+        "R": "2026-10-25T19:00:00+00:00",
+    }
+    kwargs = {"reference_time": "2026-10-24T21:30:00+00:00", "weekend_format": "conventional", "event_name": "United States Grand Prix"}
+    short = sessions_completed_by_calendar(schedule, country="USA", **kwargs)
+    full = sessions_completed_by_calendar(schedule, country="United States", **kwargs)
+    assert short == full
+    # Austin qualifying runs 21:00-22:00 UTC; it must not be marked done yet.
+    assert "Q" not in short

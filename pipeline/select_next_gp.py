@@ -20,7 +20,7 @@ from typing import Any
 if __package__ is None or __package__ == "":
     sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from pipeline.prediction_targeting import session_has_classification  # noqa: E402
+from pipeline.prediction_targeting import normalize_country, session_has_classification  # noqa: E402
 
 try:
     import fastf1  # type: ignore
@@ -96,6 +96,46 @@ def utc_iso_from_value(value: Any) -> str | None:
             parsed = parsed.replace(tzinfo=timezone.utc)
         return parsed.astimezone(timezone.utc).isoformat()
     return None
+
+
+# "fastf1" is FastF1's own maintained schedule with exact UTC session start
+# times. The "f1timing" and "ergast" backends often only know session dates
+# (midnight UTC) for upcoming events, so they are fallbacks only.
+SCHEDULE_BACKENDS = ("fastf1", "f1timing", "ergast")
+
+
+def _is_date_only(iso_value: Any) -> bool:
+    text = str(iso_value or "")
+    return "T00:00:00" in text
+
+
+def merge_session_schedules(new: dict[str, str], old: dict[str, str] | None) -> dict[str, str]:
+    """Keep a previously known exact start time when the fresh schedule only
+    has a date-only (midnight) value for the same session and day."""
+    merged = dict(new)
+    for code, old_value in (old or {}).items():
+        new_value = merged.get(code)
+        if new_value is None:
+            merged[code] = old_value
+            continue
+        if _is_date_only(new_value) and not _is_date_only(old_value) and str(new_value)[:10] == str(old_value)[:10]:
+            merged[code] = old_value
+    return merged
+
+
+def merge_calendars(new: list[dict[str, Any]], old: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    old_by_key = {(item.get("round"), str(item.get("event_name") or "").lower()): item for item in old if isinstance(item, dict)}
+    merged: list[dict[str, Any]] = []
+    for item in new:
+        previous = old_by_key.get((item.get("round"), str(item.get("event_name") or "").lower()))
+        if previous is not None:
+            item = dict(item)
+            item["sessions_schedule"] = merge_session_schedules(
+                dict(item.get("sessions_schedule") or {}),
+                previous.get("sessions_schedule") if isinstance(previous.get("sessions_schedule"), dict) else None,
+            )
+        merged.append(item)
+    return merged
 
 
 def extract_sessions_schedule(row: Any) -> dict[str, str]:
@@ -212,6 +252,27 @@ def load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+# Track-dependent parameters. They are reset to these defaults whenever a GP
+# is selected so nothing leaks from the previous event's profile.
+DEFAULT_TRACK_PARAMS: dict[str, Any] = {
+    "weather": "dry",
+    "weather_modifier": 0.0,
+    "safety_car_probability": 0.22,
+    "overtaking_difficulty": 0.5,
+    "track": {
+        "tyre_degradation_factor": 0.5,
+        "qualifying_noise": 2.6,
+        "race_noise": 3.8,
+    },
+}
+
+
+def reset_track_params(config: dict[str, Any]) -> None:
+    for key, value in DEFAULT_TRACK_PARAMS.items():
+        config[key] = json.loads(json.dumps(value))
+    config.pop("track_profile", None)
+
+
 def load_existing_config(path: Path) -> dict[str, Any]:
     default: dict[str, Any] = {
         "race": "Next GP",
@@ -219,15 +280,7 @@ def load_existing_config(path: Path) -> dict[str, Any]:
         "generated_at": "1970-01-01T00:00:00Z",
         "seed": 20260303,
         "simulations": 5000,
-        "weather": "dry",
-        "weather_modifier": 0.0,
-        "safety_car_probability": 0.22,
-        "overtaking_difficulty": 0.5,
-        "track": {
-            "tyre_degradation_factor": 0.5,
-            "qualifying_noise": 2.6,
-            "race_noise": 3.8,
-        },
+        **json.loads(json.dumps(DEFAULT_TRACK_PARAMS)),
     }
     if not path.exists():
         return default
@@ -282,12 +335,16 @@ def load_track_profiles(path: Path) -> dict[str, Any]:
 
 def apply_track_profile(config: dict[str, Any], event: dict[str, Any], profiles: dict[str, Any]) -> str | None:
     event_name_key = str(event.get("event_name") or "").strip().lower()
-    country_key = str(event.get("country") or "").strip().lower()
+    country_key = normalize_country(event.get("country"))
     profile = None
     profile_name = None
 
     by_event = profiles.get("by_event_name", {})
     by_country = profiles.get("by_country", {})
+    if isinstance(by_event, dict):
+        by_event = {str(k).strip().lower(): v for k, v in by_event.items()}
+    if isinstance(by_country, dict):
+        by_country = {normalize_country(k): v for k, v in by_country.items()}
     if isinstance(by_event, dict) and event_name_key in by_event and isinstance(by_event[event_name_key], dict):
         profile = by_event[event_name_key]
         profile_name = f"event:{event_name_key}"
@@ -431,7 +488,7 @@ def has_race_results(raw_dir: Path, season: int, event_name: str) -> bool:
 def next_event_for_season(season: int, as_of: date, raw_dir: Path) -> dict[str, Any] | None:
     if fastf1 is None:
         return None
-    backends = ["f1timing", "ergast"]
+    backends = SCHEDULE_BACKENDS
     for backend in backends:
         try:
             schedule = fastf1.get_event_schedule(season, include_testing=False, backend=backend)
@@ -480,7 +537,7 @@ def next_event_for_season(season: int, as_of: date, raw_dir: Path) -> dict[str, 
 def fetch_live_calendar(season: int) -> list[dict[str, Any]]:
     if fastf1 is None:
         return []
-    backends = ["f1timing", "ergast"]
+    backends = SCHEDULE_BACKENDS
     for backend in backends:
         try:
             schedule = fastf1.get_event_schedule(season, include_testing=False, backend=backend)
@@ -523,6 +580,7 @@ def select_next_event(requested_season: int | None, as_of: date, raw_dir: Path, 
     for season in candidate_seasons:
         live_calendar = fetch_live_calendar(season)
         if len(live_calendar) >= MIN_COMPLETE_CALENDAR_EVENTS:
+            live_calendar = merge_calendars(live_calendar, load_cached_calendar(calendar_cache_dir, season=season))
             write_cached_calendar(calendar_cache_dir, season, live_calendar)
             live_event = next_event_from_calendar(live_calendar, as_of=as_of, raw_dir=raw_dir)
             if live_event is not None:
@@ -667,9 +725,16 @@ def main() -> int:
         config["seed"] = int(f"{event['season']}{event['round']:02d}")
         if config.get("simulations", 0) < 5000:
             config["simulations"] = 5000
+        reset_track_params(config)
         profile_name = apply_track_profile(config, event, profiles)
         if profile_name:
             config["track_profile"] = profile_name
+        else:
+            LOGGER.warning(
+                "No track profile for %s (country %r); using default track parameters.",
+                event["event_name"],
+                event.get("country"),
+            )
 
         config["grid_source"] = "simulation"
         config.pop("fixed_grid", None)

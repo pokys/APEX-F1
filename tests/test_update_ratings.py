@@ -322,3 +322,12 @@ def test_simulation_uses_dnf_probability() -> None:
     ]
     result = simulate_single_race(entries, ["AAA", "BBB"], random.Random(1), 0.0, 0.5, 0.0, 0.5, 3.0)
     assert result == {"BBB": 1, "AAA": 3}
+
+
+def test_wet_rating_from_history_and_signals() -> None:
+    from pipeline.update_ratings import wet_rating
+
+    assert wet_rating({}, None) == 50.0
+    assert wet_rating({"wet_position_delta": 3.0, "wet_sessions": 4}, None) > 60.0
+    assert wet_rating({"wet_position_delta": -3.0, "wet_sessions": 4}, None) < 40.0
+    assert wet_rating({}, 1.0) > 50.0

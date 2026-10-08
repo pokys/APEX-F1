@@ -87,3 +87,22 @@ def test_align_team_names_uses_fastf1_roster() -> None:
     update_roster(roster, {"source": "openf1", "results": [{"abbreviation": "VER", "team_name": "Red Bull Racing"}]})
     rows = align_team_names([{"abbreviation": "VER", "team_name": "Red Bull Racing"}], roster)
     assert rows[0]["team_name"] == "Red Bull"
+
+
+def test_session_is_wet_from_tyre_stints() -> None:
+    def fetch(endpoint, params):
+        if endpoint == "stints":
+            return [
+                {"driver_number": 1, "compound": "INTERMEDIATE"},
+                {"driver_number": 63, "compound": "WET"},
+                {"driver_number": 4, "compound": "MEDIUM"},
+            ]
+        return []
+
+    assert OpenF1Client(fetcher=fetch).session_is_wet(1) is True
+
+    def dry(endpoint, params):
+        return [{"driver_number": 1, "compound": "SOFT"}] if endpoint == "stints" else []
+
+    assert OpenF1Client(fetcher=dry).session_is_wet(1) is False
+    assert OpenF1Client(fetcher=lambda e, p: []).session_is_wet(1) is None

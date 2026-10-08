@@ -154,6 +154,7 @@ def build_entries(driver_ratings: dict[str, Any], team_ratings: dict[str, Any], 
                 "driver_rating": safe_float(row.get("driver_rating"), 50.0),
                 "qualifying_rating": safe_float(row.get("qualifying_rating"), safe_float(row.get("driver_rating"), 50.0)),
                 "race_rating": safe_float(row.get("race_rating"), safe_float(row.get("driver_rating"), 50.0)),
+                "wet_rating": safe_float(row.get("wet_rating"), 50.0),
                 "team_rating": team_rating_by_name.get(team, 50.0),
                 "qualifying_team_rating": qualifying_team_rating_by_name.get(team, team_rating_by_name.get(team, 50.0)),
                 "race_team_rating": race_team_rating_by_name.get(team, team_rating_by_name.get(team, 50.0)),
@@ -172,10 +173,52 @@ def dnf_probability_from_reliability(reliability_score: float) -> float:
     return clamp(0.01 + (100.0 - reliability_score) / 170.0, 0.01, 0.35)
 
 
-def simulate_qualifying(entries: list[dict[str, Any]], rng: random.Random, qualifying_noise: float) -> list[str]:
+# A sprint is about a third of a Grand Prix: no mandatory pit stop (so no
+# strategy component), far less tyre degradation, fewer safety cars, less
+# time to recover from the grid and a third of the mechanical DNF exposure.
+SPRINT_SETTINGS = {
+    "dnf_factor": 1.0 / 3.0,
+    "tyre_factor": 0.4,
+    "safety_car_factor": 0.5,
+    "recovery_factor": 0.6,
+}
+# Wet running: more randomness, more safety cars and incidents, and the
+# drivers' wet skill (wet_rating, 50 = neutral) matters.
+WET_SETTINGS = {
+    "noise_factor": 1.3,
+    "safety_car_bonus": 0.2,
+    "dnf_factor": 1.3,
+    "skill_points": 6.0,
+}
+
+
+def wet_skill_bonus(entry: dict[str, Any]) -> float:
+    rating = safe_float(entry.get("wet_rating"), 50.0)
+    return WET_SETTINGS["skill_points"] * clamp((rating - 50.0) / 50.0, -1.0, 1.0)
+
+
+def noise_scale_from_config(config: dict[str, Any], scale_key: str, legacy_temperature_key: str) -> float:
+    """Calibrated multiplier for every random term of a simulation. Scaling
+    the noise (instead of re-weighting only the headline probabilities
+    afterwards) keeps pole/front-row/top-10 and win/podium/expected finish
+    consistent. Older configs only carry a temperature, used as fallback."""
+    raw = config.get(scale_key)
+    if raw is None:
+        raw = config.get(legacy_temperature_key)
+    return clamp(safe_float(raw, 1.0), 0.25, 6.0)
+
+
+def simulate_qualifying(
+    entries: list[dict[str, Any]],
+    rng: random.Random,
+    qualifying_noise: float,
+    wet: bool = False,
+) -> list[str]:
     scored: list[tuple[str, float]] = []
     for entry in entries:
         base = 0.62 * entry.get("qualifying_rating", entry["driver_rating"]) + 0.38 * entry.get("qualifying_team_rating", entry["team_rating"])
+        if wet:
+            base += wet_skill_bonus(entry)
         variation = rng.gauss(0.0, qualifying_noise)
         scored.append((entry["name"], base + variation))
     scored.sort(key=lambda x: (-x[1], x[0].lower()))
@@ -191,10 +234,21 @@ def simulate_single_race(
     weather_modifier: float,
     tyre_degradation_factor: float,
     race_noise: float,
+    race_kind: str = "race",
+    wet: bool = False,
+    noise_scale: float = 1.0,
 ) -> dict[str, int]:
     size = len(entries)
     grid_index = {name: idx + 1 for idx, name in enumerate(grid_order)}
-    safety_car_active = rng.random() < safety_car_probability
+    sprint = race_kind == "sprint"
+
+    sc_probability = safety_car_probability * (SPRINT_SETTINGS["safety_car_factor"] if sprint else 1.0)
+    if wet:
+        sc_probability += WET_SETTINGS["safety_car_bonus"]
+    safety_car_active = rng.random() < clamp(sc_probability, 0.0, 1.0)
+    tyre_factor = tyre_degradation_factor * (SPRINT_SETTINGS["tyre_factor"] if sprint else 1.0)
+    noise = noise_scale * (WET_SETTINGS["noise_factor"] if wet else 1.0)
+    dnf_factor = (SPRINT_SETTINGS["dnf_factor"] if sprint else 1.0) * (WET_SETTINGS["dnf_factor"] if wet else 1.0)
 
     scored_finish: list[tuple[str, float]] = []
     dnf_drivers: list[str] = []
@@ -203,25 +257,33 @@ def simulate_single_race(
         name = entry["name"]
         grid_pos = grid_index.get(name, size)
         grid_factor = (size - grid_pos) / max(size - 1, 1)
+        race_rating = entry.get("race_rating", entry["driver_rating"])
+        race_team_rating = entry.get("race_team_rating", entry["team_rating"])
 
-        base_pace = (
-            0.52 * entry.get("race_rating", entry["driver_rating"])
-            + 0.30 * entry.get("race_team_rating", entry["team_rating"])
-            + 0.18 * entry["strategy_score"]
-        )
-        strategy_noise = rng.gauss(0.0, 1.0 + tyre_degradation_factor)
-        tyre_noise = rng.gauss(0.0, 1.2 + 1.8 * tyre_degradation_factor)
+        if sprint:
+            # No pit stop, so no strategy contribution.
+            base_pace = 0.62 * race_rating + 0.38 * race_team_rating
+            strategy_noise = 0.0
+            safety_effect = rng.gauss(0.0, 1.2) * noise if safety_car_active else 0.0
+        else:
+            base_pace = 0.52 * race_rating + 0.30 * race_team_rating + 0.18 * entry["strategy_score"]
+            strategy_noise = rng.gauss(0.0, 1.0 + tyre_factor) * noise
+            safety_effect = (rng.gauss(0.0, 1.8) * noise + 0.03 * entry["strategy_score"]) if safety_car_active else 0.0
+        if wet:
+            base_pace += wet_skill_bonus(entry)
+        tyre_noise = rng.gauss(0.0, 1.2 + 1.8 * tyre_factor) * noise
         weather_noise = rng.gauss(0.0, 1.0) * weather_modifier
-        safety_effect = (rng.gauss(0.0, 1.8) + 0.03 * entry["strategy_score"]) if safety_car_active else 0.0
 
         start_track_position_advantage = 4.0 * grid_factor * overtaking_difficulty
-        overtaking_recovery = 4.5 * (1.0 - overtaking_difficulty) * (entry.get("race_rating", entry["driver_rating"]) / 100.0)
-        pure_noise = rng.gauss(0.0, race_noise)
+        recovery = 4.5 * (1.0 - overtaking_difficulty) * (race_rating / 100.0)
+        if sprint:
+            recovery *= SPRINT_SETTINGS["recovery_factor"]
+        pure_noise = rng.gauss(0.0, race_noise) * noise
 
         reliability_fail_prob = entry.get("dnf_probability")
         if reliability_fail_prob is None:
             reliability_fail_prob = dnf_probability_from_reliability(entry["reliability_score"])
-        if rng.random() < reliability_fail_prob:
+        if rng.random() < clamp(reliability_fail_prob * dnf_factor, 0.0, 0.95):
             dnf_drivers.append(name)
             continue
 
@@ -232,7 +294,7 @@ def simulate_single_race(
             + weather_noise
             + safety_effect
             + start_track_position_advantage
-            + overtaking_recovery
+            + recovery
             + pure_noise
         )
         scored_finish.append((name, race_score))
@@ -302,8 +364,9 @@ def run_simulation(entries: list[dict[str, Any]], config: dict[str, Any], driver
     tyre_degradation_factor = clamp(safe_float(track.get("tyre_degradation_factor"), 0.5), 0.0, 1.0)
     qualifying_noise = clamp(safe_float(track.get("qualifying_noise"), 2.6), 0.2, 8.0)
     race_noise = clamp(safe_float(track.get("race_noise"), 3.8), 0.5, 12.0)
-    win_temperature = clamp(safe_float(config.get("win_temperature"), 1.0), 0.6, 1.8)
-    win_smoothing = probability_smoothing(config, "win_probability_smoothing", DEFAULT_WIN_PROBABILITY_SMOOTHING)
+    noise_scale = noise_scale_from_config(config, "race_noise_scale", "win_temperature")
+    qualifying_scale = noise_scale_from_config(config, "qualifying_noise_scale", "qualifying_temperature")
+    wet = str(config.get("weather") or "dry").lower() == "wet"
 
     rng = random.Random(seed)
     driver_names = [entry["name"] for entry in entries]
@@ -317,7 +380,7 @@ def run_simulation(entries: list[dict[str, Any]], config: dict[str, Any], driver
         if isinstance(fixed_grid_config, list) and len(fixed_grid_config) > 0:
             grid = fixed_grid_config
         else:
-            grid = simulate_qualifying(entries, rng, qualifying_noise=qualifying_noise)
+            grid = simulate_qualifying(entries, rng, qualifying_noise=qualifying_noise * qualifying_scale, wet=wet)
 
         race_positions = simulate_single_race(
             entries=entries,
@@ -328,6 +391,8 @@ def run_simulation(entries: list[dict[str, Any]], config: dict[str, Any], driver
             weather_modifier=weather_modifier,
             tyre_degradation_factor=tyre_degradation_factor,
             race_noise=race_noise,
+            wet=wet,
+            noise_scale=noise_scale,
         )
 
         for name, finish in race_positions.items():
@@ -337,11 +402,7 @@ def run_simulation(entries: list[dict[str, Any]], config: dict[str, Any], driver
             if finish <= 3:
                 podium_count[name] += 1
 
-    raw_win_prob = smooth_probability_distribution(
-        {name: win_count[name] / simulations for name in driver_names},
-        smoothing=win_smoothing,
-    )
-    calibrated_win_prob = temperature_scale_distribution(raw_win_prob, temperature=win_temperature)
+    calibrated_win_prob = {name: win_count[name] / simulations for name in driver_names}
 
     # Map driver names back to their teams and raw ratings for the output
     driver_stats = {
@@ -401,8 +462,8 @@ def run_simulation(entries: list[dict[str, Any]], config: dict[str, Any], driver
             "available_sessions": config.get("available_sessions", []),
             "safety_car_probability": round(safety_car_probability, 6),
             "overtaking_difficulty": round(overtaking_difficulty, 6),
-            "win_temperature": round(win_temperature, 6),
-            "win_probability_smoothing": round(win_smoothing, 6),
+            "race_noise_scale": round(noise_scale, 6),
+            "qualifying_noise_scale": round(qualifying_scale, 6),
         },
         "drivers": rows,
     }

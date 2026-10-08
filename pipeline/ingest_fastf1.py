@@ -558,6 +558,32 @@ def load_session_openf1(
     }
 
 
+WET_FLAG_SESSIONS = {"SQ", "S", "Q", "R"}
+
+
+def annotate_wet_flag(
+    session: dict[str, Any],
+    client: OpenF1Client,
+    season: int,
+    session_code: str,
+    scheduled_start: Any,
+) -> None:
+    """Store whether a competitive session ran in wet conditions (from
+    OpenF1 tyre stints / weather). Kept once known."""
+    if "wet" in session or session_code not in WET_FLAG_SESSIONS or not scheduled_start:
+        return
+    try:
+        session_key = session.get("openf1_session_key") or client.find_session_key(season, session_code, scheduled_start)
+        if session_key is None:
+            return
+        wet = client.session_is_wet(int(session_key))
+    except Exception as exc:
+        LOGGER.warning("OpenF1 wet flag lookup failed (%s %s): %s", season, session_code, exc)
+        return
+    if wet is not None:
+        session["wet"] = bool(wet)
+
+
 def align_team_names(results: list[dict[str, Any]], roster: dict[str, str]) -> list[dict[str, Any]]:
     """Use the FastF1 team name of each driver so a fallback source with
     different naming ("Red Bull Racing" vs "Red Bull") does not create a
@@ -692,6 +718,8 @@ def ingest(
         for session_code in sessions:
             stored = previous_sessions.get((round_number, session_code))
             if reusable_session(stored, session_code, event_date, cutoff, include_lap_metrics):
+                if openf1 is not None:
+                    annotate_wet_flag(stored, openf1, season, session_code, schedule_times.get(session_code))
                 sessions_payload.append(stored)
                 update_roster(roster, stored)
                 continue
@@ -705,6 +733,8 @@ def ingest(
                         align_team_names(loaded["results"], roster)
             if loaded is not None:
                 update_roster(roster, loaded)
+                if openf1 is not None:
+                    annotate_wet_flag(loaded, openf1, season, session_code, schedule_times.get(session_code))
                 sessions_payload.append(loaded)
 
         if not sessions_payload:

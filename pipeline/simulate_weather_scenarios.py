@@ -61,8 +61,18 @@ def parse_args() -> argparse.Namespace:
         default="outputs/prediction.json",
         help="Default output path kept for compatibility (written from dry scenario).",
     )
-    parser.add_argument("--dry-weather-modifier", type=float, default=0.0, help="Weather modifier for dry scenario.")
-    parser.add_argument("--wet-weather-modifier", type=float, default=0.3, help="Weather modifier for wet scenario.")
+    parser.add_argument(
+        "--dry-weather-modifier",
+        type=float,
+        default=None,
+        help="Weather modifier for the dry scenario (default: keep the track profile value).",
+    )
+    parser.add_argument(
+        "--wet-weather-modifier",
+        type=float,
+        default=None,
+        help="Weather modifier for the wet scenario (default: track profile value + 0.3).",
+    )
     parser.add_argument("--wet-seed-offset", type=int, default=101, help="Seed offset applied only to wet scenario.")
     parser.add_argument("--allow-missing-models", action="store_true", help="Exit 0 when model files are missing.")
     parser.add_argument(
@@ -91,9 +101,15 @@ def utc_iso_timestamp(now: datetime | None = None) -> str:
     return current.replace(microsecond=0).isoformat().replace("+00:00", "Z")
 
 
-def make_scenario_config(base: dict[str, Any], weather: str, modifier: float, seed_offset: int) -> dict[str, Any]:
+WET_MODIFIER_BONUS = 0.3
+
+
+def make_scenario_config(base: dict[str, Any], weather: str, modifier: float | None, seed_offset: int) -> dict[str, Any]:
     cfg = json.loads(json.dumps(base))
     cfg["weather"] = weather
+    profile_modifier = safe_float(cfg.get("weather_modifier"), 0.0)
+    if modifier is None:
+        modifier = profile_modifier + (WET_MODIFIER_BONUS if weather == "wet" else 0.0)
     cfg["weather_modifier"] = float(modifier)
     base_seed = int(safe_float(cfg.get("seed"), 20260303))
     cfg["seed"] = base_seed + int(seed_offset)

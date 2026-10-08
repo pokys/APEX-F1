@@ -483,6 +483,19 @@ def race_position_gain_by_team(rows: list[dict[str, Any]]) -> dict[str, float]:
     return out
 
 
+def wet_rating(row: dict[str, Any], team_wet_index: float | None) -> float:
+    """Wet-weather skill, 50 = same as in the dry. Built from places gained
+    in wet sessions (shrunk by how few there were) and, when present, the
+    team's wet-performance signal."""
+    delta = safe_float(row.get("wet_position_delta"))
+    sessions = safe_float(row.get("wet_sessions")) or 0.0
+    history = None
+    if delta is not None and sessions > 0:
+        history = component(50.0 + 8.0 * clamp(delta, -4.0, 4.0) * sessions / (sessions + 2.0))
+    signal = component(35.0 + 30.0 * clamp(team_wet_index, 0.0, 1.0)) if team_wet_index is not None else None
+    return round(weighted_component_mean([(history, 1.0), (signal, 0.5)], fallback=50.0), 6)
+
+
 def compute_driver_ratings(features: dict[str, Any], wet_by_team: dict[str, float], active_drivers: dict[str, str]) -> dict[str, Any]:
     rows = features.get("drivers", [])
     if not isinstance(rows, list):
@@ -606,6 +619,7 @@ def compute_driver_ratings(features: dict[str, Any], wet_by_team: dict[str, floa
             "team": team_name,
             "qualifying_rating": qualifying_rating,
             "race_rating": race_rating,
+            "wet_rating": wet_rating(row, wet_by_team.get(slug(team_name))),
             "components": {key: value for key, value in components.items() if value is not None},
         }
 
@@ -634,6 +648,7 @@ def compute_driver_ratings(features: dict[str, Any], wet_by_team: dict[str, floa
             "team": team_name,
             "qualifying_rating": values["qualifying_rating"],
             "race_rating": values["race_rating"],
+            "wet_rating": wet_rating({}, wet_by_team.get(slug(team_name))),
             "components": {"new_driver_baseline": True},
         }
 

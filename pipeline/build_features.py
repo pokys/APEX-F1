@@ -280,6 +280,27 @@ def qualifying_teammate_gaps_ms(results: list[Any]) -> dict[int, float]:
     return gaps
 
 
+WET_SESSION_CODES = {"SQ", "S", "Q", "R"}
+
+
+def wet_position_delta(wet_results: list[tuple[str, float]], metrics: dict[str, Any]) -> tuple[float | None, int]:
+    """Average places gained in wet sessions versus the driver's usual
+    level in that kind of session (positive = stronger in the wet)."""
+    deltas: list[float] = []
+    for code, position in wet_results:
+        if code in {"Q", "SQ"}:
+            baseline = metrics.get("qualifying_avg_position")
+        elif code == "S":
+            baseline = metrics.get("sprint_avg_position") or metrics.get("race_avg_position")
+        else:
+            baseline = metrics.get("race_avg_position")
+        if baseline is not None:
+            deltas.append(float(baseline) - float(position))
+    if not deltas:
+        return None, 0
+    return round(statistics.fmean(deltas), 6), len(deltas)
+
+
 def race_gap_to_winner_seconds(row: dict[str, Any]) -> float | None:
     position = to_float(row.get("position"))
     if position is None:
@@ -707,6 +728,7 @@ def build_features(
                 "sprint_lap_pace_gaps": [],
                 "qualifying_phase_depths": [],
                 "sprint_qualifying_phase_depths": [],
+                "wet_results": [],
                 "starts": 0,
                 "dnfs": 0,
                 "points_total": 0.0,
@@ -799,6 +821,8 @@ def build_features(
                 team_state = ensure_team(team_name)
                 position = to_float(row.get("position"))
                 phase_depth = qualifying_phase_depth(row)
+                if session.get("wet") is True and position is not None and code in WET_SESSION_CODES:
+                    driver_state["wet_results"].append((code, position))
 
                 if code == "R":
                     if position is not None:
@@ -928,6 +952,7 @@ def build_features(
             confidence_delta = round(capped_soft_signal(raw_conf_delta, baseline, max_delta, -1.0, 1.0), 6)
 
         metrics = driver_or_team_metrics(state)
+        wet_delta, wet_sessions = wet_position_delta(state["wet_results"], metrics)
         driver_rows.append(
             {
                 "driver": state["driver"],
@@ -957,6 +982,8 @@ def build_features(
                 "points_total": round(state["points_total"], 6),
                 "signal_driver_confidence_delta": confidence_delta,
                 "signal_count": int(signal.get("signal_count", 0.0)),
+                "wet_position_delta": wet_delta,
+                "wet_sessions": wet_sessions,
             }
         )
 

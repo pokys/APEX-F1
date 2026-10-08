@@ -10,19 +10,16 @@ from pathlib import Path
 from typing import Any
 
 from pipeline.prediction_targeting import compute_weekend_form, find_event, load_json
+from pipeline.simulate_race import WET_SETTINGS
 from pipeline.simulate_race import (
-    DEFAULT_QUALIFYING_PROBABILITY_SMOOTHING,
-    DEFAULT_WIN_PROBABILITY_SMOOTHING,
     MIN_SIMULATIONS,
     build_entries,
     clamp,
-    probability_smoothing,
+    noise_scale_from_config,
     safe_float,
     simulate_qualifying,
     simulate_single_race,
-    smooth_probability_distribution,
     stable_hash_json,
-    temperature_scale_distribution,
 )
 
 SEASON_BLEND_RE = re.compile(r"Blended Data:\s*(\d+)% Season (\d{4}),\s*(\d+)% Season (\d{4})")
@@ -154,12 +151,8 @@ def run_qualifying_prediction(
         track = {}
     qualifying_noise = clamp(safe_float(track.get("qualifying_noise"), 2.6), 0.2, 8.0)
     weather_modifier = clamp(safe_float(config.get("weather_modifier"), 0.0), -2.0, 2.0)
-    qualifying_temperature = clamp(safe_float(config.get("qualifying_temperature"), 1.0), 0.6, 1.8)
-    qualifying_smoothing = probability_smoothing(
-        config,
-        "qualifying_probability_smoothing",
-        DEFAULT_QUALIFYING_PROBABILITY_SMOOTHING,
-    )
+    noise_scale = noise_scale_from_config(config, "qualifying_noise_scale", "qualifying_temperature")
+    wet = str(config.get("weather") or "dry").lower() == "wet"
 
     rng = random.Random(seed)
     names = [entry["name"] for entry in entries]
@@ -169,10 +162,12 @@ def run_qualifying_prediction(
     pos_sum = {name: 0.0 for name in names}
     top10_cutoff = min(10, len(entries))
 
-    adjusted_noise = qualifying_noise + abs(weather_modifier) * 0.6
+    adjusted_noise = (qualifying_noise + abs(weather_modifier) * 0.6) * noise_scale
+    if wet:
+        adjusted_noise *= WET_SETTINGS["noise_factor"]
 
     for _ in range(simulations):
-        grid = simulate_qualifying(entries, rng, qualifying_noise=adjusted_noise)
+        grid = simulate_qualifying(entries, rng, qualifying_noise=adjusted_noise, wet=wet)
         for idx, name in enumerate(grid, start=1):
             pos_sum[name] += float(idx)
             if idx == 1:
@@ -182,11 +177,7 @@ def run_qualifying_prediction(
             if idx <= top10_cutoff:
                 top10_count[name] += 1
 
-    raw_pole_prob = smooth_probability_distribution(
-        {name: pole_count[name] / simulations for name in names},
-        smoothing=qualifying_smoothing,
-    )
-    scaled_pole_prob = temperature_scale_distribution(raw_pole_prob, temperature=qualifying_temperature)
+    scaled_pole_prob = {name: pole_count[name] / simulations for name in names}
 
     driver_stats = {
         e["name"]: (
@@ -228,7 +219,7 @@ def run_qualifying_prediction(
         "grid_source": str(config.get("grid_source") or "simulation"),
         "available_sessions": config.get("available_sessions", []),
         "qualifying_noise": round(adjusted_noise, 6),
-        "qualifying_probability_smoothing": round(qualifying_smoothing, 6),
+        "qualifying_noise_scale": round(noise_scale, 6),
     }
     payload["drivers"] = rows
     return payload
@@ -257,8 +248,10 @@ def run_race_or_sprint_prediction(
     tyre_degradation_factor = clamp(safe_float(track.get("tyre_degradation_factor"), 0.5), 0.0, 1.0)
     qualifying_noise = clamp(safe_float(track.get("qualifying_noise"), 2.6), 0.2, 8.0)
     race_noise = clamp(safe_float(track.get("race_noise"), 3.8), 0.5, 12.0)
-    win_temperature = clamp(safe_float(config.get("win_temperature"), 1.0), 0.6, 1.8)
-    win_smoothing = probability_smoothing(config, "win_probability_smoothing", DEFAULT_WIN_PROBABILITY_SMOOTHING)
+    noise_scale = noise_scale_from_config(config, "race_noise_scale", "win_temperature")
+    qualifying_scale = noise_scale_from_config(config, "qualifying_noise_scale", "qualifying_temperature")
+    wet = str(config.get("weather") or "dry").lower() == "wet"
+    race_kind = "sprint" if str(config.get("prediction_target") or "race") == "sprint" else "race"
 
     rng = random.Random(seed)
     driver_names = [entry["name"] for entry in entries]
@@ -272,7 +265,7 @@ def run_race_or_sprint_prediction(
         if isinstance(fixed_grid_config, list) and fixed_grid_config:
             grid = fixed_grid_config
         else:
-            grid = simulate_qualifying(entries, rng, qualifying_noise=qualifying_noise)
+            grid = simulate_qualifying(entries, rng, qualifying_noise=qualifying_noise * qualifying_scale, wet=wet)
 
         race_positions = simulate_single_race(
             entries=entries,
@@ -283,6 +276,9 @@ def run_race_or_sprint_prediction(
             weather_modifier=weather_modifier,
             tyre_degradation_factor=tyre_degradation_factor,
             race_noise=race_noise,
+            race_kind=race_kind,
+            wet=wet,
+            noise_scale=noise_scale,
         )
 
         for name, finish in race_positions.items():
@@ -292,11 +288,7 @@ def run_race_or_sprint_prediction(
             if finish <= 3:
                 podium_count[name] += 1
 
-    raw_win_prob = smooth_probability_distribution(
-        {name: win_count[name] / simulations for name in driver_names},
-        smoothing=win_smoothing,
-    )
-    calibrated_win_prob = temperature_scale_distribution(raw_win_prob, temperature=win_temperature)
+    calibrated_win_prob = {name: win_count[name] / simulations for name in driver_names}
 
     driver_stats = {
         e["name"]: (
@@ -338,8 +330,9 @@ def run_race_or_sprint_prediction(
         "available_sessions": config.get("available_sessions", []),
         "safety_car_probability": round(safety_car_probability, 6),
         "overtaking_difficulty": round(overtaking_difficulty, 6),
-        "win_temperature": round(win_temperature, 6),
-        "win_probability_smoothing": round(win_smoothing, 6),
+        "race_kind": race_kind,
+        "race_noise_scale": round(noise_scale, 6),
+        "qualifying_noise_scale": round(qualifying_scale, 6),
     }
     payload["drivers"] = rows
     return payload

@@ -378,3 +378,23 @@ def test_qualifying_gap_compares_same_segments_only() -> None:
 
     assert by_driver["SAI"]["qualifying_gap_to_best_ms"] == 800.0
     assert by_driver["RUS"]["qualifying_gap_to_best_ms"] == 0.0
+
+
+def test_wet_sessions_produce_wet_position_delta() -> None:
+    def race(position, abbr):
+        return {"position": position, "abbreviation": abbr, "team_name": "T" + abbr, "status": "Finished"}
+
+    events = []
+    for idx, wet in enumerate([False, False, False, True]):
+        order = ["AAA", "BBB"] if not wet else ["BBB", "AAA"]
+        events.append(
+            {
+                "event_date": f"2026-0{idx + 3}-01",
+                "sessions": [{"session_code": "R", "wet": wet, "results": [race(1, order[0]), race(2, order[1])]}],
+            }
+        )
+    features = build_features({"season": 2026, "events": events}, [], DEFAULT_SIGNAL_GUARDRAILS)
+    by_driver = {row["driver"]: row for row in features["drivers"]}
+    assert by_driver["BBB"]["wet_sessions"] == 1
+    assert by_driver["BBB"]["wet_position_delta"] > 0
+    assert by_driver["AAA"]["wet_position_delta"] < 0

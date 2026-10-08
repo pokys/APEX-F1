@@ -197,5 +197,23 @@ class OpenF1Client:
                 best[abbr] = seconds
         return best
 
+    def session_is_wet(self, session_key: int) -> bool | None:
+        """True when a meaningful share of drivers ran intermediate or wet
+        tyres, or rain was recorded. None when OpenF1 has no data."""
+        stints = self.get("stints", session_key=session_key)
+        if stints:
+            drivers = {row.get("driver_number") for row in stints if row.get("driver_number") is not None}
+            wet_drivers = {
+                row.get("driver_number")
+                for row in stints
+                if str(row.get("compound") or "").upper() in {"INTERMEDIATE", "WET"}
+            }
+            if drivers:
+                return len(wet_drivers) / len(drivers) >= 0.25
+        weather = self.get("weather", session_key=session_key)
+        if weather:
+            return any(float(row.get("rainfall") or 0) > 0 for row in weather)
+        return None
+
     def race_control(self, session_key: int) -> list[dict[str, Any]]:
         return self.get("race_control", session_key=session_key)

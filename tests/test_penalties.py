@@ -208,7 +208,12 @@ def test_select_prediction_target_applies_penalties_to_qualifying_grid(tmp_path:
     }], "calendar": []}), encoding="utf-8")
     signals = tmp_path / "signals"
     signals.mkdir()
-    (signals / "penalties_2026.json").write_text(json.dumps({"signals": [_penalty("AAA", places=3)]}), encoding="utf-8")
+    substitution = {
+        "type": "driver_substitution", "season": 2026, "event": "Singapore Grand Prix", "driver_out": "FFF",
+        "driver_in": "ZZZ", "team": "Team F", "source_name": "fia_decision_documents", "source_url": "https://www.fia.com/x.pdf",
+        "timestamp": "2026-10-08T10:00:00",
+    }
+    (signals / "penalties_2026.json").write_text(json.dumps({"signals": [_penalty("AAA", places=3), substitution]}), encoding="utf-8")
     config = tmp_path / "race_config.json"
     config.write_text(json.dumps({"season": 2026, "race": "Singapore Grand Prix"}), encoding="utf-8")
     monkeypatch.setattr(sys, "argv", [
@@ -222,3 +227,6 @@ def test_select_prediction_target_applies_penalties_to_qualifying_grid(tmp_path:
     assert result["fixed_grid"] == ["BBB", "CCC", "DDD", "AAA", "EEE", "FFF"]
     assert result["grid_source"] == "qualifying+penalties"
     assert result["race_grid_penalties"][0]["driver"] == "AAA"
+    assert result["driver_substitutions"] == [
+        {"driver_in": "ZZZ", "driver_out": "FFF", "team": "Team F", "source": "https://www.fia.com/x.pdf"}
+    ]

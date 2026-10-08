@@ -178,3 +178,10 @@ def test_penalty_badges_next_to_driver() -> None:
     page = scenario_panel_html(prediction, "dry", "Dry", True, None, badges)
     assert page.count("penalty-badge") == 3 * 2  # hero card, table row, mobile card; two badges for ALO
     assert "VER</strong><small>" in page
+
+
+def test_substitute_badge() -> None:
+    from pipeline.render_prediction_page import penalty_badges
+
+    badges = penalty_badges({"driver_substitutions": [{"driver_in": "DRU", "driver_out": "STR", "team": "Aston Martin"}]})
+    assert "sub for STR" in badges["DRU"]

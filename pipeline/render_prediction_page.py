@@ -344,7 +344,8 @@ def delta_html(name: str, changes: dict[str, Any] | None) -> str:
 
 
 def penalty_badges(race_config: dict[str, Any] | None) -> dict[str, str]:
-    """Short grid penalty badge per driver code, e.g. "-25 grid"."""
+    """Short badges per driver code: grid penalties ("-25 grid") and
+    substitutes ("sub for STR")."""
     badges: dict[str, list[str]] = {}
     for key, start in (("race_grid_penalties", ""), ("sprint_grid_penalties", "Sprint ")):
         for penalty in (race_config or {}).get(key) or []:
@@ -362,6 +363,12 @@ def penalty_badges(race_config: dict[str, Any] | None) -> dict[str, str]:
             what = "sprint" if start else "race"
             badges.setdefault(str(penalty["driver"]).upper(), []).append(
                 f'<span class="penalty-badge" title="{html.escape(what.capitalize())} grid penalty: {long}">{start}{short}</span>'
+            )
+    for sub in (race_config or {}).get("driver_substitutions") or []:
+        if isinstance(sub, dict) and sub.get("driver_in"):
+            replaced = html.escape(str(sub.get("driver_out") or ""))
+            badges.setdefault(str(sub["driver_in"]).upper(), []).append(
+                f'<span class="sub-badge" title="Substitute driver this weekend, replacing {replaced}">sub for {replaced}</span>'
             )
     return {driver: " ".join(items) for driver, items in badges.items()}
 
@@ -1153,6 +1160,19 @@ def render_page(
       .delta-flat {{ color: var(--muted); }}
       .chip-link {{ color: var(--ink); text-decoration: none; border-color: rgba(76, 154, 255, 0.6); }}
       .chip-link:hover {{ background: rgba(76, 154, 255, 0.15); }}
+      .sub-badge {{
+        display: inline-block;
+        margin-left: 6px;
+        padding: 1px 6px;
+        border-radius: 4px;
+        border: 1px solid #4c9aff;
+        color: #cfe2ff;
+        font-size: 0.68em;
+        font-weight: 700;
+        vertical-align: middle;
+        white-space: nowrap;
+        cursor: help;
+      }}
       .penalty-badge {{
         display: inline-block;
         margin-left: 6px;

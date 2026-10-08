@@ -11,6 +11,11 @@ start the Race from the pit lane"). This script reads the "Infringement" and
 previous GP (penalties carried over to the next event), and writes
 grid_penalty event signals to knowledge/processed/penalties_<season>_fia.json.
 
+The official entry list of the upcoming GP is compared with the current
+line-up (latest competitive session); a driver who replaces a regular one
+becomes a driver_substitution signal, so substitutes are in the prediction
+before they ever set a lap.
+
 Plain text parsing with pypdf, no AI involved. Already processed documents
 are remembered in the output file, so each run downloads only new PDFs.
 
@@ -40,6 +45,7 @@ if __package__ is None or __package__ == "":
     sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from pipeline.prediction_targeting import _parse_iso_datetime, load_json  # noqa: E402
+from pipeline.update_ratings import load_current_entry_list  # noqa: E402
 
 LOGGER = logging.getLogger("import_fia_documents")
 
@@ -54,6 +60,11 @@ USER_AGENT = "APEX-F1 prediction pipeline (+https://github.com/pokys/apex-f1)"
 OPTION_RE = re.compile(r'<option[^>]*value="([^"]+)"[^>]*>([^<]+)')
 PDF_LINK_RE = re.compile(r'href="(/system/files/decision-document/[^"]+\.pdf)"')
 # Stewards' decisions about a car; summonses and lists are skipped.
+ENTRY_LIST_DOC_RE = re.compile(r"_-_entry_list", re.IGNORECASE)
+ENTRY_ROW_RE = re.compile(r"^\s*(\d{1,2})\s+([A-Z]{3})\s+(.+?)\s+([A-Z]{3})\s+(.+?)\s*$")
+DOCUMENT_NO_RE = re.compile(r"Document\s+(\d+)")
+# A parsed entry list shorter than this is treated as a parsing failure.
+MIN_ENTRY_LIST_SIZE = 18
 DECISION_DOC_RE = re.compile(r"_-_(?:infringement|decision|offence)_-_car_\d+", re.IGNORECASE)
 
 DRIVER_RE = re.compile(r"No\s*/\s*Driver\s+(\d+)\s*-\s*([^\n]+)")
@@ -153,6 +164,83 @@ def decision_document_links(event_page: str) -> list[str]:
     return sorted(link for link in links if DECISION_DOC_RE.search(link.rsplit("/", 1)[-1]))
 
 
+def entry_list_links(event_page: str) -> list[str]:
+    links = {FIA_BASE + path for path in PDF_LINK_RE.findall(event_page)}
+    return sorted(link for link in links if ENTRY_LIST_DOC_RE.search(link.rsplit("/", 1)[-1]))
+
+
+def parse_entry_list(text: str) -> list[dict[str, Any]]:
+    """Rows "81 PIA Oscar Piastri AUS McLaren Mastercard F1 Team McLaren
+    Mercedes" -> number, code, name and the rest (entrant + constructor)."""
+    rows = []
+    for line in text.splitlines():
+        match = ENTRY_ROW_RE.match(line)
+        if match:
+            rows.append(
+                {
+                    "number": int(match.group(1)),
+                    "code": match.group(2),
+                    "name": match.group(3),
+                    "team_text": " ".join(match.group(5).split()),
+                }
+            )
+    return rows
+
+
+def team_key(text: str) -> str:
+    return re.sub(r"[^a-z0-9]", "", text.lower())
+
+
+def find_substitutions(entry: list[dict[str, Any]], roster: dict[str, str]) -> list[dict[str, str]]:
+    """Regular drivers missing from the entry list and who replaces them.
+    The team of a newcomer comes from an entry-list teammate who is already
+    in the line-up; a newcomer without such a teammate is matched by team
+    name against the line-up."""
+    if len(entry) < MIN_ENTRY_LIST_SIZE or not roster:
+        return []
+    listed = {row["code"] for row in entry}
+    missing = {code: team for code, team in roster.items() if code not in listed}
+    out = []
+    for row in entry:
+        if row["code"] in roster:
+            continue
+        mates = [r["code"] for r in entry if r["team_text"] == row["team_text"] and r["code"] in roster]
+        team = roster[mates[0]] if mates else next(
+            (t for t in set(roster.values()) if team_key(t) and team_key(t) in team_key(row["team_text"])), None
+        )
+        replaced = sorted(code for code, t in missing.items() if t == team)
+        if team and replaced:
+            missing.pop(replaced[0])
+            out.append({"driver_out": replaced[0], "driver_in": row["code"], "team": team, "name": row["name"]})
+    return out
+
+
+def substitution_signal(sub: dict[str, str], season: int, event_name: str, url: str, timestamp: str | None) -> dict[str, Any]:
+    return {
+        "type": "driver_substitution",
+        "season": season,
+        "event": event_name,
+        "driver_out": sub["driver_out"],
+        "driver_in": sub["driver_in"],
+        "team": sub["team"],
+        "source_name": SOURCE_NAME,
+        "source_url": url,
+        "source_confidence": SOURCE_CONFIDENCE,
+        "timestamp": timestamp or datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
+        "evidence": f"{sub['name']} ({sub['driver_in']}) is on the entry list instead of {sub['driver_out']}",
+    }
+
+
+def document_timestamp(text: str) -> str | None:
+    date, clock = DATE_RE.search(text), TIME_RE.search(text)
+    if not date:
+        return None
+    try:
+        return datetime.strptime(f"{date.group(1)} {clock.group(1) if clock else '00:00'}", "%d %B %Y %H:%M").isoformat()
+    except ValueError:
+        return None
+
+
 def parse_decision(text: str) -> dict[str, Any] | None:
     """Car, session and grid sanction of one stewards' decision document,
     or None when it holds no grid sanction (fines, reprimands, time
@@ -186,13 +274,9 @@ def parse_decision(text: str) -> dict[str, Any] | None:
         parsed["target"] = "sprint"
     else:
         parsed["target"] = "race"
-    date, clock = DATE_RE.search(text), TIME_RE.search(text)
-    if date:
-        try:
-            stamp = datetime.strptime(f"{date.group(1)} {clock.group(1) if clock else '00:00'}", "%d %B %Y %H:%M")
-            parsed["timestamp"] = stamp.isoformat()
-        except ValueError:
-            pass
+    stamp = document_timestamp(text)
+    if stamp:
+        parsed["timestamp"] = stamp
     return parsed
 
 
@@ -288,18 +372,24 @@ def collect(
     processed: set[str],
     by_number: dict[int, str],
     by_name: dict[str, str],
-) -> tuple[list[dict[str, Any]], set[str]]:
-    """New penalty signals and the document URLs read in this run."""
+    roster: dict[str, str] | None = None,
+) -> tuple[list[dict[str, Any]], set[str], list[dict[str, Any]] | None]:
+    """New penalty signals, the document URLs read in this run, and the
+    substitution signals of a newly read entry list (None: no new list)."""
     season_page = fetch(season_url(fetch(FIA_BASE + CHAMPIONSHIP_PATH).decode("utf-8", "replace"), season)).decode("utf-8", "replace")
     signals: list[dict[str, Any]] = []
     done: set[str] = set()
+    substitutions: list[dict[str, Any]] | None = None
     scans = [(event_name, False)] + ([(previous_event_name, True)] if previous_event_name else [])
     for name, previous in scans:
         url = event_url(season_page, name)
         if url is None:
             LOGGER.info("No FIA documents listed for %s yet.", name)
             continue
-        for link in decision_document_links(fetch(url).decode("utf-8", "replace")):
+        page = fetch(url).decode("utf-8", "replace")
+        if not previous and roster:
+            substitutions = read_entry_lists(fetch, page, processed, done, roster, season, event_name)
+        for link in decision_document_links(page):
             if link in processed:
                 continue
             try:
@@ -319,7 +409,43 @@ def collect(
                 done.discard(link)  # retry once the snapshot knows the driver
                 continue
             signals.append(penalty_signal(parsed, driver, season, event_name, target, link))
-    return signals, done
+    return signals, done, substitutions
+
+
+def read_entry_lists(
+    fetch: Fetcher,
+    event_page: str,
+    processed: set[str],
+    done: set[str],
+    roster: dict[str, str],
+    season: int,
+    event_name: str,
+) -> list[dict[str, Any]] | None:
+    """Substitutions from the newest entry list (highest document number)
+    when an unread one was published, else None."""
+    newest: tuple[int, str, str] | None = None
+    for link in entry_list_links(event_page):
+        if link in processed:
+            continue
+        try:
+            text = pdf_text(fetch(link))
+        except Exception as exc:
+            LOGGER.warning("Could not read %s: %s", link, exc)
+            continue
+        done.add(link)
+        number = DOCUMENT_NO_RE.search(text)
+        key = int(number.group(1)) if number else 0
+        if newest is None or key >= newest[0]:
+            newest = (key, link, text)
+    if newest is None:
+        return None
+    _, link, text = newest
+    entry = parse_entry_list(text)
+    if len(entry) < MIN_ENTRY_LIST_SIZE:
+        LOGGER.warning("Entry list %s parsed into only %s rows; ignored.", link, len(entry))
+        return None
+    stamp = document_timestamp(text)
+    return [substitution_signal(sub, season, event_name, link, stamp) for sub in find_substitutions(entry, roster)]
 
 
 def main() -> int:
@@ -345,12 +471,28 @@ def main() -> int:
             return 0
         by_number, by_name = driver_codes(Path(args.raw_dir), season)
         previous_name = str(previous.get("event_name") or "") or None if previous else None
-        found, done = collect(http_fetch, season, event_name, sprint_weekend, previous_name, processed, by_number, by_name)
+        roster, _ = load_current_entry_list(Path(args.raw_dir), season)
+        found, done, substitutions = collect(
+            http_fetch, season, event_name, sprint_weekend, previous_name, processed, by_number, by_name, roster
+        )
         if not found and not done:
             LOGGER.info("No new FIA decision documents for %s.", event_name)
-        known = {(s.get("source_url"), s.get("event"), s.get("driver")) for s in existing_signals}
-        merged = existing_signals + [s for s in found if (s["source_url"], s["event"], s["driver"]) not in known]
-        merged.sort(key=lambda s: (str(s.get("event")), str(s.get("timestamp")), str(s.get("driver"))))
+        if substitutions is not None:
+            # The newest entry list replaces what an older one said.
+            existing_signals = [
+                s
+                for s in existing_signals
+                if not (s.get("type") == "driver_substitution" and str(s.get("event") or "").lower() == event_name.lower())
+            ]
+            found = found + substitutions
+            for sub in substitutions:
+                LOGGER.info("Substitution: %s replaces %s (%s)", sub["driver_in"], sub["driver_out"], sub["team"])
+        def key(s: dict[str, Any]) -> tuple:
+            return (s.get("source_url"), s.get("event"), s.get("driver") or s.get("driver_in"))
+
+        known = {key(s) for s in existing_signals}
+        merged = existing_signals + [s for s in found if key(s) not in known]
+        merged.sort(key=lambda s: (str(s.get("event")), str(s.get("timestamp")), str(s.get("driver") or s.get("driver_in"))))
         payload = {
             "signals": merged,
             "processed_documents": sorted(processed | done),

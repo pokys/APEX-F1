@@ -141,14 +141,15 @@ def test_collect_reads_new_documents_only(monkeypatch) -> None:
     }
     fetch, fetched = fake_site(documents)
     by_number = {14: "ALO", 43: "COL", 41: "LIN"}
-    signals, done = fia.collect(fetch, 2026, "Italian Grand Prix", False, "Dutch Grand Prix", set(), by_number, {})
+    signals, done, subs = fia.collect(fetch, 2026, "Italian Grand Prix", False, "Dutch Grand Prix", set(), by_number, {})
+    assert subs is None
     assert sorted((s["driver"], s["places"], s["applies_to"]) for s in signals) == [("ALO", 25, "race"), ("COL", 5, "race")]
     assert all(s["event"] == "Italian Grand Prix" and s["source_name"] == fia.SOURCE_NAME for s in signals)
     assert len(done) == 4
     assert not any("summons" in url for url in fetched)
 
     fetch2, fetched2 = fake_site(documents)
-    again, done2 = fia.collect(fetch2, 2026, "Italian Grand Prix", False, "Dutch Grand Prix", done, by_number, {})
+    again, done2, _ = fia.collect(fetch2, 2026, "Italian Grand Prix", False, "Dutch Grand Prix", done, by_number, {})
     assert again == [] and done2 == set()
     assert not any(url.endswith(".pdf") for url in fetched2)
 
@@ -183,3 +184,68 @@ def test_fia_site_is_checked_only_during_race_weekend_and_rarely() -> None:
     assert fia.should_check(schedule, "2026-10-10T09:59:00+00:00", at("2026-10-10T12:00:00"))[0] is True
     assert fia.should_check(schedule, None, at("2026-10-11T13:00:00"))[0] is False  # after race start
     assert fia.should_check({}, None, at("2026-10-10T12:00:00"))[0] is False
+
+
+ENTRY_ROWS = [
+    ("81", "PIA", "Oscar Piastri", "AUS", "McLaren Mastercard F1 Team McLaren Mercedes"),
+    ("1", "NOR", "Lando Norris", "GBR", "McLaren Mastercard F1 Team McLaren Mercedes"),
+    ("63", "RUS", "George Russell", "GBR", "Mercedes-AMG PETRONAS F1 Team Mercedes"),
+    ("12", "ANT", "Kimi Antonelli", "ITA", "Mercedes-AMG PETRONAS F1 Team Mercedes"),
+    ("3", "VER", "Max Verstappen", "NED", "Oracle Red Bull Racing Red Bull Racing Red Bull Ford"),
+    ("6", "HAD", "Isack Hadjar", "FRA", "Oracle Red Bull Racing Red Bull Racing Red Bull Ford"),
+    ("16", "LEC", "Charles Leclerc", "MON", "Scuderia Ferrari HP Ferrari"),
+    ("44", "HAM", "Lewis Hamilton", "GBR", "Scuderia Ferrari HP Ferrari"),
+    ("23", "ALB", "Alexander Albon", "THA", "Atlassian Williams F1 Team Atlassian Williams Mercedes"),
+    ("55", "SAI", "Carlos Sainz", "ESP", "Atlassian Williams F1 Team Atlassian Williams Mercedes"),
+    ("41", "LIN", "Arvid Lindblad", "GBR", "Visa Cash App Racing Bulls F1 Team Racing Bulls Red Bull Ford"),
+    ("30", "LAW", "Liam Lawson", "NZL", "Visa Cash App Racing Bulls F1 Team Racing Bulls Red Bull Ford"),
+    ("34", "DRU", "Felipe Drugovich", "BRA", "Aston Martin Aramco F1 Team Aston Martin Aramco Honda"),
+    ("14", "ALO", "Fernando Alonso", "ESP", "Aston Martin Aramco F1 Team Aston Martin Aramco Honda"),
+    ("31", "OCO", "Esteban Ocon", "FRA", "TGR Haas F1 Team Haas Ferrari"),
+    ("87", "BEA", "Oliver Bearman", "GBR", "TGR Haas F1 Team Haas Ferrari"),
+    ("27", "HUL", "Nico Hulkenberg", "GER", "Audi Revolut F1 Team Audi"),
+    ("5", "BOR", "Gabriel Bortoleto", "BRA", "Audi Revolut F1 Team Audi"),
+    ("10", "GAS", "Pierre Gasly", "FRA", "BWT Alpine F1 Team Alpine Mercedes"),
+    ("43", "COL", "Franco Colapinto", "ARG", "BWT Alpine F1 Team Alpine Mercedes"),
+]
+ROSTER = {
+    "PIA": "McLaren", "NOR": "McLaren", "RUS": "Mercedes", "ANT": "Mercedes", "VER": "Red Bull", "HAD": "Red Bull",
+    "LEC": "Ferrari", "HAM": "Ferrari", "ALB": "Williams", "SAI": "Williams", "LIN": "RB F1 Team", "LAW": "RB F1 Team",
+    "STR": "Aston Martin", "ALO": "Aston Martin", "OCO": "Haas F1 Team", "BEA": "Haas F1 Team", "HUL": "Audi",
+    "BOR": "Audi", "GAS": "Alpine F1 Team", "COL": "Alpine F1 Team",
+}
+
+
+def entry_list_text(rows=ENTRY_ROWS, document=12) -> str:
+    lines = [f"From The Stewards Document {document}", "Date 24 September 2026", "Time 10:15", "No. TLA Driver Nat Team Constructor"]
+    return "\n".join(lines + [" ".join(row) + " " for row in rows])
+
+
+def test_entry_list_substitute_replaces_regular_driver() -> None:
+    entry = fia.parse_entry_list(entry_list_text())
+    assert len(entry) == 20 and entry[12]["code"] == "DRU"
+    assert fia.find_substitutions(entry, ROSTER) == [
+        {"driver_out": "STR", "driver_in": "DRU", "team": "Aston Martin", "name": "Felipe Drugovich"}
+    ]
+    regular = [row if row[1] != "DRU" else ("18", "STR", "Lance Stroll", "CAN", row[4]) for row in ENTRY_ROWS]
+    assert fia.find_substitutions(fia.parse_entry_list(entry_list_text(regular)), ROSTER) == []
+    # A garbled list never produces substitutions.
+    assert fia.find_substitutions(entry[:5], ROSTER) == []
+
+
+def test_collect_uses_newest_entry_list(monkeypatch) -> None:
+    monkeypatch.setattr(fia, "pdf_text", lambda data: data.decode())
+    regular = [row if row[1] != "DRU" else ("18", "STR", "Lance Stroll", "CAN", row[4]) for row in ENTRY_ROWS]
+    documents = {
+        "2026_italian_grand_prix_-_entry_list": entry_list_text(regular, 10),
+        "2026_italian_grand_prix_-_entry_list_v2": entry_list_text(ENTRY_ROWS, 15),
+    }
+    fetch, _ = fake_site(documents)
+    _, done, subs = fia.collect(fetch, 2026, "Italian Grand Prix", False, None, set(), {}, {}, ROSTER)
+    assert [(s["driver_out"], s["driver_in"], s["team"]) for s in subs] == [("STR", "DRU", "Aston Martin")]
+    assert len(done) == 2
+    from pipeline.validate_signals import validate_signal
+
+    assert validate_signal(subs[0], "penalties_2026_fia.json", 0) == []
+    fetch2, _ = fake_site(documents)
+    assert fia.collect(fetch2, 2026, "Italian Grand Prix", False, None, done, {}, {}, ROSTER)[2] is None

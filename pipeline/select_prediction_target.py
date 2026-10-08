@@ -223,6 +223,16 @@ def main() -> int:
         config["event_signal_count"] = len(known_event_signals)
         config["race_grid_penalties"] = race_penalties
         config["sprint_grid_penalties"] = sprint_penalties
+        config["driver_substitutions"] = [
+            {
+                "driver_in": str(s.get("driver_in") or "").upper(),
+                "driver_out": str(s.get("driver_out") or "").upper(),
+                "team": s.get("team"),
+                "source": s.get("source_url") or s.get("source_name"),
+            }
+            for s in known_event_signals
+            if str(s.get("type") or "").lower() == "driver_substitution" and s.get("driver_in")
+        ]
 
         grid_session = {"race": "Q", "sprint": "SQ"}.get(target)
         active_penalties = race_penalties if target == "race" else sprint_penalties if target == "sprint" else []

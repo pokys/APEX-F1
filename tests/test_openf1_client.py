@@ -106,3 +106,17 @@ def test_session_is_wet_from_tyre_stints() -> None:
 
     assert OpenF1Client(fetcher=dry).session_is_wet(1) is False
     assert OpenF1Client(fetcher=lambda e, p: []).session_is_wet(1) is None
+
+
+def test_align_team_names_maps_reserve_drivers_via_teammates() -> None:
+    from pipeline.ingest_fastf1 import align_team_names
+
+    roster = {"LAW": "RB F1 Team", "LIN": "RB F1 Team"}
+    rows = align_team_names(
+        [
+            {"abbreviation": "LAW", "team_name": "Racing Bulls"},
+            {"abbreviation": "IWA", "team_name": "Racing Bulls"},
+        ],
+        roster,
+    )
+    assert [row["team_name"] for row in rows] == ["RB F1 Team", "RB F1 Team"]

@@ -588,10 +588,21 @@ def align_team_names(results: list[dict[str, Any]], roster: dict[str, str]) -> l
     """Use the FastF1 team name of each driver so a fallback source with
     different naming ("Red Bull Racing" vs "Red Bull") does not create a
     second team in features and ratings."""
+    # Learn the source->FastF1 team name mapping from known drivers in the
+    # same session, so reserve drivers (FP1 only) map to the right team too.
+    team_map: dict[str, str] = {}
     for row in results:
         abbr = str(row.get("abbreviation") or "").strip().upper()
+        source_team = str(row.get("team_name") or "").strip()
+        if abbr in roster and source_team:
+            team_map.setdefault(source_team, roster[abbr])
+    for row in results:
+        abbr = str(row.get("abbreviation") or "").strip().upper()
+        source_team = str(row.get("team_name") or "").strip()
         if abbr in roster:
             row["team_name"] = roster[abbr]
+        elif source_team in team_map:
+            row["team_name"] = team_map[source_team]
     return results
 
 
@@ -718,6 +729,8 @@ def ingest(
         for session_code in sessions:
             stored = previous_sessions.get((round_number, session_code))
             if reusable_session(stored, session_code, event_date, cutoff, include_lap_metrics):
+                if stored.get("source") == "openf1":
+                    align_team_names(stored.get("results") or [], roster)
                 if openf1 is not None:
                     annotate_wet_flag(stored, openf1, season, session_code, schedule_times.get(session_code))
                 sessions_payload.append(stored)

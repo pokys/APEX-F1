@@ -121,6 +121,10 @@ jobs:
           AS_OF_DATE="${CUTOFF_DATE:-$(date -u +%F)}"
           python pipeline/select_next_gp.py --season "$TARGET_SEASON" --as-of-date "$AS_OF_DATE" --raw-dir data/raw/fastf1 --calendar-cache-dir data/raw/calendars --race-config config/race_config.json --log-level INFO
 
+      - name: Import grid penalties from race control
+        run: |
+          python pipeline/import_penalties.py --race-config config/race_config.json --calendar-cache-dir data/raw/calendars --signals-dir knowledge/processed --log-level INFO
+
       - name: Select automatic prediction target
         run: |
           python pipeline/select_prediction_target.py --race-config config/race_config.json --raw-dir data/raw/fastf1 --calendar-cache-dir data/raw/calendars --session-weights config/session_weights.json --signals-dir knowledge/processed --log-level INFO

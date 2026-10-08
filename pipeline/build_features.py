@@ -22,6 +22,11 @@ import sys
 from pathlib import Path
 from typing import Any
 
+if __package__ is None or __package__ == "":
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from pipeline.prediction_targeting import is_event_signal  # noqa: E402
+
 
 LOGGER = logging.getLogger("build_features")
 
@@ -423,6 +428,40 @@ def is_classified_finish(classified_position: Any) -> bool:
         return False
 
 
+# A start this many places behind the qualifying position (or from the pit
+# lane) is treated as a grid penalty; one or two places can come from other
+# drivers' penalties.
+GRID_PENALTY_MIN_DROP = 3
+
+
+def event_qualifying_positions(sessions: list[Any]) -> dict[str, int]:
+    for session in sessions:
+        if isinstance(session, dict) and str(session.get("session_code") or "").upper() == "Q":
+            out: dict[str, int] = {}
+            for row in session.get("results") or []:
+                position = to_float(row.get("position")) if isinstance(row, dict) else None
+                abbr = str(row.get("abbreviation") or "").strip().upper() if isinstance(row, dict) else ""
+                if abbr and position is not None:
+                    out[abbr] = int(position)
+            return out
+    return {}
+
+
+def grid_penalty_applied(row: dict[str, Any], qualifying_order: dict[str, int]) -> bool | None:
+    """Whether a race result shows a grid penalty (start well behind the
+    qualifying position, or from the pit lane). None when unknown."""
+    status = str(row.get("status") or "").strip().lower()
+    if "did not start" in status or status == "dns":
+        return None
+    grid = to_float(row.get("grid_position"))
+    q_position = qualifying_order.get(str(row.get("abbreviation") or "").strip().upper())
+    if grid is None or q_position is None:
+        return None
+    if grid == 0:
+        return True
+    return grid - q_position >= GRID_PENALTY_MIN_DROP
+
+
 def is_completed_race_result(row: dict[str, Any]) -> bool:
     status = str(row.get("status") or "").strip()
     if status:
@@ -564,7 +603,9 @@ def collect_signals(signals_dir: Path) -> tuple[list[dict[str, Any]], list[str]]
         except json.JSONDecodeError as exc:
             LOGGER.warning("Skipping invalid signal JSON %s: %s", path, exc)
             continue
-        normalized = normalize_signals(parsed)
+        # Typed event signals (grid penalties, PU changes, bans) are applied
+        # to the grid/roster elsewhere and are not soft performance input.
+        normalized = [signal for signal in normalize_signals(parsed) if not is_event_signal(signal)]
         if not normalized:
             continue
         all_signals.extend(normalized)
@@ -731,6 +772,8 @@ def build_features(
                 "wet_results": [],
                 "starts": 0,
                 "dnfs": 0,
+                "grid_observations": 0,
+                "grid_penalties": 0,
                 "points_total": 0.0,
             },
         )
@@ -759,6 +802,8 @@ def build_features(
                 "sprint_qualifying_phase_depths": [],
                 "starts": 0,
                 "dnfs": 0,
+                "grid_observations": 0,
+                "grid_penalties": 0,
                 "points_total": 0.0,
             },
         )
@@ -772,6 +817,7 @@ def build_features(
         if not isinstance(sessions, list):
             continue
         event_idx += 1
+        qualifying_order = event_qualifying_positions(sessions)
 
         for session in sessions:
             if not isinstance(session, dict):
@@ -834,6 +880,11 @@ def build_features(
                         team_state["race_time_gaps"].append((event_idx, race_gap))
                     driver_state["starts"] += 1
                     team_state["starts"] += 1
+                    penalized = grid_penalty_applied(row, qualifying_order)
+                    if penalized is not None:
+                        for state in (driver_state, team_state):
+                            state["grid_observations"] += 1
+                            state["grid_penalties"] += int(penalized)
                     if not is_completed_race_result(row):
                         driver_state["dnfs"] += 1
                         team_state["dnfs"] += 1
@@ -979,6 +1030,8 @@ def build_features(
                 "race_effective_starts": metrics["race_effective_starts"],
                 "qualifying_effective_starts": metrics["qualifying_effective_starts"],
                 "dnf_rate": round(dnfs / starts, 6) if starts else None,
+                "grid_penalty_rate": round(state["grid_penalties"] / state["grid_observations"], 6) if state["grid_observations"] else None,
+                "grid_penalties": state["grid_penalties"],
                 "points_total": round(state["points_total"], 6),
                 "signal_driver_confidence_delta": confidence_delta,
                 "signal_count": int(signal.get("signal_count", 0.0)),
@@ -1041,6 +1094,8 @@ def build_features(
                 "race_effective_starts": metrics["race_effective_starts"],
                 "qualifying_effective_starts": metrics["qualifying_effective_starts"],
                 "dnf_rate": round(dnfs / starts, 6) if starts else None,
+                "grid_penalty_rate": round(state["grid_penalties"] / state["grid_observations"], 6) if state["grid_observations"] else None,
+                "grid_penalties": state["grid_penalties"],
                 "points_total": round(state["points_total"], 6),
                 "signal_upgrade_score": upgrade_score,
                 "signal_reliability_concern": reliability_concern,

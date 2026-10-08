@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Any
 
 from pipeline.prediction_targeting import (
+    apply_grid_penalties,
     championship_points_before,
     compute_weekend_form,
     find_event,
@@ -137,6 +138,26 @@ def _shared_prediction_meta(
             "race_config_hash": stable_hash_json(config)[:12],
         },
     }
+
+
+# Typical size of a grid drop that has not been announced yet.
+UNANNOUNCED_PENALTY_PLACES = 5
+# Share of historical grid penalties assumed still unannounced when the race
+# is simulated before qualifying (most are announced on Friday).
+UNANNOUNCED_PENALTY_SHARE = 0.5
+
+
+def sample_unannounced_penalties(entries: list[dict[str, Any]], known_drivers: set[str], rng: Any) -> list[dict[str, Any]]:
+    """Grid drops drawn from each team's historical grid penalty rate, for
+    drivers without an announced penalty."""
+    sampled = []
+    for entry in entries:
+        rate = safe_float(entry.get("grid_penalty_rate"), 0.0)
+        if rate <= 0 or entry["name"].upper() in known_drivers:
+            continue
+        if rng.random() < rate * UNANNOUNCED_PENALTY_SHARE:
+            sampled.append({"driver": entry["name"], "places": UNANNOUNCED_PENALTY_PLACES})
+    return sampled
 
 
 def run_qualifying_prediction(
@@ -276,6 +297,8 @@ def run_race_or_sprint_prediction(
 
     fixed_grid_config = config.get("fixed_grid")
     blend = clamp(safe_float(config.get("standings_blend_race"), 0.0), 0.0, 1.0) if standings else 0.0
+    known_penalties = [p for p in config.get("grid_penalties") or [] if isinstance(p, dict)]
+    known_drivers = {str(p.get("driver") or "").upper() for p in known_penalties}
 
     for _ in range(simulations):
         if blend > 0 and rng.random() < blend:
@@ -288,9 +311,11 @@ def run_race_or_sprint_prediction(
                     podium_count[name] += 1
             continue
         if isinstance(fixed_grid_config, list) and fixed_grid_config:
+            # Known penalties are already applied to a fixed grid.
             grid = fixed_grid_config
         else:
             grid = simulate_qualifying(entries, rng, qualifying_noise=qualifying_noise * qualifying_scale, wet=wet)
+            grid = apply_grid_penalties(grid, known_penalties + sample_unannounced_penalties(entries, known_drivers, rng))
 
         race_positions = simulate_single_race(
             entries=entries,
@@ -359,6 +384,7 @@ def run_race_or_sprint_prediction(
         "race_noise_scale": round(noise_scale, 6),
         "qualifying_noise_scale": round(qualifying_scale, 6),
         "standings_blend": round(blend, 6),
+        "grid_penalties": known_penalties,
     }
     payload["drivers"] = rows
     return payload

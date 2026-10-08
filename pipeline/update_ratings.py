@@ -26,6 +26,11 @@ import sys
 from pathlib import Path
 from typing import Any
 
+if __package__ is None or __package__ == "":
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from pipeline.prediction_targeting import event_signals, is_event_signal  # noqa: E402
+
 
 LOGGER = logging.getLogger("update_ratings")
 FEATURE_FILE_RE = re.compile(r"^features_season_(\d{4})\.json$")
@@ -80,6 +85,11 @@ def parse_args() -> argparse.Namespace:
         "--guardrails-config",
         default="config/signal_guardrails.json",
         help="Signal guardrails configuration JSON path.",
+    )
+    parser.add_argument(
+        "--race-config",
+        default="config/race_config.json",
+        help="Race config of the upcoming GP (for driver substitutions and race bans).",
     )
     parser.add_argument(
         "--allow-missing-features",
@@ -249,7 +259,7 @@ def load_signals(signals_dir: Path) -> list[dict[str, Any]]:
         except json.JSONDecodeError as exc:
             LOGGER.warning("Skipping invalid signal JSON %s: %s", file_path, exc)
             continue
-        signals.extend(normalize_signals(raw))
+        signals.extend(signal for signal in normalize_signals(raw) if not is_event_signal(signal))
     return signals
 
 
@@ -874,9 +884,11 @@ def compute_reliability_scores(features: dict[str, Any], penalties_by_team: dict
             "starts": starts,
             "signal_adjustment": round(adjustment, 6),
         }
+        grid_penalty_rate = safe_float(row.get("grid_penalty_rate"))
         payload_rows.append(
             {
                 "team": team_name,
+                "grid_penalty_rate": round(grid_penalty_rate, 6) if grid_penalty_rate is not None else None,
                 "dnf_probability": round(dnf_probability, 6),
                 "reliability_score": round(100.0 * (1.0 - dnf_probability), 6),
                 "components": {key: value for key, value in components.items() if value is not None},
@@ -971,6 +983,28 @@ def current_season_blend_weight(max_starts: float) -> float:
     return 1.0
 
 
+def apply_roster_changes(active_drivers: dict[str, str], changes: list[dict[str, Any]]) -> dict[str, str]:
+    """Driver substitutions and race bans announced for the upcoming GP. A
+    substitute without history gets the new-driver baseline rating."""
+    roster = dict(active_drivers)
+    for change in changes:
+        kind = str(change.get("type") or "").strip().lower()
+        if kind == "driver_substitution":
+            out_code = str(change.get("driver_out") or "").strip().upper()
+            in_code = str(change.get("driver_in") or "").strip().upper()
+            # Prefer the FastF1 team name of the replaced driver.
+            team = roster.pop(out_code, None) or str(change.get("team") or "").strip()
+            if in_code and team:
+                roster[in_code] = team
+        elif kind == "race_ban":
+            banned = str(change.get("driver") or "").strip().upper()
+            team = roster.pop(banned, None)
+            replacement = str(change.get("driver_in") or "").strip().upper()
+            if replacement and team:
+                roster[replacement] = team
+    return roster
+
+
 def max_effective_starts(features: dict[str, Any]) -> float:
     """Largest recency-weighted effective sample (Kish ESS) of race starts,
     falling back to plain starts for older feature files."""
@@ -1055,6 +1089,14 @@ def main() -> int:
             LOGGER.warning("No active entry list found for season %s. Falling back to feature-based list.", target_season)
             active_drivers = {str(row.get("driver") or ""): str(row.get("team") or "") for row in features.get("drivers", []) if isinstance(row, dict)}
             active_teams = sorted(list(set(active_drivers.values())))
+
+        race_config_path = Path(args.race_config)
+        if race_config_path.exists():
+            race_config = load_json(race_config_path)
+            if isinstance(race_config, dict) and race_config.get("race"):
+                changes = event_signals(Path(args.signals_dir), race_config.get("season"), str(race_config.get("race")))
+                active_drivers = apply_roster_changes(active_drivers, changes)
+                active_teams = sorted(set(active_drivers.values()))
 
         signals = load_signals(Path(args.signals_dir))
         guardrails = load_signal_guardrails(Path(args.guardrails_config))

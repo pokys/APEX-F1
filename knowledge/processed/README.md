@@ -48,6 +48,18 @@ These are consumed by rating updates when provided:
 - `safety_car_reaction` in `[0, 1]` (team strategy helper)
 - `new_component_penalty` in `[0, 1]` (reliability penalty helper)
 
+## Event Signals (Penalties, PU Changes, Bans, Substitutions)
+
+Signals with a `type` field (`grid_penalty`, `pu_element_change`,
+`race_ban`, `driver_substitution`) describe facts about one GP and follow a
+separate schema (see section 10 of `AI_EXTRACTION_GUIDE.md`). Required:
+`type`, `season`, `event`, `source_name`, `source_url`, `timestamp` plus the
+type-specific fields. `article_hash` is not required for them.
+
+- manual file: `penalties_YYYY.json`
+- automatic file written by `pipeline/import_penalties.py` from OpenF1 race
+  control messages: `penalties_YYYY_auto.json`
+
 ## Article Hash
 
 `article_hash` should match the collector convention:

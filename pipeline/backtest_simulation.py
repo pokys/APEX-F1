@@ -161,6 +161,23 @@ def actual_pole(event: dict[str, Any]) -> str | None:
 
 
 def fixed_grid_from_event(event: dict[str, Any]) -> list[str] | None:
+    """The actual starting grid (race grid positions, pit-lane starters
+    last), so historical grid penalties are part of the backtest. Falls back
+    to the qualifying order when grid positions are missing."""
+    starting: list[tuple[int, str]] = []
+    for row in find_race_results(event):
+        grid = normalize_position(row.get("grid_position"))
+        abbr = str(row.get("abbreviation") or "").strip().upper()
+        status = str(row.get("status") or "").lower()
+        if grid is None or not abbr or "did not start" in status:
+            continue
+        starting.append((grid if grid > 0 else 999, abbr))
+    if starting:
+        return [abbr for _, abbr in sorted(starting)]
+    return qualifying_order_from_event(event)
+
+
+def qualifying_order_from_event(event: dict[str, Any]) -> list[str] | None:
     rows = session_results(event, "Q")
     ranked: list[tuple[int, str]] = []
     for row in rows:

@@ -133,6 +133,11 @@ def build_entries(driver_ratings: dict[str, Any], team_ratings: dict[str, Any], 
         for row in reliability_scores.get("teams", [])
         if isinstance(row, dict)
     }
+    grid_penalty_rate_by_name = {
+        str(row.get("team") or ""): safe_float(row.get("grid_penalty_rate"), 0.0)
+        for row in reliability_scores.get("teams", [])
+        if isinstance(row, dict)
+    }
     dnf_probability_by_name = {
         str(row.get("team") or ""): safe_float(row.get("dnf_probability"), -1.0)
         for row in reliability_scores.get("teams", [])
@@ -160,6 +165,7 @@ def build_entries(driver_ratings: dict[str, Any], team_ratings: dict[str, Any], 
                 "race_team_rating": race_team_rating_by_name.get(team, team_rating_by_name.get(team, 50.0)),
                 "strategy_score": strategy_by_name.get(team, 50.0),
                 "reliability_score": reliability_by_name.get(team, 60.0),
+                "grid_penalty_rate": grid_penalty_rate_by_name.get(team, 0.0),
                 "dnf_probability": dnf_probability_by_name.get(team, dnf_probability_from_reliability(reliability_by_name.get(team, 60.0))),
             }
         )

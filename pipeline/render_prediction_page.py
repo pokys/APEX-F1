@@ -309,6 +309,39 @@ def scenario_panel_html(prediction: dict[str, Any], scenario_key: str, scenario_
     )
 
 
+def penalties_html(race_config: dict[str, Any]) -> str:
+    """Grid penalties known for this GP and where they come from."""
+    sections = []
+    for key, label in (("race_grid_penalties", "Race"), ("sprint_grid_penalties", "Sprint")):
+        rows = [p for p in race_config.get(key) or [] if isinstance(p, dict)]
+        if not rows:
+            continue
+        items = []
+        for penalty in rows:
+            if penalty.get("excluded"):
+                what = "excluded (race ban)"
+            elif penalty.get("pit_lane"):
+                what = "pit lane start"
+            elif penalty.get("back_of_grid"):
+                what = "back of the grid"
+            else:
+                what = f"{int(to_float(penalty.get('places')))} place grid drop"
+            sources = ", ".join(
+                f'<a href="{html.escape(str(src))}">{html.escape(str(src).split("//")[-1][:48])}</a>'
+                if str(src).startswith("http")
+                else html.escape(str(src))
+                for src in penalty.get("sources") or []
+            )
+            items.append(f"<li><strong>{html.escape(str(penalty.get('driver') or ''))}</strong>: {html.escape(what)}" + (f" &middot; source: {sources}" if sources else "") + "</li>")
+        sections.append(f"<h3>{label}</h3><ul>{''.join(items)}</ul>")
+    if not sections:
+        return (
+            '<section class="explain-card"><h2>Grid Penalties</h2>'
+            "<p>No grid penalty is known for this GP (race control import + manual signals).</p></section>"
+        )
+    return '<section class="explain-card"><h2>Grid Penalties</h2>' + "".join(sections) + "</section>"
+
+
 def track_record_html(track_record: dict[str, Any] | None) -> str:
     """Scores of archived pre-session predictions once results are in."""
     if not isinstance(track_record, dict):
@@ -994,6 +1027,8 @@ def render_page(
       <section class="timeline-grid">{weekend_timeline}</section>
 
       {compounds_html}
+
+      {penalties_html(race_config)}
 
       {track_record_html(track_record)}
     </main>

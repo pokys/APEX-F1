@@ -190,3 +190,69 @@ Before committing `knowledge/processed/signals_YYYY-MM-DD.json`:
    - `python pipeline/validate_signals.py --signals-dir knowledge/processed --log-level INFO`
 2. Ensure no schema/range errors.
 3. Ensure each signal is performance-relevant and non-duplicative.
+
+---
+
+## 10) Event Signals: Grid Penalties, PU Changes, Bans, Substitutions
+
+Facts about one specific GP are recorded as **typed event signals**. They
+are applied deterministically (grid order, entry list) and are *not* soft
+performance signals: they never count towards the soft-signal weight.
+
+Store them in `knowledge/processed/penalties_YYYY.json` (manual) — the
+pipeline writes its own `penalties_YYYY_auto.json` from race control
+messages.
+
+Common fields (all types):
+- `type`: `grid_penalty` | `pu_element_change` | `race_ban` | `driver_substitution`
+- `season` (integer), `event` (GP name exactly as in the calendar, e.g. `"Singapore Grand Prix"`)
+- `source_name`, `source_url` (http(s) link to the FIA document / article), `timestamp` (ISO datetime)
+- optional `source_confidence` in `[0,1]`, optional `applies_to`: `race` (default) or `sprint`
+
+Per type:
+- `grid_penalty`: `driver` (three-letter code) and exactly one of
+  `places` (integer 1..60), `back_of_grid: true`, `pit_lane: true`
+- `pu_element_change`: `driver` or `team`, optional `elements` (list of
+  `ICE`, `TC`, `MGU-H`, `MGU-K`, `ES`, `CE`, `EX`, `GEARBOX`) and, when the
+  change exceeds the allocation, one of `places` / `back_of_grid` / `pit_lane`
+- `race_ban`: `driver`, optional `driver_in` (replacement)
+- `driver_substitution`: `driver_out`, `driver_in`, `team`
+
+Example:
+
+```json
+{
+  "signals": [
+    {
+      "type": "pu_element_change",
+      "season": 2026,
+      "event": "Singapore Grand Prix",
+      "driver": "HAM",
+      "elements": ["ICE", "TC", "MGU-K"],
+      "back_of_grid": true,
+      "source_name": "fia",
+      "source_url": "https://www.fia.com/documents/...",
+      "timestamp": "2026-10-09T10:00:00+00:00"
+    },
+    {
+      "type": "driver_substitution",
+      "season": 2026,
+      "event": "Singapore Grand Prix",
+      "driver_out": "STR",
+      "driver_in": "DRU",
+      "team": "Aston Martin",
+      "source_name": "the-race",
+      "source_url": "https://www.the-race.com/...",
+      "timestamp": "2026-10-08T15:00:00+00:00"
+    }
+  ]
+}
+```
+
+How they are used:
+- grid penalties are applied to the qualifying order (place drops, then
+  back-of-grid, then pit-lane starters) for the race (or sprint) grid, and
+  to every simulated grid before qualifying;
+- `driver_substitution` / `race_ban` change the entry list of that GP; a
+  substitute without history starts from the new-driver baseline rating;
+- the dashboard lists every applied penalty with its source.

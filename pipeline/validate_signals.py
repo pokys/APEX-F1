@@ -20,7 +20,10 @@ from typing import Any
 
 
 LOGGER = logging.getLogger("validate_signals")
-FILENAME_RE = re.compile(r"^signals_\d{4}-\d{2}-\d{2}\.json$")
+FILENAME_RE = re.compile(r"^(signals_\d{4}-\d{2}-\d{2}|penalties_\d{4}(_auto)?)\.json$")
+EVENT_SIGNAL_TYPES = {"grid_penalty", "pu_element_change", "race_ban", "driver_substitution"}
+PU_ELEMENTS = {"ICE", "TC", "MGU-H", "MGU-K", "ES", "CE", "EX", "GEARBOX"}
+DRIVER_CODE_RE = re.compile(r"^[A-Z]{3}$")
 UPGRADE_MAGNITUDES = {"minor", "medium", "major"}
 
 
@@ -65,8 +68,73 @@ def ensure_range(errors: list[str], label: str, value: Any, lo: float, hi: float
         errors.append(f"{prefix}: '{label}' must be in range [{lo}, {hi}].")
 
 
+def validate_event_signal(signal: dict[str, Any], prefix: str) -> list[str]:
+    """Typed event signal: a fact about one GP (grid penalty, PU element
+    change, race ban, driver substitution)."""
+    errors: list[str] = []
+    kind = str(signal.get("type") or "").strip().lower()
+    source_name = signal.get("source_name")
+    if not isinstance(source_name, str) or not source_name.strip():
+        errors.append(f"{prefix}: 'source_name' is required and must be non-empty string.")
+    source_url = signal.get("source_url")
+    if not isinstance(source_url, str) or not source_url.startswith(("http://", "https://")):
+        errors.append(f"{prefix}: 'source_url' must be an http(s) URL.")
+    if not isinstance(signal.get("season"), int) or isinstance(signal.get("season"), bool):
+        errors.append(f"{prefix}: 'season' must be an integer.")
+    if not isinstance(signal.get("event"), str) or not signal["event"].strip():
+        errors.append(f"{prefix}: 'event' (GP name as in the calendar) is required.")
+    timestamp = signal.get("timestamp")
+    if not isinstance(timestamp, str) or not re.match(r"^\d{4}-\d{2}-\d{2}T", timestamp):
+        errors.append(f"{prefix}: 'timestamp' must be an ISO datetime string.")
+    if signal.get("source_confidence") is not None:
+        ensure_range(errors, "source_confidence", signal["source_confidence"], 0.0, 1.0, prefix)
+    applies_to = signal.get("applies_to", "race")
+    if applies_to not in {"race", "sprint"}:
+        errors.append(f"{prefix}: 'applies_to' must be 'race' or 'sprint'.")
+
+    def check_driver(field: str) -> None:
+        value = signal.get(field)
+        if not isinstance(value, str) or not DRIVER_CODE_RE.match(value.strip().upper()):
+            errors.append(f"{prefix}: '{field}' must be a three-letter driver code.")
+
+    has_places = signal.get("places") is not None
+    if has_places and (not isinstance(signal.get("places"), int) or isinstance(signal.get("places"), bool) or not 1 <= signal["places"] <= 60):
+        errors.append(f"{prefix}: 'places' must be an integer in [1, 60].")
+    for flag in ("back_of_grid", "pit_lane"):
+        if flag in signal and not isinstance(signal[flag], bool):
+            errors.append(f"{prefix}: '{flag}' must be boolean.")
+    sanctions = int(has_places) + int(signal.get("back_of_grid") is True) + int(signal.get("pit_lane") is True)
+
+    if kind == "grid_penalty":
+        check_driver("driver")
+        if sanctions != 1:
+            errors.append(f"{prefix}: grid_penalty needs exactly one of 'places', 'back_of_grid'=true, 'pit_lane'=true.")
+    elif kind == "pu_element_change":
+        if not signal.get("driver") and not signal.get("team"):
+            errors.append(f"{prefix}: pu_element_change needs 'driver' or 'team'.")
+        if signal.get("driver"):
+            check_driver("driver")
+        elements = signal.get("elements", [])
+        if not isinstance(elements, list) or any(str(e).upper() not in PU_ELEMENTS for e in elements):
+            errors.append(f"{prefix}: 'elements' must be a list of {sorted(PU_ELEMENTS)}.")
+        if sanctions > 1:
+            errors.append(f"{prefix}: at most one of 'places', 'back_of_grid', 'pit_lane'.")
+    elif kind == "race_ban":
+        check_driver("driver")
+    elif kind == "driver_substitution":
+        check_driver("driver_out")
+        check_driver("driver_in")
+        if not isinstance(signal.get("team"), str) or not signal["team"].strip():
+            errors.append(f"{prefix}: driver_substitution needs 'team'.")
+    return errors
+
+
 def validate_signal(signal: dict[str, Any], file_label: str, idx: int) -> list[str]:
     prefix = f"{file_label} signal#{idx}"
+    if "type" in signal:
+        if str(signal.get("type") or "").strip().lower() not in EVENT_SIGNAL_TYPES:
+            return [f"{prefix}: 'type' must be one of {sorted(EVENT_SIGNAL_TYPES)}."]
+        return validate_event_signal(signal, prefix)
     errors: list[str] = []
 
     source_name = signal.get("source_name")
@@ -139,7 +207,7 @@ def main() -> int:
     total_signals = 0
     for path in files:
         if not FILENAME_RE.match(path.name):
-            LOGGER.warning("Non-standard signal filename: %s (expected signals_YYYY-MM-DD.json)", path.name)
+            LOGGER.warning("Non-standard signal filename: %s (expected signals_YYYY-MM-DD.json or penalties_YYYY.json)", path.name)
 
         try:
             raw = json.loads(path.read_text(encoding="utf-8"))

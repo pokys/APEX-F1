@@ -483,24 +483,110 @@ def extract_fixed_grid_from_event(event: dict[str, Any], session_code: str) -> l
     return [name for _, name in ranked]
 
 
-def signal_count(signals_dir: Path) -> int:
+# Typed "event" signals describe facts about a specific GP (grid penalties,
+# power-unit element changes, bans, substitutions). They are applied
+# deterministically and are not soft performance signals.
+EVENT_SIGNAL_TYPES = {"grid_penalty", "pu_element_change", "race_ban", "driver_substitution"}
+
+
+def _signals_from_file(raw: Any) -> list[dict[str, Any]]:
+    if isinstance(raw, list):
+        return [x for x in raw if isinstance(x, dict)]
+    if isinstance(raw, dict):
+        signals = raw.get("signals")
+        if isinstance(signals, list):
+            return [x for x in signals if isinstance(x, dict)]
+        return [raw]
+    return []
+
+
+def is_event_signal(signal: dict[str, Any]) -> bool:
+    return str(signal.get("type") or "").strip().lower() in EVENT_SIGNAL_TYPES
+
+
+def load_all_signals(signals_dir: Path) -> list[dict[str, Any]]:
     if not signals_dir.exists():
-        return 0
-    total = 0
+        return []
+    out: list[dict[str, Any]] = []
     for path in sorted(signals_dir.glob("*.json")):
         try:
-            raw = load_json(path)
+            out.extend(_signals_from_file(load_json(path)))
         except Exception:
             continue
-        if isinstance(raw, list):
-            total += len(raw)
-        elif isinstance(raw, dict):
-            signals = raw.get("signals")
-            if isinstance(signals, list):
-                total += len(signals)
-            else:
-                total += 1
-    return total
+    return out
+
+
+def signal_count(signals_dir: Path) -> int:
+    """Number of soft (article-derived) signals; event signals such as grid
+    penalties are counted separately and never activate the soft-signal
+    weight."""
+    return sum(1 for signal in load_all_signals(signals_dir) if not is_event_signal(signal))
+
+
+def event_signals(signals_dir: Path, season: Any, event_name: str) -> list[dict[str, Any]]:
+    key = str(event_name or "").strip().lower()
+    out = []
+    for signal in load_all_signals(signals_dir):
+        if not is_event_signal(signal):
+            continue
+        try:
+            if int(signal.get("season")) != int(season):
+                continue
+        except (TypeError, ValueError):
+            continue
+        if str(signal.get("event") or "").strip().lower() == key:
+            out.append(signal)
+    return out
+
+
+def grid_penalties_from_signals(signals: list[dict[str, Any]], applies_to: str = "race") -> list[dict[str, Any]]:
+    """Normalised grid penalties for one session ("race" or "sprint")."""
+    penalties: dict[str, dict[str, Any]] = {}
+    for signal in signals:
+        kind = str(signal.get("type") or "").strip().lower()
+        if kind not in {"grid_penalty", "pu_element_change", "race_ban"}:
+            continue
+        if str(signal.get("applies_to") or "race").strip().lower() != applies_to:
+            continue
+        driver = str(signal.get("driver") or "").strip().upper()
+        if not driver:
+            continue
+        entry = penalties.setdefault(driver, {"driver": driver, "places": 0, "back_of_grid": False, "pit_lane": False, "sources": []})
+        if kind == "race_ban":
+            entry["excluded"] = True
+        try:
+            entry["places"] += int(signal.get("places") or 0)
+        except (TypeError, ValueError):
+            pass
+        entry["back_of_grid"] = entry["back_of_grid"] or bool(signal.get("back_of_grid"))
+        entry["pit_lane"] = entry["pit_lane"] or bool(signal.get("pit_lane"))
+        source = signal.get("source_url") or signal.get("source_name")
+        if source and source not in entry["sources"]:
+            entry["sources"].append(source)
+    return [
+        entry
+        for entry in sorted(penalties.values(), key=lambda e: e["driver"])
+        if entry["places"] > 0 or entry["back_of_grid"] or entry["pit_lane"] or entry.get("excluded")
+    ]
+
+
+def apply_grid_penalties(order: list[str], penalties: list[dict[str, Any]]) -> list[str]:
+    """Starting grid from a qualifying order and grid penalties.
+
+    Approximates the FIA procedure: place drops are applied in qualifying
+    order among the drivers without back-of-grid/pit-lane sanctions, then
+    back-of-grid drivers follow (in qualifying order) and pit-lane starters
+    start last. Excluded (banned) drivers are removed."""
+    by_driver = {str(p.get("driver") or "").upper(): p for p in penalties}
+    excluded = {d for d, p in by_driver.items() if p.get("excluded")}
+    pit_lane = [d for d in order if d in by_driver and by_driver[d].get("pit_lane") and d not in excluded]
+    back = [d for d in order if d in by_driver and by_driver[d].get("back_of_grid") and d not in pit_lane and d not in excluded]
+    grid = [d for d in order if d not in pit_lane and d not in back and d not in excluded]
+    for driver in [d for d in order if d in grid and int(by_driver.get(d, {}).get("places") or 0) > 0]:
+        index = grid.index(driver)
+        grid.pop(index)
+        grid.insert(min(index + int(by_driver[driver]["places"]), len(grid)), driver)
+    return grid + back + pit_lane
 
 
 def build_inputs_manifest(

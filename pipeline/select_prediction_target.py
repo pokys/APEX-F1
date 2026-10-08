@@ -31,7 +31,10 @@ from pipeline.prediction_targeting import (  # noqa: E402
     TARGET_LABEL,
     TARGET_OUTPUT_TYPE,
     TARGET_SESSION_CODE,
+    apply_grid_penalties,
     available_sessions_for_event,
+    event_signals,
+    grid_penalties_from_signals,
     build_inputs_manifest,
     build_inputs_status,
     extract_fixed_grid_from_event,
@@ -214,22 +217,21 @@ def main() -> int:
         config["inputs_status"] = inputs_status
         config["signal_count"] = active_signal_count
 
-        if target == "race":
-            fixed_grid = extract_fixed_grid_from_event(event, "Q") if event is not None else None
-            if fixed_grid:
-                config["fixed_grid"] = fixed_grid
-                config["grid_source"] = "qualifying"
-            else:
-                config.pop("fixed_grid", None)
-                config["grid_source"] = "simulation"
-        elif target == "sprint":
-            fixed_grid = extract_fixed_grid_from_event(event, "SQ") if event is not None else None
-            if fixed_grid:
-                config["fixed_grid"] = fixed_grid
-                config["grid_source"] = "sprint_qualifying"
-            else:
-                config.pop("fixed_grid", None)
-                config["grid_source"] = "simulation"
+        known_event_signals = event_signals(Path(args.signals_dir), season, race_name)
+        race_penalties = grid_penalties_from_signals(known_event_signals, "race")
+        sprint_penalties = grid_penalties_from_signals(known_event_signals, "sprint")
+        config["event_signal_count"] = len(known_event_signals)
+        config["race_grid_penalties"] = race_penalties
+        config["sprint_grid_penalties"] = sprint_penalties
+
+        grid_session = {"race": "Q", "sprint": "SQ"}.get(target)
+        active_penalties = race_penalties if target == "race" else sprint_penalties if target == "sprint" else []
+        config["grid_penalties"] = active_penalties
+        fixed_grid = extract_fixed_grid_from_event(event, grid_session) if (event is not None and grid_session) else None
+        if fixed_grid:
+            config["fixed_grid"] = apply_grid_penalties(fixed_grid, active_penalties)
+            label = "qualifying" if target == "race" else "sprint_qualifying"
+            config["grid_source"] = f"{label}+penalties" if active_penalties else label
         else:
             config.pop("fixed_grid", None)
             config["grid_source"] = "simulation"

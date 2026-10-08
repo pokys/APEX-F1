@@ -16,7 +16,7 @@ import logging
 import re
 import sys
 from dataclasses import dataclass
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 from pathlib import Path
 from typing import Any
@@ -50,6 +50,17 @@ def parse_args() -> argparse.Namespace:
         "--inbox",
         default="knowledge/inbox/articles.md",
         help="Path to inbox markdown file (default: knowledge/inbox/articles.md).",
+    )
+    parser.add_argument(
+        "--archive-dir",
+        default="knowledge/inbox/archive",
+        help="Where inbox sections older than --keep-days are moved (default: knowledge/inbox/archive).",
+    )
+    parser.add_argument(
+        "--keep-days",
+        type=int,
+        default=14,
+        help="Days an article section stays in the inbox before it is archived (default: 14).",
     )
     parser.add_argument(
         "--timeout",
@@ -264,6 +275,63 @@ def parse_feed_entries(feed_xml: bytes, fallback_date: date) -> list[tuple[str, 
     return parsed
 
 
+SECTION_RE = re.compile(r"^## (\d{4}-\d{2}-\d{2})\s*$")
+
+
+def article_hashes(lines: list[str]) -> set[str]:
+    hashes: set[str] = set()
+    for line in lines:
+        match = ARTICLE_LINE_RE.match(line.strip())
+        if match:
+            hashes.add(make_article_hash(match.group("title"), match.group("url")))
+    return hashes
+
+
+def archived_hashes(archive_dir: Path) -> set[str]:
+    hashes: set[str] = set()
+    if archive_dir.exists():
+        for path in sorted(archive_dir.glob("articles_*.md")):
+            hashes |= article_hashes(path.read_text(encoding="utf-8").splitlines())
+    return hashes
+
+
+def rotate_inbox(lines: list[str], today: date, keep_days: int, archive_dir: Path) -> list[str]:
+    """Move date sections older than keep_days to monthly archive files,
+    unchanged (checkbox state included), and return the remaining inbox."""
+    cutoff = today - timedelta(days=max(0, keep_days))
+    kept: list[str] = []
+    moved: dict[str, list[str]] = {}
+    current: list[str] | None = None
+    for line in lines:
+        match = SECTION_RE.match(line.strip())
+        if match:
+            try:
+                section_date = date.fromisoformat(match.group(1))
+            except ValueError:
+                section_date = None
+            if section_date is not None and section_date < cutoff:
+                current = moved.setdefault(section_date.strftime("%Y-%m"), [])
+            else:
+                current = kept
+            current.append(line)
+            continue
+        (current if current is not None else kept).append(line)
+    if not moved:
+        return lines
+    archive_dir.mkdir(parents=True, exist_ok=True)
+    for month, month_lines in sorted(moved.items()):
+        path = archive_dir / f"articles_{month}.md"
+        existing = path.read_text(encoding="utf-8").splitlines() if path.exists() else [f"# F1 Article Archive {month}", ""]
+        while existing and existing[-1] == "":
+            existing.pop()
+        body = [line for line in month_lines]
+        while body and body[-1] == "":
+            body.pop()
+        path.write_text("\n".join(existing + [""] + body) + "\n", encoding="utf-8")
+    LOGGER.info("Archived inbox sections for %s.", ", ".join(sorted(moved)))
+    return kept
+
+
 def load_existing_hashes(inbox_path: Path) -> tuple[list[str], set[str]]:
     if not inbox_path.exists():
         return [INBOX_HEADER, ""], set()
@@ -373,17 +441,34 @@ def group_articles_by_date(articles: list[Article]) -> dict[str, list[Article]]:
     return grouped
 
 
-def run(feeds_path: Path, inbox_path: Path, timeout_seconds: int) -> int:
+def run(
+    feeds_path: Path,
+    inbox_path: Path,
+    timeout_seconds: int,
+    archive_dir: Path | None = None,
+    keep_days: int = 14,
+    today: date | None = None,
+) -> int:
+    today = today or datetime.now(timezone.utc).date()
+    archive_dir = archive_dir or inbox_path.parent / "archive"
     feed_urls = load_feed_urls(feeds_path)
     inbox_lines, existing_hashes = load_existing_hashes(inbox_path)
+    existing_hashes |= archived_hashes(archive_dir)
+    rotated_lines = rotate_inbox(inbox_lines, today, keep_days, archive_dir)
 
     new_articles = collect_articles(feed_urls, timeout_seconds=timeout_seconds, existing_hashes=existing_hashes)
+    # Articles already past the inbox window go nowhere; otherwise they
+    # would bounce between inbox and archive.
+    cutoff = today - timedelta(days=max(0, keep_days))
+    new_articles = [article for article in new_articles if article.published_date >= cutoff]
     if not new_articles:
+        if rotated_lines != inbox_lines:
+            inbox_path.write_text("\n".join(rotated_lines), encoding="utf-8")
         LOGGER.info("No new articles found.")
         return 0
 
     grouped = group_articles_by_date(new_articles)
-    updated_lines = insert_articles(inbox_lines, grouped)
+    updated_lines = insert_articles(rotated_lines, grouped)
 
     inbox_path.parent.mkdir(parents=True, exist_ok=True)
     inbox_path.write_text("\n".join(updated_lines), encoding="utf-8")
@@ -404,6 +489,8 @@ def main() -> int:
             feeds_path=Path(args.feeds),
             inbox_path=Path(args.inbox),
             timeout_seconds=args.timeout,
+            archive_dir=Path(args.archive_dir),
+            keep_days=args.keep_days,
         )
     except Exception as exc:
         LOGGER.error("collect_articles failed: %s", exc)

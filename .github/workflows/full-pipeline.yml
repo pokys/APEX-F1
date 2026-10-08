@@ -195,9 +195,8 @@ jobs:
 
       - name: Commit changes
         run: |
-          echo "# F1 Article Inbox" > knowledge/inbox/articles.md
           bash scripts/commit_bot_outputs.sh "Run full F1 prediction pipeline" \
-            knowledge/inbox/articles.md \
+            knowledge/inbox \
             knowledge/processed \
             data/raw/fastf1 \
             data/raw/calendars \

@@ -309,6 +309,12 @@ def scenario_panel_html(prediction: dict[str, Any], scenario_key: str, scenario_
     )
 
 
+def signals_chip(signal_count: int) -> str:
+    if signal_count <= 0:
+        return "Article signals: none - their input weight is redistributed to timing data"
+    return f"Article signals: {signal_count}"
+
+
 def penalties_html(race_config: dict[str, Any]) -> str:
     """Grid penalties known for this GP and where they come from."""
     sections = []
@@ -973,6 +979,7 @@ def render_page(
         </div>
         <div class="meta-strip">
           <span class="chip">Generated: {generated_at}</span>
+          <span class="chip">{html.escape(signals_chip(signal_count))}</span>
         </div>
         <section class="explain-card">
           <h2>Why This Is Active Now</h2>

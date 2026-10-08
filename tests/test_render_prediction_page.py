@@ -111,3 +111,28 @@ def test_render_page_shows_dry_wet_toggle_for_race_predictions() -> None:
     assert "Race" in rendered
     assert "Win" in rendered
     assert "Podium" in rendered
+
+
+def test_page_states_when_no_article_signals_are_used() -> None:
+    from pipeline.prediction_targeting import build_inputs_manifest
+    from pipeline.render_prediction_page import render_page
+
+    manifest = build_inputs_manifest(
+        "qualifying",
+        ["FP1"],
+        {"qualifying": {"history_driver": 0.2, "fp1": 0.15, "signals": 0.15}},
+        active_signal_count=0,
+    )
+    assert "signals" not in {row["source"] for row in manifest}
+    assert abs(sum(row["weight"] for row in manifest) - 1.0) < 1e-6
+
+    prediction = {
+        "race": "Test GP",
+        "prediction_target": "qualifying",
+        "target_output_type": "qualifying",
+        "drivers": [{"name": "AAA", "team": "T", "pole_probability": 1.0, "front_row_probability": 1.0, "top10_probability": 1.0, "expected_position": 1.0}],
+    }
+    page = render_page(prediction, {"signal_count": 0})
+    assert "Article signals: none" in page
+    page = render_page(prediction, {"signal_count": 3})
+    assert "Article signals: 3" in page

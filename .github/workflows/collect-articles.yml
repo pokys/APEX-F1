@@ -45,4 +45,4 @@ jobs:
             --log-level INFO
 
       - name: Commit changes
-        run: bash scripts/commit_bot_outputs.sh "Update F1 article inbox" knowledge/inbox/articles.md
+        run: bash scripts/commit_bot_outputs.sh "Update F1 article inbox" knowledge/inbox

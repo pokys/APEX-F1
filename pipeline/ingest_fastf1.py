@@ -23,6 +23,7 @@ if __package__ is None or __package__ == "":
     sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from pipeline.prediction_targeting import session_has_classification  # noqa: E402
+from pipeline.openf1_client import OpenF1Client, format_duration  # noqa: E402
 from pipeline.select_next_gp import extract_sessions_schedule  # noqa: E402
 
 try:
@@ -90,6 +91,11 @@ def parse_args() -> argparse.Namespace:
         "--include-lap-metrics",
         action="store_true",
         help="Extract clean-lap pace metrics. Slower, but can improve prediction quality when used for targeted refreshes.",
+    )
+    parser.add_argument(
+        "--no-openf1",
+        action="store_true",
+        help="Disable the OpenF1 fallback for practice/sprint qualifying classification.",
     )
     parser.add_argument(
         "--log-level",
@@ -362,19 +368,6 @@ def extract_lap_metrics(session: Any) -> list[dict[str, Any]]:
     return metrics
 
 
-def format_duration(seconds: float) -> str:
-    """Render seconds in the same textual form pandas uses for Timedelta,
-    which every downstream duration parser already understands."""
-    total = max(0.0, float(seconds))
-    days = int(total // 86400)
-    rest = total - days * 86400
-    hours = int(rest // 3600)
-    rest -= hours * 3600
-    minutes = int(rest // 60)
-    rest -= minutes * 60
-    return f"{days} days {hours:02d}:{minutes:02d}:{rest:09.6f}"
-
-
 def best_lap_seconds_by_driver(session: Any) -> dict[str, float]:
     """Fastest non-deleted lap per driver abbreviation."""
     laps = session_laps(session)
@@ -528,6 +521,66 @@ def _default_schedule_fetcher(season: int, backend: str) -> Any:
     return fastf1.get_event_schedule(season, include_testing=False, backend=backend)
 
 
+def load_session_openf1(
+    client: OpenF1Client,
+    season: int,
+    session_code: str,
+    scheduled_start: Any,
+) -> dict[str, Any] | None:
+    """Fallback for practice/sprint qualifying when FastF1 has no timing
+    data: take OpenF1 session results, or rank fastest laps."""
+    try:
+        session_key = client.find_session_key(season, session_code, scheduled_start)
+        if session_key is None:
+            return None
+        results = client.session_results(session_key, session_code)
+        if not session_has_classification(results):
+            best = client.best_laps(session_key)
+            if results:
+                results = classify_by_best_lap(results, best)
+            else:
+                results = classify_by_best_lap(
+                    [{"abbreviation": abbr, "position": None, "time": None, "source": "openf1"} for abbr in sorted(best)],
+                    best,
+                )
+    except Exception as exc:
+        LOGGER.warning("OpenF1 fallback failed (%s %s): %s", season, session_code, exc)
+        return None
+    if not session_has_classification(results):
+        return None
+    return {
+        "session_code": session_code,
+        "session_name": None,
+        "session_date": str(scheduled_start),
+        "source": "openf1",
+        "openf1_session_key": session_key,
+        "results": results,
+    }
+
+
+def align_team_names(results: list[dict[str, Any]], roster: dict[str, str]) -> list[dict[str, Any]]:
+    """Use the FastF1 team name of each driver so a fallback source with
+    different naming ("Red Bull Racing" vs "Red Bull") does not create a
+    second team in features and ratings."""
+    for row in results:
+        abbr = str(row.get("abbreviation") or "").strip().upper()
+        if abbr in roster:
+            row["team_name"] = roster[abbr]
+    return results
+
+
+def update_roster(roster: dict[str, str], session: dict[str, Any]) -> None:
+    if session.get("source") == "openf1":
+        return
+    for row in session.get("results") or []:
+        if not isinstance(row, dict):
+            continue
+        abbr = str(row.get("abbreviation") or "").strip().upper()
+        team = str(row.get("team_name") or "").strip()
+        if abbr and team:
+            roster[abbr] = team
+
+
 def load_previous_sessions(snapshot_path: Path) -> dict[tuple[int, str], dict[str, Any]]:
     """Index sessions of an existing snapshot by (round, session_code)."""
     if not snapshot_path.exists():
@@ -570,12 +623,20 @@ def reusable_session(
     if not session_has_classification(previous.get("results")):
         return False
     needs_laps = include_lap_metrics or session_code in LAP_DATA_SESSIONS
-    if needs_laps and not previous.get("lap_metrics"):
+    if needs_laps and not previous.get("lap_metrics") and previous.get("source") != "openf1":
         return False
     return True
 
 
-def ingest(season: int, sessions: list[str], cutoff: date, output_dir: Path, cache_dir: Path, include_lap_metrics: bool = False) -> Path | None:
+def ingest(
+    season: int,
+    sessions: list[str],
+    cutoff: date,
+    output_dir: Path,
+    cache_dir: Path,
+    include_lap_metrics: bool = False,
+    openf1: OpenF1Client | None = None,
+) -> Path | None:
     if fastf1 is None:
         raise RuntimeError("fastf1 is not installed. Install dependencies from requirements.txt first.")
 
@@ -594,6 +655,11 @@ def ingest(season: int, sessions: list[str], cutoff: date, output_dir: Path, cac
         return None
     schedule = schedule.sort_values(by=["EventDate", "RoundNumber"], kind="stable")
     previous_sessions = load_previous_sessions(output_dir / f"season_{season}.json")
+    # Latest FastF1 team name per driver, seeded from the previous snapshot
+    # so OpenF1 fallback sessions early in a weekend already map correctly.
+    roster: dict[str, str] = {}
+    for _, stored in sorted(previous_sessions.items(), key=lambda item: item[0][0]):
+        update_roster(roster, stored)
 
     calendar_payload: list[dict[str, Any]] = []
     for _, row in schedule.iterrows():
@@ -621,14 +687,24 @@ def ingest(season: int, sessions: list[str], cutoff: date, output_dir: Path, cac
             continue
 
         event_date = to_utc_date(row.get("EventDate"))
+        schedule_times = extract_sessions_schedule(row)
         sessions_payload: list[dict[str, Any]] = []
         for session_code in sessions:
             stored = previous_sessions.get((round_number, session_code))
             if reusable_session(stored, session_code, event_date, cutoff, include_lap_metrics):
                 sessions_payload.append(stored)
+                update_roster(roster, stored)
                 continue
             loaded = load_session(season, round_number, session_code, cutoff=cutoff, include_lap_metrics=include_lap_metrics)
+            if loaded is None and openf1 is not None and session_code in LAP_DATA_SESSIONS:
+                scheduled = schedule_times.get(session_code)
+                scheduled_dt = to_utc_date(scheduled)
+                if scheduled and scheduled_dt is not None and scheduled_dt <= cutoff:
+                    loaded = load_session_openf1(openf1, season, session_code, scheduled)
+                    if loaded is not None:
+                        align_team_names(loaded["results"], roster)
             if loaded is not None:
+                update_roster(roster, loaded)
                 sessions_payload.append(loaded)
 
         if not sessions_payload:
@@ -681,6 +757,7 @@ def main() -> int:
             output_dir=Path(args.output_dir),
             cache_dir=Path(args.cache_dir),
             include_lap_metrics=args.include_lap_metrics,
+            openf1=None if args.no_openf1 else OpenF1Client(),
         )
     except Exception as exc:
         LOGGER.error("ingest_fastf1 failed: %s", exc)

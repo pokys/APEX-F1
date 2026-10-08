@@ -218,3 +218,26 @@ def test_reusable_session_requires_final_classified_data() -> None:
     assert not reusable_session(classified, "R", date(2026, 10, 5), cutoff, include_lap_metrics=False)
     # Lap-data sessions without stored lap metrics are re-fetched.
     assert not reusable_session({"results": classified["results"]}, "SQ", date(2026, 9, 1), cutoff, include_lap_metrics=False)
+
+
+def test_load_session_survives_missing_timing_data(monkeypatch) -> None:
+    # Regression: FastF1 raises DataNotLoadedError on .laps when the live
+    # timing API has no data; that must not abort the whole ingest.
+    class NoTimingSession(FakeLoadableSession):
+        @property
+        def laps(self):
+            raise RuntimeError("The data you are trying to access has not been loaded yet.")
+
+        @laps.setter
+        def laps(self, value):
+            pass
+
+    session = NoTimingSession(results=[_entry("RUS", "Mercedes")], laps=[])
+
+    class FakeFastF1:
+        @staticmethod
+        def get_session(season, round_number, code):
+            return session
+
+    monkeypatch.setattr(ingest_module, "fastf1", FakeFastF1)
+    assert load_session(2026, 1, "FP1", cutoff=date(2026, 12, 31)) is None

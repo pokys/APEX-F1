@@ -286,8 +286,18 @@ def extract_results(session: Any) -> list[dict[str, Any]]:
     return records
 
 
+def session_laps(session: Any) -> Any:
+    """Return session.laps, or None when FastF1 could not load timing data.
+    FastF1 raises DataNotLoadedError (not AttributeError) in that case."""
+    try:
+        return getattr(session, "laps", None)
+    except Exception as exc:
+        LOGGER.debug("Lap data unavailable: %s", exc)
+        return None
+
+
 def extract_lap_metrics(session: Any) -> list[dict[str, Any]]:
-    laps = getattr(session, "laps", None)
+    laps = session_laps(session)
     if laps is None or getattr(laps, "empty", True):
         return []
 
@@ -367,7 +377,7 @@ def format_duration(seconds: float) -> str:
 
 def best_lap_seconds_by_driver(session: Any) -> dict[str, float]:
     """Fastest non-deleted lap per driver abbreviation."""
-    laps = getattr(session, "laps", None)
+    laps = session_laps(session)
     if laps is None or getattr(laps, "empty", True):
         return {}
     best: dict[str, float] = {}

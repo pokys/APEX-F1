@@ -34,3 +34,16 @@ def test_validate_signal_rejects_invalid_ranges_and_required_fields() -> None:
     assert any("upgrade_magnitude" in e for e in errors)
     assert any("reliability_concern" in e for e in errors)
     assert any("driver_confidence_change" in e for e in errors)
+
+
+def test_main_accepts_explicitly_empty_signal_file(tmp_path, monkeypatch) -> None:
+    import json
+    import sys
+
+    from pipeline import validate_signals
+
+    (tmp_path / "penalties_2026_fia.json").write_text(json.dumps({"signals": [], "processed_documents": ["https://x/a.pdf"]}))
+    monkeypatch.setattr(sys, "argv", ["validate_signals.py", "--signals-dir", str(tmp_path)])
+    assert validate_signals.main() == 0
+    (tmp_path / "broken.json").write_text(json.dumps({"signals": "nope"}))
+    assert validate_signals.main() == 1

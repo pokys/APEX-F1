@@ -77,7 +77,8 @@ Zdroje a jejich spolehlivost:
 
 - **Historie (spolehlivé):** z rozdílu startovní pozice a pozice v kvalifikaci (≥ 3 místa nebo start z boxů) se počítá `grid_penalty_rate` týmu; backtest používá skutečný startovní grid.
 - **OpenF1 race control (best effort, automaticky):** `pipeline/import_penalties.py` čte zprávy race control aktuální GP a přenesené tresty z minulé GP a zapisuje `knowledge/processed/penalties_<sezona>_auto.json`. Zachytí jen rozhodnutí, která race control zveřejní textem („3 PLACE GRID PENALTY FOR CAR 23 (ALB)“, „WILL START FROM THE PIT LANE“); formulace se mezi sezonami mění.
-- **Dokumenty FIA (nejúplnější, ručně):** výměny prvků pohonné jednotky a z nich plynoucí penalizace FIA publikuje jen jako PDF na fia.com bez API. Automatický parser by byl křehký, proto se zadávají jako ruční signály do `knowledge/processed/penalties_<sezona>.json`.
+- **Dokumenty FIA (nejúplnější, automaticky):** `pipeline/import_fia_documents.py` stahuje z fia.com PDF rozhodnutí stewardů („Infringement“/„Decision“) aktuální GP a závodní rozhodnutí minulé GP (přenesené tresty) a čte z nich posuny na roštu, start z boxů a konec roštu – hlavně penalizace za výměny prvků pohonné jednotky a změny v parc fermé, které race control nehlásí. Čistý textový parser (pypdf), žádná AI; už přečtené dokumenty si pamatuje, takže každou hodinu stahuje jen nové. Zapisuje `knowledge/processed/penalties_<sezona>_fia.json`. Když stejný trest zachytí i race control, počítá se jen verze z FIA dokumentu.
+- **Ruční signály:** cokoli, co automatika nezachytí (zákaz startu, náhradník), patří do `knowledge/processed/penalties_<sezona>.json`.
 
 ## Výstupy
 
@@ -183,6 +184,7 @@ python pipeline/ingest_fastf1.py --log-level INFO
 python pipeline/select_next_gp.py --race-config config/race_config.json --log-level INFO
 python pipeline/collect_weather.py --race-config config/race_config.json --log-level INFO
 python pipeline/import_penalties.py --race-config config/race_config.json --log-level INFO
+python pipeline/import_fia_documents.py --race-config config/race_config.json --log-level INFO
 python pipeline/select_prediction_target.py --race-config config/race_config.json --raw-dir data/raw/fastf1 --calendar-cache-dir data/raw/calendars --session-weights config/session_weights.json --signals-dir knowledge/processed --log-level INFO
 python pipeline/collect_tyre_compounds.py --calendar-cache-dir data/raw/calendars --source-config config/tyre_sources.json --output-dir data/raw/tyres --log-level INFO
 python pipeline/validate_signals.py --signals-dir knowledge/processed --allow-empty --log-level INFO

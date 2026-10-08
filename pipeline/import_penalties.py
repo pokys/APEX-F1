@@ -12,8 +12,8 @@ knowledge/processed/penalties_<season>_auto.json. The output passes the
 same validation as hand-written signals (validate_signals.py).
 
 Not every penalty reaches race control in this form: power-unit element
-changes are published in FIA documents (PDF) only. Those must still be
-added by hand as signals (see knowledge/processed/README.md).
+changes are published in FIA documents (PDF) only; those are imported by
+import_fia_documents.py.
 """
 
 from __future__ import annotations

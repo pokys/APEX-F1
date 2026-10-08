@@ -126,6 +126,10 @@ jobs:
         run: |
           python pipeline/import_penalties.py --race-config config/race_config.json --calendar-cache-dir data/raw/calendars --signals-dir knowledge/processed --log-level INFO
 
+      - name: Import grid penalties from FIA decision documents
+        run: |
+          python pipeline/import_fia_documents.py --race-config config/race_config.json --calendar-cache-dir data/raw/calendars --raw-dir data/raw/fastf1 --signals-dir knowledge/processed --log-level INFO
+
       - name: Select automatic prediction target
         run: |
           python pipeline/select_prediction_target.py --race-config config/race_config.json --raw-dir data/raw/fastf1 --calendar-cache-dir data/raw/calendars --session-weights config/session_weights.json --signals-dir knowledge/processed --log-level INFO

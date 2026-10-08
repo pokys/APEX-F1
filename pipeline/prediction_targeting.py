@@ -487,6 +487,10 @@ def extract_fixed_grid_from_event(event: dict[str, Any], session_code: str) -> l
 # power-unit element changes, bans, substitutions). They are applied
 # deterministically and are not soft performance signals.
 EVENT_SIGNAL_TYPES = {"grid_penalty", "pu_element_change", "race_ban", "driver_substitution"}
+# source_name of the automatic penalty importers (import_penalties.py,
+# import_fia_documents.py).
+RACE_CONTROL_SOURCE = "openf1_race_control"
+FIA_DOCUMENTS_SOURCE = "fia_decision_documents"
 
 
 def _signals_from_file(raw: Any) -> list[dict[str, Any]]:
@@ -540,9 +544,23 @@ def event_signals(signals_dir: Path, season: Any, event_name: str) -> list[dict[
 
 
 def grid_penalties_from_signals(signals: list[dict[str, Any]], applies_to: str = "race") -> list[dict[str, Any]]:
-    """Normalised grid penalties for one session ("race" or "sprint")."""
+    """Normalised grid penalties for one session ("race" or "sprint").
+
+    The FIA decision documents hold every stewards' decision, so for a
+    driver covered by them the race control copies of the same decisions
+    are dropped (otherwise a 3-place drop would count twice)."""
     penalties: dict[str, dict[str, Any]] = {}
+    covered_by_fia = {
+        (str(s.get("driver") or "").strip().upper(), str(s.get("applies_to") or "race").strip().lower())
+        for s in signals
+        if s.get("source_name") == FIA_DOCUMENTS_SOURCE
+    }
     for signal in signals:
+        if signal.get("source_name") == RACE_CONTROL_SOURCE and (
+            str(signal.get("driver") or "").strip().upper(),
+            str(signal.get("applies_to") or "race").strip().lower(),
+        ) in covered_by_fia:
+            continue
         kind = str(signal.get("type") or "").strip().lower()
         if kind not in {"grid_penalty", "pu_element_change", "race_ban"}:
             continue

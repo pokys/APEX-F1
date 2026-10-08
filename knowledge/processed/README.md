@@ -59,6 +59,11 @@ type-specific fields. `article_hash` is not required for them.
 - manual file: `penalties_YYYY.json`
 - automatic file written by `pipeline/import_penalties.py` from OpenF1 race
   control messages: `penalties_YYYY_auto.json`
+- automatic file written by `pipeline/import_fia_documents.py` from the FIA
+  stewards' decision PDFs (PU element changes, parc ferme changes, grid
+  drops): `penalties_YYYY_fia.json`. It also lists `processed_documents`
+  so each run downloads only new PDFs. When both automatic sources report
+  a penalty for the same driver and start, only the FIA one is counted.
 
 ## Article Hash
 

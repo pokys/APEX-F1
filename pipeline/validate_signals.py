@@ -20,7 +20,7 @@ from typing import Any
 
 
 LOGGER = logging.getLogger("validate_signals")
-FILENAME_RE = re.compile(r"^(signals_\d{4}-\d{2}-\d{2}|penalties_\d{4}(_auto)?)\.json$")
+FILENAME_RE = re.compile(r"^(signals_\d{4}-\d{2}-\d{2}|penalties_\d{4}(_auto|_fia)?)\.json$")
 EVENT_SIGNAL_TYPES = {"grid_penalty", "pu_element_change", "race_ban", "driver_substitution"}
 PU_ELEMENTS = {"ICE", "TC", "MGU-H", "MGU-K", "ES", "CE", "EX", "GEARBOX"}
 DRIVER_CODE_RE = re.compile(r"^[A-Z]{3}$")
@@ -216,7 +216,10 @@ def main() -> int:
             continue
 
         signals = normalize_signals(raw)
-        if not signals:
+        # {"signals": []} is a valid empty file (e.g. an importer that has
+        # read documents but found no penalty yet).
+        explicit_empty = isinstance(raw, dict) and raw.get("signals") == []
+        if not signals and not explicit_empty:
             errors.append(f"{path}: no valid signal objects found.")
             continue
 

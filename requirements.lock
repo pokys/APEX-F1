@@ -27,6 +27,7 @@ pydantic==2.12.5
 pydantic-core==2.41.5
 PyJWT==2.11.0
 pyparsing==3.3.2
+pypdf==6.19.0
 pytest==8.3.5
 python-dateutil==2.9.0.post0
 pytz==2026.1.post1

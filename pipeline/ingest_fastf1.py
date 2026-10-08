@@ -450,7 +450,7 @@ def load_session(season: int, round_number: int, session_code: str, cutoff: date
         LOGGER.warning("Session load failed (%s round %s %s): %s", season, round_number, session_code, exc)
         return None
 
-    results = extract_results(session)
+    results = canonicalize_teams(extract_results(session))
     if not results:
         return None
     if load_laps and session_code in LAP_DATA_SESSIONS:
@@ -471,7 +471,7 @@ def load_session(season: int, round_number: int, session_code: str, cutoff: date
         "results": results,
     }
     if load_laps:
-        lap_metrics = extract_lap_metrics(session)
+        lap_metrics = canonicalize_teams(extract_lap_metrics(session))
         if lap_metrics:
             payload["lap_metrics"] = lap_metrics
     return payload
@@ -533,7 +533,7 @@ def load_session_openf1(
         session_key = client.find_session_key(season, session_code, scheduled_start)
         if session_key is None:
             return None
-        results = client.session_results(session_key, session_code)
+        results = canonicalize_teams(client.session_results(session_key, session_code))
         if not session_has_classification(results):
             best = client.best_laps(session_key)
             if results:
@@ -582,6 +582,53 @@ def annotate_wet_flag(
         return
     if wet is not None:
         session["wet"] = bool(wet)
+
+
+# One canonical name per team, whatever the source. F1 live timing (FastF1
+# when it has timing data) and OpenF1 use marketing names, Ergast/Jolpica
+# its own; without this the same team appears twice once the source changes.
+TEAM_NAME_ALIASES = {
+    "red bull racing": "Red Bull",
+    "oracle red bull racing": "Red Bull",
+    "racing bulls": "RB F1 Team",
+    "visa cash app racing bulls": "RB F1 Team",
+    "visa cash app rb": "RB F1 Team",
+    "rb": "RB F1 Team",
+    "alpine": "Alpine F1 Team",
+    "bwt alpine f1 team": "Alpine F1 Team",
+    "cadillac": "Cadillac F1 Team",
+    "haas": "Haas F1 Team",
+    "moneygram haas f1 team": "Haas F1 Team",
+    "aston martin aramco": "Aston Martin",
+    "mclaren f1 team": "McLaren",
+    "mercedes-amg petronas": "Mercedes",
+    "scuderia ferrari": "Ferrari",
+    "audi f1 team": "Audi",
+}
+
+
+def canonical_team_name(name: Any) -> Any:
+    if not isinstance(name, str) or not name.strip():
+        return name
+    return TEAM_NAME_ALIASES.get(" ".join(name.strip().lower().split()), name.strip())
+
+
+def canonicalize_teams(results: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    for row in results:
+        if isinstance(row, dict) and row.get("team_name"):
+            row["team_name"] = canonical_team_name(row["team_name"])
+    return results
+
+
+def fill_missing_teams(results: list[dict[str, Any]], roster: dict[str, str]) -> list[dict[str, Any]]:
+    """Some sessions come without driver info (no team); take the team of
+    the driver's latest earlier session."""
+    for row in results:
+        if isinstance(row, dict) and not row.get("team_name"):
+            abbr = str(row.get("abbreviation") or "").strip().upper()
+            if abbr in roster:
+                row["team_name"] = roster[abbr]
+    return results
 
 
 def align_team_names(results: list[dict[str, Any]], roster: dict[str, str]) -> list[dict[str, Any]]:
@@ -696,6 +743,7 @@ def ingest(
     # so OpenF1 fallback sessions early in a weekend already map correctly.
     roster: dict[str, str] = {}
     for _, stored in sorted(previous_sessions.items(), key=lambda item: item[0][0]):
+        canonicalize_teams(stored.get("results") or [])
         update_roster(roster, stored)
 
     calendar_payload: list[dict[str, Any]] = []
@@ -729,6 +777,9 @@ def ingest(
         for session_code in sessions:
             stored = previous_sessions.get((round_number, session_code))
             if reusable_session(stored, session_code, event_date, cutoff, include_lap_metrics):
+                canonicalize_teams(stored.get("results") or [])
+                canonicalize_teams(stored.get("lap_metrics") or [])
+                fill_missing_teams(stored.get("results") or [], roster)
                 if stored.get("source") == "openf1":
                     align_team_names(stored.get("results") or [], roster)
                 if openf1 is not None:
@@ -745,6 +796,7 @@ def ingest(
                     if loaded is not None:
                         align_team_names(loaded["results"], roster)
             if loaded is not None:
+                fill_missing_teams(loaded["results"], roster)
                 update_roster(roster, loaded)
                 if openf1 is not None:
                     annotate_wet_flag(loaded, openf1, season, session_code, schedule_times.get(session_code))

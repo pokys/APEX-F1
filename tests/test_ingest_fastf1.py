@@ -276,3 +276,44 @@ def test_annotate_wet_flag_stores_openf1_result_once() -> None:
     practice = {"session_code": "FP1"}
     annotate_wet_flag(practice, client, 2026, "FP1", "2026-07-03T11:30:00+00:00")
     assert "wet" not in practice
+
+
+def test_team_names_are_canonical_across_sources() -> None:
+    from pipeline.ingest_fastf1 import canonicalize_teams
+
+    rows = canonicalize_teams([
+        {"abbreviation": "VER", "team_name": "Red Bull Racing"},
+        {"abbreviation": "LAW", "team_name": "Racing Bulls"},
+        {"abbreviation": "GAS", "team_name": "Alpine"},
+        {"abbreviation": "PER", "team_name": "Cadillac"},
+        {"abbreviation": "LEC", "team_name": "Ferrari"},
+        {"abbreviation": "XXX", "team_name": None},
+    ])
+    assert [r["team_name"] for r in rows] == ["Red Bull", "RB F1 Team", "Alpine F1 Team", "Cadillac F1 Team", "Ferrari", None]
+
+
+def test_missing_team_is_filled_from_roster() -> None:
+    from pipeline.ingest_fastf1 import fill_missing_teams
+
+    rows = fill_missing_teams(
+        [{"abbreviation": "RUS", "team_name": None}, {"abbreviation": "BEG", "team_name": None}, {"abbreviation": "LEC", "team_name": "Ferrari"}],
+        {"RUS": "Mercedes", "LEC": "Williams"},
+    )
+    assert [r["team_name"] for r in rows] == ["Mercedes", None, "Ferrari"]
+
+
+def test_lap_metrics_use_canonical_team_names(monkeypatch) -> None:
+    session = FakeLoadableSession(
+        results=[_entry("VER", "Red Bull Racing")],
+        laps=[_lap("VER", "Red Bull Racing", 80.0)],
+    )
+
+    class FakeFastF1:
+        @staticmethod
+        def get_session(season, round_number, code):
+            return session
+
+    monkeypatch.setattr(ingest_module, "fastf1", FakeFastF1)
+    payload = load_session(2026, 1, "FP1", cutoff=date(2026, 12, 31))
+    assert payload["results"][0]["team_name"] == "Red Bull"
+    assert payload["lap_metrics"][0]["team_name"] == "Red Bull"

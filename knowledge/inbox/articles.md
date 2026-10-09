@@ -265,3 +265,5 @@
 - [ ] Verstappen keeps sprint race pole position after passing Hamilton under yellow flags | Formula 1 (https://www.racefans.net/2026/10/09/verstappen-keeps-sprint-race-pole-position-after-passing-hamilton-under-yellow-flags/)
 - [ ] Why Verstappen keeps Singapore sprint pole despite yellow flag 'breach' (https://www.the-race.com/formula-1/why-verstappen-keeps-singapore-sprint-pole-despite-yellow-flag-breach/)
 - [ ] Winners and losers from sprint qualifying at F1's Singapore GP (https://www.the-race.com/formula-1/winners-and-losers-from-sprint-qualifying-at-f1s-singapore-gp/)
+- [ ] "We're stuck with what we've got" – Why Kimi Antonelli can't revert to previous Mercedes spec in Singapore (https://www.motorsport.com/f1/news/were-stuck-with-what-weve-got-why-antonelli-cant-revert-to-previous-mercedes-spec-in-singapore/10863572/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Big weakness with new Mercedes upgrade has been exposed (https://www.the-race.com/formula-1/big-weakness-with-new-mercedes-upgrade-has-been-exposed/)

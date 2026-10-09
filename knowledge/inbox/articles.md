@@ -205,3 +205,8 @@
 - [ ] F1 Singapore GP: Friday schedule, weather forecast and how to watch (https://www.motorsport.com/f1/news/f1-singapore-gp-friday-schedule-weather-forecast-and-how-to-watch/10863120/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Naomi Schiff questions Mercedes' George Russell F1 engine penalty decision (https://www.motorsport.com/f1/news/naomi-schiff-questions-mercedes-george-russell-f1-engine-penalty-decision/10863171/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Will Buxton raises alarm over Mercedes F1 upgrades ahead of Singapore GP (https://www.motorsport.com/f1/news/will-buxton-raises-alarm-over-mercedes-f1-upgrades-ahead-of-singapore-gp/10863178/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] 'Should be banned' - F1 drivers divided over cooling vests (https://www.the-race.com/formula-1/should-be-banned-f1-drivers-divided-over-cooling-vests/)
+- [ ] Oscar Piastri: Red Bull has become “the class of the field” in F1 2026 (https://www.motorsport.com/f1/news/oscar-piastri-red-bull-has-become-the-class-of-the-field-in-f1-2026/10863147/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+
+## 2026-10-09
+- [ ] Everything that happened in first Indonesia MotoGP practice (https://www.the-race.com/motogp/marquez-splits-aprilias-late-on-in-first-indonesia-motogp-practice/)

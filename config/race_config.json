@@ -1,27 +1,33 @@
 {
-  "available_sessions": [],
-  "available_sessions_by_calendar": [],
-  "available_sessions_ingested": [],
+  "available_sessions": [
+    "FP1"
+  ],
+  "available_sessions_by_calendar": [
+    "FP1"
+  ],
+  "available_sessions_ingested": [
+    "FP1"
+  ],
   "calibration_season": 2026,
   "calibration_source": "outputs/backtest/backtest_season_2026.json",
   "driver_substitutions": [],
   "event_format": "sprint",
   "event_signal_count": 0,
-  "generated_at": "2026-10-09T07:11:58Z",
+  "generated_at": "2026-10-09T12:07:20Z",
   "grid_penalties": [],
   "grid_source": "simulation",
   "inputs_status": [
-    {
-      "configured_weight": 0.45,
-      "source": "fp1",
-      "source_key": "FP1",
-      "status": "missing"
-    },
     {
       "configured_weight": 0.25,
       "source": "signals",
       "source_key": "signals",
       "status": "missing"
+    },
+    {
+      "configured_weight": 0.45,
+      "source": "fp1",
+      "source_key": "FP1",
+      "status": "used"
     },
     {
       "configured_weight": 0.2,
@@ -38,14 +44,19 @@
   ],
   "inputs_used": [
     {
+      "source": "fp1",
+      "source_key": "FP1",
+      "weight": 0.6
+    },
+    {
       "source": "history_driver",
       "source_key": "history_driver",
-      "weight": 0.666667
+      "weight": 0.266667
     },
     {
       "source": "history_team",
       "source_key": "history_team",
-      "weight": 0.333333
+      "weight": 0.133333
     }
   ],
   "location": "Marina Bay",

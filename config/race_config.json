@@ -40,8 +40,9 @@
     "BOT",
     "SAI"
   ],
-  "generated_at": "2026-10-09T19:14:52Z",
+  "generated_at": "2026-10-09T19:34:32Z",
   "grid_penalties": [],
+  "grid_position_weight": 1500.0,
   "grid_source": "sprint_qualifying",
   "inputs_status": [
     {
@@ -116,7 +117,7 @@
       ]
     }
   ],
-  "race_noise_scale": 1.25,
+  "race_noise_scale": 6.0,
   "safety_car_probability": 0.52,
   "season": 2026,
   "seed": 202617,

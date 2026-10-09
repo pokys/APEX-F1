@@ -1,5 +1,5 @@
 {
-  "inputs_hash": "b32e3ca1de35f97bfecb2d177782fa18d3ebb0465f57e5d04746b94b55b4c3a3",
+  "inputs_hash": "1c43213a77c0f6d52d66d3a65195a8cc51a04d1126a95b1facf0698e25be80fe",
   "season": 2026,
   "source_features": "data/processed/features_season_2026.json",
   "source_summary": "Full Season 2026 Data",
@@ -31,9 +31,9 @@
     {
       "components": {
         "race_position_gain": 50.333672,
-        "sprint_execution": 60.120716
+        "sprint_execution": 57.308567
       },
-      "strategy_score": 52.780433,
+      "strategy_score": 52.077396,
       "team": "Cadillac F1 Team"
     },
     {
@@ -71,25 +71,25 @@
     {
       "components": {
         "race_position_gain": 67.377656,
-        "sprint_execution": 57.787781
+        "sprint_execution": 55.204637
       },
-      "strategy_score": 64.980187,
+      "strategy_score": 64.334401,
       "team": "RB F1 Team"
     },
     {
       "components": {
         "race_position_gain": 59.05736,
-        "sprint_execution": 15.987092
+        "sprint_execution": 19.072805
       },
-      "strategy_score": 48.289793,
+      "strategy_score": 49.061221,
       "team": "Red Bull"
     },
     {
       "components": {
         "race_position_gain": 36.00004,
-        "sprint_execution": 63.389903
+        "sprint_execution": 66.229781
       },
-      "strategy_score": 42.847506,
+      "strategy_score": 43.557475,
       "team": "Williams"
     }
   ]

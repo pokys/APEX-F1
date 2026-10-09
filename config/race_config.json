@@ -24,8 +24,8 @@
     "NOR",
     "HAM",
     "ANT",
-    "HAD",
     "LAW",
+    "HAD",
     "GAS",
     "COL",
     "HUL",
@@ -36,11 +36,11 @@
     "LIN",
     "STR",
     "ALB",
+    "PER",
     "BOT",
-    "SAI",
-    "PER"
+    "SAI"
   ],
-  "generated_at": "2026-10-09T14:35:11Z",
+  "generated_at": "2026-10-09T15:03:52Z",
   "grid_penalties": [],
   "grid_source": "sprint_qualifying",
   "inputs_status": [

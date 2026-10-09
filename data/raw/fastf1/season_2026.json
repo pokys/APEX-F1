@@ -29593,6 +29593,214 @@
           "session_date": "2026-10-09T08:30:00+00:00",
           "session_name": null,
           "source": "openf1"
+        },
+        {
+          "openf1_session_key": 11379,
+          "results": [
+            {
+              "abbreviation": "VER",
+              "best_lap_seconds": 91.156,
+              "position": 1,
+              "position_source": "best_lap",
+              "source": "openf1",
+              "team_name": "Red Bull",
+              "time": "0 days 00:01:31.156000"
+            },
+            {
+              "abbreviation": "RUS",
+              "best_lap_seconds": 91.276,
+              "position": 2,
+              "position_source": "best_lap",
+              "source": "openf1",
+              "team_name": "Mercedes",
+              "time": "0 days 00:01:31.276000"
+            },
+            {
+              "abbreviation": "LEC",
+              "best_lap_seconds": 91.399,
+              "position": 3,
+              "position_source": "best_lap",
+              "source": "openf1",
+              "team_name": "Ferrari",
+              "time": "0 days 00:01:31.399000"
+            },
+            {
+              "abbreviation": "PIA",
+              "best_lap_seconds": 91.454,
+              "position": 4,
+              "position_source": "best_lap",
+              "source": "openf1",
+              "team_name": "McLaren",
+              "time": "0 days 00:01:31.454000"
+            },
+            {
+              "abbreviation": "NOR",
+              "best_lap_seconds": 91.587,
+              "position": 5,
+              "position_source": "best_lap",
+              "source": "openf1",
+              "team_name": "McLaren",
+              "time": "0 days 00:01:31.587000"
+            },
+            {
+              "abbreviation": "HAM",
+              "best_lap_seconds": 91.702,
+              "position": 6,
+              "position_source": "best_lap",
+              "source": "openf1",
+              "team_name": "Ferrari",
+              "time": "0 days 00:01:31.702000"
+            },
+            {
+              "abbreviation": "ANT",
+              "best_lap_seconds": 91.849,
+              "position": 7,
+              "position_source": "best_lap",
+              "source": "openf1",
+              "team_name": "Mercedes",
+              "time": "0 days 00:01:31.849000"
+            },
+            {
+              "abbreviation": "HAD",
+              "best_lap_seconds": 92.048,
+              "position": 8,
+              "position_source": "best_lap",
+              "source": "openf1",
+              "team_name": "Red Bull",
+              "time": "0 days 00:01:32.048000"
+            },
+            {
+              "abbreviation": "LAW",
+              "best_lap_seconds": 92.341,
+              "position": 9,
+              "position_source": "best_lap",
+              "source": "openf1",
+              "team_name": "RB F1 Team",
+              "time": "0 days 00:01:32.341000"
+            },
+            {
+              "abbreviation": "GAS",
+              "best_lap_seconds": 93.155,
+              "position": 10,
+              "position_source": "best_lap",
+              "source": "openf1",
+              "team_name": "Alpine F1 Team",
+              "time": "0 days 00:01:33.155000"
+            },
+            {
+              "abbreviation": "COL",
+              "best_lap_seconds": 93.249,
+              "position": 11,
+              "position_source": "best_lap",
+              "source": "openf1",
+              "team_name": "Alpine F1 Team",
+              "time": "0 days 00:01:33.249000"
+            },
+            {
+              "abbreviation": "HUL",
+              "best_lap_seconds": 93.42,
+              "position": 12,
+              "position_source": "best_lap",
+              "source": "openf1",
+              "team_name": "Audi",
+              "time": "0 days 00:01:33.420000"
+            },
+            {
+              "abbreviation": "BEA",
+              "best_lap_seconds": 93.423,
+              "position": 13,
+              "position_source": "best_lap",
+              "source": "openf1",
+              "team_name": "Haas F1 Team",
+              "time": "0 days 00:01:33.423000"
+            },
+            {
+              "abbreviation": "BOR",
+              "best_lap_seconds": 93.466,
+              "position": 14,
+              "position_source": "best_lap",
+              "source": "openf1",
+              "team_name": "Audi",
+              "time": "0 days 00:01:33.466000"
+            },
+            {
+              "abbreviation": "ALO",
+              "best_lap_seconds": 93.734,
+              "position": 15,
+              "position_source": "best_lap",
+              "source": "openf1",
+              "team_name": "Aston Martin",
+              "time": "0 days 00:01:33.734000"
+            },
+            {
+              "abbreviation": "OCO",
+              "best_lap_seconds": 94.368,
+              "position": 16,
+              "position_source": "best_lap",
+              "source": "openf1",
+              "team_name": "Haas F1 Team",
+              "time": "0 days 00:01:34.368000"
+            },
+            {
+              "abbreviation": "LIN",
+              "best_lap_seconds": 95.136,
+              "position": 17,
+              "position_source": "best_lap",
+              "source": "openf1",
+              "team_name": "RB F1 Team",
+              "time": "0 days 00:01:35.136000"
+            },
+            {
+              "abbreviation": "STR",
+              "best_lap_seconds": 95.662,
+              "position": 18,
+              "position_source": "best_lap",
+              "source": "openf1",
+              "team_name": "Aston Martin",
+              "time": "0 days 00:01:35.662000"
+            },
+            {
+              "abbreviation": "ALB",
+              "best_lap_seconds": 96.13,
+              "position": 19,
+              "position_source": "best_lap",
+              "source": "openf1",
+              "team_name": "Williams",
+              "time": "0 days 00:01:36.130000"
+            },
+            {
+              "abbreviation": "BOT",
+              "best_lap_seconds": 96.868,
+              "position": 20,
+              "position_source": "best_lap",
+              "source": "openf1",
+              "team_name": "Cadillac F1 Team",
+              "time": "0 days 00:01:36.868000"
+            },
+            {
+              "abbreviation": "SAI",
+              "best_lap_seconds": 97.376,
+              "position": 21,
+              "position_source": "best_lap",
+              "source": "openf1",
+              "team_name": "Williams",
+              "time": "0 days 00:01:37.376000"
+            },
+            {
+              "abbreviation": "PER",
+              "best_lap_seconds": 97.83,
+              "position": 22,
+              "position_source": "best_lap",
+              "source": "openf1",
+              "team_name": "Cadillac F1 Team",
+              "time": "0 days 00:01:37.830000"
+            }
+          ],
+          "session_code": "SQ",
+          "session_date": "2026-10-09T12:30:00+00:00",
+          "session_name": null,
+          "source": "openf1",
+          "wet": false
         }
       ]
     }

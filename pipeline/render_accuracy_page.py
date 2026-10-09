@@ -45,11 +45,12 @@ def parse_args() -> argparse.Namespace:
 
 
 def kind_rows(backtest: dict[str, Any], kind: str) -> list[dict[str, Any]]:
-    """Normalised per-event rows: kind 'win' (races) or 'pole' (qualifying)."""
-    source = backtest.get("races" if kind == "win" else "qualifying") or []
+    """Normalised per-event rows: kind 'win' (races), 'sprint' or 'pole'
+    (qualifying)."""
+    source = backtest.get({"win": "races", "sprint": "sprints"}.get(kind, "qualifying")) or []
     actual_key, predicted_key, hit_key, loss_key, probs_key = (
         ("actual_winner", "predicted_winner", "winner_hit", "winner_log_loss", "win_probabilities")
-        if kind == "win"
+        if kind in {"win", "sprint"}
         else ("actual_pole", "predicted_pole", "pole_hit", "pole_log_loss", "pole_probabilities")
     )
     rows = []
@@ -219,13 +220,14 @@ def render(backtest: dict[str, Any] | None, track_record: dict[str, Any] | None,
     backtest = backtest or {}
     win = kind_rows(backtest, "win")
     pole = kind_rows(backtest, "pole")
+    sprint = kind_rows(backtest, "sprint")
     legend = (
         '<p class="legend"><span><i class="dot model"></i>Model</span>'
         '<span><i class="dot baseline"></i>Championship order (standings leader favoured)</span>'
         "<span>&#10003; model favourite was right</span></p>"
     )
     sections = []
-    for title, rows, label in (("Race winner", win, "Winner"), ("Pole position", pole, "Pole")):
+    for title, rows, label in (("Race winner", win, "Winner"), ("Sprint winner", sprint, "Winner"), ("Pole position", pole, "Pole")):
         if rows:
             sections.append(
                 f'<section class="card"><h2>{title}: probability given to the actual result</h2>{legend}'
@@ -292,7 +294,7 @@ def render(backtest: dict[str, Any] | None, track_record: dict[str, Any] | None,
   <p class="intro">Every Grand Prix of the season is re-predicted using only the data that existed before it, then compared with
   what actually happened. The yardstick is the simplest sensible guess: <em>the championship order decides</em> (the current
   standings leader is the favourite). A useful model must beat it.</p>
-  <section class="cards">{summary_card("Race winner", win)}{summary_card("Pole position", pole)}</section>
+  <section class="cards">{summary_card("Race winner", win)}{summary_card("Sprint winner", sprint) if sprint else ""}{summary_card("Pole position", pole)}</section>
   {"".join(sections)}
   {live_section(track_record)}
   <p class="note">"Typical probability" is the geometric mean of the probability given to the actual winner (equivalent to the

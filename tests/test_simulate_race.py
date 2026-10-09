@@ -131,3 +131,25 @@ def test_standings_blend_mixes_whole_outcomes_consistently() -> None:
     assert abs(rows["SLOW"]["pole_probability"] - 0.4) < 0.03
     # Half model (always 2nd), half standings (1st with 0.8): 0.5*2 + 0.5*1.2.
     assert abs(rows["SLOW"]["expected_position"] - 1.6) < 0.03
+
+
+def test_grid_weight_controls_how_much_the_starting_grid_matters() -> None:
+    from pipeline.simulate_race import DEFAULT_GRID_POSITION_WEIGHT, grid_weight_from_config
+
+    # The fastest driver starts last; a heavy grid weight keeps the pole
+    # sitter ahead at a track where overtaking is hard.
+    entries = [_entry("FAST", rating=75.0)] + [_entry(f"D{i}", rating=60.0) for i in range(9)]
+    grid = [f"D{i}" for i in range(9)] + ["FAST"]
+
+    def pole_wins(weight: float) -> int:
+        rng = random.Random(7)
+        return sum(
+            simulate_single_race(entries, grid, rng, 0.0, 0.8, 0.0, 0.5, 3.0, race_kind="sprint", grid_weight=weight)["D0"] == 1
+            for _ in range(400)
+        )
+
+    assert pole_wins(40.0) > pole_wins(DEFAULT_GRID_POSITION_WEIGHT) + 100
+    assert grid_weight_from_config({}) == DEFAULT_GRID_POSITION_WEIGHT
+    assert grid_weight_from_config({"grid_position_weight": 24}) == 24.0
+    assert grid_weight_from_config({"grid_position_weight": "x"}) == DEFAULT_GRID_POSITION_WEIGHT
+    assert grid_weight_from_config({"grid_position_weight": 1e9}) == 2000.0

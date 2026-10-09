@@ -26,6 +26,7 @@ from pipeline.simulate_race import (
     noise_scale_from_config,
     safe_float,
     simulate_qualifying,
+    grid_weight_from_config,
     simulate_single_race,
     stable_hash_json,
 )
@@ -288,6 +289,7 @@ def run_race_or_sprint_prediction(
     qualifying_scale = noise_scale_from_config(config, "qualifying_noise_scale", "qualifying_temperature")
     wet = str(config.get("weather") or "dry").lower() == "wet"
     race_kind = "sprint" if str(config.get("prediction_target") or "race") == "sprint" else "race"
+    grid_weight = grid_weight_from_config(config)
 
     rng = random.Random(seed)
     driver_names = [entry["name"] for entry in entries]
@@ -329,6 +331,7 @@ def run_race_or_sprint_prediction(
             race_kind=race_kind,
             wet=wet,
             noise_scale=noise_scale,
+            grid_weight=grid_weight,
         )
 
         for name, finish in race_positions.items():
@@ -384,6 +387,7 @@ def run_race_or_sprint_prediction(
         "race_noise_scale": round(noise_scale, 6),
         "qualifying_noise_scale": round(qualifying_scale, 6),
         "standings_blend": round(blend, 6),
+        "grid_position_weight": round(grid_weight, 6),
         "grid_penalties": known_penalties,
     }
     payload["drivers"] = rows

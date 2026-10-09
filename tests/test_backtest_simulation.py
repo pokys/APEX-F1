@@ -91,3 +91,53 @@ def test_baseline_favourite_is_standings_leader() -> None:
     assert baseline_favourite({"VER": 0.2, "NOR": 0.5, "LEC": 0.3}, "NOR") == {"baseline_favourite": "NOR", "baseline_hit": True}
     assert baseline_favourite({"VER": 0.2, "NOR": 0.5}, "VER")["baseline_hit"] is False
     assert baseline_favourite({}, "VER") == {}
+
+
+def test_grid_weight_search_extends_past_largest_candidate() -> None:
+    from pipeline.backtest_simulation import search_grid_weight
+
+    # Loss falls until weight 100, noise scale optimum at 1.5 everywhere.
+    def loss(scale: float, weight: float) -> float:
+        return abs(weight - 100.0) / 100.0 + abs(scale - 1.5)
+
+    weight, scale, _, report = search_grid_weight(loss, weights=(4.0, 16.0, 48.0))
+    assert weight == 108.0  # 48 -> 72 -> 108, then 162 is worse
+    assert scale == 1.5
+    assert set(report) == {"4.0", "16.0", "48.0", "72.0", "108.0", "162.0"}
+
+
+def test_start_blend_kept_a_priori_unless_tuned_wins_leave_one_out() -> None:
+    from pipeline.backtest_simulation import choose_start_blend
+
+    assert choose_start_blend({"weight": 0.5, "loss": 1.8, "tuned_weight": 0.1, "tuned_leave_one_out_loss": 1.7}) == 0.1
+    assert choose_start_blend({"weight": 0.5, "loss": 1.8, "tuned_weight": 0.1, "tuned_leave_one_out_loss": 1.9}) == 0.5
+
+
+def test_event_config_never_carries_the_live_calibration() -> None:
+    from pipeline.backtest_simulation import build_event_config
+
+    live = {"standings_blend_race": 0.5, "standings_blend_qualifying": 0.5, "grid_position_weight": 24.0, "race_noise_scale": 2.0}
+    cfg = build_event_config(
+        base_config=live, profiles={}, season=2026, round_number=3, event_name="X Grand Prix", country="X",
+        event_date="2026-04-01", simulations=500, prediction_target="sprint", inputs_used=[], available_sessions=["SQ"],
+        fixed_grid=["AAA", "BBB"],
+    )
+    for key in ("standings_blend_race", "standings_blend_qualifying", "grid_position_weight", "race_noise_scale"):
+        assert key not in cfg
+    assert cfg["target_session_code"] == "S" and cfg["fixed_grid"] == ["AAA", "BBB"]
+
+
+def test_sprint_grid_and_winner_from_the_sprint_session() -> None:
+    from pipeline.backtest_simulation import actual_winner_and_podium, fixed_grid_from_event
+
+    event = {"sessions": [
+        {"session_code": "S", "results": [
+            {"abbreviation": "BBB", "position": 1, "grid_position": 2},
+            {"abbreviation": "AAA", "position": 2, "grid_position": 1},
+            {"abbreviation": "CCC", "position": 3, "grid_position": 0},
+        ]},
+        {"session_code": "R", "results": [{"abbreviation": "CCC", "position": 1, "grid_position": 1}]},
+    ]}
+    assert fixed_grid_from_event(event, "S") == ["AAA", "BBB", "CCC"]
+    assert actual_winner_and_podium(event, "S") == ("BBB", {"AAA", "BBB", "CCC"})
+    assert actual_winner_and_podium(event)[0] == "CCC"

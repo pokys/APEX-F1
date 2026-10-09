@@ -182,6 +182,21 @@ def dnf_probability_from_reliability(reliability_score: float) -> float:
 # A sprint is about a third of a Grand Prix: no mandatory pit stop (so no
 # strategy component), far less tyre degradation, fewer safety cars, less
 # time to recover from the grid and a third of the mechanical DNF exposure.
+# Score bonus of pole over the last grid slot, scaled by the track's
+# overtaking difficulty. Calibrated by the backtest on actual starting grids
+# (config key grid_position_weight); this default is the old fixed value.
+DEFAULT_GRID_POSITION_WEIGHT = 4.0
+MAX_GRID_POSITION_WEIGHT = 2000.0
+
+
+def grid_weight_from_config(config: dict[str, Any]) -> float:
+    try:
+        value = float(config.get("grid_position_weight", DEFAULT_GRID_POSITION_WEIGHT))
+    except (TypeError, ValueError):
+        return DEFAULT_GRID_POSITION_WEIGHT
+    return max(0.0, min(MAX_GRID_POSITION_WEIGHT, value))
+
+
 SPRINT_SETTINGS = {
     "dnf_factor": 1.0 / 3.0,
     "tyre_factor": 0.4,
@@ -243,6 +258,7 @@ def simulate_single_race(
     race_kind: str = "race",
     wet: bool = False,
     noise_scale: float = 1.0,
+    grid_weight: float = DEFAULT_GRID_POSITION_WEIGHT,
 ) -> dict[str, int]:
     size = len(entries)
     grid_index = {name: idx + 1 for idx, name in enumerate(grid_order)}
@@ -280,7 +296,7 @@ def simulate_single_race(
         tyre_noise = rng.gauss(0.0, 1.2 + 1.8 * tyre_factor) * noise
         weather_noise = rng.gauss(0.0, 1.0) * weather_modifier
 
-        start_track_position_advantage = 4.0 * grid_factor * overtaking_difficulty
+        start_track_position_advantage = grid_weight * grid_factor * overtaking_difficulty
         recovery = 4.5 * (1.0 - overtaking_difficulty) * (race_rating / 100.0)
         if sprint:
             recovery *= SPRINT_SETTINGS["recovery_factor"]
@@ -399,6 +415,7 @@ def run_simulation(entries: list[dict[str, Any]], config: dict[str, Any], driver
             race_noise=race_noise,
             wet=wet,
             noise_scale=noise_scale,
+            grid_weight=grid_weight_from_config(config),
         )
 
         for name, finish in race_positions.items():

@@ -130,6 +130,10 @@ GitHub plánované (cron) běhy tohoto repa zdržuje o několik hodin, takže �
 
 ## Backtest a kalibrace
 
+Backtest kalibruje i **váhu startovní pozice** (`grid_position_weight`) společně se šumem simulace, a to na skutečných roštech závodů i sprintů sezony. Původní pevná váha 4 dělala rošt skoro bezvýznamným (sprint v Singapuru: ANT ze 7. místa 49 %, VER z pole 22 %). Kalibrace na sezoně 2026 vybrala váhu ~1500 (plochý optimum 750–2000): log loss vítěze 1,73 → 1,08, trefený vítěz závodu 6/15 → 10/15, sprinty 4/5. Simulace historických GP v backtestu už nepoužívá kalibraci živého configu (dřív se pořadí šampionátu míchalo dvakrát).
+
+
+
 Backtest je v [`pipeline/backtest_simulation.py`](pipeline/backtest_simulation.py). Pro každý historický event:
 
 - seřadí eventy podle skutečného `event_date`,

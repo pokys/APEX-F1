@@ -136,10 +136,10 @@ def available_sessions_for_event(event: dict[str, Any]) -> list[str]:
     return out
 
 
-def actual_winner_and_podium(event: dict[str, Any]) -> tuple[str | None, set[str]]:
+def actual_winner_and_podium(event: dict[str, Any], code: str = "R") -> tuple[str | None, set[str]]:
     winner: str | None = None
     podium: set[str] = set()
-    for row in find_race_results(event):
+    for row in find_race_results(event) if code == "R" else session_results(event, code):
         abbr = str(row.get("abbreviation") or "").strip().upper()
         pos = normalize_position(row.get("position"))
         if not abbr or pos is None:
@@ -160,12 +160,14 @@ def actual_pole(event: dict[str, Any]) -> str | None:
     return None
 
 
-def fixed_grid_from_event(event: dict[str, Any]) -> list[str] | None:
-    """The actual starting grid (race grid positions, pit-lane starters
-    last), so historical grid penalties are part of the backtest. Falls back
-    to the qualifying order when grid positions are missing."""
+def fixed_grid_from_event(event: dict[str, Any], code: str = "R") -> list[str] | None:
+    """The actual starting grid of the race (or sprint, code "S"): grid
+    positions, pit-lane starters last, so historical grid penalties are part
+    of the backtest. Falls back to the qualifying (sprint qualifying) order
+    when grid positions are missing."""
+    rows = find_race_results(event) if code == "R" else session_results(event, code)
     starting: list[tuple[int, str]] = []
-    for row in find_race_results(event):
+    for row in rows:
         grid = normalize_position(row.get("grid_position"))
         abbr = str(row.get("abbreviation") or "").strip().upper()
         status = str(row.get("status") or "").lower()
@@ -174,11 +176,11 @@ def fixed_grid_from_event(event: dict[str, Any]) -> list[str] | None:
         starting.append((grid if grid > 0 else 999, abbr))
     if starting:
         return [abbr for _, abbr in sorted(starting)]
-    return qualifying_order_from_event(event)
+    return qualifying_order_from_event(event, "Q" if code == "R" else "SQ")
 
 
-def qualifying_order_from_event(event: dict[str, Any]) -> list[str] | None:
-    rows = session_results(event, "Q")
+def qualifying_order_from_event(event: dict[str, Any], code: str = "Q") -> list[str] | None:
+    rows = session_results(event, code)
     ranked: list[tuple[int, str]] = []
     for row in rows:
         pos = normalize_position(row.get("position"))
@@ -248,20 +250,33 @@ def build_event_config(
     # The base config is the live race_config of the upcoming GP; nothing
     # track- or calibration-specific may leak into historical events.
     reset_track_params(cfg)
-    for key in ("win_temperature", "qualifying_temperature", "race_noise_scale", "qualifying_noise_scale", "fixed_grid", "grid_penalties"):
+    # Calibrated values of the live config are popped too: the backtest sets
+    # them itself, and the standings blend is applied by the backtest after
+    # the simulation (keeping it in the config would blend twice).
+    for key in (
+        "win_temperature",
+        "qualifying_temperature",
+        "race_noise_scale",
+        "qualifying_noise_scale",
+        "fixed_grid",
+        "grid_penalties",
+        "standings_blend_qualifying",
+        "standings_blend_race",
+        "grid_position_weight",
+    ):
         cfg.pop(key, None)
     cfg["season"] = season
     cfg["next_round"] = round_number
     cfg["race"] = event_name
     cfg["race_date"] = event_date
     cfg["generated_at"] = f"{event_date}T00:00:00Z"
-    cfg["seed"] = event_seed(season, event_date, 1 if prediction_target == "qualifying" else 2)
+    cfg["seed"] = event_seed(season, event_date, {"qualifying": 1, "sprint": 3}.get(prediction_target, 2))
     cfg["simulations"] = simulations
     cfg["available_sessions"] = available_sessions
     cfg["inputs_used"] = inputs_used
     cfg["prediction_target"] = prediction_target
-    cfg["prediction_target_label"] = "Qualifying" if prediction_target == "qualifying" else "Race"
-    cfg["target_session_code"] = "Q" if prediction_target == "qualifying" else "R"
+    cfg["prediction_target_label"] = {"qualifying": "Qualifying", "sprint": "Sprint"}.get(prediction_target, "Race")
+    cfg["target_session_code"] = {"qualifying": "Q", "sprint": "S"}.get(prediction_target, "R")
     cfg["target_output_type"] = "qualifying" if prediction_target == "qualifying" else "race"
     cfg["weekend_format"] = "sprint" if any(code in available_sessions for code in ("SQ", "S")) else "standard"
     if fixed_grid:
@@ -407,6 +422,50 @@ BLEND_GRID = tuple(round(0.1 * i, 1) for i in range(10))
 DEFAULT_STANDINGS_BLEND = 0.5
 
 
+# Candidate weights of the starting grid in the race/sprint simulation
+# (simulate_race.DEFAULT_GRID_POSITION_WEIGHT is the old fixed 4.0).
+GRID_WEIGHTS = (4.0, 16.0, 48.0, 120.0, 250.0, 400.0, 550.0, 750.0, 1000.0)
+MAX_GRID_WEIGHT = 2000.0
+
+
+def search_grid_weight(
+    loss_for: Callable[[float, float], float],
+    weights: tuple[float, ...] = GRID_WEIGHTS,
+) -> tuple[float, float, dict[float, float], dict[str, dict[str, float]]]:
+    """Joint search over the grid weight and, for each weight, the race
+    noise scale. When the best weight is the largest candidate the search
+    continues upwards (x1.5) while the loss improves. Returns (weight,
+    noise scale, noise grid of that weight, report per weight)."""
+    report: dict[str, dict[str, float]] = {}
+    results: dict[float, tuple[float, float, dict[float, float]]] = {}
+
+    def run(weight: float) -> float:
+        scale, loss, grid = search_noise_scale(lambda s: loss_for(s, weight))
+        results[weight] = (scale, loss, grid)
+        report[str(weight)] = {"noise_scale": scale, "loss": round(loss, 6)}
+        return loss
+
+    for weight in weights:
+        run(weight)
+    best = min(results, key=lambda w: (results[w][1], w))
+    while best == max(results) and best < MAX_GRID_WEIGHT:
+        candidate = round(min(best * 1.5, MAX_GRID_WEIGHT), 4)
+        if run(candidate) >= results[best][1]:
+            break
+        best = candidate
+    scale, _, grid = results[best]
+    return best, scale, grid, report
+
+
+def choose_start_blend(report: dict[str, float]) -> float:
+    """Standings blend for races and sprints. The grid is known there, so
+    the a-priori 0.5 is only kept when a tuned weight does not beat it in
+    leave-one-out."""
+    if report.get("tuned_leave_one_out_loss", float("inf")) < report.get("loss", float("inf")):
+        return float(report["tuned_weight"])
+    return float(report["weight"])
+
+
 def mix(model: dict[str, float], baseline: dict[str, float], weight: float) -> dict[str, float]:
     names = set(model) | set(baseline)
     return {name: (1.0 - weight) * model.get(name, 0.0) + weight * baseline.get(name, 0.0) for name in names}
@@ -512,6 +571,17 @@ def collect_cases(args: argparse.Namespace, raw: dict[str, Any], season: int) ->
             available_sessions=race_sessions,
             fixed_grid=fixed_grid_from_event(event),
         )
+        sprint_winner, sprint_podium = actual_winner_and_podium(event, "S")
+        sprint_config = None
+        if sprint_winner:
+            sprint_sessions = [code for code in available_sessions if code in {"FP1", "SQ"}]
+            sprint_config = build_event_config(
+                **common,
+                prediction_target="sprint",
+                inputs_used=build_inputs_manifest("sprint", sprint_sessions, session_weights, 0),
+                available_sessions=sprint_sessions,
+                fixed_grid=fixed_grid_from_event(event, "S"),
+            )
         entrants = sorted(entry_list_for_event(event)[0])
         cases.append(
             {
@@ -524,6 +594,9 @@ def collect_cases(args: argparse.Namespace, raw: dict[str, Any], season: int) ->
                 "pole": actual_pole(event),
                 "winner": winner,
                 "podium": podium,
+                "sprint_config": sprint_config,
+                "sprint_winner": sprint_winner,
+                "sprint_podium": sprint_podium,
                 "pole_baselines": baseline_distributions(entrants, prior_events, "pole"),
                 "win_baselines": baseline_distributions(entrants, prior_events, "win"),
             }
@@ -532,12 +605,23 @@ def collect_cases(args: argparse.Namespace, raw: dict[str, Any], season: int) ->
     return cases
 
 
-def predict_case(case: dict[str, Any], target: str, scale: float, simulations: int, raw_dir: Path) -> dict[str, Any]:
-    config = json.loads(json.dumps(case["qualifying_config" if target == "qualifying" else "race_config"]))
+def predict_case(
+    case: dict[str, Any],
+    target: str,
+    scale: float,
+    simulations: int,
+    raw_dir: Path,
+    grid_weight: float | None = None,
+) -> dict[str, Any]:
+    """target: "qualifying", "race" or "sprint" (actual starting grid)."""
+    key = {"qualifying": "qualifying_config", "sprint": "sprint_config"}.get(target, "race_config")
+    config = json.loads(json.dumps(case[key]))
     config["simulations"] = simulations
     config["qualifying_noise_scale"] = scale if target == "qualifying" else 1.0
-    if target == "race":
+    if target != "qualifying":
         config["race_noise_scale"] = scale
+    if grid_weight is not None:
+        config["grid_position_weight"] = grid_weight
     return run_target_prediction(*case["models"], config, raw_dir=raw_dir)
 
 
@@ -592,16 +676,22 @@ def main() -> int:
             losses.append(log_loss(probs, case["pole"]))
         return mean(losses)
 
-    def win_loss(scale: float) -> float:
+    sprint_cases = [case for case in cases if case.get("sprint_winner") and case.get("sprint_config")]
+
+    def start_loss(scale: float, weight: float) -> float:
+        """Mean winner log loss over races and sprints (actual grids)."""
         losses = []
         for case in cases:
-            probs = win_probabilities(predict_case(case, "race", scale, search_sims, raw_dir), search_sims)
+            probs = win_probabilities(predict_case(case, "race", scale, search_sims, raw_dir, weight), search_sims)
             losses.append(log_loss(probs, case["winner"]))
+        for case in sprint_cases:
+            probs = win_probabilities(predict_case(case, "sprint", scale, search_sims, raw_dir, weight), search_sims)
+            losses.append(log_loss(probs, case["sprint_winner"]))
         return mean(losses)
 
     qualifying_scale, _, qualifying_grid = search_noise_scale(pole_loss) if pole_cases else (1.0, 0.0, {})
-    race_scale, _, race_grid = search_noise_scale(win_loss)
-    LOGGER.info("Calibrated noise scales: qualifying=%s race=%s", qualifying_scale, race_scale)
+    grid_weight, race_scale, race_grid, grid_weight_report = search_grid_weight(start_loss)
+    LOGGER.info("Calibrated: qualifying noise=%s race noise=%s grid weight=%s", qualifying_scale, race_scale, grid_weight)
 
     sims = max(args.simulations, 500)
     pole_rows: list[tuple[dict[str, Any], dict[str, float], dict[str, float]]] = []
@@ -639,46 +729,63 @@ def main() -> int:
             }
         )
 
-    race_rows: list[tuple[dict[str, Any], dict[str, float], dict[str, float], dict[str, Any]]] = []
-    for case in cases:
-        raw_probs = win_probabilities(predict_case(case, "race", 1.0, sims, raw_dir), sims)
-        prediction = predict_case(case, "race", race_scale, sims, raw_dir)
-        probs = win_probabilities(prediction, sims)
-        if case["winner"] in probs:
-            race_rows.append((case, raw_probs, probs, prediction))
+    def start_rows(target: str) -> list[tuple[dict[str, Any], dict[str, float], dict[str, float], dict[str, Any]]]:
+        rows = []
+        for case in sprint_cases if target == "sprint" else cases:
+            winner = case["sprint_winner"] if target == "sprint" else case["winner"]
+            raw_probs = win_probabilities(predict_case(case, target, 1.0, sims, raw_dir), sims)
+            prediction = predict_case(case, target, race_scale, sims, raw_dir, grid_weight)
+            probs = win_probabilities(prediction, sims)
+            if winner in probs:
+                rows.append((case, raw_probs, probs, prediction))
+        return rows
+
+    race_rows = start_rows("race")
+    sprint_rows = start_rows("sprint")
     win_blend = blend_report(
         [(probs, case["win_baselines"]["championship_order"], case["winner"]) for case, _, probs, _ in race_rows]
+        + [(probs, case["win_baselines"]["championship_order"], case["sprint_winner"]) for case, _, probs, _ in sprint_rows]
     )
-    race_blend = win_blend["weight"]
+    race_blend = choose_start_blend(win_blend)
+    win_blend["chosen_weight"] = race_blend
 
-    per_race: list[dict[str, Any]] = []
     winner_conf_outcomes: list[tuple[float, int]] = []
     raw_win_losses: list[float] = []
-    for case, raw_probs, model_probs, prediction in race_rows:
-        probs = mix(model_probs, case["win_baselines"]["championship_order"], race_blend)
-        podium_prob = {row["name"]: float(row["podium_probability"]) for row in prediction["drivers"]}
-        predicted = max(probs, key=lambda k: (probs[k], k))
-        predicted_podium = {row["name"] for row in sorted(prediction["drivers"], key=lambda r: (-float(r["podium_probability"]), r["name"]))[:3]}
-        winner_conf_outcomes.append((probs[predicted], 1 if predicted == case["winner"] else 0))
-        raw_win_losses.append(log_loss(raw_probs, case["winner"]))
-        per_race.append(
-            {
-                "round": case["round"],
-                "race": case["race"],
-                "event_date": case["event_date"],
-                "actual_winner": case["winner"],
-                "predicted_winner": predicted,
-                "winner_hit": predicted == case["winner"],
-                **baseline_favourite(case["win_baselines"]["championship_order"], case["winner"]),
-                "podium_overlap": len(predicted_podium.intersection(case["podium"])),
-                "brier_win": round(score_brier(probs, {case["winner"]}), 6),
-                "brier_podium": round(score_brier(podium_prob, case["podium"]), 6),
-                "winner_log_loss": round(log_loss(probs, case["winner"]), 6),
-                "model_only_log_loss": round(log_loss(model_probs, case["winner"]), 6),
-                "baseline_log_loss": {name: round(log_loss(dist, case["winner"]), 6) for name, dist in case["win_baselines"].items()},
-                "win_probabilities": {k: round(v, 6) for k, v in sorted(probs.items())},
-            }
-        )
+
+    def start_report(rows, target: str) -> list[dict[str, Any]]:
+        out = []
+        for case, raw_probs, model_probs, prediction in rows:
+            winner = case["sprint_winner"] if target == "sprint" else case["winner"]
+            podium = case["sprint_podium"] if target == "sprint" else case["podium"]
+            probs = mix(model_probs, case["win_baselines"]["championship_order"], race_blend)
+            podium_prob = {row["name"]: float(row["podium_probability"]) for row in prediction["drivers"]}
+            predicted = max(probs, key=lambda k: (probs[k], k))
+            predicted_podium = {row["name"] for row in sorted(prediction["drivers"], key=lambda r: (-float(r["podium_probability"]), r["name"]))[:3]}
+            if target == "race":
+                winner_conf_outcomes.append((probs[predicted], 1 if predicted == winner else 0))
+                raw_win_losses.append(log_loss(raw_probs, winner))
+            out.append(
+                {
+                    "round": case["round"],
+                    "race": case["race"],
+                    "event_date": case["event_date"],
+                    "actual_winner": winner,
+                    "predicted_winner": predicted,
+                    "winner_hit": predicted == winner,
+                    **baseline_favourite(case["win_baselines"]["championship_order"], winner),
+                    "podium_overlap": len(predicted_podium.intersection(podium)),
+                    "brier_win": round(score_brier(probs, {winner}), 6),
+                    "brier_podium": round(score_brier(podium_prob, podium), 6),
+                    "winner_log_loss": round(log_loss(probs, winner), 6),
+                    "model_only_log_loss": round(log_loss(model_probs, winner), 6),
+                    "baseline_log_loss": {name: round(log_loss(dist, winner), 6) for name, dist in case["win_baselines"].items()},
+                    "win_probabilities": {k: round(v, 6) for k, v in sorted(probs.items())},
+                }
+            )
+        return out
+
+    per_race = start_report(race_rows, "race")
+    per_sprint = start_report(sprint_rows, "sprint")
 
     def baseline_means(rows: list[dict[str, Any]]) -> dict[str, float]:
         names = sorted({name for row in rows for name in row["baseline_log_loss"]})
@@ -687,7 +794,7 @@ def main() -> int:
     pole_baselines = baseline_means(per_qualifying)
     win_baselines = baseline_means(per_race)
     calibrated_pole = pole_blend["loss"]
-    calibrated_win = win_blend["loss"]
+    calibrated_win = mean([row["winner_log_loss"] for row in per_race])
     summary = {
         "winner_accuracy": round(mean([1.0 if r["winner_hit"] else 0.0 for r in per_race]), 6),
         "mean_podium_overlap_top3": round(mean([r["podium_overlap"] for r in per_race]), 6),
@@ -706,6 +813,13 @@ def main() -> int:
         "recommended_race_noise_scale": race_scale,
         "recommended_standings_blend_qualifying": qualifying_blend,
         "recommended_standings_blend_race": race_blend,
+        "recommended_grid_position_weight": grid_weight,
+        "grid_weight_search": grid_weight_report,
+        "sprints_evaluated": len(per_sprint),
+        "sprint_winner_accuracy": round(mean([1.0 if r["winner_hit"] else 0.0 for r in per_sprint]), 6),
+        "sprint_baseline_winner_accuracy": round(mean([1.0 if r.get("baseline_hit") else 0.0 for r in per_sprint]), 6),
+        "sprint_win_log_loss": round(mean([r["winner_log_loss"] for r in per_sprint]), 6),
+        "sprint_baseline_win_log_loss": baseline_means(per_sprint),
         "standings_blend_search": {"pole": pole_blend, "win": win_blend},
         "model_only_pole_log_loss": round(mean([row["model_only_log_loss"] for row in per_qualifying]), 6),
         "model_only_win_log_loss": round(mean([row["model_only_log_loss"] for row in per_race]), 6),
@@ -727,6 +841,7 @@ def main() -> int:
         "min_training_races": max(0, args.min_training_races),
         "summary": summary,
         "races": per_race,
+        "sprints": per_sprint,
         "qualifying": per_qualifying,
     }
     output_path.write_text(json.dumps(payload, indent=2, sort_keys=True, ensure_ascii=True) + "\n", encoding="utf-8")

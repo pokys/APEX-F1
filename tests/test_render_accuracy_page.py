@@ -66,3 +66,11 @@ def test_main_never_fails_the_pipeline(tmp_path, monkeypatch) -> None:
     monkeypatch.setattr(sys, "argv", ["x", "--race-config", str(tmp_path / "race_config.json"), "--backtest-dir", str(tmp_path),
                                       "--output", str(tmp_path / "accuracy.html")])
     assert acc.main() == 0
+
+
+def test_sprints_get_their_own_card_and_chart() -> None:
+    data = backtest()
+    data["sprints"] = [dict(data["races"][0], race="Sprint GP")]
+    page = acc.render(data, None, 2026)
+    assert "Sprint winner" in page and page.count("<svg") == 4
+    assert "Sprint winner" not in acc.render(backtest(), None, 2026)

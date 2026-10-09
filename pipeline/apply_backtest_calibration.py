@@ -130,6 +130,7 @@ CALIBRATION_KEYS = {
     "recommended_race_noise_scale": ("race_noise_scale", 0.25, 24.0),
     "recommended_standings_blend_qualifying": ("standings_blend_qualifying", 0.0, 1.0),
     "recommended_standings_blend_race": ("standings_blend_race", 0.0, 1.0),
+    "recommended_grid_position_weight": ("grid_position_weight", 0.0, 2000.0),
 }
 
 

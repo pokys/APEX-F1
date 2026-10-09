@@ -1,0 +1,59 @@
+name: Race Weekend Keeper
+
+# GitHub delays the scheduled (cron) runs of this repository by several
+# hours, so during a race weekend the hourly pipeline ran only every 6-7 h.
+# This workflow keeps one job alive during the weekend that triggers the
+# full pipeline every hour via workflow_dispatch (not delayed), and hands
+# over to a new run of itself before the 6 h job limit. Outside the race
+# weekend window (pipeline/weekend_window.py) it exits immediately.
+
+on:
+  schedule:
+    # Several kick-off chances; the concurrency group keeps a single keeper.
+    - cron: "7 */3 * * 3,4,5,6,0"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/weekend-keeper.yml"
+      - "pipeline/weekend_window.py"
+
+permissions:
+  actions: write
+  contents: read
+
+concurrency:
+  group: weekend-keeper
+  cancel-in-progress: false
+
+jobs:
+  keep:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Trigger the pipeline hourly during the race weekend
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          budget=$(( $(date +%s) + 320 * 60 ))
+          while true; do
+            git pull --quiet origin main || true
+            if [ "$(python3 pipeline/weekend_window.py)" != "in" ]; then
+              echo "Outside the race weekend window; stopping."
+              exit 0
+            fi
+            echo "$(date -u +%FT%TZ) triggering Full Prediction Pipeline"
+            gh workflow run full-pipeline.yml --ref main || echo "dispatch failed; retrying next hour"
+            if [ $(( $(date +%s) + 60 * 60 )) -ge "$budget" ]; then
+              break
+            fi
+            sleep 3600
+          done
+          echo "Job budget used; handing over to a new keeper run."
+          gh workflow run weekend-keeper.yml --ref main

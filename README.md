@@ -105,6 +105,10 @@ Kanonické výstupy jsou:
 - [`outputs/prediction_wet.json`](outputs/prediction_wet.json),
 - [`outputs/prediction_report.html`](outputs/prediction_report.html).
 
+## Závodní víkend: spolehlivé hodinové běhy
+
+GitHub plánované (cron) běhy tohoto repa zdržuje o několik hodin, takže „hodinová“ pipeline během víkendu ve skutečnosti běžela jen každých 6–7 h. Workflow [`weekend-keeper.yml`](.github/workflows/weekend-keeper.yml) proto během závodního víkendu (od 24 h před 1. session do 6 h po startu závodu, [`pipeline/weekend_window.py`](pipeline/weekend_window.py)) drží jeden job, který každou hodinu spustí Full Prediction Pipeline přes `workflow_dispatch` (ten se nezdržuje) a před limitem 6 h předá štafetu novému běhu. Mimo víkend hned skončí. Repo je veřejné, minuty Actions jsou zdarma.
+
 ## Hlavní pipeline
 
 1. [`pipeline/collect_articles.py`](pipeline/collect_articles.py) načte F1 články do inboxu.

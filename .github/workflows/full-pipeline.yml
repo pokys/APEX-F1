@@ -48,6 +48,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 # Serialize every workflow that commits to main against every other one.
 # All bot-write workflows (full-pipeline, build-features, simulate-race,
@@ -240,3 +241,12 @@ jobs:
             outputs/prediction_history.json \
             outputs/weather_forecast.json \
             config/race_config.json
+
+      - name: Deploy the page (runs started by the Race Weekend Keeper)
+        # Deploy Prediction Page listens to workflow_run, which GitHub does
+        # not fire for runs started with GITHUB_TOKEN (the keeper's
+        # workflow_dispatch), so those runs request the deploy themselves.
+        if: github.event_name == 'workflow_dispatch' && github.actor == 'github-actions[bot]'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy-pages.yml --ref main

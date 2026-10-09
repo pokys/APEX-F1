@@ -107,7 +107,7 @@ Kanonické výstupy jsou:
 
 ## Závodní víkend: spolehlivé hodinové běhy
 
-GitHub plánované (cron) běhy tohoto repa zdržuje o několik hodin, takže „hodinová“ pipeline během víkendu ve skutečnosti běžela jen každých 6–7 h. Workflow [`weekend-keeper.yml`](.github/workflows/weekend-keeper.yml) proto během závodního víkendu (od 24 h před 1. session do 6 h po startu závodu, [`pipeline/weekend_window.py`](pipeline/weekend_window.py)) drží jeden job, který každou hodinu spustí Full Prediction Pipeline přes `workflow_dispatch` (ten se nezdržuje) a před limitem 6 h předá štafetu novému běhu. Mimo víkend hned skončí. Repo je veřejné, minuty Actions jsou zdarma.
+GitHub plánované (cron) běhy tohoto repa zdržuje o několik hodin, takže „hodinová“ pipeline během víkendu ve skutečnosti běžela jen každých 6–7 h. Workflow [`weekend-keeper.yml`](.github/workflows/weekend-keeper.yml) proto během závodního víkendu (od 24 h před 1. session do 6 h po startu závodu, [`pipeline/weekend_window.py`](pipeline/weekend_window.py)) drží jeden job, který každou hodinu spustí Full Prediction Pipeline přes `workflow_dispatch` (ten se nezdržuje) a před limitem 6 h předá štafetu novému běhu. Mimo víkend hned skončí. Takto spuštěné běhy si samy vyžádají nasazení webu (deploy přes `workflow_run` se pro běhy spuštěné `GITHUB_TOKEN`em nespustí). Repo je veřejné, minuty Actions jsou zdarma.
 
 ## Hlavní pipeline
 

@@ -210,3 +210,4 @@
 
 ## 2026-10-09
 - [ ] Everything that happened in first Indonesia MotoGP practice (https://www.the-race.com/motogp/marquez-splits-aprilias-late-on-in-first-indonesia-motogp-practice/)
+- [ ] Williams ‘completely missed this set of regulations and got it really wrong’ – Sainz | Formula 1 (https://www.racefans.net/2026/10/09/williams-completely-missed-this-set-of-regulations-and-got-it-really-wrong-sainz/)

@@ -133,6 +133,6 @@ def test_page_states_when_no_article_signals_are_used() -> None:
         "drivers": [{"name": "AAA", "team": "T", "pole_probability": 1.0, "front_row_probability": 1.0, "top10_probability": 1.0, "expected_position": 1.0}],
     }
     page = render_page(prediction, {"signal_count": 0})
-    assert "Article signals: none" in page
+    assert "none (weight moved to timing data)" in page
     page = render_page(prediction, {"signal_count": 3})
-    assert "Article signals: 3" in page
+    assert 'Article Signals</p><p class="debug-value">3</p>' in page

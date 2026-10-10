@@ -392,3 +392,9 @@ def test_penalty_sources_are_short_links() -> None:
     assert ">FIA document &#8599;</a>" in source_link_html("https://www.fia.com/system/files/decision-document/x.pdf")
     assert ">race control &#8599;</a>" in source_link_html("https://api.openf1.org/v1/race_control?session_key=1")
     assert source_link_html("manual") == "manual"
+
+
+def test_help_matches_the_table_columns() -> None:
+    page = render_page(_prediction({"RUS": 0.6, "NOR": 0.4}), CONFIG)
+    assert "<dt>Predicted</dt>" not in page and "<dt>Weekend Delta</dt>" not in page
+    assert "<dt>Weekend form (driver detail)</dt>" in page

@@ -706,11 +706,9 @@ HELP_HTML = """
     <dd>Places the driver is predicted to gain (green &#9650;) or lose (red &#9660;): their place in the predicted order
     (the # column) against the last time they were classified &ndash; the starting grid for a sprint or race (penalties
     included), otherwise the latest session of this weekend (e.g. FP1 or the sprint). &ndash; means no change.</dd>
-    <dt>Predicted</dt>
-    <dd>Median finishing position. Hover it for the mean; the mean is pulled down by unlikely outcomes, so the median
-    reads better.</dd>
     <dt>Driver detail (click the name / "Detail")</dt>
-    <dd>Start &rarr; median and most likely position, DNF risk, the driver's results in this weekend's sessions, the
+    <dd>Start &rarr; median (the position reached or beaten in half of the simulations) and most likely position,
+    weekend form, DNF risk, the driver's results in this weekend's sessions, the
     win/pole chance before the latest session and now (e.g. "Win chance 17% before FP1+SQ &rarr; 6% now": how much the latest sessions changed the
     prediction), and the chance of finishing in each position.</dd>
     <dt>Badges</dt>
@@ -721,7 +719,7 @@ HELP_HTML = """
     estimated from the Open-Meteo forecast (rain probability, expected amount and weather code). Weather icons:
     &#9728;&#65039;/&#127769; dry, &#9925; mostly dry, &#127782;&#65039; showers possible, &#127783;&#65039; wet likely,
     &#9928;&#65039; thunderstorm; click an icon for the numbers.</dd>
-    <dt>Weekend Delta</dt>
+    <dt>Weekend form (driver detail)</dt>
     <dd>How much this weekend's sessions moved the driver's rating up or down.</dd>
     <dt>Accuracy</dt>
     <dd>"How accurate is it?" compares past predictions with the results and with a simple guess based on the
@@ -731,10 +729,6 @@ HELP_HTML = """
 """
 
 
-def signals_chip(signal_count: int) -> str:
-    if signal_count <= 0:
-        return "Article signals: none - their input weight is redistributed to timing data"
-    return f"Article signals: {signal_count}"
 
 
 def penalties_html(race_config: dict[str, Any]) -> str:
@@ -1040,7 +1034,7 @@ def render_page(
             <article class="debug-card"><p class="debug-label">Season Blend</p><p class="debug-value">{season_blend_summary}</p></article>
             <article class="debug-card"><p class="debug-label">Target Session</p><p class="debug-value">{target_session_code}</p></article>
             <article class="debug-card"><p class="debug-label">Grid Source</p><p class="debug-value">{grid_source}</p></article>
-            <article class="debug-card"><p class="debug-label">Article Signals</p><p class="debug-value">{html.escape(signals_chip(signal_count))}</p></article>
+            <article class="debug-card"><p class="debug-label">Article Signals</p><p class="debug-value">{signal_count or "none (weight moved to timing data)"}</p></article>
             <article class="debug-card"><p class="debug-label">Simulations</p><p class="debug-value">{simulations}</p></article>
             <article class="debug-card"><p class="debug-label">Output Type</p><p class="debug-value">{html.escape(target_output_type)}</p></article>
             <article class="debug-card"><p class="debug-label">Generated</p><p class="debug-value">{generated_at}</p></article>

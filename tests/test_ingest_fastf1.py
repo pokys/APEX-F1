@@ -345,3 +345,39 @@ def test_ingest_keeps_stored_session_when_live_sources_fail(tmp_path, monkeypatc
     assert [e["round"] for e in events] == [17]
     assert [s["session_code"] for s in events[0]["sessions"]] == ["SQ"]
     assert events[0]["sessions"][0]["results"][0]["abbreviation"] == "VER"
+
+
+def test_ingest_falls_back_to_openf1_for_qualifying(tmp_path, monkeypatch) -> None:
+    # Regression (Singapore 2026): F1 live timing refused the GitHub runner and
+    # Ergast had no results yet, so sprint and qualifying never arrived and the
+    # race grid was simulated instead of taken from qualifying.
+    import json
+
+    import pandas as pd
+
+    from pipeline import ingest_fastf1 as ing
+
+    schedule = pd.DataFrame([{"RoundNumber": 17, "EventDate": pd.Timestamp("2026-10-11"), "EventName": "Singapore Grand Prix",
+                              "OfficialEventName": "x", "EventFormat": "sprint_qualifying", "Country": "Singapore", "Location": "Marina Bay"}])
+    monkeypatch.setattr(ing, "fetch_schedule", lambda season, fetcher: schedule)
+    monkeypatch.setattr(ing, "extract_sessions_schedule", lambda row: {"Q": "2026-10-10T13:00:00+00:00"})
+    monkeypatch.setattr(ing, "load_session", lambda *a, **k: None)
+    monkeypatch.setattr(ing.fastf1.Cache, "enable_cache", lambda path: None)
+
+    class FakeOpenF1:
+        def find_session_key(self, season, code, start):
+            return 42 if code == "Q" else None
+
+        def session_results(self, key, code):
+            return [{"position": 1, "abbreviation": "VER", "team_name": "Red Bull"}, {"position": 2, "abbreviation": "ANT", "team_name": "Mercedes"}]
+
+        def best_laps(self, key):
+            raise AssertionError("qualifying must not be ranked by fastest lap")
+
+        def session_is_wet(self, key):
+            return False
+
+    out = ing.ingest(2026, ["Q"], ing.parse_iso_date("2026-10-10"), tmp_path, tmp_path / "cache", openf1=FakeOpenF1())
+    sessions = json.loads(out.read_text())["events"][0]["sessions"]
+    assert [(s["session_code"], s["source"]) for s in sessions] == [("Q", "openf1")]
+    assert [r["abbreviation"] for r in sessions[0]["results"]] == ["VER", "ANT"]

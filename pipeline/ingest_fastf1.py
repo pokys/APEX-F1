@@ -95,7 +95,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--no-openf1",
         action="store_true",
-        help="Disable the OpenF1 fallback for practice/sprint qualifying classification.",
+        help="Disable the OpenF1 fallback used when FastF1 has no data for a session.",
     )
     parser.add_argument(
         "--log-level",
@@ -527,14 +527,15 @@ def load_session_openf1(
     session_code: str,
     scheduled_start: Any,
 ) -> dict[str, Any] | None:
-    """Fallback for practice/sprint qualifying when FastF1 has no timing
-    data: take OpenF1 session results, or rank fastest laps."""
+    """Fallback when FastF1 has no data (F1 live timing refuses the request,
+    Ergast is not updated yet): take OpenF1 session results. Practice and
+    sprint qualifying without official results are ranked by fastest lap."""
     try:
         session_key = client.find_session_key(season, session_code, scheduled_start)
         if session_key is None:
             return None
         results = canonicalize_teams(client.session_results(session_key, session_code))
-        if not session_has_classification(results):
+        if not session_has_classification(results) and session_code in LAP_DATA_SESSIONS:
             best = client.best_laps(session_key)
             if results:
                 results = classify_by_best_lap(results, best)
@@ -788,7 +789,7 @@ def ingest(
                 update_roster(roster, stored)
                 continue
             loaded = load_session(season, round_number, session_code, cutoff=cutoff, include_lap_metrics=include_lap_metrics)
-            if loaded is None and openf1 is not None and session_code in LAP_DATA_SESSIONS:
+            if loaded is None and openf1 is not None:
                 scheduled = schedule_times.get(session_code)
                 scheduled_dt = to_utc_date(scheduled)
                 if scheduled and scheduled_dt is not None and scheduled_dt <= cutoff:

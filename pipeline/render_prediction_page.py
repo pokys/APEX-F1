@@ -418,8 +418,14 @@ def penalty_badges(race_config: dict[str, Any] | None) -> dict[str, str]:
     substitutes ("sub for STR")."""
     badges: dict[str, list[str]] = {}
     # Outside the race itself, say which start a race penalty applies to.
-    race_prefix = "" if str((race_config or {}).get("prediction_target") or "race") == "race" else "Race "
-    for key, start in (("race_grid_penalties", race_prefix), ("sprint_grid_penalties", "Sprint ")):
+    target = str((race_config or {}).get("prediction_target") or "race")
+    race_prefix = "" if target == "race" else "Race "
+    groups = [("race_grid_penalties", race_prefix)]
+    # Once the race is predicted the sprint has been run: its penalties no
+    # longer matter.
+    if target != "race":
+        groups.append(("sprint_grid_penalties", "Sprint "))
+    for key, start in groups:
         for penalty in (race_config or {}).get(key) or []:
             if not isinstance(penalty, dict) or not penalty.get("driver"):
                 continue

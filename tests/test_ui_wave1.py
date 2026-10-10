@@ -194,8 +194,11 @@ def test_penalty_badges_next_to_driver() -> None:
         ],
         "sprint_grid_penalties": [{"driver": "ALO", "places": 3}],
     }
-    badges = penalty_badges(config)
-    assert "&minus;25 grid" in badges["ALO"] and "Sprint &minus;3 grid" in badges["ALO"]
+    sprint_badges = penalty_badges({**config, "prediction_target": "sprint"})
+    assert "Race &minus;25 grid" in sprint_badges["ALO"] and "Sprint &minus;3 grid" in sprint_badges["ALO"]
+    # Predicting the race, the sprint is over: only race penalties remain.
+    badges = penalty_badges({**config, "prediction_target": "race"})
+    assert "&minus;25 grid" in badges["ALO"] and "Sprint" not in badges["ALO"]
     assert "pit start" in badges["LAW"]
     prediction = {
         "prediction_target": "race",
@@ -205,7 +208,7 @@ def test_penalty_badges_next_to_driver() -> None:
         ],
     }
     page = scenario_panel_html(prediction, "dry", "Dry", True, None, badges)
-    assert page.count("penalty-badge") == 3 * 2  # hero card, table row, mobile card; two badges for ALO
+    assert page.count("penalty-badge") == 3  # hero card, table row, mobile card
     assert "VER</strong><span class=\"caret\" aria-hidden=\"true\">&#9662;</span></button><small>" in page  # no badge for VER
 
 

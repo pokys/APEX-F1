@@ -195,7 +195,7 @@ def test_penalty_badges_next_to_driver() -> None:
     }
     page = scenario_panel_html(prediction, "dry", "Dry", True, None, badges)
     assert page.count("penalty-badge") == 3 * 2  # hero card, table row, mobile card; two badges for ALO
-    assert "VER</strong><small>" in page
+    assert "VER</strong><span class=\"caret\" aria-hidden=\"true\">&#9662;</span></button><small>" in page  # no badge for VER
 
 
 def test_substitute_badge() -> None:
@@ -203,3 +203,36 @@ def test_substitute_badge() -> None:
 
     badges = penalty_badges({"driver_substitutions": [{"driver_in": "DRU", "driver_out": "STR", "team": "Aston Martin"}]})
     assert "sub for STR" in badges["DRU"]
+
+
+def test_driver_detail_start_median_dnf_and_weekend() -> None:
+    from pipeline.render_prediction_page import driver_detail_html, position_histogram_svg, weekend_session_results
+
+    row = {
+        "name": "VER", "team": "Red Bull", "expected_metric": 4.4,
+        "position_probabilities": [0.48, 0.05, 0.03, 0.2, 0.2], "dnf_probability": 0.04,
+    }
+    context = {"grid": {"VER": 3}, "weekend": {"VER": [("FP1", 6), ("SQ", 1)]}}
+    detail = driver_detail_html(row, qualifying=False, context=context)
+    assert "<b>Start</b> P3" in detail and 'class="trend-up"' in detail  # median P2 beats start P3
+    assert "<b>median</b> P2" in detail and "<b>most likely</b> P1 (48%)" in detail
+    assert "DNF risk</b> 4%" in detail
+    assert "FP1 P6" in detail and "SQ P1" in detail
+    assert detail.count("<rect") == 5 and "P1: 48.0%" in detail
+    quali = driver_detail_html(dict(row, dnf_probability=None), qualifying=True, context=context)
+    assert "Start" not in quali and "DNF" not in quali
+    assert position_histogram_svg([], "#fff") == ""
+
+    snapshot = {"events": [{"round": 17, "sessions": [
+        {"session_code": "SQ", "results": [{"abbreviation": "VER", "position": 1}]},
+        {"session_code": "FP1", "results": [{"abbreviation": "VER", "position": 6}, {"abbreviation": "RUS", "position": None}]},
+    ]}, {"round": 16, "sessions": [{"session_code": "R", "results": [{"abbreviation": "VER", "position": 1}]}]}]}
+    assert weekend_session_results(snapshot, 17) == {"VER": [("FP1", 6), ("SQ", 1)]}
+    assert weekend_session_results(None, 17) == {}
+
+
+def test_race_simulation_reports_position_distribution_and_dnf() -> None:
+    from pipeline.simulate_target_prediction import position_distribution
+
+    assert position_distribution([5, 3, 2], 10) == [0.5, 0.3, 0.2]
+    assert position_distribution([1], 0) == []

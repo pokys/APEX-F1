@@ -128,6 +128,12 @@ def normalize_prediction(payload: dict[str, Any]) -> dict[str, Any]:
         if "driver_share" in row: driver_entry["driver_share"] = row["driver_share"]
         if "team_share" in row: driver_entry["team_share"] = row["team_share"]
         if "weekend_form_delta" in row: driver_entry["weekend_form_delta"] = row["weekend_form_delta"]
+        # Per-position finishing shares and DNF share, shown in the driver detail.
+        positions = row.get("position_probabilities")
+        if isinstance(positions, list) and positions:
+            driver_entry["position_probabilities"] = [round(clamp(safe_float(v, 0.0), 0.0, 1.0), 4) for v in positions]
+        if row.get("dnf_probability") is not None:
+            driver_entry["dnf_probability"] = round(clamp(safe_float(row.get("dnf_probability"), 0.0), 0.0, 1.0), 4)
 
         normalized_drivers.append(driver_entry)
 

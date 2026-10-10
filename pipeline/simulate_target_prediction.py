@@ -190,6 +190,7 @@ def run_qualifying_prediction(
     front_row_count = {name: 0 for name in names}
     top10_count = {name: 0 for name in names}
     pos_sum = {name: 0.0 for name in names}
+    position_count = {name: [0] * len(names) for name in names}
     top10_cutoff = min(10, len(entries))
 
     adjusted_noise = (qualifying_noise + abs(weather_modifier) * 0.6) * noise_scale
@@ -205,6 +206,8 @@ def run_qualifying_prediction(
             grid = simulate_qualifying(entries, rng, qualifying_noise=adjusted_noise, wet=wet)
         for idx, name in enumerate(grid, start=1):
             pos_sum[name] += float(idx)
+            if idx <= len(names):
+                position_count[name][idx - 1] += 1
             if idx == 1:
                 pole_count[name] += 1
             if idx <= 2:
@@ -242,6 +245,7 @@ def run_qualifying_prediction(
                 "front_row_probability": round(front_row_count[name] / simulations, 6),
                 "top10_probability": round(top10_count[name] / simulations, 6),
                 "expected_position": round(pos_sum[name] / simulations, 6),
+                "position_probabilities": position_distribution(position_count[name], simulations),
             }
         )
     rows.sort(key=lambda x: (-x["pole_probability"], x["expected_position"], x["name"].lower()))
@@ -296,6 +300,8 @@ def run_race_or_sprint_prediction(
     finish_sum = {name: 0.0 for name in driver_names}
     win_count = {name: 0 for name in driver_names}
     podium_count = {name: 0 for name in driver_names}
+    position_count = {name: [0] * len(driver_names) for name in driver_names}
+    dnf_count = {name: 0 for name in driver_names}
 
     fixed_grid_config = config.get("fixed_grid")
     blend = clamp(safe_float(config.get("standings_blend_race"), 0.0), 0.0, 1.0) if standings else 0.0
@@ -307,6 +313,8 @@ def run_race_or_sprint_prediction(
             order = plackett_luce_order(rng, standings or {})
             for idx, name in enumerate(order, start=1):
                 finish_sum[name] += float(idx)
+                if idx <= len(driver_names):
+                    position_count[name][idx - 1] += 1
                 if idx == 1:
                     win_count[name] += 1
                 if idx <= 3:
@@ -336,6 +344,10 @@ def run_race_or_sprint_prediction(
 
         for name, finish in race_positions.items():
             finish_sum[name] += float(finish)
+            if finish > len(driver_names):
+                dnf_count[name] += 1
+            else:
+                position_count[name][finish - 1] += 1
             if finish == 1:
                 win_count[name] += 1
             if finish <= 3:
@@ -370,6 +382,8 @@ def run_race_or_sprint_prediction(
                 "win_probability": round(calibrated_win_prob[name], 6),
                 "podium_probability": round(podium_count[name] / simulations, 6),
                 "expected_finish": round(finish_sum[name] / simulations, 6),
+                "position_probabilities": position_distribution(position_count[name], simulations),
+                "dnf_probability": round(dnf_count[name] / simulations, 4),
             }
         )
     rows.sort(key=lambda x: (-x["win_probability"], x["expected_finish"], x["name"].lower()))
@@ -392,6 +406,12 @@ def run_race_or_sprint_prediction(
     }
     payload["drivers"] = rows
     return payload
+
+
+def position_distribution(counts: list[int], simulations: int) -> list[float]:
+    """Share of simulations finishing in each position (index 0 = P1); for
+    races the remainder up to 1 is the DNF share."""
+    return [round(count / simulations, 4) for count in counts] if simulations > 0 else []
 
 
 def run_target_prediction(

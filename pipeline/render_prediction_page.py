@@ -54,6 +54,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--track-record", default="outputs/track_record.json", help="Track record JSON (optional).")
     parser.add_argument("--weather", default="outputs/weather_forecast.json", help="Weather forecast JSON (optional).")
     parser.add_argument("--history", default="outputs/prediction_history.json", help="Prediction phase history JSON (optional).")
+    parser.add_argument("--raw-dir", default="data/raw/fastf1", help="FastF1 snapshots for this weekend's session results (optional).")
     parser.add_argument("--output", default="outputs/prediction_report.html", help="Rendered HTML output path.")
     parser.add_argument("--allow-missing-input", action="store_true", help="Exit 0 if prediction input is missing.")
     parser.add_argument(
@@ -130,6 +131,8 @@ def parse_prediction_rows(prediction: dict[str, Any]) -> list[dict[str, Any]]:
             "driver_share": to_float(raw.get("driver_share"), 50.0),
             "team_share": to_float(raw.get("team_share"), 50.0),
             "weekend_form_delta": to_float(raw.get("weekend_form_delta"), 0.0),
+            "position_probabilities": [to_float(v, 0.0) for v in raw.get("position_probabilities") or []],
+            "dnf_probability": to_float(raw.get("dnf_probability"), -1.0) if raw.get("dnf_probability") is not None else None,
         }
         if target in QUALIFYING_TARGETS:
             row["headline_probability"] = max(0.0, min(1.0, to_float(raw.get("pole_probability"), 0.0)))
@@ -365,6 +368,8 @@ def blend_predictions(dry: dict[str, Any], wet: dict[str, Any], wet_share: float
                 continue
             if isinstance(value, (int, float)) and not isinstance(value, bool) and isinstance(other.get(key), (int, float)):
                 mixed[key] = (1.0 - wet_share) * value + wet_share * float(other[key])
+            elif isinstance(value, list) and isinstance(other.get(key), list) and len(other[key]) == len(value):
+                mixed[key] = [(1.0 - wet_share) * float(a) + wet_share * float(b) for a, b in zip(value, other[key])]
         drivers.append(mixed)
     return {**dry, "drivers": drivers}
 
@@ -410,6 +415,101 @@ def penalty_badges(race_config: dict[str, Any] | None) -> dict[str, str]:
     return {driver: " ".join(items) for driver, items in badges.items()}
 
 
+def position_histogram_svg(probabilities: list[float], color: str) -> str:
+    """Bars for P1..PN, height proportional to the probability of finishing
+    there; hovering a bar shows the value."""
+    if not probabilities:
+        return ""
+    count = len(probabilities)
+    bar_w, gap, height = 8, 2, 40
+    width = count * (bar_w + gap)
+    peak = max(max(probabilities), 1e-9)
+    bars = []
+    for idx, p in enumerate(probabilities):
+        h = max(1.0, (p / peak) * (height - 2)) if p > 0 else 0.0
+        x = idx * (bar_w + gap)
+        bars.append(
+            f'<rect x="{x}" y="{height - h:.1f}" width="{bar_w}" height="{h:.1f}" rx="2" fill="{color}">'
+            f"<title>P{idx + 1}: {p * 100:.1f}%</title></rect>"
+        )
+    ticks = "".join(
+        f'<text x="{(n - 1) * (bar_w + gap) + bar_w / 2}" y="{height + 11}" text-anchor="middle">P{n}</text>'
+        for n in (1, 5, 10, 15, 20)
+        if n <= count
+    )
+    return (
+        f'<svg class="pos-hist" viewBox="0 0 {width} {height + 14}" role="img" aria-label="Finishing position distribution">'
+        f'{"".join(bars)}<g class="pos-hist-ticks">{ticks}</g></svg>'
+    )
+
+
+def driver_detail_html(row: dict[str, Any], qualifying: bool, context: dict[str, Any] | None) -> str:
+    """Expandable detail of one driver: start vs expected result, DNF risk,
+    the driver's sessions this weekend and the finishing distribution."""
+    context = context or {}
+    name = row["name"]
+    facts = []
+    grid_pos = (context.get("grid") or {}).get(name)
+    probs = row.get("position_probabilities") or []
+    if probs:
+        # The mean is misleading for a two-peaked distribution (the standings
+        # blend), so show the median and the single most likely position.
+        cumulative, median = 0.0, len(probs)
+        for idx, p in enumerate(probs, start=1):
+            cumulative += p
+            if cumulative >= 0.5:
+                median = idx
+                break
+        mode = max(range(len(probs)), key=lambda i: (probs[i], -i)) + 1
+        outcome = f"<b>median</b> P{median} &middot; <b>most likely</b> P{mode} ({probs[mode - 1] * 100:.0f}%)"
+        reference = median
+    else:
+        outcome = f"<b>expected</b> ~P{row['expected_metric']:.1f}"
+        reference = row["expected_metric"]
+    if grid_pos and not qualifying:
+        trend = "up" if reference < grid_pos else "down" if reference > grid_pos else "flat"
+        facts.append(f'<span class="fact"><b>Start</b> P{grid_pos} <span class="trend-{trend}">&rarr;</span> {outcome}</span>')
+    else:
+        facts.append(f'<span class="fact">{outcome}</span>')
+    dnf = row.get("dnf_probability")
+    if not qualifying and dnf is not None and dnf >= 0:
+        facts.append(f'<span class="fact"><b>DNF risk</b> {dnf * 100:.0f}%</span>')
+    sessions = (context.get("weekend") or {}).get(name) or []
+    if sessions:
+        chips = "".join(f'<span class="session-chip">{html.escape(code)} P{pos}</span>' for code, pos in sessions)
+        facts.append(f'<span class="fact"><b>This weekend</b> {chips}</span>')
+    histogram = position_histogram_svg(row.get("position_probabilities") or [], get_team_color(row["team"]))
+    hist_html = f'<div class="pos-hist-wrap"><span class="hist-label">Finishing position chances</span>{histogram}</div>' if histogram else ""
+    return f'<div class="driver-detail-body"><div class="facts">{"".join(facts)}</div>{hist_html}</div>'
+
+
+def weekend_session_results(snapshot: dict[str, Any] | None, round_number: Any) -> dict[str, list[tuple[str, int]]]:
+    """Classified position of every driver in each session of this GP so far."""
+    out: dict[str, list[tuple[str, int]]] = {}
+    if not isinstance(snapshot, dict):
+        return out
+    try:
+        target_round = int(round_number)
+    except (TypeError, ValueError):
+        return out
+    order = {code: idx for idx, code in enumerate(("FP1", "FP2", "FP3", "SQ", "S", "Q", "R"))}
+    for event in snapshot.get("events") or []:
+        if not isinstance(event, dict) or to_float(event.get("round"), -1) != target_round:
+            continue
+        sessions = sorted(
+            (s for s in event.get("sessions") or [] if isinstance(s, dict) and str(s.get("session_code") or "").upper() in order),
+            key=lambda s: order[str(s.get("session_code")).upper()],
+        )
+        for session in sessions:
+            code = str(session.get("session_code")).upper()
+            for result in session.get("results") or []:
+                abbr = str(result.get("abbreviation") or "").upper()
+                pos = to_float(result.get("position"), 0)
+                if abbr and pos >= 1:
+                    out.setdefault(abbr, []).append((code, int(pos)))
+    return out
+
+
 def scenario_panel_html(
     prediction: dict[str, Any],
     scenario_key: str,
@@ -417,6 +517,7 @@ def scenario_panel_html(
     active: bool,
     changes: dict[str, Any] | None = None,
     penalties: dict[str, str] | None = None,
+    context: dict[str, Any] | None = None,
 ) -> str:
     target = str(prediction.get("prediction_target") or "race")
     rows = parse_prediction_rows(prediction)
@@ -446,18 +547,21 @@ def scenario_panel_html(
     table_rows = []
     for idx, row in enumerate(rows, start=1):
         color = get_team_color(row["team"])
+        detail_id = f"detail-{scenario_key}-{html.escape(row['name'])}"
         numbers = f"{row['headline_probability'] * 100:.1f}% / {row['secondary_probability'] * 100:.1f}%"
         if qualifying:
             numbers += f" / {row['third_probability'] * 100:.1f}%"
         table_rows.append(
             '<tr style="--team-color: {color}">'.format(color=color)
             + f"<td>{idx}</td>"
-            + f'<td><strong>{html.escape(row["name"])}</strong>{badge(row["name"])}<small>{html.escape(row["team"])}</small></td>'
+            + f'<td><button class="detail-toggle" type="button" aria-expanded="false" aria-controls="{detail_id}" title="Show driver detail">'
+            + f'<strong>{html.escape(row["name"])}</strong><span class="caret" aria-hidden="true">&#9662;</span></button>{badge(row["name"])}<small>{html.escape(row["team"])}</small></td>'
             + f'<td class="odds-cell">{odds_bar_html(row, target)}<small>{numbers}</small></td>'
             + f"<td>{delta_html(row['name'], changes)}</td>"
             + f"<td>{row['expected_metric']:.1f}</td>"
             + f"<td>{row['weekend_form_delta']:+.2f}</td>"
             + "</tr>"
+            + f'<tr class="detail-row" id="{detail_id}" hidden><td colspan="6">{driver_detail_html(row, qualifying, context)}</td></tr>'
         )
 
     mobile_cards = []
@@ -470,6 +574,7 @@ def scenario_panel_html(
             + f'<p>{primary_label} {row["headline_probability"] * 100:.1f}% · {secondary_label} {row["secondary_probability"] * 100:.1f}%'
             + (f' · {tertiary_label} {row["third_probability"] * 100:.1f}%' if qualifying else "")
             + f" · {expected_label} {row['expected_metric']:.1f}</p>"
+            + f'<details class="driver-detail"><summary>Detail</summary>{driver_detail_html(row, qualifying, context)}</details>'
             + "</article>"
         )
 
@@ -574,6 +679,7 @@ def render_page(
     track_record: dict[str, Any] | None = None,
     weather: dict[str, Any] | None = None,
     history: dict[str, Any] | None = None,
+    weekend_results: dict[str, list[tuple[str, int]]] | None = None,
 ) -> str:
     target = str(prediction.get("prediction_target") or race_config.get("prediction_target") or "race")
     target_theme = "quali" if target in QUALIFYING_TARGETS else "race"
@@ -672,9 +778,14 @@ def render_page(
 
     phase_config = {"season": prediction.get("season") or race_config.get("season"), "next_round": race_config.get("next_round")}
     badges = penalty_badges(race_config)
+    fixed_grid = race_config.get("fixed_grid") if target not in QUALIFYING_TARGETS else None
+    context = {
+        "grid": {str(name).upper(): idx for idx, name in enumerate(fixed_grid or [], start=1)},
+        "weekend": weekend_results or {},
+    }
     dry_changes = phase_changes(history, phase_config, "dry")
     wet_changes = phase_changes(history, phase_config, "wet")
-    dry_panel = scenario_panel_html(prediction, "dry", "Dry", recommended == "dry", dry_changes, badges)
+    dry_panel = scenario_panel_html(prediction, "dry", "Dry", recommended == "dry", dry_changes, badges, context)
     if recommended == "mixed" and isinstance(prediction_wet, dict):
         share = float(wet_share or 0.0)
         dry_panel = (
@@ -685,11 +796,12 @@ def render_page(
                 True,
                 blend_changes(dry_changes, wet_changes, share),
                 badges,
+                context,
             )
             + dry_panel
         )
     wet_panel = (
-        scenario_panel_html(prediction_wet, "wet", "Wet", recommended == "wet", wet_changes, badges)
+        scenario_panel_html(prediction_wet, "wet", "Wet", recommended == "wet", wet_changes, badges, context)
         if isinstance(prediction_wet, dict)
         else ""
     )
@@ -1225,6 +1337,44 @@ def render_page(
       .delta-flat {{ color: var(--muted); }}
       .chip-link {{ color: var(--ink); text-decoration: none; border-color: rgba(76, 154, 255, 0.6); }}
       .chip-link:hover {{ background: rgba(76, 154, 255, 0.15); }}
+      .detail-toggle {{
+        all: unset;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+      }}
+      .detail-toggle:focus-visible {{ outline: 2px solid var(--accent); outline-offset: 2px; }}
+      .detail-toggle .caret {{ font-size: 0.7em; color: var(--muted); transition: transform 0.15s; }}
+      .detail-toggle[aria-expanded="true"] .caret {{ transform: rotate(180deg); }}
+      .detail-row td {{ background: rgba(255, 255, 255, 0.02); }}
+      .driver-detail-body {{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px 24px;
+        align-items: center;
+        font-size: 0.85rem;
+      }}
+      .driver-detail-body .facts {{ display: flex; flex-direction: column; gap: 4px; }}
+      .driver-detail-body .fact b {{ color: var(--muted); font-weight: 600; }}
+      .trend-up {{ color: #3ddc84; font-weight: 700; }}
+      .trend-down {{ color: #ff8a80; font-weight: 700; }}
+      .session-chip {{
+        display: inline-block;
+        margin-left: 4px;
+        padding: 0 6px;
+        border: 1px solid var(--grid);
+        border-radius: 4px;
+        font-size: 0.8em;
+        white-space: nowrap;
+      }}
+      .pos-hist-wrap {{ display: flex; flex-direction: column; gap: 2px; }}
+      .hist-label {{ color: var(--muted); font-size: 0.75rem; }}
+      .pos-hist {{ width: 230px; max-width: 100%; height: auto; }}
+      .pos-hist-ticks text {{ fill: var(--muted); font-size: 8px; }}
+      .driver-detail {{ margin-top: 6px; }}
+      .driver-detail summary {{ cursor: pointer; color: var(--muted); font-size: 0.8rem; }}
+      .driver-detail .driver-detail-body {{ margin-top: 6px; }}
       .sub-badge {{
         display: inline-block;
         margin-left: 6px;
@@ -1421,6 +1571,16 @@ def render_page(
     </main>
 {script_html}
     <script>
+      // Expandable driver detail rows in the desktop table.
+      for (const btn of document.querySelectorAll('.detail-toggle')) {{
+        btn.addEventListener('click', () => {{
+          const row = document.getElementById(btn.getAttribute('aria-controls'));
+          if (!row) return;
+          const open = btn.getAttribute('aria-expanded') === 'true';
+          btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+          row.hidden = open;
+        }});
+      }}
       // Session times in the visitor's local time, and a countdown to the next one.
       for (const el of document.querySelectorAll('[data-local-time]')) {{
         const d = new Date(el.dataset.localTime);
@@ -1514,6 +1674,9 @@ def main() -> int:
             track_record=track_record if isinstance(track_record, dict) else None,
             weather=load_optional_json(Path(args.weather)),
             history=load_optional_json(Path(args.history)),
+            weekend_results=weekend_session_results(
+                load_optional_json(Path(args.raw_dir) / f"season_{season}.json"), race_config.get("next_round")
+            ),
         )
         output_path = Path(args.output)
         output_path.parent.mkdir(parents=True, exist_ok=True)

@@ -316,3 +316,5 @@
 - [ ] Verstappen takes second pole position in Singapore ahead of the Ferraris | 2026 Singapore Grand Prix qualifying report (https://www.racefans.net/2026/10/10/verstappen-takes-second-pole-position-in-singapore-ahead-of-the-ferraris/)
 - [ ] How F1 2026 team-mates are comparing in qualifying (https://www.the-race.com/formula-1/how-f1-2026-team-mates-are-comparing-in-qualifying/)
 - [ ] Starting grid for the 2026 F1 Singapore GP (https://www.motorsport.com/f1/news/2026-f1-singapore-grand-prix-starting-grid/10863947/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Collision between Norris and Piastri was “simply not acceptable” – Stella | Formula 1 (https://www.racefans.net/2026/10/10/collision-between-norris-and-piastri-was-simply-not-acceptable-stella/)
+- [ ] Kim Kardashian's private jet makes 6,700-mile journey for Lewis Hamilton's Singapore GP (https://www.motorsport.com/f1/news/hamilton-gets-massive-6700-mile-boost-as-kim-kardashian-touches-down-for-singapore-gp/10863940/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

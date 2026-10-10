@@ -1,24 +1,24 @@
 {
-  "fetched_at": "2026-10-10T10:36:54+00:00",
+  "fetched_at": "2026-10-10T11:36:04+00:00",
   "longitude": 103.864,
   "race": "Singapore Grand Prix",
   "season": 2026,
   "sessions": {
     "Q": {
       "precipitation_mm": 0.1,
-      "rain_probability": 0.73,
+      "rain_probability": 0.82,
       "start": "2026-10-10T13:00:00+00:00",
       "weather_code": 51
     },
     "R": {
       "precipitation_mm": 0.0,
-      "rain_probability": 0.45,
+      "rain_probability": 0.53,
       "start": "2026-10-11T12:00:00+00:00",
       "weather_code": 3
     },
     "S": {
       "precipitation_mm": 0.2,
-      "rain_probability": 1.0,
+      "rain_probability": 0.98,
       "start": "2026-10-10T09:00:00+00:00",
       "weather_code": 51
     }

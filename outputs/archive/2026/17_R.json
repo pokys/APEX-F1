@@ -1,15 +1,5 @@
 {
-  "data_freshness": {
-    "days_since_latest_event": -1,
-    "days_until_next_race": 1,
-    "is_stale": false,
-    "latest_completed_date": "2026-10-11",
-    "latest_completed_event": "Singapore Grand Prix",
-    "next_race_date": "2026-10-11",
-    "reference_date": "2026-10-10",
-    "stale_threshold_days": 21.0
-  },
-  "deterministic_run_id": "63a8ea400f38ac5862b3",
+  "archived_at": "2026-10-10T14:35:57+00:00",
   "drivers": [
     {
       "dnf_probability": 0.0743,
@@ -782,65 +772,11 @@
       "win_probability": 0.0
     }
   ],
-  "generated_at": "2026-10-10T14:35:56Z",
-  "inputs_used": [
-    {
-      "source": "history_driver",
-      "source_key": "history_driver",
-      "weight": 0.6
-    },
-    {
-      "source": "history_team",
-      "source_key": "history_team",
-      "weight": 0.4
-    }
-  ],
-  "integrity": {
-    "driver_ratings_hash": "b169923d3838",
-    "race_config_hash": "59a7e3c0f059",
-    "team_ratings_hash": "f9323e8bc22d"
-  },
   "prediction_target": "race",
-  "prediction_target_label": "Race",
   "race": "Singapore Grand Prix",
-  "season_blend": {
-    "current_season": 2026,
-    "current_weight": 100,
-    "previous_season": 2025,
-    "previous_weight": 0,
-    "summary": "100% Season 2026"
-  },
-  "simulation": {
-    "available_sessions": [
-      "FP1",
-      "SQ",
-      "S",
-      "Q"
-    ],
-    "grid_penalties": [
-      {
-        "back_of_grid": false,
-        "driver": "RUS",
-        "pit_lane": false,
-        "places": 40,
-        "sources": [
-          "https://www.fia.com/system/files/decision-document/2026_singapore_grand_prix_-_infringement_-_car_63_-_changes_to_pu_elements.pdf"
-        ]
-      }
-    ],
-    "grid_position_weight": 1500.0,
-    "grid_source": "simulation",
-    "overtaking_difficulty": 0.79,
-    "qualifying_noise_scale": 2.0,
-    "race_kind": "race",
-    "race_noise_scale": 6.0,
-    "safety_car_probability": 0.52,
-    "seed": 202617,
-    "simulations": 6000,
-    "standings_blend": 0.5,
-    "weather": "dry"
-  },
-  "target_output_type": "race",
-  "target_session_code": "R",
-  "weekend_format": "sprint"
+  "round": 17,
+  "season": 2026,
+  "session_code": "R",
+  "session_start": "2026-10-11T12:00:00+00:00",
+  "target_output_type": "race"
 }

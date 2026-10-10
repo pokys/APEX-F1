@@ -310,3 +310,7 @@
 - [ ] Norris and Piastri cleared over last-lap crash in Singapore | Formula 1 (https://www.racefans.net/2026/10/10/norris-and-piastri-cleared-over-last-lap-crash-in-singapore/)
 - [ ] Singapore GP stewards reveal Lando Norris investigation decision following Oscar Piastri clash (https://www.motorsport.com/f1/news/lando-norris-summoned-for-oscar-piastri-clash-it-was-a-big-gap-so-i-went-for-it/10863862/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Stewards rule Piastri shares blame for Norris clash (https://www.the-race.com/formula-1/stewards-rule-piastri-shares-blame-for-norris-clash/)
+- [ ] F1 Singapore GP: Max Verstappen overcomes Ferrari challenge for pole (https://www.motorsport.com/f1/news/f1-singapore-gp-qualifying-report/10863917/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] F1 Singapore GP: Verstappen continues recent dominance with pole (https://www.autosport.com/f1/news/f1-singapore-gp-verstappen-on-pole/10863921/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Verstappen beats Ferraris to Singapore GP pole (https://www.the-race.com/formula-1/verstappen-beats-ferraris-to-singapore-gp-pole/)
+- [ ] Verstappen takes second pole position in Singapore ahead of the Ferraris | 2026 Singapore Grand Prix qualifying report (https://www.racefans.net/2026/10/10/verstappen-takes-second-pole-position-in-singapore-ahead-of-the-ferraris/)

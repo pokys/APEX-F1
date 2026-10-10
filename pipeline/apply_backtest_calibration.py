@@ -131,6 +131,7 @@ CALIBRATION_KEYS = {
     "recommended_standings_blend_qualifying": ("standings_blend_qualifying", 0.0, 1.0),
     "recommended_standings_blend_race": ("standings_blend_race", 0.0, 1.0),
     "recommended_grid_position_weight": ("grid_position_weight", 0.0, 2000.0),
+    "recommended_standings_grid_decay": ("standings_grid_decay", 0.0, 5.0),
 }
 
 

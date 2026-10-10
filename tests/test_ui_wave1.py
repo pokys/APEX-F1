@@ -143,7 +143,7 @@ def test_page_mixes_dry_and_wet_by_chance_of_a_wet_session() -> None:
     assert 'class="scenario-panel is-active" data-scenario="mixed"' in page
     assert 'class="toggle-btn is-active" data-target="mixed"' in page
     assert 'data-target="dry"' in page and 'data-target="wet"' in page  # the toggle stays
-    assert "Forecast mix (30% dry / 70% wet)" in page
+    assert "Mix &middot; 70% wet" in page
     assert "31.5%" in page  # NOR: 0.3 * 35 % + 0.7 * 30 %
     assert "Qualifying: wet likely &middot; showing the dry/wet mix (70% wet)" in page
     assert "Rain chance 70% &middot; 3.0 mm expected" in page
@@ -272,7 +272,8 @@ def test_table_in_predicted_order_with_arrows_vs_start() -> None:
     assert order == sorted(order)  # VER (median P2), RUS (P2, lower win chance), ANT (P5)
     assert 'title="Predicted P3, P7 at the start">&#9650; 4' in page
     assert 'title="Predicted P1, P1 at the start">&ndash;' in page
-    assert "<th>vs start</th>" in page and "<td title=\"Median position; mean 5.0\">P5</td>" in page
+    assert "<th>vs start</th>" in page and "<b>median</b> P5" in page
+    assert "Weekend Delta" not in page and "<th>Predicted</th>" not in page
 
 
 def test_reference_is_latest_session_for_qualifying() -> None:
@@ -358,3 +359,36 @@ def test_weather_icon_by_risk_and_night() -> None:
     assert weather_icon({"rain_probability": 1.0, "precipitation_mm": 2.0})[1] == "Wet likely"
     assert weather_icon({"rain_probability": 0.4, "weather_code": 95})[1] == "Thunderstorm"
     assert weather_icon(None) == ("", "")
+
+
+def test_running_session_shows_locked_prediction(tmp_path) -> None:
+    import json
+    from datetime import datetime, timezone
+
+    from pipeline.render_prediction_page import locked_prediction
+
+    config = dict(CONFIG, target_session_code="S", next_round=17, available_sessions=["FP1", "SQ"])
+    archived = {"session_code": "S", "archived_at": "2026-10-10T08:38:48+00:00", "drivers": [
+        {"name": "VER", "team": "Red Bull", "win_probability": 0.48, "podium_probability": 0.56, "expected_finish": 2.0},
+        {"name": "RUS", "team": "Mercedes", "win_probability": 0.14, "podium_probability": 0.75, "expected_finish": 2.5},
+    ]}
+    (tmp_path / "2026").mkdir()
+    (tmp_path / "2026" / "17_S.json").write_text(json.dumps(archived))
+    assert locked_prediction(tmp_path, config, datetime(2026, 10, 10, 8, 0, tzinfo=timezone.utc)) is None  # not started
+    locked = locked_prediction(tmp_path, config, datetime(2026, 10, 10, 9, 30, tzinfo=timezone.utc))
+    assert locked["session_code"] == "S"
+
+    live = _prediction({"VER": 0.05, "RUS": 0.9}, target="race")
+    live.update(prediction_target="sprint", target_session_code="S")
+    page = render_page(live, config, prediction_wet=live, locked=locked)
+    assert "Sprint is running." in page and "live · prediction locked" in page
+    assert "48.0%" in page and "90.0%" not in page  # the locked numbers, not the live run
+    assert 'data-target="wet"' not in page  # one locked prediction, no scenario toggle
+
+
+def test_penalty_sources_are_short_links() -> None:
+    from pipeline.render_prediction_page import source_link_html
+
+    assert ">FIA document &#8599;</a>" in source_link_html("https://www.fia.com/system/files/decision-document/x.pdf")
+    assert ">race control &#8599;</a>" in source_link_html("https://api.openf1.org/v1/race_control?session_key=1")
+    assert source_link_html("manual") == "manual"

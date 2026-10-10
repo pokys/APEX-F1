@@ -141,3 +141,24 @@ def test_sprint_grid_and_winner_from_the_sprint_session() -> None:
     assert fixed_grid_from_event(event, "S") == ["AAA", "BBB", "CCC"]
     assert actual_winner_and_podium(event, "S") == ("BBB", {"AAA", "BBB", "CCC"})
     assert actual_winner_and_podium(event)[0] == "CCC"
+
+
+def test_grid_aware_standings_and_decay_choice() -> None:
+    from pipeline.backtest_simulation import choose_grid_decay
+    from pipeline.simulate_target_prediction import grid_aware_standings
+
+    standings = {"ANT": 0.5, "VER": 0.25, "RUS": 0.25}
+    grid = ["VER", "RUS", "ANT"]
+    assert grid_aware_standings(standings, grid, 0.0) == standings
+    assert grid_aware_standings(standings, None, 1.0) == standings
+    weighted = grid_aware_standings(standings, grid, 1.0)
+    assert weighted["VER"] > weighted["ANT"] and abs(sum(weighted.values()) - 1.0) < 1e-9
+
+    # The pole sitter keeps winning while the standings leader starts last:
+    # a decay along the grid must be chosen.
+    model = {"VER": 0.6, "RUS": 0.3, "ANT": 0.1}
+    rows = [(model, standings, grid, "VER")] * 6
+    decay, report = choose_grid_decay(rows)
+    assert decay > 0 and report["leave_one_out_loss"] < report["no_decay_loss"]
+    # No grid information: nothing to gain, decay stays 0.
+    assert choose_grid_decay([(model, standings, None, "VER")] * 6)[0] == 0.0

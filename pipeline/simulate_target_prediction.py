@@ -5,6 +5,8 @@ Target-aware prediction execution for qualifying, sprint qualifying, sprint and 
 
 from __future__ import annotations
 
+import math
+import random
 import re
 from pathlib import Path
 from typing import Any
@@ -308,9 +310,12 @@ def run_race_or_sprint_prediction(
     known_penalties = [p for p in config.get("grid_penalties") or [] if isinstance(p, dict)]
     known_drivers = {str(p.get("driver") or "").upper() for p in known_penalties}
 
+    # With a known grid the championship-order draws favour the front of the
+    # grid (grid-aware standings), instead of ignoring it.
+    blend_weights = grid_aware_standings(standings or {}, fixed_grid_config, safe_float(config.get("standings_grid_decay"), 0.0))
     for _ in range(simulations):
         if blend > 0 and rng.random() < blend:
-            order = plackett_luce_order(rng, standings or {})
+            order = plackett_luce_order(rng, blend_weights)
             for idx, name in enumerate(order, start=1):
                 finish_sum[name] += float(idx)
                 if idx <= len(driver_names):
@@ -406,6 +411,18 @@ def run_race_or_sprint_prediction(
     }
     payload["drivers"] = rows
     return payload
+
+
+def grid_aware_standings(standings: dict[str, float], grid: Any, decay: float) -> dict[str, float]:
+    """Standings weights multiplied by exp(-decay * (grid position - 1)) and
+    renormalised; unchanged without a grid or with decay 0."""
+    if not standings or not isinstance(grid, list) or not grid or decay <= 0:
+        return standings
+    position = {str(name): idx for idx, name in enumerate(grid)}
+    worst = len(grid)
+    weighted = {name: w * math.exp(-decay * position.get(name, worst)) for name, w in standings.items()}
+    total = sum(weighted.values())
+    return {name: w / total for name, w in weighted.items()} if total > 0 else standings
 
 
 def position_distribution(counts: list[int], simulations: int) -> list[float]:

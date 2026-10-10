@@ -263,6 +263,7 @@ def build_event_config(
         "standings_blend_qualifying",
         "standings_blend_race",
         "grid_position_weight",
+        "standings_grid_decay",
     ):
         cfg.pop(key, None)
     cfg["season"] = season
@@ -455,6 +456,39 @@ def search_grid_weight(
         best = candidate
     scale, _, grid = results[best]
     return best, scale, grid, report
+
+
+# Candidate decays of the championship-order component along the known
+# starting grid (simulate_target_prediction.grid_aware_standings).
+GRID_DECAYS = (0.0, 0.1, 0.2, 0.35, 0.5, 0.75, 1.0, 1.5)
+
+
+def choose_grid_decay(
+    rows: list[tuple[dict[str, float], dict[str, float], list[str] | None, str]],
+    blend: float = DEFAULT_STANDINGS_BLEND,
+    decays: tuple[float, ...] = GRID_DECAYS,
+) -> tuple[float, dict[str, Any]]:
+    """Decay of the standings component along the grid: the in-sample best
+    one, kept only when choosing it on the other events (leave-one-out) beats
+    no decay. rows: (model probs, standings baseline, grid, actual winner)."""
+    from pipeline.simulate_target_prediction import grid_aware_standings
+
+    def loss(decay: float, subset) -> float:
+        return mean([log_loss(mix(m, grid_aware_standings(b, g, decay), blend), a) for m, b, g, a in subset])
+
+    if not rows:
+        return 0.0, {}
+    in_sample = {str(d): round(loss(d, rows), 6) for d in decays}
+    best = min(decays, key=lambda d: (loss(d, rows), d))
+    loo = []
+    for idx, row in enumerate(rows):
+        others = rows[:idx] + rows[idx + 1:]
+        chosen = min(decays, key=lambda d: (loss(d, others), d)) if others else best
+        loo.append(loss(chosen, [row]))
+    loo_loss = mean(loo)
+    no_decay = loss(0.0, rows)
+    decay = best if loo_loss < no_decay else 0.0
+    return decay, {"in_sample": in_sample, "leave_one_out_loss": round(loo_loss, 6), "no_decay_loss": round(no_decay, 6), "chosen": decay}
 
 
 def choose_start_blend(report: dict[str, float]) -> float:
@@ -742,9 +776,25 @@ def main() -> int:
 
     race_rows = start_rows("race")
     sprint_rows = start_rows("sprint")
+    from pipeline.simulate_target_prediction import grid_aware_standings
+
+    def grid_of(case: dict[str, Any], target: str) -> list[str] | None:
+        return (case["sprint_config"] if target == "sprint" else case["race_config"]).get("fixed_grid")
+
+    decay_rows = [
+        (probs, case["win_baselines"]["championship_order"], grid_of(case, "race"), case["winner"]) for case, _, probs, _ in race_rows
+    ] + [
+        (probs, case["win_baselines"]["championship_order"], grid_of(case, "sprint"), case["sprint_winner"]) for case, _, probs, _ in sprint_rows
+    ]
+    grid_decay, grid_decay_report = choose_grid_decay(decay_rows)
+    LOGGER.info("Standings grid decay: %s (%s)", grid_decay, grid_decay_report)
+
+    def start_baseline(case: dict[str, Any], target: str) -> dict[str, float]:
+        return grid_aware_standings(case["win_baselines"]["championship_order"], grid_of(case, target), grid_decay)
+
     win_blend = blend_report(
-        [(probs, case["win_baselines"]["championship_order"], case["winner"]) for case, _, probs, _ in race_rows]
-        + [(probs, case["win_baselines"]["championship_order"], case["sprint_winner"]) for case, _, probs, _ in sprint_rows]
+        [(probs, start_baseline(case, "race"), case["winner"]) for case, _, probs, _ in race_rows]
+        + [(probs, start_baseline(case, "sprint"), case["sprint_winner"]) for case, _, probs, _ in sprint_rows]
     )
     race_blend = choose_start_blend(win_blend)
     win_blend["chosen_weight"] = race_blend
@@ -757,7 +807,7 @@ def main() -> int:
         for case, raw_probs, model_probs, prediction in rows:
             winner = case["sprint_winner"] if target == "sprint" else case["winner"]
             podium = case["sprint_podium"] if target == "sprint" else case["podium"]
-            probs = mix(model_probs, case["win_baselines"]["championship_order"], race_blend)
+            probs = mix(model_probs, start_baseline(case, target), race_blend)
             podium_prob = {row["name"]: float(row["podium_probability"]) for row in prediction["drivers"]}
             predicted = max(probs, key=lambda k: (probs[k], k))
             predicted_podium = {row["name"] for row in sorted(prediction["drivers"], key=lambda r: (-float(r["podium_probability"]), r["name"]))[:3]}
@@ -814,6 +864,8 @@ def main() -> int:
         "recommended_standings_blend_qualifying": qualifying_blend,
         "recommended_standings_blend_race": race_blend,
         "recommended_grid_position_weight": grid_weight,
+        "recommended_standings_grid_decay": grid_decay,
+        "standings_grid_decay_search": grid_decay_report,
         "grid_weight_search": grid_weight_report,
         "sprints_evaluated": len(per_sprint),
         "sprint_winner_accuracy": round(mean([1.0 if r["winner_hit"] else 0.0 for r in per_sprint]), 6),

@@ -47,9 +47,9 @@ def test_render_page_shows_current_target_and_inputs() -> None:
     }
 
     rendered = render_page(prediction, race_config, tyre_compounds=tyre_compounds)
-    assert "Now Predicting" in rendered
+    assert "Predicting <b>" in rendered
     assert "Qualifying" in rendered
-    assert "Sessions Online" in rendered
+    assert "sessions done:" in rendered
     assert "FP1, FP2, FP3" in rendered
     assert "Input Weights" in rendered
     assert "Input Availability" in rendered
@@ -62,7 +62,7 @@ def test_render_page_shows_current_target_and_inputs() -> None:
     assert "Missing" in rendered
     assert "history_driver" in rendered
     assert "Pole" in rendered
-    assert "<th>Predicted</th>" in rendered
+    assert "<th>Predicted</th>" not in rendered  # rank is the # column; median sits in the driver detail
     assert "Because the season is still young" in rendered
     assert "Pirelli Weekend Compounds" in rendered
     assert "Hard" in rendered

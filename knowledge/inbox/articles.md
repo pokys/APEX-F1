@@ -275,3 +275,4 @@
 ## 2026-10-10
 - [ ] Fernandez on Mandalika pole as title contenders upstaged (https://www.the-race.com/motogp/fernandez-on-mandalika-pole-as-title-contenders-upstaged/)
 - [ ] Wolff admits he mishandled 2016 title-decider between Hamilton and Rosberg | Formula 1 (https://www.racefans.net/2026/10/10/wolff-admits-he-mishandled-2016-title-decider-between-hamilton-and-rosberg/)
+- [ ] Marquez takes MotoGP points lead after Aprilia implosion (https://www.the-race.com/motogp/marquez-takes-motogp-points-lead-after-aprilia-implosion/)

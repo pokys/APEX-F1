@@ -45,7 +45,7 @@
     "BOT",
     "RUS"
   ],
-  "generated_at": "2026-10-10T18:36:25Z",
+  "generated_at": "2026-10-10T19:36:01Z",
   "grid_penalties": [
     {
       "back_of_grid": false,
@@ -158,7 +158,8 @@
     }
   ],
   "standings_blend_qualifying": 0.5,
-  "standings_blend_race": 0.5,
+  "standings_blend_race": 0.2,
+  "standings_grid_decay": 0.0,
   "target_output_type": "race",
   "target_session_code": "R",
   "track": {

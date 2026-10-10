@@ -314,3 +314,5 @@
 - [ ] F1 Singapore GP: Verstappen continues recent dominance with pole (https://www.autosport.com/f1/news/f1-singapore-gp-verstappen-on-pole/10863921/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] Verstappen beats Ferraris to Singapore GP pole (https://www.the-race.com/formula-1/verstappen-beats-ferraris-to-singapore-gp-pole/)
 - [ ] Verstappen takes second pole position in Singapore ahead of the Ferraris | 2026 Singapore Grand Prix qualifying report (https://www.racefans.net/2026/10/10/verstappen-takes-second-pole-position-in-singapore-ahead-of-the-ferraris/)
+- [ ] How F1 2026 team-mates are comparing in qualifying (https://www.the-race.com/formula-1/how-f1-2026-team-mates-are-comparing-in-qualifying/)
+- [ ] Starting grid for the 2026 F1 Singapore GP (https://www.motorsport.com/f1/news/2026-f1-singapore-grand-prix-starting-grid/10863947/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

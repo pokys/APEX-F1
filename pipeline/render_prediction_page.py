@@ -366,7 +366,7 @@ def delta_html(name: str, changes: dict[str, Any] | None) -> str:
     label = html.escape(str(changes.get("label") or "previous phase"))
     if abs(points) < DELTA_THRESHOLD_PP:
         return f'<span class="delta delta-flat" title="No change {label}">&ndash;</span>'
-    arrow, css = ("&#9650;", "delta-up") if points > 0 else ("&#9660;", "delta-down")
+    arrow, css = (ARROW_UP, "delta-up") if points > 0 else (ARROW_DOWN, "delta-down")
     return f'<span class="delta {css}" title="{points:+.1f} pp {label}">{arrow} {abs(points):.1f}</span>'
 
 
@@ -500,6 +500,12 @@ def reference_positions(
     return {name: pos for name, results in weekend.items() for code, pos in results if code == latest}, latest
 
 
+# Inline SVG instead of the ▲▼ characters: iOS Safari draws those with a
+# system symbol font that ignores the text colour.
+ARROW_UP = '<svg class="tri" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 1 9.5 9h-9z" fill="currentColor"/></svg>'
+ARROW_DOWN = '<svg class="tri" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 9 .5 1h9z" fill="currentColor"/></svg>'
+
+
 def position_arrow_html(name: str, predicted: int | None, context: dict[str, Any] | None) -> str:
     """Places the driver is predicted to gain (green) or lose (red): the
     predicted finishing order (table rank) against the reference positions
@@ -514,7 +520,7 @@ def position_arrow_html(name: str, predicted: int | None, context: dict[str, Any
     title = f"Predicted P{predicted}, P{reference} at {where}"
     if diff == 0:
         return f'<span class="delta delta-flat" title="{html.escape(title)}">&ndash;</span>'
-    arrow, css = ("&#9650;", "delta-up") if diff > 0 else ("&#9660;", "delta-down")
+    arrow, css = (ARROW_UP, "delta-up") if diff > 0 else (ARROW_DOWN, "delta-down")
     return f'<span class="delta {css}" title="{html.escape(title)}">{arrow} {abs(diff)}</span>'
 
 
@@ -676,7 +682,7 @@ def scenario_panel_html(
     legend_items = [("l1", primary_label), ("l2", secondary_label)] + ([("l3", tertiary_label)] if qualifying else [])
     legend = "".join(f'<span class="legend-item"><i class="legend-{key}"></i>{html.escape(label)}</span>' for key, label in legend_items)
     where = "the start" if reference_label == "start" else reference_label
-    change_note = f'<span class="legend-item">&#9650;&#9660; places vs {html.escape(where)}</span>' if reference_label else ""
+    change_note = f'<span class="legend-item"><span class="delta delta-up">{ARROW_UP}</span><span class="delta delta-down">{ARROW_DOWN}</span> places vs {html.escape(where)}</span>' if reference_label else ""
     change_header = f"vs {html.escape('start' if reference_label == 'start' else reference_label)}" if reference_label else "Change"
     odds_header = " / ".join(label for _, label in legend_items)
     active_class = " is-active" if active else ""
@@ -702,8 +708,8 @@ HELP_HTML = """
     <dt>Bars and percentages</dt>
     <dd>Win / podium (race, sprint) or pole / front row / top 10 (qualifying): the share of simulations in which that
     happens. Bright part = the headline result, darker parts = the wider ones.</dd>
-    <dt>&#9650; / &#9660; next to a driver</dt>
-    <dd>Places the driver is predicted to gain (green &#9650;) or lose (red &#9660;): their place in the predicted order
+    <dt>__ARROW_UP__ / __ARROW_DOWN__ next to a driver</dt>
+    <dd>Places the driver is predicted to gain (green) or lose (red): their place in the predicted order
     (the # column) against the last time they were classified &ndash; the starting grid for a sprint or race (penalties
     included), otherwise the latest session of this weekend (e.g. FP1 or the sprint). &ndash; means no change.</dd>
     <dt>Driver detail (click the name / "Detail")</dt>
@@ -727,6 +733,9 @@ HELP_HTML = """
   </dl>
 </details>
 """
+HELP_HTML = HELP_HTML.replace("__ARROW_UP__", f'<span class="delta delta-up">{ARROW_UP}</span>').replace(
+    "__ARROW_DOWN__", f'<span class="delta delta-down">{ARROW_DOWN}</span>'
+)
 
 
 
@@ -1193,6 +1202,7 @@ tbody tr:last-child td { border-bottom: 0; }
 .driver-detail summary { cursor: pointer; color: var(--accent); font-size: 0.82rem; }
 .driver-detail .driver-detail-body { margin-top: 8px; }
 .delta { font-size: 0.82rem; font-weight: 600; white-space: nowrap; }
+.tri { width: 0.7em; height: 0.7em; vertical-align: 0; margin-right: 1px; }
 .delta-up { color: var(--up); }
 .delta-down { color: var(--down); }
 .delta-flat { color: var(--faint); }

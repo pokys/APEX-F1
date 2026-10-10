@@ -270,7 +270,7 @@ def test_table_in_predicted_order_with_arrows_vs_start() -> None:
     page = scenario_panel_html(prediction, "dry", "Dry", True, None, None, {"reference": reference, "reference_label": label})
     order = [page.index(f"<strong>{n}</strong>") for n in ("VER", "RUS", "ANT")]
     assert order == sorted(order)  # VER (median P2), RUS (P2, lower win chance), ANT (P5)
-    assert 'title="Predicted P3, P7 at the start">&#9650; 4' in page
+    assert 'title="Predicted P3, P7 at the start"><svg class="tri"' in page and 'fill="currentColor"/></svg> 4</span>' in page
     assert 'title="Predicted P1, P1 at the start">&ndash;' in page
     assert "<th>vs start</th>" in page and "<b>median</b> P5" in page
     assert "Weekend Delta" not in page and "<th>Predicted</th>" not in page

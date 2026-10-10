@@ -62,7 +62,7 @@ def test_render_page_shows_current_target_and_inputs() -> None:
     assert "Missing" in rendered
     assert "history_driver" in rendered
     assert "Pole" in rendered
-    assert "Expected Position" in rendered
+    assert "<th>Predicted</th>" in rendered
     assert "Because the season is still young" in rendered
     assert "Pirelli Weekend Compounds" in rendered
     assert "Hard" in rendered

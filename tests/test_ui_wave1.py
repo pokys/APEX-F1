@@ -156,12 +156,19 @@ def test_page_mixes_dry_and_wet_by_chance_of_a_wet_session() -> None:
     assert 'class="scenario-panel is-active" data-scenario="dry"' in other_gp
 
 
-def test_drizzle_counts_only_partly_as_wet() -> None:
+def test_wet_share_from_probability_amount_and_weather_code() -> None:
     from pipeline.collect_weather import wet_session_probability
 
-    assert wet_session_probability({"rain_probability": 0.96, "precipitation_mm": 0.2}) == 0.192
+    # A likely shower with little water counts only partly as wet.
+    assert wet_session_probability({"rain_probability": 0.6, "precipitation_mm": 0.2}) == 0.12
     assert wet_session_probability({"rain_probability": 0.7, "precipitation_mm": 3.0}) == 0.7
     assert wet_session_probability({"rain_probability": 0.4}) == 0.4
+    # Near-certain rain is at least half wet even when the amount says 0 mm
+    # (Singapore 2026 sprint: 100 %, 0.0 mm, heavy rain).
+    assert wet_session_probability({"rain_probability": 1.0, "precipitation_mm": 0.0}) == 0.5
+    # A thunderstorm code makes it mostly wet.
+    assert wet_session_probability({"rain_probability": 1.0, "precipitation_mm": 0.0, "weather_code": 95}) == 0.8
+    assert wet_session_probability({"rain_probability": 0.6, "precipitation_mm": 0.0, "weather_code": 63}) == 0.3
     assert wet_session_probability(None) is None
 
 
@@ -236,3 +243,59 @@ def test_race_simulation_reports_position_distribution_and_dnf() -> None:
 
     assert position_distribution([5, 3, 2], 10) == [0.5, 0.3, 0.2]
     assert position_distribution([1], 0) == []
+
+
+def test_table_in_predicted_order_with_arrows_vs_start() -> None:
+    from pipeline.render_prediction_page import reference_positions, scenario_panel_html
+
+    prediction = {
+        "prediction_target": "sprint",
+        "drivers": [
+            # ANT: higher win chance (standings blend) but median P5.
+            {"name": "ANT", "team": "Mercedes", "win_probability": 0.15, "podium_probability": 0.3, "expected_finish": 5.0,
+             "position_probabilities": [0.15, 0.05, 0.05, 0.1, 0.4, 0.25]},
+            {"name": "RUS", "team": "Mercedes", "win_probability": 0.14, "podium_probability": 0.75, "expected_finish": 3.0,
+             "position_probabilities": [0.14, 0.5, 0.2, 0.1, 0.03, 0.03]},
+            {"name": "VER", "team": "Red Bull", "win_probability": 0.48, "podium_probability": 0.56, "expected_finish": 4.0,
+             "position_probabilities": [0.48, 0.05, 0.03, 0.2, 0.2, 0.04]},
+        ],
+    }
+    config = {"fixed_grid": ["VER", "RUS", "LEC", "PIA", "NOR", "HAM", "ANT"]}
+    reference, label = reference_positions("sprint", config, {})
+    assert label == "start" and reference["ANT"] == 7
+    page = scenario_panel_html(prediction, "dry", "Dry", True, None, None, {"reference": reference, "reference_label": label})
+    order = [page.index(f"<strong>{n}</strong>") for n in ("VER", "RUS", "ANT")]
+    assert order == sorted(order)  # VER (median P2), RUS (P2, lower win chance), ANT (P5)
+    assert 'title="Predicted P3, P7 at the start">&#9650; 4' in page
+    assert 'title="Predicted P1, P1 at the start">&ndash;' in page
+    assert "<th>vs start</th>" in page and "<td title=\"Median position; mean 5.0\">P5</td>" in page
+
+
+def test_reference_is_latest_session_for_qualifying() -> None:
+    from pipeline.render_prediction_page import reference_positions
+
+    weekend = {"VER": [("FP1", 6), ("SQ", 1), ("S", 2)], "RUS": [("FP1", 1), ("SQ", 2), ("S", 1)]}
+    assert reference_positions("qualifying", {"fixed_grid": ["VER"]}, weekend) == ({"VER": 2, "RUS": 1}, "S")
+    assert reference_positions("qualifying", {}, {}) == ({}, "")
+
+
+def test_page_has_hidden_help() -> None:
+    page = render_page(_prediction({"RUS": 0.6, "NOR": 0.4}), CONFIG)
+    assert '<details class="page-help">' in page and "How to read this page" in page
+
+
+def test_race_penalty_badge_says_race_before_the_race() -> None:
+    from pipeline.render_prediction_page import penalty_badges
+
+    config = {"prediction_target": "sprint", "race_grid_penalties": [{"driver": "RUS", "places": 40}]}
+    assert ">Race &minus;40 grid<" in penalty_badges(config)["RUS"]
+    assert ">&minus;40 grid<" in penalty_badges(dict(config, prediction_target="race"))["RUS"]
+
+
+def test_session_forecast_keeps_most_severe_weather_code() -> None:
+    series = [
+        (datetime(2026, 10, 10, 9, tzinfo=timezone.utc), 100, 0.0, 80),
+        (datetime(2026, 10, 10, 10, tzinfo=timezone.utc), 90, 0.1, 95),
+    ]
+    forecast = session_forecast(series, datetime(2026, 10, 10, 9, 0, tzinfo=timezone.utc), 120)
+    assert forecast == {"rain_probability": 1.0, "precipitation_mm": 0.1, "weather_code": 95}

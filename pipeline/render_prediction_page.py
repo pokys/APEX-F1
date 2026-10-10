@@ -389,7 +389,9 @@ def penalty_badges(race_config: dict[str, Any] | None) -> dict[str, str]:
     """Short badges per driver code: grid penalties ("-25 grid") and
     substitutes ("sub for STR")."""
     badges: dict[str, list[str]] = {}
-    for key, start in (("race_grid_penalties", ""), ("sprint_grid_penalties", "Sprint ")):
+    # Outside the race itself, say which start a race penalty applies to.
+    race_prefix = "" if str((race_config or {}).get("prediction_target") or "race") == "race" else "Race "
+    for key, start in (("race_grid_penalties", race_prefix), ("sprint_grid_penalties", "Sprint ")):
         for penalty in (race_config or {}).get(key) or []:
             if not isinstance(penalty, dict) or not penalty.get("driver"):
                 continue
@@ -402,7 +404,7 @@ def penalty_badges(race_config: dict[str, Any] | None) -> dict[str, str]:
             else:
                 places = int(to_float(penalty.get("places")))
                 short, long = f"&minus;{places} grid", f"{places} place grid drop"
-            what = "sprint" if start else "race"
+            what = "sprint" if key == "sprint_grid_penalties" else "race"
             badges.setdefault(str(penalty["driver"]).upper(), []).append(
                 f'<span class="penalty-badge" title="{html.escape(what.capitalize())} grid penalty: {long}">{start}{short}</span>'
             )
@@ -443,6 +445,51 @@ def position_histogram_svg(probabilities: list[float], color: str) -> str:
     )
 
 
+def median_position(probabilities: list[float]) -> int | None:
+    """Finishing position reached or beaten in half of the simulations."""
+    cumulative = 0.0
+    for idx, p in enumerate(probabilities, start=1):
+        cumulative += p
+        if cumulative >= 0.5:
+            return idx
+    return None
+
+
+def reference_positions(
+    target: str, race_config: dict[str, Any], weekend: dict[str, list[tuple[str, int]]]
+) -> tuple[dict[str, int], str]:
+    """Positions the predicted order is compared with, and their label: the
+    starting grid (penalties included) for a sprint or race, otherwise the
+    classification of the latest session of this weekend."""
+    grid = race_config.get("fixed_grid") if target not in QUALIFYING_TARGETS else None
+    if grid:
+        return {str(name).upper(): idx for idx, name in enumerate(grid, start=1)}, "start"
+    order = ("FP1", "FP2", "FP3", "SQ", "S", "Q", "R")
+    sessions = {code for results in weekend.values() for code, _ in results}
+    if not sessions:
+        return {}, ""
+    latest = max(sessions, key=order.index)
+    return {name: pos for name, results in weekend.items() for code, pos in results if code == latest}, latest
+
+
+def position_arrow_html(name: str, predicted: int | None, context: dict[str, Any] | None) -> str:
+    """Places the driver is predicted to gain (green) or lose (red): the
+    predicted finishing order (table rank) against the reference positions
+    (start grid or latest session)."""
+    context = context or {}
+    reference = (context.get("reference") or {}).get(name.upper())
+    label = context.get("reference_label") or ""
+    if predicted is None or reference is None:
+        return ""
+    where = "the start" if label == "start" else label
+    diff = reference - predicted
+    title = f"Predicted P{predicted}, P{reference} at {where}"
+    if diff == 0:
+        return f'<span class="delta delta-flat" title="{html.escape(title)}">&ndash;</span>'
+    arrow, css = ("&#9650;", "delta-up") if diff > 0 else ("&#9660;", "delta-down")
+    return f'<span class="delta {css}" title="{html.escape(title)}">{arrow} {abs(diff)}</span>'
+
+
 def driver_detail_html(row: dict[str, Any], qualifying: bool, context: dict[str, Any] | None) -> str:
     """Expandable detail of one driver: start vs expected result, DNF risk,
     the driver's sessions this weekend and the finishing distribution."""
@@ -454,12 +501,7 @@ def driver_detail_html(row: dict[str, Any], qualifying: bool, context: dict[str,
     if probs:
         # The mean is misleading for a two-peaked distribution (the standings
         # blend), so show the median and the single most likely position.
-        cumulative, median = 0.0, len(probs)
-        for idx, p in enumerate(probs, start=1):
-            cumulative += p
-            if cumulative >= 0.5:
-                median = idx
-                break
+        median = median_position(probs) or len(probs)
         mode = max(range(len(probs)), key=lambda i: (probs[i], -i)) + 1
         outcome = f"<b>median</b> P{median} &middot; <b>most likely</b> P{mode} ({probs[mode - 1] * 100:.0f}%)"
         reference = median
@@ -471,6 +513,10 @@ def driver_detail_html(row: dict[str, Any], qualifying: bool, context: dict[str,
         facts.append(f'<span class="fact"><b>Start</b> P{grid_pos} <span class="trend-{trend}">&rarr;</span> {outcome}</span>')
     else:
         facts.append(f'<span class="fact">{outcome}</span>')
+    phase_change = delta_html(name, context.get("changes"))
+    if phase_change:
+        label = html.escape(str((context.get("changes") or {}).get("label") or "previous phase"))
+        facts.append(f'<span class="fact"><b>Chance change {label}</b> {phase_change} pp</span>')
     dnf = row.get("dnf_probability")
     if not qualifying and dnf is not None and dnf >= 0:
         facts.append(f'<span class="fact"><b>DNF risk</b> {dnf * 100:.0f}%</span>')
@@ -521,10 +567,23 @@ def scenario_panel_html(
 ) -> str:
     target = str(prediction.get("prediction_target") or "race")
     rows = parse_prediction_rows(prediction)
+    for row in rows:
+        row["median"] = median_position(row.get("position_probabilities") or [])
+    # Predicted finishing order: median position, then the headline chance.
+    rows.sort(key=lambda r: (r["median"] or 99, -r["headline_probability"], r["expected_metric"], r["name"]))
+    for rank, row in enumerate(rows, start=1):
+        row["rank"] = rank
     primary_label, secondary_label, tertiary_label = metric_labels(target)
     qualifying = target in QUALIFYING_TARGETS
-    change_label = html.escape(str(changes.get("label"))) if isinstance(changes, dict) else ""
     penalties = penalties or {}
+    context = dict(context or {}, changes=changes)
+    reference_label = context.get("reference_label") or ""
+
+    def arrow(row: dict[str, Any]) -> str:
+        return position_arrow_html(row["name"], row["rank"], context)
+
+    def predicted(row: dict[str, Any]) -> str:
+        return f"P{row['median']}" if row["median"] else f"~{row['expected_metric']:.1f}"
 
     def badge(name: str) -> str:
         return (" " + penalties[name.upper()]) if name.upper() in penalties else ""
@@ -534,7 +593,7 @@ def scenario_panel_html(
         color = get_team_color(row["team"])
         top_cards.append(
             '<article class="hero-card" style="--team-color: {color}">'.format(color=color)
-            + f'<p class="hero-rank">P{idx} {delta_html(row["name"], changes)}</p>'
+            + f'<p class="hero-rank">P{idx} {arrow(row)}</p>'
             + f'<h3>{html.escape(row["name"])}{badge(row["name"])}</h3>'
             + f'<p class="hero-team">{html.escape(row["team"])}</p>'
             + f'<p class="hero-big">{row["headline_probability"] * 100:.1f}%<small>{primary_label.lower()}</small></p>'
@@ -543,7 +602,7 @@ def scenario_panel_html(
             + "</article>"
         )
 
-    expected_label = "Expected Position" if qualifying else "Expected Finish"
+    expected_label = "Predicted"
     table_rows = []
     for idx, row in enumerate(rows, start=1):
         color = get_team_color(row["team"])
@@ -557,8 +616,8 @@ def scenario_panel_html(
             + f'<td><button class="detail-toggle" type="button" aria-expanded="false" aria-controls="{detail_id}" title="Show driver detail">'
             + f'<strong>{html.escape(row["name"])}</strong><span class="caret" aria-hidden="true">&#9662;</span></button>{badge(row["name"])}<small>{html.escape(row["team"])}</small></td>'
             + f'<td class="odds-cell">{odds_bar_html(row, target)}<small>{numbers}</small></td>'
-            + f"<td>{delta_html(row['name'], changes)}</td>"
-            + f"<td>{row['expected_metric']:.1f}</td>"
+            + f"<td>{arrow(row)}</td>"
+            + f'<td title="Median position; mean {row["expected_metric"]:.1f}">{predicted(row)}</td>'
             + f"<td>{row['weekend_form_delta']:+.2f}</td>"
             + "</tr>"
             + f'<tr class="detail-row" id="{detail_id}" hidden><td colspan="6">{driver_detail_html(row, qualifying, context)}</td></tr>'
@@ -569,18 +628,20 @@ def scenario_panel_html(
         color = get_team_color(row["team"])
         mobile_cards.append(
             '<article class="mobile-driver-card" style="--team-color: {color}">'.format(color=color)
-            + f'<div class="mobile-top"><h4>{html.escape(row["name"])}{badge(row["name"])} {delta_html(row["name"], changes)}</h4><span>{html.escape(row["team"])}</span></div>'
+            + f'<div class="mobile-top"><h4>{html.escape(row["name"])}{badge(row["name"])} {arrow(row)}</h4><span>{html.escape(row["team"])}</span></div>'
             + odds_bar_html(row, target)
             + f'<p>{primary_label} {row["headline_probability"] * 100:.1f}% · {secondary_label} {row["secondary_probability"] * 100:.1f}%'
             + (f' · {tertiary_label} {row["third_probability"] * 100:.1f}%' if qualifying else "")
-            + f" · {expected_label} {row['expected_metric']:.1f}</p>"
+            + f" · {expected_label} {predicted(row)}</p>"
             + f'<details class="driver-detail"><summary>Detail</summary>{driver_detail_html(row, qualifying, context)}</details>'
             + "</article>"
         )
 
     legend_items = [("l1", primary_label), ("l2", secondary_label)] + ([("l3", tertiary_label)] if qualifying else [])
     legend = "".join(f'<span class="legend-item"><i class="legend-{key}"></i>{html.escape(label)}</span>' for key, label in legend_items)
-    change_note = f'<span class="legend-item">&#9650;&#9660; change {change_label}</span>' if change_label else ""
+    where = "the start" if reference_label == "start" else reference_label
+    change_note = f'<span class="legend-item">&#9650;&#9660; places vs {html.escape(where)}</span>' if reference_label else ""
+    change_header = f"vs {html.escape('start' if reference_label == 'start' else reference_label)}" if reference_label else "Change"
     odds_header = " / ".join(label for _, label in legend_items)
     active_class = " is-active" if active else ""
     return (
@@ -589,11 +650,47 @@ def scenario_panel_html(
         f'<section class="hero-grid">{"".join(top_cards)}</section>'
         f'<p class="odds-legend">{legend}{change_note}</p>'
         f'<section class="desktop-table"><table>'
-        f"<thead><tr><th>#</th><th>Driver</th><th>{odds_header}</th><th>Change</th><th>{expected_label}</th><th>Weekend Delta</th></tr></thead>"
+        f"<thead><tr><th>#</th><th>Driver</th><th>{odds_header}</th><th>{change_header}</th><th>{expected_label}</th><th>Weekend Delta</th></tr></thead>"
         f"<tbody>{''.join(table_rows)}</tbody></table></section>"
         f'<section class="mobile-list">{"".join(mobile_cards)}</section>'
         "</section>"
     )
+
+
+HELP_HTML = """
+<details class="page-help">
+  <summary>How to read this page</summary>
+  <dl>
+    <dt>Order of the table</dt>
+    <dd>Drivers are listed in the predicted finishing order: by the median simulated position (the position the driver
+    reaches or beats in half of the simulations), ties broken by the win/pole chance.</dd>
+    <dt>Bars and percentages</dt>
+    <dd>Win / podium (race, sprint) or pole / front row / top 10 (qualifying): the share of simulations in which that
+    happens. Bright part = the headline result, darker parts = the wider ones.</dd>
+    <dt>&#9650; / &#9660; next to a driver</dt>
+    <dd>Places the driver is predicted to gain (green &#9650;) or lose (red &#9660;): their place in the predicted order
+    (the # column) against the last time they were classified &ndash; the starting grid for a sprint or race (penalties
+    included), otherwise the latest session of this weekend (e.g. FP1 or the sprint). &ndash; means no change.</dd>
+    <dt>Predicted</dt>
+    <dd>Median finishing position. Hover it for the mean; the mean is pulled down by unlikely outcomes, so the median
+    reads better.</dd>
+    <dt>Driver detail (click the name / "Detail")</dt>
+    <dd>Start &rarr; median and most likely position, DNF risk, the driver's results in this weekend's sessions, how
+    the win/pole chance changed since before the latest session, and the chance of finishing in each position.</dd>
+    <dt>Badges</dt>
+    <dd>Red: grid penalty from the FIA stewards' decisions or race control (&minus;N grid, pit start, back of grid).
+    Blue outline: substitute driver from the official entry list.</dd>
+    <dt>Dry / Wet / Mix</dt>
+    <dd>The model simulates a dry and a wet race. Mix weights them by the chance that the session runs in the wet,
+    estimated from the Open-Meteo forecast (rain probability, expected amount and weather code).</dd>
+    <dt>Weekend Delta</dt>
+    <dd>How much this weekend's sessions moved the driver's rating up or down.</dd>
+    <dt>Accuracy</dt>
+    <dd>"How accurate is it?" compares past predictions with the results and with a simple guess based on the
+    championship order.</dd>
+  </dl>
+</details>
+"""
 
 
 def signals_chip(signal_count: int) -> str:
@@ -779,9 +876,12 @@ def render_page(
     phase_config = {"season": prediction.get("season") or race_config.get("season"), "next_round": race_config.get("next_round")}
     badges = penalty_badges(race_config)
     fixed_grid = race_config.get("fixed_grid") if target not in QUALIFYING_TARGETS else None
+    reference, reference_label = reference_positions(target, race_config, weekend_results or {})
     context = {
         "grid": {str(name).upper(): idx for idx, name in enumerate(fixed_grid or [], start=1)},
         "weekend": weekend_results or {},
+        "reference": reference,
+        "reference_label": reference_label,
     }
     dry_changes = phase_changes(history, phase_config, "dry")
     wet_changes = phase_changes(history, phase_config, "wet")
@@ -1337,6 +1437,22 @@ def render_page(
       .delta-flat {{ color: var(--muted); }}
       .chip-link {{ color: var(--ink); text-decoration: none; border-color: rgba(76, 154, 255, 0.6); }}
       .chip-link:hover {{ background: rgba(76, 154, 255, 0.15); }}
+      .page-help {{
+        margin: 0 0 12px;
+        border: 1px solid var(--grid);
+        border-radius: 10px;
+        padding: 8px 14px;
+        font-size: 0.86rem;
+        color: var(--muted);
+      }}
+      .page-help summary {{ cursor: pointer; color: var(--ink); }}
+      .page-help dl {{ margin: 10px 0 4px; display: grid; gap: 4px 16px; grid-template-columns: minmax(140px, 220px) 1fr; }}
+      .page-help dt {{ color: var(--ink); font-weight: 600; }}
+      .page-help dd {{ margin: 0; line-height: 1.45; }}
+      @media (max-width: 640px) {{
+        .page-help dl {{ grid-template-columns: 1fr; }}
+        .page-help dd {{ margin-bottom: 6px; }}
+      }}
       .detail-toggle {{
         all: unset;
         cursor: pointer;
@@ -1559,6 +1675,7 @@ def render_page(
       {weekend_timeline}
 
       <h2 class="section-title">Predictions</h2>
+      {HELP_HTML}
       {weather_banner}
       {dry_panel}
       {wet_panel}

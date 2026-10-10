@@ -37,16 +37,37 @@ FORECAST_URL = "https://api.open-meteo.com/v1/forecast"
 # Open-Meteo forecasts up to 16 days ahead.
 FORECAST_HORIZON_DAYS = 15
 SESSION_DURATION_MINUTES = {"FP1": 60, "FP2": 60, "FP3": 60, "SQ": 45, "S": 40, "Q": 60, "R": 120}
-# The dashboard opens the wet scenario first when rain is likely AND enough
-# of it is expected. Open-Meteo's probability counts anything from 0.1 mm,
-# so probability alone flags every drizzle as a wet session.
+# A session counts as wet on the timeline when its estimated wet share
+# (wet_session_probability) reaches this value.
 WET_SCENARIO_THRESHOLD = 0.5
-WET_SCENARIO_MIN_MM = 0.5
 
 # For the dry/wet mix: this much rain over a session counts as a fully wet
 # session; less rain scales the wet share down (a 90 % chance of 0.2 mm is
 # a damp track for a few minutes, not a wet race).
 WET_TRACK_MM = 1.0
+# Open-Meteo's precipitation amounts are unreliable for tropical showers and
+# thunderstorms (Singapore 2026 sprint: 100 % chance, 0.0 mm, heavy rain).
+# The WMO weather code of the session window and a near-certain probability
+# therefore set a floor on how much of the probability counts as wet.
+STORM_CODES = {95, 96, 99}
+HEAVY_RAIN_CODES = {65, 67, 82}
+MODERATE_RAIN_CODES = {63, 66, 81}
+CERTAIN_RAIN_PROBABILITY = 0.9
+
+
+def wet_factor_floor(weather_code: Any, probability: float) -> float:
+    try:
+        code = int(weather_code)
+    except (TypeError, ValueError):
+        code = None
+    floor = 0.0
+    if code in STORM_CODES or code in HEAVY_RAIN_CODES:
+        floor = 0.8
+    elif code in MODERATE_RAIN_CODES:
+        floor = 0.5
+    if probability >= CERTAIN_RAIN_PROBABILITY:
+        floor = max(floor, 0.5)
+    return floor
 
 Fetcher = Callable[[str, dict[str, Any]], Any]
 
@@ -89,13 +110,14 @@ def circuit_coordinates(circuits: dict[str, Any], race_name: str) -> tuple[float
     return None
 
 
-def hourly_series(payload: Any) -> list[tuple[datetime, float | None, float | None]]:
+def hourly_series(payload: Any) -> list[tuple[datetime, float | None, float | None, int | None]]:
     hourly = payload.get("hourly") if isinstance(payload, dict) else None
     if not isinstance(hourly, dict):
         return []
     times = hourly.get("time") or []
     probabilities = hourly.get("precipitation_probability") or []
     amounts = hourly.get("precipitation") or []
+    codes = hourly.get("weather_code") or []
     series = []
     for idx, raw_time in enumerate(times):
         parsed = _parse_iso_datetime(raw_time)
@@ -103,23 +125,29 @@ def hourly_series(payload: Any) -> list[tuple[datetime, float | None, float | No
             continue
         probability = probabilities[idx] if idx < len(probabilities) else None
         amount = amounts[idx] if idx < len(amounts) else None
-        series.append((parsed, probability, amount))
+        code = codes[idx] if idx < len(codes) else None
+        series.append((parsed, probability, amount, code))
     return series
 
 
-def session_forecast(series: list[tuple[datetime, float | None, float | None]], start: datetime, minutes: int) -> dict[str, Any] | None:
-    """Worst hour of the session window: max precipitation probability and
-    summed precipitation over the hours that overlap the session."""
+def session_forecast(series: list[tuple], start: datetime, minutes: int) -> dict[str, Any] | None:
+    """Worst hour of the session window: max precipitation probability,
+    summed precipitation and the most severe WMO weather code over the hours
+    that overlap the session."""
     end = start + timedelta(minutes=minutes)
-    window = [(p, a) for t, p, a in series if t < end and t + timedelta(hours=1) > start]
-    probabilities = [float(p) for p, _ in window if p is not None]
-    amounts = [float(a) for _, a in window if a is not None]
+    window = [entry for entry in series if entry[0] < end and entry[0] + timedelta(hours=1) > start]
+    probabilities = [float(entry[1]) for entry in window if entry[1] is not None]
+    amounts = [float(entry[2]) for entry in window if entry[2] is not None]
+    codes = [int(entry[3]) for entry in window if len(entry) > 3 and entry[3] is not None]
     if not probabilities and not amounts:
         return None
-    return {
+    forecast: dict[str, Any] = {
         "rain_probability": round(max(probabilities) / 100.0, 3) if probabilities else None,
         "precipitation_mm": round(sum(amounts), 2) if amounts else None,
     }
+    if codes:
+        forecast["weather_code"] = max(codes)
+    return forecast
 
 
 def build_forecast(race_config: dict[str, Any], circuits: dict[str, Any], fetch: Fetcher, now: datetime) -> dict[str, Any] | None:
@@ -142,7 +170,7 @@ def build_forecast(race_config: dict[str, Any], circuits: dict[str, Any], fetch:
         {
             "latitude": coords[0],
             "longitude": coords[1],
-            "hourly": "precipitation_probability,precipitation",
+            "hourly": "precipitation_probability,precipitation,weather_code",
             "timezone": "UTC",
             "start_date": first.isoformat(),
             "end_date": last.isoformat(),
@@ -167,21 +195,21 @@ def build_forecast(race_config: dict[str, Any], circuits: dict[str, Any], fetch:
 
 def wet_session_probability(info: dict[str, Any] | None) -> float | None:
     """Estimated chance that the session runs in wet conditions: the rain
-    probability scaled down when only a little rain is expected."""
+    probability scaled down when only a little rain is expected, unless the
+    weather code (showers, thunderstorm) or a near-certain probability says
+    otherwise."""
     if not isinstance(info, dict) or info.get("rain_probability") is None:
         return None
     probability = max(0.0, min(1.0, float(info["rain_probability"])))
     amount = info.get("precipitation_mm")
-    if amount is None:
-        return probability
-    return round(probability * min(1.0, max(0.0, float(amount)) / WET_TRACK_MM), 3)
+    factor = 1.0 if amount is None else min(1.0, max(0.0, float(amount)) / WET_TRACK_MM)
+    factor = max(factor, wet_factor_floor(info.get("weather_code"), probability))
+    return round(probability * factor, 3)
 
 
 def is_wet_session(info: dict[str, Any] | None) -> bool:
-    if not isinstance(info, dict) or info.get("rain_probability") is None:
-        return False
-    amount = info.get("precipitation_mm")
-    return info["rain_probability"] >= WET_SCENARIO_THRESHOLD and (amount is None or amount >= WET_SCENARIO_MIN_MM)
+    share = wet_session_probability(info)
+    return share is not None and share >= WET_SCENARIO_THRESHOLD
 
 
 def main() -> int:

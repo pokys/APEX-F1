@@ -271,3 +271,6 @@
 - [ ] Why Kimi Antonelli can't revert to previous Mercedes spec in Singapore (https://www.motorsport.com/f1/news/were-stuck-with-what-weve-got-why-antonelli-cant-revert-to-previous-mercedes-spec-in-singapore/10863572/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Lando Norris: “No excuse” for Singapore gap to Oscar Piastri (https://www.motorsport.com/f1/news/lando-norris-no-excuse-for-singapore-gap-to-oscar-piastri/10863564/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] On This Day: Bottas wins as Verstappen regains points lead from Hamilton | Brief (https://www.racefans.net/2026/10/10/on-this-day-turkish-grand-prix/)
+
+## 2026-10-10
+- [ ] Fernandez on Mandalika pole as title contenders upstaged (https://www.the-race.com/motogp/fernandez-on-mandalika-pole-as-title-contenders-upstaged/)

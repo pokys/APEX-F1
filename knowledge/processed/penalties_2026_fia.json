@@ -1,5 +1,5 @@
 {
-  "last_checked": "2026-10-10T05:36:30+00:00",
+  "last_checked": "2026-10-10T08:35:44+00:00",
   "processed_documents": [
     "https://www.fia.com/system/files/decision-document/2026_bahrain_grand_prix_in_malaysia_-_decision_-_car_23_-_alleged_driving_erratically.pdf",
     "https://www.fia.com/system/files/decision-document/2026_bahrain_grand_prix_in_malaysia_-_infringement_-_car_18_-_failure_to_follow_race_directors_instructions_sc2-sc1_time_1st_offence.pdf",
@@ -14,6 +14,7 @@
     "https://www.fia.com/system/files/decision-document/2026_bahrain_grand_prix_in_malaysia_-_infringement_-_car_6_-_changes_to_pu_elements.pdf",
     "https://www.fia.com/system/files/decision-document/2026_singapore_grand_prix_-_entry_list.pdf",
     "https://www.fia.com/system/files/decision-document/2026_singapore_grand_prix_-_infringement_-_car_3_-_yellow_flag_infringement.pdf",
+    "https://www.fia.com/system/files/decision-document/2026_singapore_grand_prix_-_infringement_-_car_55_-_changes_made_during_parc_ferme.pdf",
     "https://www.fia.com/system/files/decision-document/2026_singapore_grand_prix_-_infringement_-_car_63_-_changes_to_pu_elements.pdf"
   ],
   "signals": [
@@ -28,6 +29,19 @@
       "source_name": "fia_decision_documents",
       "source_url": "https://www.fia.com/system/files/decision-document/2026_singapore_grand_prix_-_infringement_-_car_63_-_changes_to_pu_elements.pdf",
       "timestamp": "2026-10-09T19:40:00",
+      "type": "grid_penalty"
+    },
+    {
+      "applies_to": "sprint",
+      "driver": "SAI",
+      "event": "Singapore Grand Prix",
+      "evidence": "Required to start the Sprint from the pit lane.",
+      "pit_lane": true,
+      "season": 2026,
+      "source_confidence": 0.98,
+      "source_name": "fia_decision_documents",
+      "source_url": "https://www.fia.com/system/files/decision-document/2026_singapore_grand_prix_-_infringement_-_car_55_-_changes_made_during_parc_ferme.pdf",
+      "timestamp": "2026-10-10T15:46:00",
       "type": "grid_penalty"
     }
   ]

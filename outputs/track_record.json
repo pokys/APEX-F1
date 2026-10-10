@@ -1,7 +1,34 @@
 {
-  "by_session": {},
-  "entries": [],
+  "by_session": {
+    "SQ": {
+      "count": 1,
+      "hit_rate": 0.0,
+      "mean_group_overlap": 10.0,
+      "mean_log_loss": 2.51537,
+      "mean_winner_probability": 0.080833
+    }
+  },
+  "entries": [
+    {
+      "actual_winner": "VER",
+      "archived_at": "2026-10-09T07:12:08+00:00",
+      "group": "top10",
+      "group_overlap": 10,
+      "hit": false,
+      "log_loss": 2.51537,
+      "predicted_winner": "RUS",
+      "race": "Singapore Grand Prix",
+      "round": 17,
+      "season": 2026,
+      "session_code": "SQ",
+      "winner_probability": 0.080833
+    }
+  ],
   "summary": {
-    "count": 0
+    "count": 1,
+    "hit_rate": 0.0,
+    "mean_group_overlap": 10.0,
+    "mean_log_loss": 2.51537,
+    "mean_winner_probability": 0.080833
   }
 }

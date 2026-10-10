@@ -65,6 +65,29 @@ def event_key(race_config: dict[str, Any]) -> str:
     return f"{race_config.get('season')}-{int(race_config.get('next_round') or 0):02d}"
 
 
+def is_regression(phase: dict[str, Any], earlier: list[dict[str, Any]]) -> bool:
+    """A phase whose sessions are a strict subset of an earlier phase of the
+    same target only appears when a run lost already ingested data (a live
+    source outage); it is not a real phase of the weekend."""
+    sessions = set(phase.get("sessions") or [])
+    return any(
+        p.get("target") == phase.get("target") and sessions < set(p.get("sessions") or [])
+        for p in earlier
+    )
+
+
+def clean_phases(phases: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    out: list[dict[str, Any]] = []
+    for phase in phases:
+        if is_regression(phase, out):
+            continue
+        if out and out[-1].get("target") == phase.get("target") and out[-1].get("sessions") == phase.get("sessions"):
+            out[-1] = phase  # the same phase again (after a dropped regression)
+        else:
+            out.append(phase)
+    return out
+
+
 def record_phase(
     history: dict[str, Any],
     race_config: dict[str, Any],
@@ -84,11 +107,14 @@ def record_phase(
         "dry": headline_probabilities(prediction_dry),
         "wet": headline_probabilities(prediction_wet),
     }
-    phases = event["phases"]
-    if phases and phases[-1].get("target") == target and phases[-1].get("sessions") == sessions:
+    phases = clean_phases(event["phases"])
+    if is_regression(phase, phases):
+        LOGGER.warning("Not recording phase %s %s: earlier runs had more sessions.", target, sessions)
+    elif phases and phases[-1].get("target") == target and phases[-1].get("sessions") == sessions:
         phases[-1] = phase
     else:
         phases.append(phase)
+    event["phases"] = phases
     for old in sorted(events)[:-KEEP_EVENTS]:
         events.pop(old, None)
     return history
@@ -100,11 +126,19 @@ def phase_changes(history: dict[str, Any] | None, race_config: dict[str, Any], s
     if not isinstance(history, dict):
         return None
     event = (history.get("events") or {}).get(event_key(race_config))
-    phases = event.get("phases") if isinstance(event, dict) else None
+    phases = clean_phases(event.get("phases") or []) if isinstance(event, dict) else None
     if not phases or len(phases) < 2:
         return None
     current = phases[-1]
-    reference = next((p for p in reversed(phases[:-1]) if p.get("target") == current.get("target")), None)
+    current_sessions = set(current.get("sessions") or [])
+    reference = next(
+        (
+            p
+            for p in reversed(phases[:-1])
+            if p.get("target") == current.get("target") and set(p.get("sessions") or []) < current_sessions
+        ),
+        None,
+    )
     if reference is None:
         return None
     now = current.get(scenario) or {}
@@ -116,6 +150,7 @@ def phase_changes(history: dict[str, Any] | None, race_config: dict[str, Any], s
         "new_sessions": new_sessions,
         "label": ("before " + "+".join(new_sessions)) if new_sessions else "previous phase",
         "deltas": deltas,
+        "before": {name: round(before.get(name, 0.0), 6) for name in now},
     }
 
 

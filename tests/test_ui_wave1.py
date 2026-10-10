@@ -144,9 +144,10 @@ def test_page_mixes_dry_and_wet_by_chance_of_a_wet_session() -> None:
     assert "Forecast mix (30% dry / 70% wet)" in page
     assert "31.5%" in page  # NOR: 0.3 * 35 % + 0.7 * 30 %
     assert "Rain risk for Qualifying: <strong>70%</strong>, 3.0 mm expected" in page
-    # Changes mix too: dry NOR +15 pp, wet 0 pp -> +4.5 pp.
-    assert "&#9650; 4.5" in page and "&#9650; 15.0" in page
-    assert "change before S" in page
+    # The chance before the latest session mixes too: NOR dry 20 % -> 35 %,
+    # wet 30 % -> 30 %, mix 27 % -> 32 %.
+    assert "<b>Pole chance</b> 27% before S" in page and "32% now" in page
+    assert "<b>Pole chance</b> 20% before S" in page and "35% now" in page
 
     soaked = render_page(dry, CONFIG, prediction_wet=wet, weather={"race": "Singapore Grand Prix", "sessions": {"Q": {"rain_probability": 1.0, "precipitation_mm": 5.0}}})
     assert 'class="scenario-panel is-active" data-scenario="wet"' in soaked and 'data-scenario="mixed"' not in soaked
@@ -299,3 +300,42 @@ def test_session_forecast_keeps_most_severe_weather_code() -> None:
     ]
     forecast = session_forecast(series, datetime(2026, 10, 10, 9, 0, tzinfo=timezone.utc), 120)
     assert forecast == {"rain_probability": 1.0, "precipitation_mm": 0.1, "weather_code": 95}
+
+
+def test_phase_history_ignores_runs_that_lost_data() -> None:
+    from pipeline.prediction_history import phase_changes, record_phase
+
+    history: dict = {}
+    cfg = dict(CONFIG)
+    record_phase(history, dict(cfg, available_sessions_ingested=["FP1"]), _prediction({"LEC": 0.17}), None)
+    record_phase(history, dict(cfg, available_sessions_ingested=["FP1", "SQ"]), _prediction({"LEC": 0.06}), None)
+    # A run during a live-timing outage lost FP1+SQ: not a real phase.
+    record_phase(history, dict(cfg, available_sessions_ingested=[]), _prediction({"LEC": 0.16}), None)
+    record_phase(history, dict(cfg, available_sessions_ingested=["FP1", "SQ"]), _prediction({"LEC": 0.06}), None)
+    phases = history["events"]["2026-17"]["phases"]
+    assert [p["sessions"] for p in phases] == [["FP1"], ["FP1", "SQ"]]
+    changes = phase_changes(history, dict(cfg, available_sessions_ingested=["FP1", "SQ"]))
+    assert changes["new_sessions"] == ["SQ"] and changes["before"]["LEC"] == 0.17
+    # Old histories that already hold such a phase are cleaned when read.
+    history["events"]["2026-17"]["phases"].insert(2, {"target": "qualifying", "sessions": [], "dry": {"LEC": 0.5}, "wet": {}})
+    assert phase_changes(history, cfg)["before"]["LEC"] == 0.17
+
+
+def test_detail_shows_chance_before_and_now() -> None:
+    from pipeline.render_prediction_page import driver_detail_html
+
+    row = {"name": "LEC", "team": "Ferrari", "expected_metric": 3.0, "headline_probability": 0.06, "position_probabilities": []}
+    detail = driver_detail_html(row, False, {"changes": {"before": {"LEC": 0.17}, "new_sessions": ["FP1", "SQ"]}})
+    assert "<b>Win chance</b> 17% before FP1+SQ" in detail and "6% now" in detail and "trend-down" in detail
+
+
+def test_phase_history_merges_repeated_phase_after_outage() -> None:
+    from pipeline.prediction_history import phase_changes
+
+    history = {"events": {"2026-17": {"phases": [
+        {"target": "sprint", "sessions": ["FP1", "SQ"], "dry": {"VER": 0.48}, "wet": {}},
+        {"target": "sprint", "sessions": [], "dry": {"VER": 0.07}, "wet": {}},
+        {"target": "sprint", "sessions": ["FP1", "SQ"], "dry": {"VER": 0.48}, "wet": {}},
+    ]}}}
+    # Only one real sprint phase: nothing earlier to compare with.
+    assert phase_changes(history, CONFIG) is None

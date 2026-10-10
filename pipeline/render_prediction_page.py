@@ -382,7 +382,11 @@ def blend_changes(dry: dict[str, Any] | None, wet: dict[str, Any] | None, wet_sh
         name: (1.0 - wet_share) * (dry.get("deltas") or {}).get(name, 0.0) + wet_share * (wet.get("deltas") or {}).get(name, 0.0)
         for name in names
     }
-    return {**dry, "deltas": deltas}
+    before = {
+        name: (1.0 - wet_share) * (dry.get("before") or {}).get(name, 0.0) + wet_share * (wet.get("before") or {}).get(name, 0.0)
+        for name in set(dry.get("before") or {}) | set(wet.get("before") or {})
+    }
+    return {**dry, "deltas": deltas, "before": before}
 
 
 def penalty_badges(race_config: dict[str, Any] | None) -> dict[str, str]:
@@ -513,10 +517,17 @@ def driver_detail_html(row: dict[str, Any], qualifying: bool, context: dict[str,
         facts.append(f'<span class="fact"><b>Start</b> P{grid_pos} <span class="trend-{trend}">&rarr;</span> {outcome}</span>')
     else:
         facts.append(f'<span class="fact">{outcome}</span>')
-    phase_change = delta_html(name, context.get("changes"))
-    if phase_change:
-        label = html.escape(str((context.get("changes") or {}).get("label") or "previous phase"))
-        facts.append(f'<span class="fact"><b>Chance change {label}</b> {phase_change} pp</span>')
+    changes = context.get("changes") or {}
+    before = (changes.get("before") or {}).get(name)
+    if before is not None:
+        sessions = "+".join(changes.get("new_sessions") or []) or "the latest session"
+        chance = "Pole" if qualifying else "Win"
+        now = row["headline_probability"]
+        trend = "up" if now > before + 0.005 else "down" if now < before - 0.005 else "flat"
+        facts.append(
+            f'<span class="fact"><b>{chance} chance</b> {before * 100:.0f}% before {html.escape(sessions)} '
+            f'<span class="trend-{trend}">&rarr;</span> {now * 100:.0f}% now</span>'
+        )
     dnf = row.get("dnf_probability")
     if not qualifying and dnf is not None and dnf >= 0:
         facts.append(f'<span class="fact"><b>DNF risk</b> {dnf * 100:.0f}%</span>')
@@ -675,8 +686,9 @@ HELP_HTML = """
     <dd>Median finishing position. Hover it for the mean; the mean is pulled down by unlikely outcomes, so the median
     reads better.</dd>
     <dt>Driver detail (click the name / "Detail")</dt>
-    <dd>Start &rarr; median and most likely position, DNF risk, the driver's results in this weekend's sessions, how
-    the win/pole chance changed since before the latest session, and the chance of finishing in each position.</dd>
+    <dd>Start &rarr; median and most likely position, DNF risk, the driver's results in this weekend's sessions, the
+    win/pole chance before the latest session and now (e.g. "Win chance 17% before FP1+SQ &rarr; 6% now": how much the latest sessions changed the
+    prediction), and the chance of finishing in each position.</dd>
     <dt>Badges</dt>
     <dd>Red: grid penalty from the FIA stewards' decisions or race control (&minus;N grid, pit start, back of grid).
     Blue outline: substitute driver from the official entry list.</dd>

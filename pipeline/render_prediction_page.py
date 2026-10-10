@@ -986,7 +986,7 @@ def render_page(
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="color-scheme" content="light dark" />
+    <meta name="color-scheme" content="dark" />
     <title>{race_name} | APEX-F1</title>
     <style>{PAGE_CSS}</style>
   </head>
@@ -1095,18 +1095,10 @@ def render_page(
 
 PAGE_CSS = """
 :root {
-  color-scheme: light dark;
-  --bg: #f5f5f7; --surface: #ffffff; --surface-2: #f2f2f5; --line: rgba(0, 0, 0, 0.08);
-  --ink: #1d1d1f; --muted: #6e6e73; --faint: #a1a1a6; --accent: #0071e3; --accent-soft: rgba(0, 113, 227, 0.1);
-  --up: #1f9d55; --down: #d93025; --live: #ff3b30; --track: #e8e8ed; --chip: #ebebf0;
-  --shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.04); --radius: 14px;
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0a0a0c; --surface: #151517; --surface-2: #1c1c1f; --line: rgba(255, 255, 255, 0.08);
-    --ink: #f5f5f7; --muted: #a1a1a6; --faint: #6e6e73; --accent: #0a84ff; --accent-soft: rgba(10, 132, 255, 0.16);
-    --up: #30d158; --down: #ff453a; --live: #ff453a; --track: #2a2a2e; --chip: #26262a; --shadow: none;
-  }
+  color-scheme: dark;
+  --bg: #0a0a0c; --surface: #151517; --surface-2: #1c1c1f; --line: rgba(255, 255, 255, 0.08);
+  --ink: #f5f5f7; --muted: #a1a1a6; --faint: #6e6e73; --accent: #0a84ff; --accent-soft: rgba(10, 132, 255, 0.16);
+  --up: #30d158; --down: #ff453a; --live: #ff453a; --track: #2a2a2e; --chip: #26262a; --shadow: none; --radius: 14px;
 }
 * { box-sizing: border-box; }
 body {

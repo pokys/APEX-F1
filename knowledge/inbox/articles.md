@@ -331,3 +331,5 @@
 - [ ] How Mercedes’ tricky F1 upgrade has been working at Singapore GP (https://www.motorsport.com/f1/news/how-mercedes-tricky-f1-upgrade-has-been-working-at-singapore-gp/10864023/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Sprint start crash causes huge tension within Aprilia (https://www.the-race.com/motogp/injured-fernandez-livid-with-bezzecchi-over-start-crash/)
 - [ ] Winners and losers from Singapore GP 2026 F1 qualifying (https://www.the-race.com/formula-1/winners-and-losers-from-singapore-gp-2026-f1-qualifying/)
+- [ ] A "better job" or more engine power? Verstappen's Singapore pole unpicked (https://www.autosport.com/f1/news/a-better-job-or-more-engine-power-verstappens-singapore-pole-unpicked/10864047/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Max Verstappen hints at change after Red Bull's poor F1 starts in Malaysia and Singapore (https://www.motorsport.com/f1/news/max-verstappen-hints-at-change-after-red-bulls-poor-f1-starts-in-malaysia-and-singapore/10864048/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

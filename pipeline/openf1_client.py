@@ -89,6 +89,14 @@ def format_duration(seconds: float) -> str:
     return f"{days} days {hours:02d}:{minutes:02d}:{rest:09.6f}"
 
 
+def _status_from_position(position: Any) -> str | None:
+    """OpenF1 puts codes such as "RT" (retired) in the position field of
+    drivers without a classified result."""
+    if isinstance(position, str) and position.strip() and not position.strip().isdigit():
+        return {"RT": "DNF"}.get(position.strip().upper(), position.strip().upper())
+    return None
+
+
 def _as_float(value: Any) -> float | None:
     try:
         number = float(value)
@@ -156,7 +164,7 @@ class OpenF1Client:
                 "full_name": info.get("full_name"),
                 "team_name": info.get("team_name"),
                 "classified_position": str(int(position)) if isinstance(position, (int, float)) else None,
-                "status": "DNF" if row.get("dnf") else ("DNS" if row.get("dns") else ("DSQ" if row.get("dsq") else None)),
+                "status": "DNF" if row.get("dnf") else ("DNS" if row.get("dns") else ("DSQ" if row.get("dsq") else _status_from_position(position))),
                 "points": None,
                 "time": None,
                 "q1": None,

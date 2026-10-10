@@ -120,3 +120,18 @@ def test_align_team_names_maps_reserve_drivers_via_teammates() -> None:
         roster,
     )
     assert [row["team_name"] for row in rows] == ["RB F1 Team", "RB F1 Team"]
+
+
+def test_session_results_marks_non_numeric_positions() -> None:
+    from pipeline.openf1_client import OpenF1Client
+
+    def fetch(endpoint, params):
+        if endpoint == "drivers":
+            return [{"driver_number": 3, "name_acronym": "VER"}, {"driver_number": 6, "name_acronym": "HAD"}]
+        return [
+            {"driver_number": 3, "position": 1, "duration": [93.2, 91.6, 91.4]},
+            {"driver_number": 6, "position": "RT", "duration": [None, None, None]},
+        ]
+
+    rows = OpenF1Client(fetcher=fetch).session_results(1, "Q")
+    assert [(r["abbreviation"], r["position"], r["status"]) for r in rows] == [("VER", 1, None), ("HAD", None, "DNF")]

@@ -187,6 +187,7 @@ def build_forecast(race_config: dict[str, Any], circuits: dict[str, Any], fetch:
     return {
         "season": race_config.get("season"),
         "race": race_name,
+        "longitude": coords[1],
         "fetched_at": now.replace(microsecond=0).isoformat(),
         "source": "open-meteo.com",
         "sessions": sessions,
@@ -205,6 +206,33 @@ def wet_session_probability(info: dict[str, Any] | None) -> float | None:
     factor = 1.0 if amount is None else min(1.0, max(0.0, float(amount)) / WET_TRACK_MM)
     factor = max(factor, wet_factor_floor(info.get("weather_code"), probability))
     return round(probability * factor, 3)
+
+
+def weather_icon(info: dict[str, Any] | None, start: datetime | None = None, longitude: float | None = None) -> tuple[str, str]:
+    """Emoji and a short word for a session's forecast. Clear sky after
+    dark (local solar time from the longitude) is a moon: Singapore and Las
+    Vegas race at night."""
+    if not isinstance(info, dict) or info.get("rain_probability") is None:
+        return "", ""
+    probability = float(info["rain_probability"])
+    share = wet_session_probability(info) or 0.0
+    try:
+        code = int(info.get("weather_code"))
+    except (TypeError, ValueError):
+        code = None
+    if code in STORM_CODES:
+        return "\u26c8\ufe0f", "Thunderstorm"
+    if share >= WET_SCENARIO_THRESHOLD:
+        return "\U0001f327\ufe0f", "Wet likely"
+    if share >= 0.15 or probability >= 0.5:
+        return "\U0001f326\ufe0f", "Showers possible"
+    night = False
+    if start is not None and longitude is not None:
+        local_hour = (start.hour + start.minute / 60 + longitude / 15.0) % 24
+        night = local_hour >= 18.5 or local_hour < 6  # dusk ~18:30 local solar time
+    if probability >= 0.2:
+        return ("\u2601\ufe0f", "Mostly dry") if night else ("\u26c5", "Mostly dry")
+    return ("\U0001f319", "Dry") if night else ("\u2600\ufe0f", "Dry")
 
 
 def is_wet_session(info: dict[str, Any] | None) -> bool:

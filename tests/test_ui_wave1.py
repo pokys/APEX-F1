@@ -60,7 +60,9 @@ def test_timeline_lists_sessions_chronologically_with_countdown_and_rain() -> No
     assert order == sorted(order)
     assert 'data-countdown="2026-10-10T13:00:00+00:00"' in html_out
     assert 'data-local-time="2026-10-09T08:30:00+00:00"' in html_out
-    assert "Rain 62% · 2.4 mm" in html_out
+    assert "Rain chance 62% &middot; 2.4 mm expected &middot; wet session ~62%" in html_out
+    assert "\U0001f327\ufe0f" in html_out and "Wet likely" in html_out  # qualifying
+    assert "Showers possible" in html_out  # race: 96 %, 0.2 mm
     # Only qualifying is flagged as a wet session; the race's 96 % is drizzle.
     assert html_out.count("rain-high") == 1
     assert "predicting now" in html_out
@@ -143,7 +145,8 @@ def test_page_mixes_dry_and_wet_by_chance_of_a_wet_session() -> None:
     assert 'data-target="dry"' in page and 'data-target="wet"' in page  # the toggle stays
     assert "Forecast mix (30% dry / 70% wet)" in page
     assert "31.5%" in page  # NOR: 0.3 * 35 % + 0.7 * 30 %
-    assert "Rain risk for Qualifying: <strong>70%</strong>, 3.0 mm expected" in page
+    assert "Qualifying: wet likely &middot; showing the dry/wet mix (70% wet)" in page
+    assert "Rain chance 70% &middot; 3.0 mm expected" in page
     # The chance before the latest session mixes too: NOR dry 20 % -> 35 %,
     # wet 30 % -> 30 %, mix 27 % -> 32 %.
     assert "<b>Pole chance</b> 27% before S" in page and "32% now" in page
@@ -339,3 +342,19 @@ def test_phase_history_merges_repeated_phase_after_outage() -> None:
     ]}}}
     # Only one real sprint phase: nothing earlier to compare with.
     assert phase_changes(history, CONFIG) is None
+
+
+def test_weather_icon_by_risk_and_night() -> None:
+    from datetime import datetime, timezone
+
+    from pipeline.collect_weather import weather_icon
+
+    night = datetime(2026, 10, 10, 12, 0, tzinfo=timezone.utc)  # 20:00 in Singapore
+    day = datetime(2026, 10, 10, 2, 0, tzinfo=timezone.utc)
+    assert weather_icon({"rain_probability": 0.05}, night, 103.86) == ("\U0001f319", "Dry")
+    assert weather_icon({"rain_probability": 0.05}, day, 103.86) == ("\u2600\ufe0f", "Dry")
+    assert weather_icon({"rain_probability": 0.3, "precipitation_mm": 0.0})[1] == "Mostly dry"
+    assert weather_icon({"rain_probability": 0.6, "precipitation_mm": 0.1})[1] == "Showers possible"
+    assert weather_icon({"rain_probability": 1.0, "precipitation_mm": 2.0})[1] == "Wet likely"
+    assert weather_icon({"rain_probability": 0.4, "weather_code": 95})[1] == "Thunderstorm"
+    assert weather_icon(None) == ("", "")

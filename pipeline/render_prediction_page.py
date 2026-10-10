@@ -17,7 +17,7 @@ from typing import Any
 if __package__ is None or __package__ == "":
     sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from pipeline.collect_weather import is_wet_session, wet_session_probability  # noqa: E402
+from pipeline.collect_weather import is_wet_session, weather_icon, wet_session_probability  # noqa: E402
 from pipeline.prediction_history import phase_changes  # noqa: E402
 
 
@@ -203,6 +203,29 @@ def metric_labels(target: str) -> tuple[str, str, str]:
     return ("Win", "Podium", "Expected")
 
 
+def weather_detail_text(info: dict[str, Any]) -> str:
+    """'Rain chance 100% · 0.2 mm · wet session ~50%' for the click-open detail."""
+    parts = [f"Rain chance {float(info.get('rain_probability') or 0.0) * 100:.0f}%"]
+    if info.get("precipitation_mm") is not None:
+        parts.append(f"{float(info['precipitation_mm']):.1f} mm expected")
+    share = wet_session_probability(info)
+    if share is not None:
+        parts.append(f"wet session ~{share * 100:.0f}%")
+    return " &middot; ".join(parts)
+
+
+def weather_chip_html(info: dict[str, Any], start: datetime | None, longitude: float | None) -> str:
+    icon, word = weather_icon(info, start, longitude)
+    if not icon:
+        return ""
+    wet_class = " rain-high" if is_wet_session(info) else ""
+    return (
+        f'<details class="wx{wet_class}"><summary title="{html.escape(word)} (click for details)">'
+        f'<span class="wx-icon" aria-hidden="true">{icon}</span><span class="wx-word">{html.escape(word)}</span></summary>'
+        f'<span class="wx-detail">{weather_detail_text(info)}<br>Open-Meteo forecast</span></details>'
+    )
+
+
 def timeline_html(
     weekend_format: str,
     available_sessions: list[str],
@@ -222,7 +245,12 @@ def timeline_html(
     steps = sorted(schedule, key=lambda code: schedule[code]) if schedule else default_steps
     available = {str(code).upper() for code in available_sessions}
     rain = {}
+    longitude = None
     if isinstance(weather, dict):
+        try:
+            longitude = float(weather["longitude"]) if weather.get("longitude") is not None else None
+        except (TypeError, ValueError):
+            longitude = None
         rain = {str(code).upper(): info for code, info in (weather.get("sessions") or {}).items() if isinstance(info, dict)}
 
     cards = []
@@ -241,14 +269,8 @@ def timeline_html(
         if start is not None:
             iso = start.isoformat()
             time_html = f'<time datetime="{iso}" data-local-time="{iso}">{start.strftime("%a %H:%M")} UTC</time>'
-        rain_html = ""
         info = rain.get(step, {})
-        probability = info.get("rain_probability")
-        if probability is not None and status != "done":
-            wet_class = " rain-high" if is_wet_session(info) else ""
-            amount = info.get("precipitation_mm")
-            amount_text = f" · {amount:.1f} mm" if amount is not None else ""
-            rain_html = f'<em class="rain-chip{wet_class}" title="Open-Meteo forecast: chance of rain and expected amount">Rain {probability * 100:.0f}%{amount_text}</em>'
+        rain_html = weather_chip_html(info, start, longitude) if status != "done" else ""
         cards.append(
             f'<article class="timeline-step timeline-{status}">'
             f'<p>{html.escape(SESSION_NAMES.get(step, step))}</p>{time_html}<span>{html.escape(label)}</span>{rain_html}</article>'
@@ -694,7 +716,9 @@ HELP_HTML = """
     Blue outline: substitute driver from the official entry list.</dd>
     <dt>Dry / Wet / Mix</dt>
     <dd>The model simulates a dry and a wet race. Mix weights them by the chance that the session runs in the wet,
-    estimated from the Open-Meteo forecast (rain probability, expected amount and weather code).</dd>
+    estimated from the Open-Meteo forecast (rain probability, expected amount and weather code). Weather icons:
+    &#9728;&#65039;/&#127769; dry, &#9925; mostly dry, &#127782;&#65039; showers possible, &#127783;&#65039; wet likely,
+    &#9928;&#65039; thunderstorm; click an icon for the numbers.</dd>
     <dt>Weekend Delta</dt>
     <dd>How much this weekend's sessions moved the driver's rating up or down.</dd>
     <dt>Accuracy</dt>
@@ -838,16 +862,18 @@ def render_page(
         recommended = "mixed"
     weather_banner = ""
     if rain_probability is not None:
-        amount = session_info.get("precipitation_mm")
-        amount_text = f", {amount:.1f} mm expected" if amount is not None else ""
+        session_name = html.escape(SESSION_NAMES.get(str(target_session_code), str(target_session_code)))
+        icon, word = weather_icon(session_info, parse_utc(session_info.get("start")), (weather or {}).get("longitude"))
         advice = {
-            "dry": "the dry scenario is the main one",
-            "wet": "showing the wet scenario first",
-            "mixed": f"chance of a wet session about {(wet_share or 0.0) * 100:.0f}%, showing the dry/wet mix",
+            "dry": "showing the dry scenario",
+            "wet": "showing the wet scenario",
+            "mixed": f"showing the dry/wet mix ({(wet_share or 0.0) * 100:.0f}% wet)",
         }[recommended]
         weather_banner = (
-            f'<p class="weather-banner weather-{recommended}">Rain risk for {html.escape(SESSION_NAMES.get(str(target_session_code), str(target_session_code)))}: '
-            f"<strong>{rain_probability * 100:.0f}%</strong>{html.escape(amount_text)} &middot; {advice} (Open-Meteo forecast)</p>"
+            f'<details class="weather-banner weather-{recommended}"><summary>'
+            f'<span class="wx-icon" aria-hidden="true">{icon}</span> {session_name}: {html.escape(word.lower())} &middot; {advice}</summary>'
+            f'<p>{weather_detail_text(session_info)} (Open-Meteo forecast). The dry and wet predictions are mixed by the '
+            f"chance of a wet session; Dry / Wet above switch to the pure scenarios.</p></details>"
         )
 
     toggle_html = ""
@@ -1219,7 +1245,7 @@ def render_page(
         margin: 0;
         font-weight: 700;
       }}
-      .timeline-step span {{
+      .timeline-step > span {{
         display: block;
         margin-top: 8px;
         color: var(--muted);
@@ -1541,6 +1567,15 @@ def render_page(
         font-family: "IBM Plex Mono", monospace;
         font-size: 0.85rem;
       }}
+      .wx {{ margin-top: 6px; }}
+      .wx summary {{ cursor: pointer; list-style: none; display: inline-flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--muted); }}
+      .wx summary::-webkit-details-marker {{ display: none; }}
+      .wx-icon {{ font-size: 1.35rem; line-height: 1; }}
+      .wx.rain-high .wx-word {{ color: #9cc9ff; font-weight: 600; }}
+      .timeline-step .wx-detail, .wx-detail {{ display: block; margin-top: 4px; font-size: 0.75rem; color: var(--muted); line-height: 1.4; text-transform: none; letter-spacing: normal; }}
+      .weather-banner summary {{ cursor: pointer; list-style: none; }}
+      .weather-banner summary::-webkit-details-marker {{ display: none; }}
+      .weather-banner p {{ margin: 6px 0 0; font-size: 0.85rem; color: var(--muted); }}
       .rain-chip {{
         display: inline-block;
         margin-top: 8px;

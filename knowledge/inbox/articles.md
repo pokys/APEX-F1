@@ -288,3 +288,5 @@
 - [ ] F1 Singapore GP: Verstappen wins chaotic wet sprint after Russell's crash (https://www.autosport.com/f1/news/f1-singapore-gp-verstappen-wins-wet-sprint-after-russell-crash/10863787/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] Rate the Race: 2026 Singapore Grand Prix sprint race | Formula 1 (https://www.racefans.net/2026/10/10/rate-the-race-2026-singapore-grand-prix-sprint-race/)
 - [ ] Injured Fernandez livid with Bezzecchi over start crash (https://www.the-race.com/motogp/injured-fernandez-livid-with-bezzecchi-over-start-crash/)
+- [ ] 2026 Singapore Grand Prix sprint race result and championship points | Formula 1 (https://www.racefans.net/2026/10/10/2026-singapore-grand-prix-sprint-race-result-and-championship-points/)
+- [ ] Verstappen wins sprint race after Russell crashes out of lead on wet track | 2026 Singapore Grand Prix sprint race report (https://www.racefans.net/2026/10/10/verstappen-wins-sprint-race-after-russell-crashes-out-of-lead-on-wet-track/)

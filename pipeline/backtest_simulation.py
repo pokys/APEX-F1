@@ -151,6 +151,17 @@ def actual_winner_and_podium(event: dict[str, Any], code: str = "R") -> tuple[st
     return winner, podium
 
 
+def finish_positions(event: dict[str, Any], code: str = "R") -> dict[str, int]:
+    """Classified finishing position per driver."""
+    out: dict[str, int] = {}
+    for row in session_results(event, code):
+        abbr = str(row.get("abbreviation") or "").strip().upper()
+        pos = normalize_position(row.get("position"))
+        if abbr and pos is not None:
+            out[abbr] = pos
+    return out
+
+
 def actual_pole(event: dict[str, Any]) -> str | None:
     for row in session_results(event, "Q"):
         abbr = str(row.get("abbreviation") or "").strip().upper()
@@ -491,13 +502,53 @@ def choose_grid_decay(
     return decay, {"in_sample": in_sample, "leave_one_out_loss": round(loo_loss, 6), "no_decay_loss": round(no_decay, 6), "chosen": decay}
 
 
-def choose_start_blend(report: dict[str, float]) -> float:
-    """Standings blend for races and sprints. The grid is known there, so
-    the a-priori 0.5 is only kept when a tuned weight does not beat it in
-    leave-one-out."""
-    if report.get("tuned_leave_one_out_loss", float("inf")) < report.get("loss", float("inf")):
-        return float(report["tuned_weight"])
-    return float(report["weight"])
+def position_crps(position_probabilities: list[float], actual: int) -> float:
+    """Ranked probability score of a finishing-position distribution (index
+    0 = P1; mass missing up to 1 is the DNF share): 0 when all mass sits on
+    the actual position, growing with the distance of the mass from it."""
+    score, cumulative = 0.0, 0.0
+    for index, probability in enumerate(position_probabilities):
+        cumulative += probability
+        score += (cumulative - (1.0 if actual <= index + 1 else 0.0)) ** 2
+    return score
+
+
+def order_loss(prediction: dict[str, Any], finish: dict[str, int], winner: str, simulations: int) -> float:
+    """Winner log loss plus the mean position CRPS of the classified
+    drivers: scores the whole predicted order, not only the winner."""
+    rows = {row["name"]: row for row in prediction["drivers"]}
+    crps = [position_crps(rows[name].get("position_probabilities") or [], pos) for name, pos in finish.items() if name in rows]
+    return log_loss(win_probabilities(prediction, simulations), winner) + (mean(crps) if crps else 0.0)
+
+
+def choose_blend_by_order(losses: dict[float, list[float]], fixed: float = DEFAULT_STANDINGS_BLEND) -> tuple[float, dict[str, Any]]:
+    """losses: per blend weight, the order loss of each event. The in-sample
+    best weight replaces the a-priori one only when choosing it on the other
+    events (leave-one-out) beats the a-priori weight."""
+    weights = sorted(losses)
+    if not weights or fixed not in losses:
+        return fixed, {}
+    count = len(losses[fixed])
+
+    def loss(weight: float, indices: list[int]) -> float:
+        return mean([losses[weight][i] for i in indices])
+
+    every = list(range(count))
+    best = min(weights, key=lambda w: (loss(w, every), w))
+    loo = []
+    for i in every:
+        others = [j for j in every if j != i]
+        chosen = min(weights, key=lambda w: (loss(w, others), w)) if others else best
+        loo.append(losses[chosen][i])
+    loo_loss = mean(loo)
+    chosen = best if loo_loss < loss(fixed, every) else fixed
+    return chosen, {
+        "in_sample": {str(w): round(loss(w, every), 6) for w in weights},
+        "leave_one_out_loss": round(loo_loss, 6),
+        "fixed_weight": fixed,
+        "fixed_loss": round(loss(fixed, every), 6),
+        "chosen": chosen,
+    }
 
 
 def mix(model: dict[str, float], baseline: dict[str, float], weight: float) -> dict[str, float]:
@@ -628,6 +679,8 @@ def collect_cases(args: argparse.Namespace, raw: dict[str, Any], season: int) ->
                 "pole": actual_pole(event),
                 "winner": winner,
                 "podium": podium,
+                "finish": finish_positions(event),
+                "sprint_finish": finish_positions(event, "S") if sprint_winner else {},
                 "sprint_config": sprint_config,
                 "sprint_winner": sprint_winner,
                 "sprint_podium": sprint_podium,
@@ -646,6 +699,7 @@ def predict_case(
     simulations: int,
     raw_dir: Path,
     grid_weight: float | None = None,
+    standings_blend: float | None = None,
 ) -> dict[str, Any]:
     """target: "qualifying", "race" or "sprint" (actual starting grid)."""
     key = {"qualifying": "qualifying_config", "sprint": "sprint_config"}.get(target, "race_config")
@@ -656,6 +710,8 @@ def predict_case(
         config["race_noise_scale"] = scale
     if grid_weight is not None:
         config["grid_position_weight"] = grid_weight
+    if standings_blend is not None:
+        config["standings_blend_race"] = standings_blend
     return run_target_prediction(*case["models"], config, raw_dir=raw_dir)
 
 
@@ -796,7 +852,24 @@ def main() -> int:
         [(probs, start_baseline(case, "race"), case["winner"]) for case, _, probs, _ in race_rows]
         + [(probs, start_baseline(case, "sprint"), case["sprint_winner"]) for case, _, probs, _ in sprint_rows]
     )
-    race_blend = choose_start_blend(win_blend)
+    # The championship-order share of the race simulation, chosen on the
+    # whole predicted order (winner log loss + position CRPS). A choice on
+    # the winner alone favoured a share that splits the field into "grid
+    # holds" and "grid ignored" and gave implausible places.
+    order_losses: dict[float, list[float]] = {}
+    for weight in BLEND_GRID:
+        per_event = []
+        for case in cases:
+            if case.get("finish"):
+                prediction = predict_case(case, "race", race_scale, search_sims, raw_dir, grid_weight, weight)
+                per_event.append(order_loss(prediction, case["finish"], case["winner"], search_sims))
+        for case in sprint_cases:
+            if case.get("sprint_finish"):
+                prediction = predict_case(case, "sprint", race_scale, search_sims, raw_dir, grid_weight, weight)
+                per_event.append(order_loss(prediction, case["sprint_finish"], case["sprint_winner"], search_sims))
+        order_losses[weight] = per_event
+    race_blend, order_blend_report = choose_blend_by_order(order_losses)
+    LOGGER.info("Race standings blend by whole order: %s (%s)", race_blend, order_blend_report)
     win_blend["chosen_weight"] = race_blend
 
     winner_conf_outcomes: list[tuple[float, int]] = []
@@ -872,7 +945,7 @@ def main() -> int:
         "sprint_baseline_winner_accuracy": round(mean([1.0 if r.get("baseline_hit") else 0.0 for r in per_sprint]), 6),
         "sprint_win_log_loss": round(mean([r["winner_log_loss"] for r in per_sprint]), 6),
         "sprint_baseline_win_log_loss": baseline_means(per_sprint),
-        "standings_blend_search": {"pole": pole_blend, "win": win_blend},
+        "standings_blend_search": {"pole": pole_blend, "win": win_blend, "race_order": order_blend_report},
         "model_only_pole_log_loss": round(mean([row["model_only_log_loss"] for row in per_qualifying]), 6),
         "model_only_win_log_loss": round(mean([row["model_only_log_loss"] for row in per_race]), 6),
         "baseline_pole_log_loss": pole_baselines,

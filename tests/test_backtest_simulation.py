@@ -106,11 +106,24 @@ def test_grid_weight_search_extends_past_largest_candidate() -> None:
     assert set(report) == {"4.0", "16.0", "48.0", "72.0", "108.0", "162.0"}
 
 
-def test_start_blend_kept_a_priori_unless_tuned_wins_leave_one_out() -> None:
-    from pipeline.backtest_simulation import choose_start_blend
+def test_position_crps_rewards_mass_near_the_actual_position() -> None:
+    from pipeline.backtest_simulation import position_crps
 
-    assert choose_start_blend({"weight": 0.5, "loss": 1.8, "tuned_weight": 0.1, "tuned_leave_one_out_loss": 1.7}) == 0.1
-    assert choose_start_blend({"weight": 0.5, "loss": 1.8, "tuned_weight": 0.1, "tuned_leave_one_out_loss": 1.9}) == 0.5
+    assert position_crps([1.0, 0.0, 0.0], 1) == 0.0
+    near = position_crps([0.0, 1.0, 0.0], 1)
+    far = position_crps([0.0, 0.0, 1.0], 1)
+    assert 0 < near < far
+
+
+def test_blend_by_order_kept_a_priori_unless_leave_one_out_wins() -> None:
+    from pipeline.backtest_simulation import choose_blend_by_order
+
+    # 0.3 is better on every event: chosen.
+    weight, report = choose_blend_by_order({0.3: [1.0, 1.0, 1.0], 0.5: [1.2, 1.2, 1.2]})
+    assert weight == 0.3 and report["chosen"] == 0.3
+    # 0.3 wins in-sample only through one event: leave-one-out keeps 0.5.
+    weight, _ = choose_blend_by_order({0.3: [0.1, 2.0, 2.0], 0.5: [1.6, 1.5, 1.5]})
+    assert weight == 0.5
 
 
 def test_event_config_never_carries_the_live_calibration() -> None:

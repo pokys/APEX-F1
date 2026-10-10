@@ -317,3 +317,31 @@ def test_lap_metrics_use_canonical_team_names(monkeypatch) -> None:
     payload = load_session(2026, 1, "FP1", cutoff=date(2026, 12, 31))
     assert payload["results"][0]["team_name"] == "Red Bull"
     assert payload["lap_metrics"][0]["team_name"] == "Red Bull"
+
+
+def test_ingest_keeps_stored_session_when_live_sources_fail(tmp_path, monkeypatch) -> None:
+    import json
+
+    import pandas as pd
+
+    from pipeline import ingest_fastf1 as ing
+
+    stored = {
+        "session_code": "SQ",
+        "source": "fastf1",
+        "results": [{"position": 1, "abbreviation": "VER", "team_name": "Red Bull"}, {"position": 2, "abbreviation": "RUS", "team_name": "Mercedes"}],
+        "lap_metrics": [{"abbreviation": "VER"}],
+    }
+    (tmp_path / "season_2026.json").write_text(json.dumps({"events": [{"round": 17, "sessions": [stored]}]}))
+    schedule = pd.DataFrame([{"RoundNumber": 17, "EventDate": pd.Timestamp("2026-10-11"), "EventName": "Singapore Grand Prix",
+                              "OfficialEventName": "x", "EventFormat": "sprint_qualifying", "Country": "Singapore", "Location": "Marina Bay"}])
+    monkeypatch.setattr(ing, "fetch_schedule", lambda season, fetcher: schedule)
+    monkeypatch.setattr(ing, "extract_sessions_schedule", lambda row: {})
+    monkeypatch.setattr(ing, "load_session", lambda *a, **k: None)  # live timing: "no data"
+    monkeypatch.setattr(ing.fastf1.Cache, "enable_cache", lambda path: None)
+
+    out = ing.ingest(2026, ["FP1", "SQ"], ing.parse_iso_date("2026-10-10"), tmp_path, tmp_path / "cache")
+    events = json.loads(out.read_text())["events"]
+    assert [e["round"] for e in events] == [17]
+    assert [s["session_code"] for s in events[0]["sessions"]] == ["SQ"]
+    assert events[0]["sessions"][0]["results"][0]["abbreviation"] == "VER"

@@ -795,6 +795,14 @@ def ingest(
                     loaded = load_session_openf1(openf1, season, session_code, scheduled)
                     if loaded is not None:
                         align_team_names(loaded["results"], roster)
+            if loaded is None and isinstance(stored, dict) and session_has_classification(stored.get("results")):
+                # The live sources can fail around a running session (F1 live
+                # timing "no data", OpenF1 401 while a session is live). A
+                # session ingested earlier must never disappear because of it.
+                LOGGER.warning("Could not re-load %s round %s %s; keeping the stored copy.", season, round_number, session_code)
+                sessions_payload.append(stored)
+                update_roster(roster, stored)
+                continue
             if loaded is not None:
                 fill_missing_teams(loaded["results"], roster)
                 update_roster(roster, loaded)

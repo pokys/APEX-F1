@@ -283,3 +283,7 @@
 - [ ] Why Martin had to give up MotoGP sprint win (https://www.the-race.com/motogp/why-martin-had-to-give-up-motogp-sprint-win/)
 - [ ] Toto Wolff slams “red mist” F1 rule proposal but warns of massive talent crisis (https://www.motorsport.com/f1/news/toto-wolff-slams-red-mist-f1-rule-proposal-but-warns-of-a-massive-talent-crisis/10863727/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] George Russell crashes out of lead at wet Singapore F1 sprint (https://www.motorsport.com/f1/news/george-russell-crashes-out-of-lead-at-wet-singapore-f1-sprint/10863777/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] F1 2026 Singapore Grand Prix sprint race result (https://www.the-race.com/formula-1/f1-2026-singapore-grand-prix-sprint-race-result/)
+- [ ] F1 Singapore GP: Max Verstappen wins sprint, George Russell crashes out and McLarens collide (https://www.motorsport.com/f1/news/f1-singapore-gp-sprint-report/10863770/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] F1 Singapore GP: Verstappen wins chaotic wet sprint after Russell's crash (https://www.autosport.com/f1/news/f1-singapore-gp-verstappen-wins-wet-sprint-after-russell-crash/10863787/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Rate the Race: 2026 Singapore Grand Prix sprint race | Formula 1 (https://www.racefans.net/2026/10/10/rate-the-race-2026-singapore-grand-prix-sprint-race/)

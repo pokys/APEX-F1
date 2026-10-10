@@ -6,20 +6,27 @@
 <title>APEX-F1 Accuracy</title>
 <style>
   :root {
-    --bg: #0d1117; --panel: rgba(24, 28, 35, 0.94); --ink: #ebf4ff; --muted: #aab6c5;
-    --grid: #2d3742; --accent: #e10600; --model: #4c9aff; --baseline: #8a93a6;
+    color-scheme: light dark;
+    --bg: #f5f5f7; --panel: #ffffff; --ink: #1d1d1f; --muted: #6e6e73; --grid: rgba(0, 0, 0, 0.08);
+    --accent: #0071e3; --model: #0071e3; --baseline: #8e8e93; --shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.04);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0a0a0c; --panel: #151517; --ink: #f5f5f7; --muted: #a1a1a6; --grid: rgba(255, 255, 255, 0.08);
+      --accent: #0a84ff; --model: #0a84ff; --baseline: #8e8e93; --shadow: none;
+    }
   }
   * { box-sizing: border-box; }
-  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--ink);
-    background: linear-gradient(180deg, #07090d 0%, #0d1117 48%, #121820 100%); min-height: 100vh; }
-  .wrap { width: min(980px, 100% - 32px); margin: 0 auto; padding: 28px 0 48px; }
-  a { color: var(--ink); }
-  .back { font-size: 0.9rem; color: var(--muted); }
-  h1 { margin: 10px 0 6px; font-size: clamp(1.6rem, 4vw, 2.3rem); }
-  h2 { margin: 0 0 10px; font-size: 1.05rem; }
+  body { margin: 0; font: 15px/1.45 -apple-system, BlinkMacSystemFont, "SF Pro Text", Inter, "Segoe UI", Roboto, sans-serif;
+    color: var(--ink); background: var(--bg); min-height: 100vh; -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums; }
+  .wrap { width: min(1080px, 100% - 32px); margin: 0 auto; padding: 28px 0 48px; }
+  a { color: var(--accent); text-decoration: none; }
+  .back { font-size: 0.9rem; }
+  h1 { margin: 10px 0 6px; font-size: clamp(1.7rem, 4vw, 2.4rem); font-weight: 700; letter-spacing: -0.02em; }
+  h2 { margin: 0 0 10px; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
   .intro { color: var(--muted); max-width: 70ch; line-height: 1.5; }
   .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin: 18px 0; }
-  .card { background: var(--panel); border: 1px solid var(--grid); border-radius: 14px; padding: 16px 18px; margin-bottom: 14px; }
+  .card { background: var(--panel); border: 1px solid var(--grid); border-radius: 14px; box-shadow: var(--shadow); padding: 18px 20px; margin-bottom: 16px; }
   .big { font-size: 2rem; font-weight: 800; margin: 4px 0; }
   .big small { font-size: 0.9rem; font-weight: 500; color: var(--muted); margin-left: 6px; }
   .muted { color: var(--muted); }
@@ -38,8 +45,8 @@
   .chart .axis, .chart .label { fill: var(--muted); font-size: 12px; }
   .chart .value { fill: var(--ink); font-size: 11px; }
   .chart .link { stroke: var(--grid); stroke-width: 2; }
-  .chart .model { fill: var(--model); stroke: var(--bg); stroke-width: 2; }
-  .chart .baseline { fill: var(--bg); stroke: var(--baseline); stroke-width: 2; }
+  .chart .model { fill: var(--model); stroke: var(--panel); stroke-width: 2; }
+  .chart .baseline { fill: var(--panel); stroke: var(--baseline); stroke-width: 2; }
   .chart .hit { fill: transparent; }
   .chart .row:hover .hit { fill: rgba(255, 255, 255, 0.04); }
   details { margin-top: 10px; }

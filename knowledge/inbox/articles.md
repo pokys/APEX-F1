@@ -343,3 +343,4 @@
 ## 2026-10-11
 - [ ] FIA admits fairness was compromised in Singapore F1 sprint qualifying “mess” (https://www.motorsport.com/f1/news/fia-admits-fairness-was-compromised-in-singapore-f1-sprint-qualifying-mess/10864037/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] FIA admits fairness was compromised in Singapore GP sprint qualifying “mess” (https://www.autosport.com/f1/news/fia-admits-fairness-was-compromised-in-singapore-f1-sprint-qualifying-mess/10864155/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Aprilia 1-2-3-4 as Martin reclaims MotoGP lead (https://www.the-race.com/motogp/aprilia-1-2-3-4-as-martin-reclaims-motogp-lead/)

@@ -17,7 +17,7 @@
       "qualifying_rating": 33.331465,
       "race_rating": 41.896696,
       "team": "Williams",
-      "wet_rating": 40.748994
+      "wet_rating": 36.929248
     },
     {
       "components": {
@@ -36,7 +36,7 @@
       "qualifying_rating": 32.313013,
       "race_rating": 54.449084,
       "team": "Aston Martin",
-      "wet_rating": 60.064486
+      "wet_rating": 56.76848
     },
     {
       "components": {
@@ -55,7 +55,7 @@
       "qualifying_rating": 64.591965,
       "race_rating": 75.429182,
       "team": "Mercedes",
-      "wet_rating": 55.382211
+      "wet_rating": 57.228444
     },
     {
       "components": {
@@ -74,7 +74,7 @@
       "qualifying_rating": 45.678758,
       "race_rating": 51.198105,
       "team": "Haas F1 Team",
-      "wet_rating": 63.215067
+      "wet_rating": 60.07646
     },
     {
       "components": {
@@ -93,7 +93,7 @@
       "qualifying_rating": 45.930012,
       "race_rating": 52.838722,
       "team": "Audi",
-      "wet_rating": 39.524922
+      "wet_rating": 40.277116
     },
     {
       "components": {
@@ -112,7 +112,7 @@
       "qualifying_rating": 23.314132,
       "race_rating": 44.625837,
       "team": "Cadillac F1 Team",
-      "wet_rating": 50.999566
+      "wet_rating": 49.802328
     },
     {
       "components": {
@@ -131,7 +131,7 @@
       "qualifying_rating": 45.394548,
       "race_rating": 55.800534,
       "team": "Alpine F1 Team",
-      "wet_rating": 53.566981
+      "wet_rating": 60.071952
     },
     {
       "components": {
@@ -150,7 +150,7 @@
       "qualifying_rating": 54.700825,
       "race_rating": 54.753543,
       "team": "Alpine F1 Team",
-      "wet_rating": 51.652088
+      "wet_rating": 51.198192
     },
     {
       "components": {
@@ -169,7 +169,7 @@
       "qualifying_rating": 59.969603,
       "race_rating": 65.814606,
       "team": "Red Bull",
-      "wet_rating": 50.513581
+      "wet_rating": 53.363464
     },
     {
       "components": {
@@ -188,7 +188,7 @@
       "qualifying_rating": 68.486137,
       "race_rating": 64.390901,
       "team": "Ferrari",
-      "wet_rating": 64.52048
+      "wet_rating": 65.546132
     },
     {
       "components": {
@@ -207,7 +207,7 @@
       "qualifying_rating": 47.126988,
       "race_rating": 58.073117,
       "team": "Audi",
-      "wet_rating": 59.11269
+      "wet_rating": 52.063432
     },
     {
       "components": {
@@ -226,7 +226,7 @@
       "qualifying_rating": 54.136329,
       "race_rating": 60.665661,
       "team": "RB F1 Team",
-      "wet_rating": 59.833688
+      "wet_rating": 58.273972
     },
     {
       "components": {
@@ -245,7 +245,7 @@
       "qualifying_rating": 69.614393,
       "race_rating": 67.341626,
       "team": "Ferrari",
-      "wet_rating": 58.529466
+      "wet_rating": 60.545792
     },
     {
       "components": {
@@ -264,7 +264,7 @@
       "qualifying_rating": 49.96183,
       "race_rating": 61.66776,
       "team": "RB F1 Team",
-      "wet_rating": 30.8
+      "wet_rating": 34.0
     },
     {
       "components": {
@@ -283,7 +283,7 @@
       "qualifying_rating": 66.702239,
       "race_rating": 64.136172,
       "team": "McLaren",
-      "wet_rating": 30.8
+      "wet_rating": 34.0
     },
     {
       "components": {
@@ -302,7 +302,7 @@
       "qualifying_rating": 40.844169,
       "race_rating": 59.015114,
       "team": "Haas F1 Team",
-      "wet_rating": 49.603866
+      "wet_rating": 46.482268
     },
     {
       "components": {
@@ -321,7 +321,7 @@
       "qualifying_rating": 26.811127,
       "race_rating": 49.011678,
       "team": "Cadillac F1 Team",
-      "wet_rating": 47.864562
+      "wet_rating": 48.061648
     },
     {
       "components": {
@@ -340,7 +340,7 @@
       "qualifying_rating": 64.315702,
       "race_rating": 59.988538,
       "team": "McLaren",
-      "wet_rating": 44.722611
+      "wet_rating": 50.096468
     },
     {
       "components": {
@@ -359,7 +359,7 @@
       "qualifying_rating": 68.111952,
       "race_rating": 60.188844,
       "team": "Mercedes",
-      "wet_rating": 30.8
+      "wet_rating": 34.0
     },
     {
       "components": {
@@ -378,7 +378,7 @@
       "qualifying_rating": 40.629857,
       "race_rating": 53.54258,
       "team": "Williams",
-      "wet_rating": 60.017384
+      "wet_rating": 58.521424
     },
     {
       "components": {
@@ -397,7 +397,7 @@
       "qualifying_rating": 25.26962,
       "race_rating": 44.488265,
       "team": "Aston Martin",
-      "wet_rating": 62.67009
+      "wet_rating": 66.0
     },
     {
       "components": {
@@ -416,10 +416,10 @@
       "qualifying_rating": 68.968905,
       "race_rating": 70.486118,
       "team": "Red Bull",
-      "wet_rating": 65.07212
+      "wet_rating": 64.896936
     }
   ],
-  "inputs_hash": "4fd11218015809efb3f80125f4312814d68c9799ee9077aed945c641e9500f00",
+  "inputs_hash": "d541fac568141f43bd15f8f9d69da787b75157ccf36be2019878f68115e5ea6a",
   "season": 2026,
   "source_features": "data/processed/features_season_2026.json",
   "source_summary": "Full Season 2026 Data"

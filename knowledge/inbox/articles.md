@@ -339,6 +339,7 @@
 - [ ] Why driver apologies won't fix McLaren clash (https://www.the-race.com/formula-1/how-mclaren-reacting-to-unacceptable-f1-driver-clash/)
 - [ ] Why McLaren considers Norris-Piastri Singapore clash so “serious” (https://www.autosport.com/f1/news/whats-so-serious-for-mclaren-about-the-norris-piastri-singapore-collision/10864087/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] What Verstappen will change after Red Bull’s poor F1 starts in Malaysia and Singapore (https://www.autosport.com/f1/news/max-verstappen-hints-at-change-after-red-bulls-poor-f1-starts-in-malaysia-and-singapore/10864060/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Verstappen takes second pole position in Singapore ahead of the Ferraris | 2026 Singapore GP qualifying report (https://www.racefans.net/2026/10/10/verstappen-takes-second-pole-position-in-singapore-ahead-of-the-ferraris/)
 
 ## 2026-10-11
 - [ ] FIA admits fairness was compromised in Singapore F1 sprint qualifying “mess” (https://www.motorsport.com/f1/news/fia-admits-fairness-was-compromised-in-singapore-f1-sprint-qualifying-mess/10864037/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
@@ -347,3 +348,5 @@
 - [ ] F1 2026 Singapore GP starting grid with multiple penalties and pitlane starts (https://www.the-race.com/formula-1/f1-2026-singapore-grand-prix-starting-grid-after-two-penalties/)
 - [ ] How a key resignation attempt taught Wolff a valuable lesson (https://www.the-race.com/business/how-a-key-resignation-attempt-taught-wolff-a-valuable-lesson/)
 - [ ] Isack Hadjar "pissed off" after mechanical problems strike at Singapore GP (https://www.motorsport.com/f1/news/isack-hadjar-pissed-off-after-mechanical-problems-strike-at-singapore-gp/10864184/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] George Russell handed another 20-place penalty before the Singapore Grand Prix (https://www.motorsport.com/f1/news/george-russell-handed-another-20-place-penalty-before-the-singapore-grand-prix/10864262/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Pierre Gasly questions FIA stewards' decision not to penalise Lando Norris after Singapore crash (https://www.motorsport.com/f1/news/gasly-questions-fia-stewards-decision-not-to-penalise-norris-after-singapore-crash/10864257/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

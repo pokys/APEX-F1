@@ -50,10 +50,11 @@ permissions:
   contents: write
   actions: write
 
-# Serialize every workflow that commits to main against every other one.
+# Serialize the workflows that regenerate shared outputs on main (the
+# backtest, which writes only its own report, has its own group).
 # All bot-write workflows (full-pipeline, build-features, simulate-race,
-# update-ratings, ingest-fastf1, archive-signals, collect-articles,
-# backtest) share the same group so they can never race on the same
+# update-ratings, ingest-fastf1, archive-signals, collect-articles)
+# share the same group so they can never race on the same
 # generated files. cancel-in-progress: false queues new triggers behind
 # the running one - the pipeline regenerates fully each run, so dropping
 # a queued trigger could lose an ingest window we want to keep.

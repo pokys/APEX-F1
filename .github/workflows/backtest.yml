@@ -36,8 +36,12 @@ on:
 permissions:
   contents: write
 
+# Own group, not bot-outputs: GitHub keeps only one pending run per group
+# and cancels it when a newer one queues, so behind the hourly pipeline the
+# backtest kept being dropped. It writes only outputs/backtest/, and
+# commit_bot_outputs.sh rebases and retries if another bot pushed first.
 concurrency:
-  group: bot-outputs
+  group: backtest
   cancel-in-progress: false
 
 jobs:

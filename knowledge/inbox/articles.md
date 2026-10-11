@@ -393,3 +393,5 @@
 - [ ] Winners and losers from F1's 2026 Singapore Grand Prix (https://www.the-race.com/formula-1/f1-2026-singapore-grand-prix-winners-losers/)
 - [ ] Winners and losers from F1's Singapore Grand Prix (https://www.motorsport.com/f1/news/winners-and-losers-from-f1s-singapore-grand-prix/10864434/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Charles Leclerc's private jet drama sparked last-minute change of plans (https://www.motorsport.com/f1/news/charles-leclercs-private-jet-drama-sparked-last-minute-change-of-plans/10864489/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Fans can't get enough of Max Verstappen's floral race boots after Singapore win (https://www.motorsport.com/f1/news/fans-cant-get-enough-of-max-verstappens-floral-race-boots-after-singapore-win/10864491/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] On This Day: Crash and disqualification decides title in controversial F3000 finale | Brief (https://www.racefans.net/2026/10/12/on-this-day-1996-f3000-hockenheim-2/)

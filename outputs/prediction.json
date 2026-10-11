@@ -1,15 +1,15 @@
 {
   "data_freshness": {
-    "days_since_latest_event": -1,
-    "days_until_next_race": 1,
+    "days_since_latest_event": 0,
+    "days_until_next_race": 0,
     "is_stale": false,
     "latest_completed_date": "2026-10-11",
     "latest_completed_event": "Singapore Grand Prix",
     "next_race_date": "2026-10-11",
-    "reference_date": "2026-10-10",
+    "reference_date": "2026-10-11",
     "stale_threshold_days": 21.0
   },
-  "deterministic_run_id": "eeb161224b84ad4b4e34",
+  "deterministic_run_id": "09941cc39e2003c21da9",
   "drivers": [
     {
       "dnf_probability": 0.1575,
@@ -782,7 +782,7 @@
       "win_probability": 0.0
     }
   ],
-  "generated_at": "2026-10-10T23:36:56Z",
+  "generated_at": "2026-10-11T00:36:44Z",
   "inputs_used": [
     {
       "source": "qualifying",
@@ -802,7 +802,7 @@
   ],
   "integrity": {
     "driver_ratings_hash": "e1d5719defd1",
-    "race_config_hash": "8e20ae8a87fe",
+    "race_config_hash": "36e302183e3a",
     "team_ratings_hash": "fe5a75d4b0b4"
   },
   "prediction_target": "race",

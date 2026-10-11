@@ -7,6 +7,13 @@
       "mean_log_loss": 2.346882,
       "mean_winner_probability": 0.095667
     },
+    "R": {
+      "count": 1,
+      "hit_rate": 1.0,
+      "mean_group_overlap": 2.0,
+      "mean_log_loss": 0.482076,
+      "mean_winner_probability": 0.6175
+    },
     "S": {
       "count": 1,
       "hit_rate": 1.0,
@@ -39,6 +46,20 @@
     },
     {
       "actual_winner": "VER",
+      "archived_at": "2026-10-11T11:38:41+00:00",
+      "group": "podium",
+      "group_overlap": 2,
+      "hit": true,
+      "log_loss": 0.482076,
+      "predicted_winner": "VER",
+      "race": "Singapore Grand Prix",
+      "round": 17,
+      "season": 2026,
+      "session_code": "R",
+      "winner_probability": 0.6175
+    },
+    {
+      "actual_winner": "VER",
       "archived_at": "2026-10-10T08:38:48+00:00",
       "group": "podium",
       "group_overlap": 2,
@@ -67,10 +88,10 @@
     }
   ],
   "summary": {
-    "count": 3,
-    "hit_rate": 0.333333,
-    "mean_group_overlap": 7.0,
-    "mean_log_loss": 1.864251,
-    "mean_winner_probability": 0.219389
+    "count": 4,
+    "hit_rate": 0.5,
+    "mean_group_overlap": 5.75,
+    "mean_log_loss": 1.518707,
+    "mean_winner_probability": 0.318917
   }
 }

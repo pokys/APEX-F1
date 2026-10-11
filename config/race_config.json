@@ -1,104 +1,31 @@
 {
-  "available_sessions": [
-    "FP1",
-    "SQ",
-    "S",
-    "Q",
-    "R"
-  ],
-  "available_sessions_by_calendar": [
-    "FP1",
-    "SQ",
-    "S",
-    "Q",
-    "R"
-  ],
-  "available_sessions_ingested": [
-    "FP1",
-    "SQ",
-    "S",
-    "Q"
-  ],
+  "available_sessions": [],
+  "available_sessions_by_calendar": [],
+  "available_sessions_ingested": [],
   "calibration_season": 2026,
   "calibration_source": "outputs/backtest/backtest_season_2026.json",
   "driver_substitutions": [],
-  "event_format": "sprint",
-  "event_signal_count": 6,
-  "fixed_grid": [
-    "VER",
-    "LEC",
-    "HAM",
-    "ANT",
-    "NOR",
-    "PIA",
-    "GAS",
-    "LAW",
-    "LIN",
-    "HUL",
-    "BEA",
-    "OCO",
-    "SAI",
-    "BOR",
-    "COL",
-    "ALB",
-    "PER",
-    "BOT",
-    "RUS",
-    "ALO",
-    "STR",
-    "HAD"
-  ],
-  "generated_at": "2026-10-11T13:37:43Z",
-  "grid_penalties": [
-    {
-      "back_of_grid": false,
-      "driver": "ALO",
-      "pit_lane": true,
-      "places": 0,
-      "sources": [
-        "https://www.fia.com/system/files/decision-document/2026_singapore_grand_prix_-_infringement_-_car_14_-_pu_element_and_changes_made_during_parc_ferme.pdf"
-      ]
-    },
-    {
-      "back_of_grid": false,
-      "driver": "HAD",
-      "pit_lane": true,
-      "places": 0,
-      "sources": [
-        "https://www.fia.com/system/files/decision-document/2026_singapore_grand_prix_-_infringement_-_car_6_-_pu_elements_and_changes_made_during_parc_ferme.pdf"
-      ]
-    },
-    {
-      "back_of_grid": false,
-      "driver": "RUS",
-      "pit_lane": false,
-      "places": 60,
-      "sources": [
-        "https://www.fia.com/system/files/decision-document/2026_singapore_grand_prix_-_infringement_-_car_63_-_changes_to_pu_elements.pdf",
-        "https://www.fia.com/system/files/decision-document/2026_singapore_grand_prix_-_infringement_-_car_63_-_additional_changes_to_pu_elements.pdf"
-      ]
-    },
-    {
-      "back_of_grid": false,
-      "driver": "STR",
-      "pit_lane": true,
-      "places": 0,
-      "sources": [
-        "https://www.fia.com/system/files/decision-document/2026_singapore_grand_prix_-_infringement_-_car_18_-_changes_made_during_parc_ferme.pdf"
-      ]
-    }
-  ],
+  "event_format": "conventional",
+  "event_signal_count": 0,
+  "generated_at": "2026-10-11T14:37:56Z",
+  "grid_penalties": [],
   "grid_position_weight": 1500.0,
-  "grid_source": "qualifying+penalties",
+  "grid_source": "simulation",
   "inputs_status": [
     {
-      "configured_weight": 0.1,
+      "configured_weight": 0.15,
+      "source": "fp1",
+      "source_key": "FP1",
+      "status": "missing"
+    },
+    {
+      "configured_weight": 0.2,
       "source": "fp2",
       "source_key": "FP2",
       "status": "missing"
     },
     {
-      "configured_weight": 0.1,
+      "configured_weight": 0.2,
       "source": "fp3",
       "source_key": "FP3",
       "status": "missing"
@@ -110,7 +37,7 @@
       "status": "missing"
     },
     {
-      "configured_weight": 0.15,
+      "configured_weight": 0.2,
       "source": "history_driver",
       "source_key": "history_driver",
       "status": "used"
@@ -120,114 +47,55 @@
       "source": "history_team",
       "source_key": "history_team",
       "status": "used"
-    },
-    {
-      "configured_weight": 0.4,
-      "source": "qualifying",
-      "source_key": "Q",
-      "status": "used"
     }
   ],
   "inputs_used": [
     {
-      "source": "qualifying",
-      "source_key": "Q",
-      "weight": 0.615385
-    },
-    {
       "source": "history_driver",
       "source_key": "history_driver",
-      "weight": 0.230769
+      "weight": 0.666667
     },
     {
       "source": "history_team",
       "source_key": "history_team",
-      "weight": 0.153846
+      "weight": 0.333333
     }
   ],
-  "location": "Marina Bay",
-  "next_round": 17,
-  "overtaking_difficulty": 0.79,
-  "prediction_target": "race",
-  "prediction_target_label": "Race",
+  "location": "Austin",
+  "next_round": 18,
+  "overtaking_difficulty": 0.45,
+  "prediction_target": "qualifying",
+  "prediction_target_label": "Qualifying",
   "qualifying_noise_scale": 2.0,
-  "race": "Singapore Grand Prix",
-  "race_date": "2026-10-11",
-  "race_grid_penalties": [
-    {
-      "back_of_grid": false,
-      "driver": "ALO",
-      "pit_lane": true,
-      "places": 0,
-      "sources": [
-        "https://www.fia.com/system/files/decision-document/2026_singapore_grand_prix_-_infringement_-_car_14_-_pu_element_and_changes_made_during_parc_ferme.pdf"
-      ]
-    },
-    {
-      "back_of_grid": false,
-      "driver": "HAD",
-      "pit_lane": true,
-      "places": 0,
-      "sources": [
-        "https://www.fia.com/system/files/decision-document/2026_singapore_grand_prix_-_infringement_-_car_6_-_pu_elements_and_changes_made_during_parc_ferme.pdf"
-      ]
-    },
-    {
-      "back_of_grid": false,
-      "driver": "RUS",
-      "pit_lane": false,
-      "places": 60,
-      "sources": [
-        "https://www.fia.com/system/files/decision-document/2026_singapore_grand_prix_-_infringement_-_car_63_-_changes_to_pu_elements.pdf",
-        "https://www.fia.com/system/files/decision-document/2026_singapore_grand_prix_-_infringement_-_car_63_-_additional_changes_to_pu_elements.pdf"
-      ]
-    },
-    {
-      "back_of_grid": false,
-      "driver": "STR",
-      "pit_lane": true,
-      "places": 0,
-      "sources": [
-        "https://www.fia.com/system/files/decision-document/2026_singapore_grand_prix_-_infringement_-_car_18_-_changes_made_during_parc_ferme.pdf"
-      ]
-    }
-  ],
+  "race": "United States Grand Prix",
+  "race_date": "2026-10-25",
+  "race_grid_penalties": [],
   "race_noise_scale": 6.0,
-  "safety_car_probability": 0.52,
+  "safety_car_probability": 0.25,
   "season": 2026,
-  "seed": 202617,
+  "seed": 202618,
   "sessions_schedule": {
-    "FP1": "2026-10-09T08:30:00+00:00",
-    "Q": "2026-10-10T13:30:00+00:00",
-    "R": "2026-10-11T12:00:00+00:00",
-    "S": "2026-10-10T09:00:00+00:00",
-    "SQ": "2026-10-09T12:30:00+00:00"
+    "FP1": "2026-10-23T17:30:00+00:00",
+    "FP2": "2026-10-23T21:00:00+00:00",
+    "FP3": "2026-10-24T17:30:00+00:00",
+    "Q": "2026-10-24T21:00:00+00:00",
+    "R": "2026-10-25T20:00:00+00:00"
   },
   "signal_count": 0,
   "simulations": 6000,
-  "sprint_grid_penalties": [
-    {
-      "back_of_grid": false,
-      "driver": "SAI",
-      "pit_lane": true,
-      "places": 0,
-      "sources": [
-        "https://www.fia.com/system/files/decision-document/2026_singapore_grand_prix_-_infringement_-_car_55_-_changes_made_during_parc_ferme.pdf"
-      ]
-    }
-  ],
+  "sprint_grid_penalties": [],
   "standings_blend_qualifying": 0.5,
   "standings_blend_race": 0.2,
   "standings_grid_decay": 0.0,
-  "target_output_type": "race",
-  "target_session_code": "R",
+  "target_output_type": "qualifying",
+  "target_session_code": "Q",
   "track": {
-    "qualifying_noise": 2.2,
-    "race_noise": 3.5,
-    "tyre_degradation_factor": 0.66
+    "qualifying_noise": 2.35,
+    "race_noise": 3.45,
+    "tyre_degradation_factor": 0.6
   },
-  "track_profile": "country:singapore",
+  "track_profile": "event:united states grand prix",
   "weather": "dry",
   "weather_modifier": 0.0,
-  "weekend_format": "sprint"
+  "weekend_format": "standard"
 }

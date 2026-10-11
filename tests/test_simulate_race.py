@@ -153,3 +153,38 @@ def test_grid_weight_controls_how_much_the_starting_grid_matters() -> None:
     assert grid_weight_from_config({"grid_position_weight": 24}) == 24.0
     assert grid_weight_from_config({"grid_position_weight": "x"}) == DEFAULT_GRID_POSITION_WEIGHT
     assert grid_weight_from_config({"grid_position_weight": 1e9}) == 2000.0
+
+
+def test_recovery_bonus_depends_on_pace_and_track() -> None:
+    from pipeline.simulate_target_prediction import recovery_bonus
+
+    standings = {"FAST": 0.6, "MID": 0.3, "SLOW": 0.1}
+    assert recovery_bonus(standings, {}, 1500.0, 0.5, 3) is None  # off unless calibrated
+    easy = recovery_bonus(standings, {"recovery_strength": 1.0}, 1500.0, 0.35, 3)
+    hard = recovery_bonus(standings, {"recovery_strength": 1.0}, 1500.0, 0.8, 3)
+    assert easy["FAST"] > 0 > easy["SLOW"]
+
+    def places(bonus, difficulty):  # bonus in grid slots at that track
+        return bonus["FAST"] / (1500.0 * difficulty / 2)
+
+    # Easy overtaking: the fast car gains far more places than in Singapore.
+    assert places(easy, 0.35) > 3 * places(hard, 0.8)
+
+
+def test_recovery_lets_a_fast_car_climb_from_the_back() -> None:
+    from pipeline.simulate_race import simulate_single_race
+
+    entries = [
+        {"name": n, "driver_rating": 70.0, "team_rating": 70.0, "strategy_score": 50.0, "reliability_score": 100.0, "dnf_probability": 0.0}
+        for n in ("AAA", "BBB", "CCC", "DDD", "FAST")
+    ]
+
+    def mean_finish(bonus):
+        rng = random.Random(7)
+        total = 0
+        for _ in range(400):
+            total += simulate_single_race(entries, ["AAA", "BBB", "CCC", "DDD", "FAST"], rng, 0.0, 0.5, 0.0, 0.5, 3.6,
+                                          noise_scale=6.0, grid_weight=1500.0, pace_bonus=bonus)["FAST"]
+        return total / 400
+
+    assert mean_finish({"FAST": 300.0}) < mean_finish(None) - 1

@@ -129,13 +129,13 @@ def test_blend_by_order_kept_a_priori_unless_leave_one_out_wins() -> None:
 def test_event_config_never_carries_the_live_calibration() -> None:
     from pipeline.backtest_simulation import build_event_config
 
-    live = {"standings_blend_race": 0.5, "standings_blend_qualifying": 0.5, "grid_position_weight": 24.0, "race_noise_scale": 2.0}
+    live = {"standings_blend_race": 0.5, "standings_blend_qualifying": 0.5, "grid_position_weight": 24.0, "race_noise_scale": 2.0, "recovery_strength": 1.0}
     cfg = build_event_config(
         base_config=live, profiles={}, season=2026, round_number=3, event_name="X Grand Prix", country="X",
         event_date="2026-04-01", simulations=500, prediction_target="sprint", inputs_used=[], available_sessions=["SQ"],
         fixed_grid=["AAA", "BBB"],
     )
-    for key in ("standings_blend_race", "standings_blend_qualifying", "grid_position_weight", "race_noise_scale"):
+    for key in ("standings_blend_race", "standings_blend_qualifying", "grid_position_weight", "race_noise_scale", "recovery_strength"):
         assert key not in cfg
     assert cfg["target_session_code"] == "S" and cfg["fixed_grid"] == ["AAA", "BBB"]
 

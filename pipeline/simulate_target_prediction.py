@@ -313,6 +313,7 @@ def run_race_or_sprint_prediction(
     # With a known grid the championship-order draws favour the front of the
     # grid (grid-aware standings), instead of ignoring it.
     blend_weights = grid_aware_standings(standings or {}, fixed_grid_config, safe_float(config.get("standings_grid_decay"), 0.0))
+    pace_bonus = recovery_bonus(standings, config, grid_weight, overtaking_difficulty, len(driver_names))
     for _ in range(simulations):
         if blend > 0 and rng.random() < blend:
             order = plackett_luce_order(rng, blend_weights)
@@ -345,6 +346,7 @@ def run_race_or_sprint_prediction(
             wet=wet,
             noise_scale=noise_scale,
             grid_weight=grid_weight,
+            pace_bonus=pace_bonus,
         )
 
         for name, finish in race_positions.items():
@@ -413,6 +415,34 @@ def run_race_or_sprint_prediction(
     return payload
 
 
+def recovery_bonus(
+    standings: dict[str, float] | None,
+    config: dict[str, Any],
+    grid_weight: float,
+    overtaking_difficulty: float,
+    field_size: int,
+) -> dict[str, float] | None:
+    """How far a car's pace carries it through the field from its grid slot.
+    Pace is the championship form (log standings weight, in standard
+    deviations of the field); each SD is worth recovery_strength x
+    ((1 - overtaking difficulty) / 0.5) places: a fast car starting at the
+    back climbs far where overtaking is easy and less in Singapore or
+    Monaco. Applied inside the one race simulation, so the grid still
+    holds and a driver gains places instead of jumping to the front."""
+    strength = safe_float(config.get("recovery_strength"), 0.0)
+    if strength <= 0 or not standings or field_size < 2:
+        return None
+    pace = {name: math.log(max(weight, 1e-12)) for name, weight in standings.items()}
+    values = list(pace.values())
+    centre = sum(values) / len(values)
+    spread = math.sqrt(sum((v - centre) ** 2 for v in values) / len(values)) or 1.0
+    difficulty = clamp(overtaking_difficulty, 0.05, 0.95)
+    # One grid slot at this track (the grid term is weight x difficulty).
+    slot = grid_weight * difficulty / (field_size - 1)
+    track = (1.0 - difficulty) / 0.5
+    return {name: strength * slot * track * (value - centre) / spread for name, value in pace.items()}
+
+
 def grid_aware_standings(standings: dict[str, float], grid: Any, decay: float) -> dict[str, float]:
     """Standings weights multiplied by exp(-decay * (grid position - 1)) and
     renormalised; unchanged without a grid or with decay 0."""
@@ -455,7 +485,11 @@ def run_target_prediction(
 def standings_for_config(entries: list[dict[str, Any]], config: dict[str, Any], raw_dir: Path) -> dict[str, float] | None:
     """Championship-order weights from events before this GP; None when no
     blend is configured or no points exist yet."""
-    if max(safe_float(config.get("standings_blend_qualifying"), 0.0), safe_float(config.get("standings_blend_race"), 0.0)) <= 0:
+    if max(
+        safe_float(config.get("standings_blend_qualifying"), 0.0),
+        safe_float(config.get("standings_blend_race"), 0.0),
+        safe_float(config.get("recovery_strength"), 0.0),
+    ) <= 0:
         return None
     season = int(safe_float(config.get("season"), 0))
     path = raw_dir / f"season_{season}.json"

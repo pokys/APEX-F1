@@ -275,6 +275,7 @@ def build_event_config(
         "standings_blend_race",
         "grid_position_weight",
         "standings_grid_decay",
+        "recovery_strength",
     ):
         cfg.pop(key, None)
     cfg["season"] = season
@@ -521,10 +522,16 @@ def order_loss(prediction: dict[str, Any], finish: dict[str, int], winner: str, 
     return log_loss(win_probabilities(prediction, simulations), winner) + (mean(crps) if crps else 0.0)
 
 
+# Candidate strengths of the recovery through the field (places per pace SD
+# at an average track; simulate_target_prediction.recovery_bonus).
+RECOVERY_STRENGTHS = (0.0, 0.25, 0.5, 1.0, 1.5)
+
+
 def choose_blend_by_order(losses: dict[float, list[float]], fixed: float = DEFAULT_STANDINGS_BLEND) -> tuple[float, dict[str, Any]]:
-    """losses: per blend weight, the order loss of each event. The in-sample
-    best weight replaces the a-priori one only when choosing it on the other
-    events (leave-one-out) beats the a-priori weight."""
+    """losses: per candidate value (race blend weight, recovery strength),
+    the order loss of each event. The in-sample best value replaces the
+    a-priori one only when choosing it on the other events (leave-one-out)
+    beats the a-priori value."""
     weights = sorted(losses)
     if not weights or fixed not in losses:
         return fixed, {}
@@ -700,6 +707,7 @@ def predict_case(
     raw_dir: Path,
     grid_weight: float | None = None,
     standings_blend: float | None = None,
+    recovery: float | None = None,
 ) -> dict[str, Any]:
     """target: "qualifying", "race" or "sprint" (actual starting grid)."""
     key = {"qualifying": "qualifying_config", "sprint": "sprint_config"}.get(target, "race_config")
@@ -712,6 +720,8 @@ def predict_case(
         config["grid_position_weight"] = grid_weight
     if standings_blend is not None:
         config["standings_blend_race"] = standings_blend
+    if recovery is not None:
+        config["recovery_strength"] = recovery
     return run_target_prediction(*case["models"], config, raw_dir=raw_dir)
 
 
@@ -856,21 +866,27 @@ def main() -> int:
     # whole predicted order (winner log loss + position CRPS). A choice on
     # the winner alone favoured a share that splits the field into "grid
     # holds" and "grid ignored" and gave implausible places.
-    order_losses: dict[float, list[float]] = {}
-    for weight in BLEND_GRID:
+    def order_losses_for(blend: float, recovery: float) -> list[float]:
         per_event = []
         for case in cases:
             if case.get("finish"):
-                prediction = predict_case(case, "race", race_scale, search_sims, raw_dir, grid_weight, weight)
+                prediction = predict_case(case, "race", race_scale, search_sims, raw_dir, grid_weight, blend, recovery)
                 per_event.append(order_loss(prediction, case["finish"], case["winner"], search_sims))
         for case in sprint_cases:
             if case.get("sprint_finish"):
-                prediction = predict_case(case, "sprint", race_scale, search_sims, raw_dir, grid_weight, weight)
+                prediction = predict_case(case, "sprint", race_scale, search_sims, raw_dir, grid_weight, blend, recovery)
                 per_event.append(order_loss(prediction, case["sprint_finish"], case["sprint_winner"], search_sims))
-        order_losses[weight] = per_event
+        return per_event
+
+    order_losses = {weight: order_losses_for(weight, 0.0) for weight in BLEND_GRID}
     race_blend, order_blend_report = choose_blend_by_order(order_losses)
     LOGGER.info("Race standings blend by whole order: %s (%s)", race_blend, order_blend_report)
     win_blend["chosen_weight"] = race_blend
+    # Recovery through the field (championship pace x track overtaking
+    # ease), switched on only when it beats none in leave-one-out.
+    recovery_losses = {strength: order_losses_for(race_blend, strength) for strength in RECOVERY_STRENGTHS}
+    recovery_strength, recovery_report = choose_blend_by_order(recovery_losses, fixed=0.0)
+    LOGGER.info("Recovery strength by whole order: %s (%s)", recovery_strength, recovery_report)
 
     winner_conf_outcomes: list[tuple[float, int]] = []
     raw_win_losses: list[float] = []
@@ -938,6 +954,8 @@ def main() -> int:
         "recommended_standings_blend_race": race_blend,
         "recommended_grid_position_weight": grid_weight,
         "recommended_standings_grid_decay": grid_decay,
+        "recommended_recovery_strength": recovery_strength,
+        "recovery_strength_search": recovery_report,
         "standings_grid_decay_search": grid_decay_report,
         "grid_weight_search": grid_weight_report,
         "sprints_evaluated": len(per_sprint),

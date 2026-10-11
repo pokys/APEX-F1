@@ -259,6 +259,7 @@ def simulate_single_race(
     wet: bool = False,
     noise_scale: float = 1.0,
     grid_weight: float = DEFAULT_GRID_POSITION_WEIGHT,
+    pace_bonus: dict[str, float] | None = None,
 ) -> dict[str, int]:
     size = len(entries)
     grid_index = {name: idx + 1 for idx, name in enumerate(grid_order)}
@@ -318,6 +319,7 @@ def simulate_single_race(
             + start_track_position_advantage
             + recovery
             + pure_noise
+            + (pace_bonus or {}).get(name, 0.0)
         )
         scored_finish.append((name, race_score))
 

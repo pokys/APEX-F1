@@ -392,3 +392,4 @@
 - [ ] Why Hamilton's Singapore GP really imploded (https://www.the-race.com/formula-1/why-lewis-hamilton-singapore-gp-really-imploded/)
 - [ ] Winners and losers from F1's 2026 Singapore Grand Prix (https://www.the-race.com/formula-1/f1-2026-singapore-grand-prix-winners-losers/)
 - [ ] Winners and losers from F1's Singapore Grand Prix (https://www.motorsport.com/f1/news/winners-and-losers-from-f1s-singapore-grand-prix/10864434/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Charles Leclerc's private jet drama sparked last-minute change of plans (https://www.motorsport.com/f1/news/charles-leclercs-private-jet-drama-sparked-last-minute-change-of-plans/10864489/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

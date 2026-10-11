@@ -3,13 +3,15 @@
     "FP1",
     "SQ",
     "S",
-    "Q"
+    "Q",
+    "R"
   ],
   "available_sessions_by_calendar": [
     "FP1",
     "SQ",
     "S",
-    "Q"
+    "Q",
+    "R"
   ],
   "available_sessions_ingested": [
     "FP1",
@@ -46,7 +48,7 @@
     "STR",
     "HAD"
   ],
-  "generated_at": "2026-10-11T12:37:34Z",
+  "generated_at": "2026-10-11T13:37:43Z",
   "grid_penalties": [
     {
       "back_of_grid": false,

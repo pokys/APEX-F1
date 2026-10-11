@@ -353,3 +353,5 @@
 - [ ] Acosta and Marquez 'looked like donkeys' in strange MotoGP duel (https://www.the-race.com/motogp/acosta-and-marquez-looked-like-donkeys-in-strange-motogp-duel/)
 - [ ] Kimi Antonelli hit with a major pre-race scare in Singapore (https://www.motorsport.com/f1/news/kimi-antonelli-hit-with-a-major-pre-race-scare-in-singapore/10864300/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Video: Four drivers collide in pits during Japanese Super Formula race in Fuji | Briefs (https://www.racefans.net/2026/10/11/video-four-drivers-collide-in-pits-during-japanese-super-formula-race-in-fuji/)
+- [ ] 2026 Singapore Grand Prix in pictures | F1 Pictures (https://www.racefans.net/2026/10/11/2026-singapore-grand-prix-in-pictures/)
+- [ ] Kim Kardashian finally breaks silence with Martin Brundle after awkward F1 snub (https://www.motorsport.com/f1/news/kim-kardashian-finally-breaks-silence-with-martin-brundle-after-awkward-f1-snub/10864306/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

@@ -21,7 +21,7 @@
   "calibration_source": "outputs/backtest/backtest_season_2026.json",
   "driver_substitutions": [],
   "event_format": "sprint",
-  "event_signal_count": 2,
+  "event_signal_count": 6,
   "fixed_grid": [
     "VER",
     "LEC",
@@ -38,23 +38,51 @@
     "SAI",
     "BOR",
     "COL",
-    "ALO",
     "ALB",
-    "STR",
     "PER",
     "BOT",
-    "HAD",
-    "RUS"
+    "RUS",
+    "ALO",
+    "STR",
+    "HAD"
   ],
-  "generated_at": "2026-10-11T11:37:24Z",
+  "generated_at": "2026-10-11T11:38:26Z",
   "grid_penalties": [
+    {
+      "back_of_grid": false,
+      "driver": "ALO",
+      "pit_lane": true,
+      "places": 0,
+      "sources": [
+        "https://www.fia.com/system/files/decision-document/2026_singapore_grand_prix_-_infringement_-_car_14_-_pu_element_and_changes_made_during_parc_ferme.pdf"
+      ]
+    },
+    {
+      "back_of_grid": false,
+      "driver": "HAD",
+      "pit_lane": true,
+      "places": 0,
+      "sources": [
+        "https://www.fia.com/system/files/decision-document/2026_singapore_grand_prix_-_infringement_-_car_6_-_pu_elements_and_changes_made_during_parc_ferme.pdf"
+      ]
+    },
     {
       "back_of_grid": false,
       "driver": "RUS",
       "pit_lane": false,
-      "places": 40,
+      "places": 60,
       "sources": [
-        "https://www.fia.com/system/files/decision-document/2026_singapore_grand_prix_-_infringement_-_car_63_-_changes_to_pu_elements.pdf"
+        "https://www.fia.com/system/files/decision-document/2026_singapore_grand_prix_-_infringement_-_car_63_-_changes_to_pu_elements.pdf",
+        "https://www.fia.com/system/files/decision-document/2026_singapore_grand_prix_-_infringement_-_car_63_-_additional_changes_to_pu_elements.pdf"
+      ]
+    },
+    {
+      "back_of_grid": false,
+      "driver": "STR",
+      "pit_lane": true,
+      "places": 0,
+      "sources": [
+        "https://www.fia.com/system/files/decision-document/2026_singapore_grand_prix_-_infringement_-_car_18_-_changes_made_during_parc_ferme.pdf"
       ]
     }
   ],
@@ -126,11 +154,39 @@
   "race_grid_penalties": [
     {
       "back_of_grid": false,
+      "driver": "ALO",
+      "pit_lane": true,
+      "places": 0,
+      "sources": [
+        "https://www.fia.com/system/files/decision-document/2026_singapore_grand_prix_-_infringement_-_car_14_-_pu_element_and_changes_made_during_parc_ferme.pdf"
+      ]
+    },
+    {
+      "back_of_grid": false,
+      "driver": "HAD",
+      "pit_lane": true,
+      "places": 0,
+      "sources": [
+        "https://www.fia.com/system/files/decision-document/2026_singapore_grand_prix_-_infringement_-_car_6_-_pu_elements_and_changes_made_during_parc_ferme.pdf"
+      ]
+    },
+    {
+      "back_of_grid": false,
       "driver": "RUS",
       "pit_lane": false,
-      "places": 40,
+      "places": 60,
       "sources": [
-        "https://www.fia.com/system/files/decision-document/2026_singapore_grand_prix_-_infringement_-_car_63_-_changes_to_pu_elements.pdf"
+        "https://www.fia.com/system/files/decision-document/2026_singapore_grand_prix_-_infringement_-_car_63_-_changes_to_pu_elements.pdf",
+        "https://www.fia.com/system/files/decision-document/2026_singapore_grand_prix_-_infringement_-_car_63_-_additional_changes_to_pu_elements.pdf"
+      ]
+    },
+    {
+      "back_of_grid": false,
+      "driver": "STR",
+      "pit_lane": true,
+      "places": 0,
+      "sources": [
+        "https://www.fia.com/system/files/decision-document/2026_singapore_grand_prix_-_infringement_-_car_18_-_changes_made_during_parc_ferme.pdf"
       ]
     }
   ],

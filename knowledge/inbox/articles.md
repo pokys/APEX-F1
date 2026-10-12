@@ -395,3 +395,6 @@
 ## 2026-10-12
 - [ ] Wellness partnerships target F1 teams and their increasingly engaged fans (https://www.motorsport.com/f1/news/wellness-partnerships-target-f1-teams-and-their-increasingly-engaged-fans/10864501/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Why Antonelli avoided a penalty that seemed obvious (https://www.the-race.com/formula-1/why-antonelli-avoided-a-penalty-that-seemed-obvious/)
+- [ ] Podcast: 'Fake' MotoGP battles, start chaos and title twists (https://www.the-race.com/motogp/podcast-fake-motogp-battles-start-chaos-and-title-twists/)
+- [ ] Podcast: How Ferrari made Verstappen's win easier (https://www.the-race.com/formula-1/podcast-how-ferrari-made-verstappens-win-easier/)
+- [ ] Who slept best last night: Max Verstappen (https://www.motorsport.com/f1/news/who-slept-best-last-night-max-verstappen-10864485/10864485/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

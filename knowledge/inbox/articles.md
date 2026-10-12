@@ -1,9 +1,5 @@
 # F1 Article Inbox
 
-## 2026-09-27
-- [ ] Alpine condemns abuse again following Colapinto's Azerbaijan GP crash (https://www.autosport.com/f1/news/alpine-condemns-abuse-again-following-colapintos-azerbaijan-gp-crash/10859570/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-- [ ] The detail that impressed Red Bull the most about Hadjar's F1 return (https://www.autosport.com/f1/news/the-one-detail-that-impresses-red-bull-most-about-isack-hadjars-outstanding-f1-return/10859537/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-
 ## 2026-09-28
 - [ ] Herta still aiming for F1 by 2028 (https://www.autosport.com/f1/news/herta-still-aiming-for-f1-by-2028/10859881/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] Norris apologises to Colapinto over F1 race ban comments (https://www.autosport.com/f1/news/norris-apologises-to-colapinto-over-f1-race-ban-comments/10859741/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
@@ -395,3 +391,7 @@
 - [ ] Charles Leclerc's private jet drama sparked last-minute change of plans (https://www.motorsport.com/f1/news/charles-leclercs-private-jet-drama-sparked-last-minute-change-of-plans/10864489/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Fans can't get enough of Max Verstappen's floral race boots after Singapore win (https://www.motorsport.com/f1/news/fans-cant-get-enough-of-max-verstappens-floral-race-boots-after-singapore-win/10864491/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] On This Day: Crash and disqualification decides title in controversial F3000 finale | Brief (https://www.racefans.net/2026/10/12/on-this-day-1996-f3000-hockenheim-2/)
+
+## 2026-10-12
+- [ ] Wellness partnerships target F1 teams and their increasingly engaged fans (https://www.motorsport.com/f1/news/wellness-partnerships-target-f1-teams-and-their-increasingly-engaged-fans/10864501/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Why Antonelli avoided a penalty that seemed obvious (https://www.the-race.com/formula-1/why-antonelli-avoided-a-penalty-that-seemed-obvious/)

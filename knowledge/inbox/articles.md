@@ -426,3 +426,4 @@
 
 ## 2026-10-13
 - [ ] McLaren to phase upgrades for 2026 fight and next year's F1 development (https://www.motorsport.com/f1/news/mclaren-to-phase-upgrades-for-2026-fight-and-next-years-f1-development/10864787/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Toto Wolff reveals problem behind George Russell's Singapore GP recovery (https://www.motorsport.com/f1/news/toto-wolff-reveals-the-problem-behind-george-russells-singapore-gp-recovery/10864793/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

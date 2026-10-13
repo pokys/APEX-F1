@@ -1,11 +1,5 @@
 # F1 Article Inbox
 
-## 2026-09-28
-- [ ] Herta still aiming for F1 by 2028 (https://www.autosport.com/f1/news/herta-still-aiming-for-f1-by-2028/10859881/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-- [ ] Norris apologises to Colapinto over F1 race ban comments (https://www.autosport.com/f1/news/norris-apologises-to-colapinto-over-f1-race-ban-comments/10859741/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-- [ ] What made Red Bull so fast in the Azerbaijan GP after Verstappen’s qualifying issue (https://www.autosport.com/f1/news/what-made-red-bull-so-fast-in-the-azerbaijan-gp-after-verstappens-qualifying-issue/10859823/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-- [ ] Why McLaren was so much slower than Mercedes on Baku's straights (https://www.autosport.com/f1/news/why-mclaren-was-so-much-slower-than-mercedes-on-bakus-straights/10859723/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-
 ## 2026-09-29
 - [ ] Aston Martin retains Alonso and Stroll for F1 2027 (https://www.autosport.com/f1/news/aston-martin-retains-alonso-and-stroll/10860022/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] Azerbaijan GP was a step forward for upgraded Williams - but real test is still to come (https://www.autosport.com/f1/news/azerbaijan-gp-step-forward-for-wiliams-real-test-still-to-come/10860001/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
@@ -424,3 +418,11 @@
 - [ ] Charles Leclerc admits he missed a chance against Max Verstappen – but not the obvious one (https://www.motorsport.com/f1/news/charles-leclerc-admits-he-missed-a-chance-against-max-verstappen-but-not-the-obvious-one/10864610/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] How to watch Max Verstappen race GT World Challenge Portimao free: Live stream, start time and schedule (https://www.motorsport.com/f1/news/how-to-watch-max-verstappen-race-gt-world-challenge-portimao-free-live-stream-start-time-and-schedu/10864757/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] The not-so-obvious chance Leclerc missed to usurp Verstappen (https://www.autosport.com/f1/news/charles-leclerc-admits-he-missed-a-chance-against-max-verstappen-but-not-the-obvious-one/10864639/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Lewis Hamilton sends message to fans after Singapore GP mistake (https://www.motorsport.com/f1/news/lewis-hamilton-sends-message-to-fans-after-singapore-gp-mistake/10864782/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] On This Day: Hill claims emotional championship victory for Williams at Suzuka | Briefs (https://www.racefans.net/2026/10/13/on-this-day-hill-claims-emotional-championship-victory-for-williams-at-suzuka/)
+- [ ] Oscar Piastri on his Singapore puncture: “Ironically, it probably helped” (https://www.motorsport.com/f1/news/oscar-piastri-on-his-singapore-puncture-ironically-it-probably-helped/10864632/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Spotlight: Wolff claimed Red Bull power unit would be “completely s***” – Horner | Briefs (https://www.racefans.net/2026/10/12/spotlight-wolff-claimed-red-bull-power-unit-would-be-completely-s-horner/)
+- [ ] Why Kimi Antonelli was left fighting his Mercedes brakes during the Singapore GP (https://www.motorsport.com/f1/news/why-kimi-antonelli-was-left-fighting-his-mercedes-brakes-during-the-singapore-gp/10864784/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+
+## 2026-10-13
+- [ ] McLaren to phase upgrades for 2026 fight and next year's F1 development (https://www.motorsport.com/f1/news/mclaren-to-phase-upgrades-for-2026-fight-and-next-years-f1-development/10864787/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

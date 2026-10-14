@@ -1,10 +1,5 @@
 # F1 Article Inbox
 
-## 2026-09-29
-- [ ] Aston Martin retains Alonso and Stroll for F1 2027 (https://www.autosport.com/f1/news/aston-martin-retains-alonso-and-stroll/10860022/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-- [ ] Azerbaijan GP was a step forward for upgraded Williams - but real test is still to come (https://www.autosport.com/f1/news/azerbaijan-gp-step-forward-for-wiliams-real-test-still-to-come/10860001/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-- [ ] Was Baku really Red Bull's last opportunity of winning in F1 2026? (https://www.autosport.com/f1/news/whether-baku-was-red-bulls-last-realistic-chance-of-winning-in-f1-2026/10860093/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-
 ## 2026-09-30
 - [ ] Ocon to leave Haas at the end of F1 2026 (https://www.autosport.com/f1/news/esteban-ocon-to-leave-haas-at-the-end-of-f1-2026/10860206/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] The five contenders to replace Ocon at Haas for F1 2027 (https://www.autosport.com/f1/news/five-contenders-to-replace-esteban-ocon-at-haas-for-f1-2027/10860261/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
@@ -451,3 +446,7 @@
 - [ ] FIA could outlaw Red Bull’s clever sidepod loophole ahead of 2027 season (https://www.motorsport.com/f1/news/fia-outlaws-red-bulls-clever-sidepod-aerodynamic-loophole-ahead-of-2027-season/10864930/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Lando Norris makes big business move with investment in £500m hospitality company (https://www.motorsport.com/f1/news/lando-norris-makes-big-business-move-with-investment-in-500m-hospitality-company/10865045/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] The watches worn at the Singapore GP: From $400 to $430,000 (https://www.motorsport.com/f1/news/the-watches-worn-at-the-singapore-gp-from-400-to-430000/10865040/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Zara launches new Ayrton Senna clothing collection inspired by F1 legend (https://www.motorsport.com/f1/news/zara-launches-new-ayrton-senna-clothing-collection-inspired-by-f1-legend/10865047/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+
+## 2026-10-14
+- [ ] Red Bull sends warning to F1 rivals with engine development admission (https://www.motorsport.com/f1/news/red-bull-sends-warning-to-f1-rivals-with-engine-development-admission/10865049/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

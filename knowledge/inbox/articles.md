@@ -467,3 +467,9 @@
 - [ ] Valentino Rossi wary of Max Verstappen threat at Portimao: "Big problem" (https://www.motorsport.com/f1/news/valentino-rossi-wary-of-max-verstappen-threat-at-portimao-big-problem/10865174/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Christian Horner wanted Fernando Alonso and Charles Leclerc at Red Bull (https://www.motorsport.com/f1/news/christian-horner-wanted-fernando-alonso-and-charles-leclerc-at-red-bull/10865251/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Why Christian Horner banned Mercedes' name as Red Bull built its own F1 engine (https://www.motorsport.com/f1/news/why-horner-banned-mercedes-name-as-red-bull-built-its-own-f1-engine/10864996/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+
+## 2026-10-15
+- [ ] Christian Horner admits that F1 rivalry with Toto Wolff became "theatre" (https://www.motorsport.com/f1/news/christian-horner-admits-that-f1-rivalry-with-toto-wolff-became-theatre/10865113/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Colapinto tells his supporters to stop abusing rival drivers: “They don’t help me” | Formula 1 (https://www.racefans.net/2026/10/15/colapinto-tells-his-supporters-to-stop-abusing-rival-drivers-they-dont-help-me/)
+- [ ] George Russell targets US race for looming Mercedes engine grid penalty (https://www.motorsport.com/f1/news/george-russell-targets-las-vegas-gp-for-looming-mercedes-engine-grid-penalty/10865295/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] How Red Bull's improved its F1 engine with no upgrades (https://www.the-race.com/formula-1/key-gains-red-bull-has-made-with-its-race-winning-f1-engine/)

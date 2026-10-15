@@ -499,3 +499,5 @@
 - [ ] Did Haas make the correct decision in signing Rafael Camara for F1 2027? (https://www.motorsport.com/f1/news/did-haas-make-the-correct-decision-in-signing-rafael-camara-for-f1-2027/10865413/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Ferrari F1 junior Camara to race for Haas (https://www.the-race.com/formula-1/ferrari-f1-junior-rafael-camara-joins-haas-everything-you-need-to-know/)
 - [ ] Williams to stage London display for 50th anniversary celebrations (https://www.the-race.com/extra/williams-w50-live-london-display-50th-anniversary/)
+- [ ] F1 could make call to move finale to Imola as late as ‘mid-November’ – report | Briefs (https://www.racefans.net/2026/10/15/f1-could-make-call-to-move-finale-to-imola-as-late-as-mid-november-report/)
+- [ ] Valtteri Bottas makes surprising Mercedes comparison as Cadillac builds F1 future (https://www.motorsport.com/f1/news/valtteri-bottas-makes-surprising-mercedes-comparison-as-cadillac-builds-f1-future/10865491/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

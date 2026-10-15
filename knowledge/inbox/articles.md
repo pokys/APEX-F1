@@ -1,9 +1,5 @@
 # F1 Article Inbox
 
-## 2026-09-30
-- [ ] Ocon to leave Haas at the end of F1 2026 (https://www.autosport.com/f1/news/esteban-ocon-to-leave-haas-at-the-end-of-f1-2026/10860206/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-- [ ] The five contenders to replace Ocon at Haas for F1 2027 (https://www.autosport.com/f1/news/five-contenders-to-replace-esteban-ocon-at-haas-for-f1-2027/10860261/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-
 ## 2026-10-01
 - [ ] Audi confirms plans for new F1 base (https://www.autosport.com/f1/news/audi-confirms-plans-for-new-f1-base/10860534/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] Colapinto still has full support of Alpine and Briatore despite Azerbaijan GP clash (https://www.autosport.com/f1/news/colapinto-has-support-of-alpine-and-briatore/10860495/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)

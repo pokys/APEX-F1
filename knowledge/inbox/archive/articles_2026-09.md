@@ -19,3 +19,7 @@
 - [ ] Aston Martin retains Alonso and Stroll for F1 2027 (https://www.autosport.com/f1/news/aston-martin-retains-alonso-and-stroll/10860022/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] Azerbaijan GP was a step forward for upgraded Williams - but real test is still to come (https://www.autosport.com/f1/news/azerbaijan-gp-step-forward-for-wiliams-real-test-still-to-come/10860001/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] Was Baku really Red Bull's last opportunity of winning in F1 2026? (https://www.autosport.com/f1/news/whether-baku-was-red-bulls-last-realistic-chance-of-winning-in-f1-2026/10860093/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+
+## 2026-09-30
+- [ ] Ocon to leave Haas at the end of F1 2026 (https://www.autosport.com/f1/news/esteban-ocon-to-leave-haas-at-the-end-of-f1-2026/10860206/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] The five contenders to replace Ocon at Haas for F1 2027 (https://www.autosport.com/f1/news/five-contenders-to-replace-esteban-ocon-at-haas-for-f1-2027/10860261/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)

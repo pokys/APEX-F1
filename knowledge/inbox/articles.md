@@ -514,3 +514,4 @@
 - [ ] Colapinto urges fans to stop online abuse: “You’re not helping me or my future” (https://www.autosport.com/f1/news/colapinto-urges-fans-to-stop-the-abuse-youre-not-helping-me-or-my-future/10865685/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] Franco Colapinto urges fans to stop the abuse: “You’re not helping me or my future” (https://www.motorsport.com/f1/news/franco-colapinto-urges-fans-to-stop-the-abuse-youre-not-helping-me-or-my-future/10865682/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] How Horner, Brown and Wolff made their fortunes from F1 (https://www.the-race.com/business/how-horner-brown-wolff-made-their-fortunes-from-f1/)
+- [ ] Verstappen has troubled qualifying in latest GT outing (https://www.the-race.com/gt/verstappen-has-troubled-qualifying-in-latest-gt-outing/)

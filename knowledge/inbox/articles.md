@@ -500,3 +500,6 @@
 - [ ] Singapore victory leaves Verstappen one win away from a full set – but not for long | 2026 Singapore Grand Prix stats and facts (https://www.racefans.net/2026/10/16/singapore-victory-leaves-verstappen-one-win-away-from-a-full-set-but-not-for-long/)
 - [ ] The extraordinary figures hinting at Aston Martin's pole potential (https://www.the-race.com/formula-1/aston-martin-f1-pole-potential-extraordinary-figures/)
 - [ ] Why one F1 test day decided a 2027 driver choice (https://www.the-race.com/formula-1/why-one-f1-test-day-decided-2027-haas-driver-choice/)
+- [ ] Who will win this year’s ultimate F1 dream ticket? You decide… (https://www.autosport.com/general/news/who-will-win-this-years-ultimate-f1-dream-ticket-you-decide-/10865598/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Who will win this year’s ultimate F1 dream ticket? You decide… (https://www.motorsport.com/general/news/who-will-win-this-years-ultimate-f1-dream-ticket-you-decide-/10865593/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Why Toto Wolff wore two watches at the Singapore Grand Prix (https://www.motorsport.com/f1/news/why-toto-wolff-wore-two-watches-at-the-singapore-grand-prix/10865603/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

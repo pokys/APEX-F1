@@ -492,3 +492,11 @@
 - [ ] Valtteri Bottas makes surprising Mercedes comparison as Cadillac builds F1 future (https://www.motorsport.com/f1/news/valtteri-bottas-makes-surprising-mercedes-comparison-as-cadillac-builds-f1-future/10865491/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Max Verstappen GTWC Europe debut: Everything you need to know (https://www.motorsport.com/f1/news/max-verstappen-faq-on-his-gtwc-europe-debut/10865181/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] On This Day: Stroll wins final race before becoming a Formula 1 driver | Brief (https://www.racefans.net/2026/10/16/on-this-day-european-formula-three-hockenheimring-race-three/)
+
+## 2026-10-16
+- [ ] F2 rebuffs suggestion its title race might be over because of the Iran war (https://www.motorsport.com/fia-f2/news/f2-rebuffs-suggestion-it-might-already-have-a-2026-champion-because-of-the-iran-war/10865537/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Ferrari promotes F2 racer to F1 reserve driver role (https://www.motorsport.com/f1/news/ferrari-promotes-f2-racer-to-f1-reserve-driver-role/10865590/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Isack Hadjar on reality of racing alongside "prime of the prime" Max Verstappen (https://www.motorsport.com/f1/news/isack-hadjar-on-reality-of-racing-alongside-prime-of-the-prime-max-verstappen-/10861847/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Singapore victory leaves Verstappen one win away from a full set – but not for long | 2026 Singapore Grand Prix stats and facts (https://www.racefans.net/2026/10/16/singapore-victory-leaves-verstappen-one-win-away-from-a-full-set-but-not-for-long/)
+- [ ] The extraordinary figures hinting at Aston Martin's pole potential (https://www.the-race.com/formula-1/aston-martin-f1-pole-potential-extraordinary-figures/)
+- [ ] Why one F1 test day decided a 2027 driver choice (https://www.the-race.com/formula-1/why-one-f1-test-day-decided-2027-haas-driver-choice/)

@@ -1,14 +1,5 @@
 # F1 Article Inbox
 
-## 2026-10-02
-- [ ] Colapinto handed extra grid penalty at F1 Bahrain GP (https://www.autosport.com/f1/news/colapinto-handed-extra-grid-penalty-at-f1-bahrain-gp/10860808/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-- [ ] F1 Bahrain GP in Malaysia: Leclerc tops FP2 with Mercedes seventh and eighth (https://www.autosport.com/f1/news/f1-bahrain-gp-in-malaysia-leclerc-tops-fp2-with-mercedes-seventh-and-eighth/10860924/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-- [ ] F1 Bahrain GP in Malaysia: Verstappen pips Russell to top FP1 (https://www.autosport.com/f1/news/f1-bahrain-gp-in-malaysia-verstappen-pips-russell-to-top-fp1/10860823/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-- [ ] Mercedes introduces new floor, sidepods for F1 Bahrain GP (https://www.autosport.com/f1/news/mercedes-introduces-new-floor-sidepods-for-f1-bahrain-gp/10860785/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-- [ ] Vasseur calls for Ferrari unity: Pointing fingers would be "big mistake" (https://www.autosport.com/f1/news/vasseur-calls-for-ferrari-unity-pointing-fingers-would-be-big-mistake/10860885/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-- [ ] Why Verstappen and Hadjar urge Red Bull to "make all the mistakes now" for 2027 (https://www.autosport.com/f1/news/why-verstappen-and-hadjar-urge-red-bull-to-make-all-the-mistakes-now-for-2027/10860977/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-- [ ] Why Verstappen’s unusual run plan highlights F1 teams’ biggest challenge in Malaysia (https://www.autosport.com/f1/news/max-verstappens-unusual-run-plan-and-f1-teams-biggest-challenge-in-malaysia-explained/10861106/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-
 ## 2026-10-03
 - [ ] "The FIA needs to step in" - Russell's cooling vest comments explained (https://www.autosport.com/f1/news/whats-actually-going-on-with-george-russells-fia-cooling-vest-complaints/10861569/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] F1 Bahrain GP in Malaysia: Antonelli recovers from tough Friday to top FP3 (https://www.autosport.com/f1/news/f1-bahrain-gp-in-malaysia-antonelli-recovers-from-tough-friday-to-top-fp3/10861282/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)

@@ -529,3 +529,8 @@
 - [ ] Penalty sets up epic Verstappen charge in his GT return (https://www.the-race.com/gt/penalty-sets-up-epic-verstappen-charge-in-his-gt-return/)
 - [ ] Aston Martin's F1-inspired monster spotted testing as record-breaking claims emerge (https://www.motorsport.com/culture/news/aston-martins-f1-inspired-monster-spotted-testing-as-record-breaking-claims-emerge/10865964/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Lando Norris faces anxious wait as F2 prepares to decide future of his racing team (https://www.motorsport.com/f1/news/lando-norris-faces-anxious-wait-as-f2-prepares-to-decide-future-of-his-racing-team/10865969/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+
+## 2026-10-18
+- [ ] Poll: Does F1 needs its cost cap – or is it just holding back the smaller teams? | Debates and Polls (https://www.racefans.net/2026/10/18/poll-does-f1-needs-its-cost-cap-or-is-it-just-holding-back-the-smaller-teams/)
+- [ ] The maths behind when Mercedes could become F1 world champions in 2026 (https://www.autosport.com/f1/news/the-maths-behind-when-mercedes-could-become-f1-world-champions-in-2026/10866008/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] When will Mercedes become F1 world champions in 2026? (https://www.motorsport.com/f1/news/when-can-mercedes-become-f1-world-champions-in-2026/10865358/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

@@ -540,3 +540,4 @@
 - [ ] Max Verstappen hits back at ex-F1 drivers over criticism of 2026 regulations (https://www.motorsport.com/f1/news/max-verstappen-hits-back-at-former-f1-drivers-over-criticism-of-2026-regulations/10866045/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Mercedes explains why its upgrade made its F1 car harder to drive (https://www.autosport.com/f1/news/mercedes-explains-why-its-upgrade-made-its-f1-car-harder-to-drive/10866035/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] The strange Alonso subplot to Aston Martin's weird recent run (https://www.the-race.com/formula-1/strange-fernando-alonso-subplot-aston-martin-weird-f1-form/)
+- [ ] Spotlight: Fornaroli tests for McLaren again alongside Hughes at Paul Ricard | Spotlight (https://www.racefans.net/2026/10/18/spotlight-fornaroli-tests-for-mclaren-again-alongside-hughes-at-paul-ricard/)

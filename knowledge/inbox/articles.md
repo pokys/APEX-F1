@@ -534,3 +534,4 @@
 - [ ] Poll: Does F1 needs its cost cap – or is it just holding back the smaller teams? | Debates and Polls (https://www.racefans.net/2026/10/18/poll-does-f1-needs-its-cost-cap-or-is-it-just-holding-back-the-smaller-teams/)
 - [ ] The maths behind when Mercedes could become F1 world champions in 2026 (https://www.autosport.com/f1/news/the-maths-behind-when-mercedes-could-become-f1-world-champions-in-2026/10866008/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] When will Mercedes become F1 world champions in 2026? (https://www.motorsport.com/f1/news/when-can-mercedes-become-f1-world-champions-in-2026/10865358/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] What Ferrari's changing with its biggest F1 upgrade of 2026 (https://www.the-race.com/formula-1/what-ferrari-is-changing-biggest-f1-2026-upgrade/)

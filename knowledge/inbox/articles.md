@@ -1,14 +1,5 @@
 # F1 Article Inbox
 
-## 2026-10-03
-- [ ] "The FIA needs to step in" - Russell's cooling vest comments explained (https://www.autosport.com/f1/news/whats-actually-going-on-with-george-russells-fia-cooling-vest-complaints/10861569/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-- [ ] F1 Bahrain GP in Malaysia: Antonelli recovers from tough Friday to top FP3 (https://www.autosport.com/f1/news/f1-bahrain-gp-in-malaysia-antonelli-recovers-from-tough-friday-to-top-fp3/10861282/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-- [ ] F1 Bahrain GP in Malaysia: Verstappen dominates for first pole of 2026 from Hamilton (https://www.autosport.com/f1/news/f1-bahrain-gp-in-malaysia-qualifying-report/10861364/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-- [ ] From "paper car" to pole – What changed for Verstappen and Red Bull? (https://www.autosport.com/f1/news/from-paper-car-to-pole-what-changed-for-verstappen-and-red-bull/10861532/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-- [ ] McLaren explains recurring Norris straightline speed issue after Bahrain GP qualifying (https://www.autosport.com/f1/news/mclaren-explains-recurring-norris-straightline-speed-issue-after-bahrain-gp-qualifying/10861561/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-- [ ] Why Malaysia would be the perfect place for F1’s first wet-weather race in 2026 (https://www.autosport.com/f1/news/why-malaysia-would-be-the-best-place-for-f1s-first-wet-weather-race-in-2026/10861397/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-- [ ] Why Mercedes' upgrade is still a "big question mark" (https://www.autosport.com/f1/news/why-mercedes-upgrade-is-still-a-big-question-mark/10861516/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-
 ## 2026-10-04
 - [ ] 2026 Bahrain Grand Prix in Malaysia interactive data: lap charts, times and tyres | Formula 1 (https://www.racefans.net/2026/10/04/2026-bahrain-grand-prix-in-malaysia-interactive-data-lap-charts-times-and-tyres/)
 - [ ] F1 Bahrain GP in Malaysia descends into chaos as car trouble prompts red flag (https://www.autosport.com/f1/news/f1-bahrain-gp-in-malaysia-descends-into-chaos-as-car-trouble-prompts-red-flag/10861807/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)

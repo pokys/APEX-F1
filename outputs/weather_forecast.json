@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-18T22:51:28+00:00",
+  "fetched_at": "2026-10-19T00:54:55+00:00",
   "longitude": -97.6411,
   "race": "United States Grand Prix",
   "season": 2026,
@@ -8,25 +8,25 @@
       "precipitation_mm": 0.0,
       "rain_probability": 0.0,
       "start": "2026-10-23T17:30:00+00:00",
-      "weather_code": 2
+      "weather_code": 3
     },
     "FP2": {
       "precipitation_mm": 0.0,
       "rain_probability": 0.0,
       "start": "2026-10-23T21:00:00+00:00",
-      "weather_code": 1
+      "weather_code": 3
     },
     "FP3": {
       "precipitation_mm": 0.0,
       "rain_probability": 0.01,
       "start": "2026-10-24T17:30:00+00:00",
-      "weather_code": 0
+      "weather_code": 2
     },
     "Q": {
       "precipitation_mm": 0.0,
       "rain_probability": 0.03,
       "start": "2026-10-24T21:00:00+00:00",
-      "weather_code": 0
+      "weather_code": 3
     },
     "R": {
       "precipitation_mm": 0.0,

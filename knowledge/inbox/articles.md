@@ -1,24 +1,5 @@
 # F1 Article Inbox
 
-## 2026-10-04
-- [ ] 2026 Bahrain Grand Prix in Malaysia interactive data: lap charts, times and tyres | Formula 1 (https://www.racefans.net/2026/10/04/2026-bahrain-grand-prix-in-malaysia-interactive-data-lap-charts-times-and-tyres/)
-- [ ] F1 Bahrain GP in Malaysia descends into chaos as car trouble prompts red flag (https://www.autosport.com/f1/news/f1-bahrain-gp-in-malaysia-descends-into-chaos-as-car-trouble-prompts-red-flag/10861807/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-- [ ] F1 Bahrain GP in Malaysia start delayed as thunderstorms hit Sepang (https://www.autosport.com/f1/news/f1-bahrain-gp-in-malaysia-start-delayed-as-thunderstorms-hit-sepang/10861780/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-- [ ] F1 Bahrain GP in Malaysia: Verstappen wins chaotic race from Antonelli as Russell retires late on (https://www.autosport.com/f1/news/f1-bahrain-gp-in-malaysia-report/10861849/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-- [ ] Featured Comment: Sepang start shambles not good enough for Formula 1 | Briefs (https://www.racefans.net/2026/10/05/featured-comment-sepang-start-shambles-not-good-enough-for-formula-1/)
-- [ ] FIA blames “unprecedented” circumstances for car stoppages on formation lap | Formula 1 (https://www.racefans.net/2026/10/04/fia-blames-unprecedented-circumstances-for-car-stoppages-on-formation-lap/)
-- [ ] FIA explains software glitch that caused Bahrain GP in Malaysia race delay (https://www.autosport.com/f1/news/fia-explains-software-glitch-that-caused-bahrain-gp-in-malaysia-race-delay/10861956/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-- [ ] Formula 1 must learn lessons from formation lap shambles at Sepang – Hamilton | Formula 1 (https://www.racefans.net/2026/10/04/formula-1-must-learn-lessons-from-formation-lap-shambles-at-sepang-hamilton/)
-- [ ] Hadjar had “no battery” to defend from Hamilton and Leclerc in final laps | Formula 1 (https://www.racefans.net/2026/10/04/hadjar-had-no-battery-to-defend-from-hamilton-and-leclerc-in-final-laps/)
-- [ ] Hamilton suspects he could have fought for win had he not started on slicks | Formula 1 (https://www.racefans.net/2026/10/04/hamilton-suspects-he-could-have-fought-for-win-had-he-started-on-slicks/)
-- [ ] How FIA software bug caused chaos in Bahrain GP in Malaysia – and the emergency fix that saved the race (https://www.autosport.com/f1/news/how-fia-software-bug-caused-chaos-in-bahrain-gp-in-malaysia-and-the-emergency-fix-that-saved-the-ra/10861989/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-- [ ] Russell: “You’ve got to laugh” at bad luck as F1 title drifts away (https://www.autosport.com/f1/news/russell-youve-got-to-laugh-at-bad-luck-as-f1-title-drifts-away/10861919/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-- [ ] Spotlight: ‘Who decided these rules were best for F1?’ asks Sainz | Brief (https://www.racefans.net/2026/10/05/spotlight-who-decided-these-rules-were-best-for-f1-asks-sainz/)
-- [ ] The slick tyre gamble that hurt McLaren and Ferrari's chances in Bahrain GP in Malaysia (https://www.autosport.com/f1/news/the-slick-tyre-gamble-that-hurt-mclaren-and-ferraris-bahrain-f1-chances/10861972/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-- [ ] Why Toto Wolff’s $102,000 IWC watch can survive almost anything (https://www.motorsport.com/f1/news/why-toto-wolffs-102000-iwc-watch-can-survive-almost-anything/10861857/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] Wolff calls Mercedes’ Sepang race “one of my worst experiences” | Formula 1 (https://www.racefans.net/2026/10/04/wolff-calls-mercedes-sepang-race-one-of-my-worst-experiences/)
-- [ ] “I guess it’s my fault” says Norris as stewards reprimand him for near-miss under Safety Car | Formula 1 (https://www.racefans.net/2026/10/04/i-guess-its-my-fault-says-norris-as-stewards-reprimand-him-for-near-miss-under-safety-car/)
-
 ## 2026-10-05
 - [ ] Andrea Stella concedes McLaren made "incorrect judgment" on Bahrain GP Strategy (https://www.motorsport.com/f1/news/andrea-stella-concedes-mclaren-made-incorrect-judgment-on-bahrain-gp-strategy/10862366/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Andrea Stella: F1 must avoid Sepang repeat, but "accept occasional glitches" (https://www.motorsport.com/f1/news/andrea-stella-f1-must-avoid-sepang-repeat-but-accept-occasional-glitches/10862197/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
@@ -541,3 +522,8 @@
 - [ ] Mercedes explains why its upgrade made its F1 car harder to drive (https://www.autosport.com/f1/news/mercedes-explains-why-its-upgrade-made-its-f1-car-harder-to-drive/10866035/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] The strange Alonso subplot to Aston Martin's weird recent run (https://www.the-race.com/formula-1/strange-fernando-alonso-subplot-aston-martin-weird-f1-form/)
 - [ ] Spotlight: Fornaroli tests for McLaren again alongside Hughes at Paul Ricard | Spotlight (https://www.racefans.net/2026/10/18/spotlight-fornaroli-tests-for-mclaren-again-alongside-hughes-at-paul-ricard/)
+- [ ] Documentary on Lewis Hamilton and Fernando Alonso's F1 rivalry reportedly in the works (https://www.motorsport.com/f1/news/lewis-hamilton-and-fernando-alonsos-infamous-mclaren-rivalry-set-for-bbc-documentary/10866138/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+
+## 2026-10-19
+- [ ] Podcast: Horner on Ferrari rumours, Newey's Aston Martin and more (https://www.the-race.com/formula-1/podcast-horner-on-ferrari-rumours-neweys-aston-martin-and-more/)
+- [ ] Stray Kids' Felix sends fans into frenzy with behind-the-scenes Ferrari F1 photos (https://www.motorsport.com/f1/news/stray-kids-felix-sends-fans-into-frenzy-with-behind-the-scenes-ferrari-f1-photos/10866141/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

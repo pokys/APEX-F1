@@ -520,3 +520,15 @@
 - [ ] Christian Horner: Building Red Bull’s F1 engine was “scary as hell” (https://www.motorsport.com/f1/news/christian-horner-receives-unexpected-call-from-red-bull-after-breakthrough/10866228/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] How soon can Mercedes win the 2026 F1 constructors' championship? (https://www.motorsport.com/f1/news/how-soon-can-mercedes-win-the-2026-f1-constructors-championship/10866296/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] On This Day: Ralf Schumacher wins Formula Nippon title despite spinning out | Brief (https://www.racefans.net/2026/10/20/on-this-day-ralf-schumacher-wins-formula-nippon-title/)
+
+## 2026-10-20
+- [ ] 'I felt sorry for Fred' - Horner on Ferrari team boss rumours (https://www.the-race.com/formula-1/i-felt-sorry-for-vasseur-horner-on-ferrari-f1-rumours/)
+- [ ] Aston Martin joins the padel court with new collaboration (https://www.the-race.com/extra/aston-martin-f1-team-joins-the-padel-court-with-new-collaboration/)
+- [ ] Christian Horner: Kimi Antonelli has 'earned' the right to be Mercedes' number one (https://www.motorsport.com/f1/news/christian-horner-kimi-antonelli-has-earned-the-right-to-be-mercedes-number-one/10865153/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Early coronation for Antonelli? Five talking points for the United States Grand Prix | Formula 1 (https://www.racefans.net/2026/10/20/early-coronation-for-antonelli-five-talking-points-for-the-united-states-grand-prix/)
+- [ ] Featured Comment: Budget cap not to blame for lack of winning teams in F1 | Brief (https://www.racefans.net/2026/10/20/featured-comment-budget-cap-not-to-blame-for-lack-of-winning-teams-in-f1/)
+- [ ] Formula 1’s move to shorter grands prix in 2027 will not be permanent | Formula 1 (https://www.racefans.net/2026/10/20/formula-1s-move-to-shorter-grands-prix-in-2027-will-not-be-permanent/)
+- [ ] Gary Anderson: The details that really separate Red Bull and Mercedes (https://www.the-race.com/formula-1/details-that-really-separate-red-bull-and-mercedes/)
+- [ ] Lando Norris suffers defeat to F1 rivals in hilarious UNO showdown (https://www.motorsport.com/f1/news/lando-norris-suffers-embarrassing-defeat-to-f1-rivals-in-hilarious-uno-showdown/10866475/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] MotoGP 2027 line-up complete: All 17 moves (https://www.the-race.com/motogp/motogp-2027-line-up-complete-all-17-moves/)
+- [ ] Razgatlioglu to miss rest of 2026 MotoGP season (https://www.the-race.com/motogp/razgatlioglu-to-miss-rest-of-2026-motogp-season/)

@@ -532,3 +532,5 @@
 - [ ] Lando Norris suffers defeat to F1 rivals in hilarious UNO showdown (https://www.motorsport.com/f1/news/lando-norris-suffers-embarrassing-defeat-to-f1-rivals-in-hilarious-uno-showdown/10866475/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] MotoGP 2027 line-up complete: All 17 moves (https://www.the-race.com/motogp/motogp-2027-line-up-complete-all-17-moves/)
 - [ ] Razgatlioglu to miss rest of 2026 MotoGP season (https://www.the-race.com/motogp/razgatlioglu-to-miss-rest-of-2026-motogp-season/)
+- [ ] F1’s former fuel flow meter supplier sues its replacement ahead of US GP (https://www.motorsport.com/f1/news/f1s-former-fuel-flow-meter-supplier-sues-its-replacement-in-texas/10866487/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Spotlight: Haas produces another Godzilla livery for United States GP | Briefs (https://www.racefans.net/2026/10/20/spotlight-haas-produces-another-godzilla-livery-for-united-states-gp/)

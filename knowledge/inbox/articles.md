@@ -534,3 +534,8 @@
 - [ ] Razgatlioglu to miss rest of 2026 MotoGP season (https://www.the-race.com/motogp/razgatlioglu-to-miss-rest-of-2026-motogp-season/)
 - [ ] F1’s former fuel flow meter supplier sues its replacement ahead of US GP (https://www.motorsport.com/f1/news/f1s-former-fuel-flow-meter-supplier-sues-its-replacement-in-texas/10866487/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Spotlight: Haas produces another Godzilla livery for United States GP | Briefs (https://www.racefans.net/2026/10/20/spotlight-haas-produces-another-godzilla-livery-for-united-states-gp/)
+- [ ] Cadillac and Haas reveal special liveries for home race in Austin | Formula 1 (https://www.racefans.net/2026/10/20/cadillac-and-haas-reveal-special-liveries-for-home-race-in-austin/)
+- [ ] FIA adamant Qatar and Abu Dhabi GPs will go ahead (https://www.the-race.com/formula-1/fia-adamant-f1-qatar-abu-dhabi-gp-will-go-ahead/)
+- [ ] Mercedes: “We had people who hadn’t done a live pitstop for 15 years” in Singapore GP (https://www.motorsport.com/f1/news/mercedes-we-had-people-who-hadnt-done-a-live-pitstop-for-15-years-in-singapore-gp/10866416/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] MotoGP bikes to run at F1's US GP (https://www.the-race.com/motogp/motogp-bikes-to-run-at-f1-us-gp/)
+- [ ] Why Isack Hadjar doesn’t like F1 sprints anymore (https://www.motorsport.com/f1/news/why-isack-hadjar-doesnt-like-f1-sprints-anymore/10866320/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

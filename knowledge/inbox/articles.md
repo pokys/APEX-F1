@@ -521,6 +521,7 @@
 - [ ] Ferrari development driver reveals confirmed F1 test plans (https://www.motorsport.com/f1/news/ferrari-development-driver-reveals-confirmed-f1-test-plans/10866579/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Max Verstappen backs Isack Hadjar to take over Red Bull F1 role (https://www.motorsport.com/f1/news/max-verstappen-backs-isack-hadjar-to-take-over-red-bull-f1-role/10866581/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Aston Martin F1's latest merchandise collection comes with eye-watering prices (https://www.motorsport.com/f1/news/aston-martin-f1s-latest-merchandise-collection-comes-with-eye-watering-prices/10866584/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Ferrari, Cadillac, Haas and Aston Martin reveal special liveries for United States Grand Prix | Formula 1 (https://www.racefans.net/2026/10/20/ferrari-cadillac-haas-and-aston-martin-reveal-special-liveries-for-united-states-grand-prix/)
 
 ## 2026-10-21
 - [ ] FIA imposes draconian new rules on F1 teams to stop cost cap exploitation (https://www.the-race.com/formula-1/fia-imposes-draconian-new-rules-on-f1-teams-to-stop-cost-cap-exploitation/)
@@ -546,3 +547,6 @@
 - [ ] Hockenheim in talks with F1 despite “virtually zero” public funding (https://www.motorsport.com/f1/news/hockenheim-in-talks-with-f1-despite-virtually-zero-public-funding/10866729/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Mercedes F1 unveils dramatic new look for United States Grand Prix (https://www.motorsport.com/f1/news/mercedes-f1-unveils-dramatic-new-look-for-united-states-grand-prix/10866765/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Why has the FIA intervened in F1's wheel rim war? (https://www.the-race.com/formula-1/why-an-f1-arms-race-has-been-stopped-before-it-could-start/)
+- [ ] Kimi Antonelli reveals down-to-earth habit ahead of potential F1 title win (https://www.motorsport.com/f1/news/kimi-antonelli-reveals-down-to-earth-habit-ahead-of-potential-f1-title-win/10866796/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Lando Norris launches new clothing collection ahead of United States Grand Prix (https://www.motorsport.com/f1/news/lando-norris-launches-new-clothing-collection-ahead-of-united-states-grand-prix/10866798/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Where to find free F1 fan zones across Austin this week (https://www.motorsport.com/f1/news/where-to-find-free-f1-fan-zones-across-austin-this-week/10866794/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

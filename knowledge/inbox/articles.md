@@ -525,6 +525,7 @@
 - [ ] F1 unveils limited-edition Leica camera with eye-watering $9,950 price tag (https://www.motorsport.com/f1/news/f1-unveils-limited-edition-leica-camera-with-eye-watering-9950-price-tag/10866811/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Ferrari reveals blueprint-style livery for United States GP (https://www.motorsport.com/f1/news/ferrari-reveals-blueprint-style-livery-for-united-states-gp/10866813/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] On This Day: Alonso takes title, Massa wins at home, Schumacher bids Ferrari farewell | Brief (https://www.racefans.net/2026/10/22/on-this-day-brazilian-grand-prix/)
+- [ ] F1's arrival in Austin could trigger staggering $1 billion economic boost (https://www.motorsport.com/f1/news/f1s-arrival-in-austin-could-trigger-staggering-1-billion-economic-boost/10866804/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 
 ## 2026-10-22
 - [ ] Five surprising things we learned from Horner's book (https://www.the-race.com/formula-1/five-surprising-things-we-learned-from-horners-book/)
@@ -536,3 +537,8 @@
 - [ ] Horner reveals Red Bull call to thank him for F1 engine project after maiden win (https://www.autosport.com/f1/news/red-bull-called-christian-horner-to-thank-him-for-f1-engine-project-after-maiden-win/10866939/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] Red Bull called Christian Horner to thank him for F1 engine project after maiden win (https://www.motorsport.com/f1/news/red-bull-called-christian-horner-to-thank-him-for-f1-engine-project-after-maiden-win/10866935/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] The 2027 MotoGP feud already starting (https://www.the-race.com/motogp/the-2027-motogp-feud-already-starting/)
+- [ ] Adobe makes first move into F1 with Alpine deal (https://www.the-race.com/business/adobe-makes-first-move-into-f1-with-alpine-deal/)
+- [ ] MotoGP "can’t just copy" F1’s Drive to Survive success – Chase Carey (https://www.autosport.com/motogp/news/motogp-cant-simply-copy-f1s-drive-to-survive-success-chase-carey/10866969/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] MotoGP can’t simply copy F1’s Drive to Survive success – Chase Carey (https://www.motorsport.com/motogp/news/motogp-cant-simply-copy-f1s-drive-to-survive-success-chase-carey/10866962/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] On this day: Fernando Alonso wins the world title, Michael Schumacher retires from F1 (https://www.motorsport.com/f1/news/2006-brazilian-gp-alonso-wins-title-schumacher-retires-f1/10866737/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Valtteri Bottas is auctioning off his unique 'Nigel the Badger' helmet (https://www.the-race.com/extra/valtteri-bottas-is-auctioning-off-his-unique-nigel-the-badger-helmet/)

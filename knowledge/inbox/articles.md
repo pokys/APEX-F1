@@ -571,3 +571,4 @@
 - [ ] Verstappen would have won Singapore GP in a Ferrari, says Hadjar: ‘It was the fastest car’ | Formula 1 (https://www.racefans.net/2026/10/22/verstappen-would-have-won-singapore-gp-in-a-ferrari-says-hadjar-it-was-the-fastest-car/)
 - [ ] Why Colapinto spoke out against abuse targeting his own F1 team (https://www.autosport.com/f1/news/why-colapinto-spoke-out-against-online-abuse/10867150/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] “Free Congo!”: Hamilton welcomes F1’s return to Africa, with reservations over Rwanda | Formula 1 (https://www.racefans.net/2026/10/22/free-congo-hamilton-welcomes-f1s-return-to-africa-with-reservations-over-rwanda/)
+- [ ] “Difficult to be convinced” F1’s Qatar and Abu Dhabi rounds will happen – Sainz | Formula 1 (https://www.racefans.net/2026/10/22/difficult-to-be-convinced-f1s-qatar-and-abu-dhabi-rounds-will-happen-sainz/)

@@ -531,3 +531,8 @@
 - [ ] Goodbye to a MotoGP classic (https://www.the-race.com/motogp/goodbye-to-motogp-classic-phillip-island-final-race/)
 - [ ] Podcast: Why F1's US GP is pivotal for shaping 2027 (https://www.the-race.com/formula-1/podcast-why-f1s-us-gp-is-pivotal-for-shaping-2027/)
 - [ ] The full story of Red Bull's biggest-ever F1 gamble (https://www.the-race.com/formula-1/red-bull-shock-f1-engine-success-full-story/)
+- [ ] Cadillac unveils $222,500 Sergio Perez special-edition ahead of 300th F1 start (https://www.motorsport.com/f1/news/cadillac-unveils-222500-sergio-perez-special-edition-ahead-of-300th-f1-start/10866891/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] F1 Rewind: The truth behind Schumacher's Ferrari exit (https://www.the-race.com/formula-1/f1-rewind-the-truth-behind-schumachers-ferrari-exit/)
+- [ ] Horner reveals Red Bull call to thank him for F1 engine project after maiden win (https://www.autosport.com/f1/news/red-bull-called-christian-horner-to-thank-him-for-f1-engine-project-after-maiden-win/10866939/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Red Bull called Christian Horner to thank him for F1 engine project after maiden win (https://www.motorsport.com/f1/news/red-bull-called-christian-horner-to-thank-him-for-f1-engine-project-after-maiden-win/10866935/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] The 2027 MotoGP feud already starting (https://www.the-race.com/motogp/the-2027-motogp-feud-already-starting/)

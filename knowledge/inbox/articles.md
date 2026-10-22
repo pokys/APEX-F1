@@ -525,3 +525,9 @@
 - [ ] F1 unveils limited-edition Leica camera with eye-watering $9,950 price tag (https://www.motorsport.com/f1/news/f1-unveils-limited-edition-leica-camera-with-eye-watering-9950-price-tag/10866811/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Ferrari reveals blueprint-style livery for United States GP (https://www.motorsport.com/f1/news/ferrari-reveals-blueprint-style-livery-for-united-states-gp/10866813/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] On This Day: Alonso takes title, Massa wins at home, Schumacher bids Ferrari farewell | Brief (https://www.racefans.net/2026/10/22/on-this-day-brazilian-grand-prix/)
+
+## 2026-10-22
+- [ ] Five surprising things we learned from Horner's book (https://www.the-race.com/formula-1/five-surprising-things-we-learned-from-horners-book/)
+- [ ] Goodbye to a MotoGP classic (https://www.the-race.com/motogp/goodbye-to-motogp-classic-phillip-island-final-race/)
+- [ ] Podcast: Why F1's US GP is pivotal for shaping 2027 (https://www.the-race.com/formula-1/podcast-why-f1s-us-gp-is-pivotal-for-shaping-2027/)
+- [ ] The full story of Red Bull's biggest-ever F1 gamble (https://www.the-race.com/formula-1/red-bull-shock-f1-engine-success-full-story/)

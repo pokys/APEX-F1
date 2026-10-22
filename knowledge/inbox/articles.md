@@ -582,3 +582,6 @@
 - [ ] Lando Norris backs Max Verstappen over COTA bumps, reveals headache tablet use (https://www.motorsport.com/f1/news/lando-norris-backs-max-verstappen-over-cota-bumps-reveals-headache-tablet-use/10867187/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Mercedes rolls back ADUO engine debut (https://www.the-race.com/formula-1/mercedes-rolls-back-aduo-engine-debut/)
 - [ ] Verstappen's spinal damage fears from 'out of control' F1 bumps (https://www.the-race.com/formula-1/verstappens-spinal-damage-fears-from-out-of-control-f1-bumps/)
+- [ ] George Russell calls for F1 track changes after Max Verstappen's COTA complaints (https://www.motorsport.com/f1/news/george-russell-calls-for-f1-track-changes-after-max-verstappens-cota-complaints/10867193/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] On This Day: Hamilton wins in Austin but VSC boosts Rosberg’s title chances | Brief (https://www.racefans.net/2026/10/23/on-this-day-united-states-grand-prix/)
+- [ ] Spotlight: Hamilton to race until he’s 45? ‘I’m forced to stay longer to race in Africa’ | Briefs (https://www.racefans.net/2026/10/23/spotlight-hamilton-to-race-until-hes-45-im-forced-to-stay-longer-to-race-in-africa/)

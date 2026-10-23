@@ -1,5 +1,5 @@
 {
-  "last_checked": "2026-10-23T17:30:14+00:00",
+  "last_checked": "2026-10-23T20:29:19+00:00",
   "processed_documents": [
     "https://www.fia.com/system/files/decision-document/2026_bahrain_grand_prix_in_malaysia_-_decision_-_car_23_-_alleged_driving_erratically.pdf",
     "https://www.fia.com/system/files/decision-document/2026_bahrain_grand_prix_in_malaysia_-_infringement_-_car_18_-_failure_to_follow_race_directors_instructions_sc2-sc1_time_1st_offence.pdf",
@@ -31,7 +31,9 @@
     "https://www.fia.com/system/files/decision-document/2026_singapore_grand_prix_-_infringement_-_car_63_-_changes_to_pu_elements.pdf",
     "https://www.fia.com/system/files/decision-document/2026_singapore_grand_prix_-_infringement_-_car_6_-_pu_elements_and_changes_made_during_parc_ferme.pdf",
     "https://www.fia.com/system/files/decision-document/2026_singapore_grand_prix_-_infringement_-_car_77_-_causing_a_collision_with_car_23.pdf",
-    "https://www.fia.com/system/files/decision-document/2026_united_states_grand_prix_-_entry_list.pdf"
+    "https://www.fia.com/system/files/decision-document/2026_united_states_grand_prix_-_entry_list.pdf",
+    "https://www.fia.com/system/files/decision-document/2026_united_states_grand_prix_-_infringement_-_car_43_-_pu_element.pdf",
+    "https://www.fia.com/system/files/decision-document/2026_united_states_grand_prix_-_infringement_-_car_5_-_pu_elements.pdf"
   ],
   "signals": [
     {
@@ -110,6 +112,32 @@
       "source_name": "fia_decision_documents",
       "source_url": "https://www.fia.com/system/files/decision-document/2026_singapore_grand_prix_-_infringement_-_car_6_-_pu_elements_and_changes_made_during_parc_ferme.pdf",
       "timestamp": "2026-10-11T18:58:00",
+      "type": "grid_penalty"
+    },
+    {
+      "applies_to": "race",
+      "driver": "BOR",
+      "event": "United States Grand Prix",
+      "evidence": "Drop of 20 grid positions for the next Race in which the driver participates.",
+      "places": 20,
+      "season": 2026,
+      "source_confidence": 0.98,
+      "source_name": "fia_decision_documents",
+      "source_url": "https://www.fia.com/system/files/decision-document/2026_united_states_grand_prix_-_infringement_-_car_5_-_pu_elements.pdf",
+      "timestamp": "2026-10-23T13:37:00",
+      "type": "grid_penalty"
+    },
+    {
+      "applies_to": "race",
+      "driver": "COL",
+      "event": "United States Grand Prix",
+      "evidence": "Drop of 10 grid positions for the next Race in which the driver participates.",
+      "places": 10,
+      "season": 2026,
+      "source_confidence": 0.98,
+      "source_name": "fia_decision_documents",
+      "source_url": "https://www.fia.com/system/files/decision-document/2026_united_states_grand_prix_-_infringement_-_car_43_-_pu_element.pdf",
+      "timestamp": "2026-10-23T13:37:00",
       "type": "grid_penalty"
     }
   ]

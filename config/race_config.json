@@ -12,8 +12,8 @@
   "calibration_source": "outputs/backtest/backtest_season_2026.json",
   "driver_substitutions": [],
   "event_format": "conventional",
-  "event_signal_count": 0,
-  "generated_at": "2026-10-23T19:29:01Z",
+  "event_signal_count": 2,
+  "generated_at": "2026-10-23T20:29:14Z",
   "grid_penalties": [],
   "grid_position_weight": 1500.0,
   "grid_source": "simulation",
@@ -80,7 +80,26 @@
   "qualifying_noise_scale": 6.0,
   "race": "United States Grand Prix",
   "race_date": "2026-10-25",
-  "race_grid_penalties": [],
+  "race_grid_penalties": [
+    {
+      "back_of_grid": false,
+      "driver": "BOR",
+      "pit_lane": false,
+      "places": 20,
+      "sources": [
+        "https://www.fia.com/system/files/decision-document/2026_united_states_grand_prix_-_infringement_-_car_5_-_pu_elements.pdf"
+      ]
+    },
+    {
+      "back_of_grid": false,
+      "driver": "COL",
+      "pit_lane": false,
+      "places": 10,
+      "sources": [
+        "https://www.fia.com/system/files/decision-document/2026_united_states_grand_prix_-_infringement_-_car_43_-_pu_element.pdf"
+      ]
+    }
+  ],
   "race_noise_scale": 6.0,
   "recovery_strength": 0.0,
   "safety_car_probability": 0.25,

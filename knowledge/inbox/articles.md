@@ -545,3 +545,6 @@
 - [ ] Phillip Island MotoGP practice: Big crashes and Marquez fastest (https://www.the-race.com/motogp/phillip-island-motogp-practice-big-crashes-and-marquez-fastest/)
 - [ ] Bezzecchi has bizarre collision then tops practice (https://www.the-race.com/motogp/bezzecchi-has-bizarre-collision-then-tops-practice/)
 - [ ] Antonelli’s second-year title bid reminds Hamilton of his first seasons in F1 | Formula 1 (https://www.racefans.net/2026/10/23/antonellis-second-year-title-bid-reminds-hamilton-of-his-first-seasons-in-f1/)
+- [ ] MotoGP rider union talks revived amid Qatar GP vote (https://www.the-race.com/motogp/motogp-rider-union-talks-revived-amid-qatar-gp-vote/)
+- [ ] Why it's now Bearman versus Camara for the next Ferrari vacancy (https://www.autosport.com/f1/news/why-its-now-bearman-versus-camara-for-the-next-ferrari-vacancy/10867288/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Why it's now Oliver Bearman versus Rafael Camara for the next Ferrari vacancy (https://www.motorsport.com/f1/news/oliver-bearman-versus-rafael-camara-for-the-next-ferrari-vacancy/10867132/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

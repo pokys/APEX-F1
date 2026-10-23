@@ -566,3 +566,4 @@
 - [ ] Lewis Hamilton: Kimi Antonelli “deserves to be the champion” (https://www.motorsport.com/f1/news/lewis-hamilton-kimi-antonelli-deserves-to-be-the-champion/10867431/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Ferrari's most significant F1 aero upgrade of 2026 revealed (https://www.the-race.com/formula-1/ferrari-f1-2026-us-gp-biggest-upgrade-revealed/)
 - [ ] Grid drops? New MotoGP sanctions for missing PR events revealed (https://www.the-race.com/motogp/grid-drops-new-motogp-sanctions-for-missing-pr-events-revealed/)
+- [ ] George Russell admits Mercedes still needs time to “fine-tune” problematic upgrade package (https://www.motorsport.com/f1/news/george-russell-admits-mercedes-still-needs-time-to-fine-tune-problematic-upgrade-package/10867446/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

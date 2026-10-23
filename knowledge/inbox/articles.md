@@ -560,3 +560,4 @@
 - [ ] George Russell: F1 2026 season a test of "character and resilience" (https://www.motorsport.com/f1/news/russell-f1-2026-season-a-test-of-character-and-resilience/10867173/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Grid drops?! New MotoGP sanctions for missing PR events revealed (https://www.the-race.com/motogp/grid-drops-new-motogp-sanctions-for-missing-pr-events-revealed/)
 - [ ] '3.0' - How F1's post-2021 race control aid has changed (https://www.the-race.com/formula-1/f1-race-control-remote-operations-stewards-fia-evolution/)
+- [ ] Palou gets home race as IndyCar adds new Spanish round to 2027 calendar | IndyCar (https://www.racefans.net/2026/10/23/palou-gets-home-race-as-indycar-adds-new-spanish-round-to-2027-calendar/)

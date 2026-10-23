@@ -562,3 +562,4 @@
 - [ ] '3.0' - How F1's post-2021 race control aid has changed (https://www.the-race.com/formula-1/f1-race-control-remote-operations-stewards-fia-evolution/)
 - [ ] Palou gets home race as IndyCar adds new Spanish round to 2027 calendar | IndyCar (https://www.racefans.net/2026/10/23/palou-gets-home-race-as-indycar-adds-new-spanish-round-to-2027-calendar/)
 - [ ] Fernando Alonso backs IndyCar Barcelona race but warns against wider global expansion (https://www.motorsport.com/indycar/news/fernando-alonso-backs-indycar-barcelona-race-but-warns-against-wider-global-expansion/10867420/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Lewis Hamilton: Kimi Antonelli “deserves to be the champion” (https://www.motorsport.com/f1/news/lewis-hamilton-kimi-antonelli-deserves-to-be-the-champion/10867431/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

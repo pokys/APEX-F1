@@ -543,3 +543,4 @@
 ## 2026-10-23
 - [ ] Everything we learned on day one of F1's 2026 US GP (https://www.the-race.com/formula-1/everything-we-learned-on-day-one-of-f1s-2026-us-gp/)
 - [ ] Phillip Island MotoGP practice: Big crashes and Marquez fastest (https://www.the-race.com/motogp/phillip-island-motogp-practice-big-crashes-and-marquez-fastest/)
+- [ ] Bezzecchi has bizarre collision then tops practice (https://www.the-race.com/motogp/bezzecchi-has-bizarre-collision-then-tops-practice/)

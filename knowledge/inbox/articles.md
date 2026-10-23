@@ -586,3 +586,4 @@
 - [ ] Featured comment: Russell is unlikely to get a better chance to win the title | Briefs (https://www.racefans.net/2026/10/23/featured-comment-russell-is-unlikely-to-get-a-better-chance-to-win-the-title/)
 - [ ] Lando Norris reveals “plenty of telling-offs” after Singapore Oscar Piastri crash (https://www.motorsport.com/f1/news/lando-norris-reveals-he-got-plenty-of-telling-offs-after-singapore-crash-with-piastri/10867463/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Newey on Honda progress 'disappointment' and signs for 2027 (https://www.the-race.com/formula-1/adrian-newey-honda-f1-2026-progress-disappointment-2027-signs/)
+- [ ] Lewis Hamilton admits Red Bull achieved what he thought was impossible (https://www.motorsport.com/f1/news/lewis-hamilton-admits-red-bull-achieved-what-he-thought-was-impossible/10867572/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

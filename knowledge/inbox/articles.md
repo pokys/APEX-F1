@@ -544,3 +544,4 @@
 - [ ] Everything we learned on day one of F1's 2026 US GP (https://www.the-race.com/formula-1/everything-we-learned-on-day-one-of-f1s-2026-us-gp/)
 - [ ] Phillip Island MotoGP practice: Big crashes and Marquez fastest (https://www.the-race.com/motogp/phillip-island-motogp-practice-big-crashes-and-marquez-fastest/)
 - [ ] Bezzecchi has bizarre collision then tops practice (https://www.the-race.com/motogp/bezzecchi-has-bizarre-collision-then-tops-practice/)
+- [ ] Antonelli’s second-year title bid reminds Hamilton of his first seasons in F1 | Formula 1 (https://www.racefans.net/2026/10/23/antonellis-second-year-title-bid-reminds-hamilton-of-his-first-seasons-in-f1/)

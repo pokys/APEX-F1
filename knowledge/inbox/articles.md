@@ -551,3 +551,8 @@
 - [ ] F1's plan to slash car weight revealed (https://www.the-race.com/formula-1/f1s-plan-to-slash-car-weight-revealed/)
 - [ ] What 'powerless' MotoGP riders have suddenly realised (https://www.the-race.com/motogp/motogp-rider-union-talks-revived-amid-qatar-gp-vote/)
 - [ ] "It's pretty bad" – Why Norris needs headache tablets for bumpy Austin circuit (https://www.autosport.com/f1/news/its-pretty-bad-why-norris-needs-headache-tablets-for-bumpy-austin-circuit/10867192/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Belgian firm to take over Renault/Alpine engine facility in Viry (https://www.motorsport.com/wec/news/alpine-a424-could-be-on-the-2027-wec-grid-as-belgian-company-takes-over-viry/10867319/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Norris “got plenty of telling-offs” from McLaren over Singapore collision with Piastri | Formula 1 (https://www.racefans.net/2026/10/23/norris-got-plenty-of-telling-offs-from-mclaren-over-singapore-collision-with-piastri/)
+- [ ] Renault to sell former F1 engine facility in Viry (https://www.autosport.com/f1/news/renault-to-sell-former-f1-engine-facility-in-viry/10867332/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Russell is certain 2026 “won’t be my last shot” to win the championship | Formula 1 (https://www.racefans.net/2026/10/23/russell-is-certain-2026-wont-be-my-last-shot-to-win-the-championship/)
+- [ ] Why F1 is 'an incredible match’ for Adobe (https://www.the-race.com/business/why-f1-is-an-incredible-match-for-adobe/)

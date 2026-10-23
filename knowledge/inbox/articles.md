@@ -539,6 +539,7 @@
 - [ ] On This Day: Hamilton wins in Austin but VSC boosts Rosberg’s title chances | Brief (https://www.racefans.net/2026/10/23/on-this-day-united-states-grand-prix/)
 - [ ] Spotlight: Hamilton to race until he’s 45? ‘I’m forced to stay longer to race in Africa’ | Briefs (https://www.racefans.net/2026/10/23/spotlight-hamilton-to-race-until-hes-45-im-forced-to-stay-longer-to-race-in-africa/)
 - [ ] MotoGP riders hold secret meeting amid Qatar concerns (https://www.the-race.com/motogp/motogp-riders-hold-secret-meeting-amid-qatar-concerns/)
+- [ ] F1's United States GP venue faces roller coaster controversy ahead of race weekend (https://www.motorsport.com/f1/news/f1s-united-states-gp-venue-faces-roller-coaster-controversy-ahead-of-race-weekend/10866807/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 
 ## 2026-10-23
 - [ ] Everything we learned on day one of F1's 2026 US GP (https://www.the-race.com/formula-1/everything-we-learned-on-day-one-of-f1s-2026-us-gp/)
@@ -563,3 +564,5 @@
 - [ ] Palou gets home race as IndyCar adds new Spanish round to 2027 calendar | IndyCar (https://www.racefans.net/2026/10/23/palou-gets-home-race-as-indycar-adds-new-spanish-round-to-2027-calendar/)
 - [ ] Fernando Alonso backs IndyCar Barcelona race but warns against wider global expansion (https://www.motorsport.com/indycar/news/fernando-alonso-backs-indycar-barcelona-race-but-warns-against-wider-global-expansion/10867420/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Lewis Hamilton: Kimi Antonelli “deserves to be the champion” (https://www.motorsport.com/f1/news/lewis-hamilton-kimi-antonelli-deserves-to-be-the-champion/10867431/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Ferrari's most significant F1 aero upgrade of 2026 revealed (https://www.the-race.com/formula-1/ferrari-f1-2026-us-gp-biggest-upgrade-revealed/)
+- [ ] Grid drops? New MotoGP sanctions for missing PR events revealed (https://www.the-race.com/motogp/grid-drops-new-motogp-sanctions-for-missing-pr-events-revealed/)

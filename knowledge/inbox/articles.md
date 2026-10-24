@@ -542,3 +542,6 @@
 - [ ] Winners and losers from COTA's Friday F1 action (https://www.the-race.com/formula-1/winners-and-losers-from-cotas-friday-f1-action/)
 - [ ] F1's wide-open US GP fight explained (https://www.the-race.com/formula-1/f1-2026-wide-open-us-gp-fight-explained/)
 - [ ] Marquez retakes MotoGP lead after epic duel and big Martin crash (https://www.the-race.com/motogp/marquez-retakes-motogp-lead-after-epic-duel-and-big-martin-crash/)
+- [ ] Arm injury effectively ends Martin's MotoGP title chance (https://www.the-race.com/motogp/arm-injury-effectively-ends-martins-motogp-title-chance/)
+- [ ] Fernandez becomes sixth rider sidelined from Australian GP (https://www.the-race.com/motogp/fernandez-becomes-sixth-rider-sidelined-from-australian-gp/)
+- [ ] Kimi Antonelli hails "step forward" at United States GP as Mercedes chips away at upgrades (https://www.motorsport.com/f1/news/kimi-antonelli-hails-austin-fp2-step-forward-as-mercedes-chips-away-at-upgrades/10867656/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

@@ -541,3 +541,4 @@
 - [ ] What was behind one F1 team's strangest day of 2026 (https://www.the-race.com/formula-1/what-was-behind-williams-f1-team-strangest-day-2026/)
 - [ ] Winners and losers from COTA's Friday F1 action (https://www.the-race.com/formula-1/winners-and-losers-from-cotas-friday-f1-action/)
 - [ ] F1's wide-open US GP fight explained (https://www.the-race.com/formula-1/f1-2026-wide-open-us-gp-fight-explained/)
+- [ ] Marquez retakes MotoGP lead after epic duel and big Martin crash (https://www.the-race.com/motogp/marquez-retakes-motogp-lead-after-epic-duel-and-big-martin-crash/)

@@ -535,3 +535,8 @@
 - [ ] McLaren's aims for its final F1 2026 upgrades amid decline in form (https://www.autosport.com/f1/news/mclarens-aims-for-final-f1-2026-upgrades/10867609/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] On This Day: Verstappen beats Hamilton in Austin despite “blurred images” in vision | Brief (https://www.racefans.net/2026/10/24/on-this-day-2021-united-states-grand-prix/)
 - [ ] Works Honda team runs out of riders for Australian GP (https://www.the-race.com/motogp/works-honda-team-out-of-australian-gp-as-it-runs-out-of-riders/)
+
+## 2026-10-24
+- [ ] Marquez falls on his way to staggering Phillip Island MotoGP pole (https://www.the-race.com/motogp/marquez-falls-before-staggering-phillip-island-motogp-pole-lap/)
+- [ ] What was behind one F1 team's strangest day of 2026 (https://www.the-race.com/formula-1/what-was-behind-williams-f1-team-strangest-day-2026/)
+- [ ] Winners and losers from COTA's Friday F1 action (https://www.the-race.com/formula-1/winners-and-losers-from-cotas-friday-f1-action/)

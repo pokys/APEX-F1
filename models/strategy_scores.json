@@ -1,95 +1,95 @@
 {
-  "inputs_hash": "9a19d6b39a28c27b6cab8322881bd85f53eb59c90c6d8018a117944a237dcd27",
+  "inputs_hash": "7020d905780e7376469f0cd2ad3787e1b8bf0c33e0a56e5fe3346e1f81f632d6",
   "season": 2026,
   "source_features": "data/processed/features_season_2026.json",
   "source_summary": "Full Season 2026 Data",
   "teams": [
     {
       "components": {
-        "race_position_gain": 37.681344,
+        "race_position_gain": 39.060224,
         "sprint_execution": 32.60786
       },
-      "strategy_score": 36.412973,
+      "strategy_score": 37.447133,
       "team": "Alpine F1 Team"
     },
     {
       "components": {
-        "race_position_gain": 50.697824,
+        "race_position_gain": 48.165152,
         "sprint_execution": 56.313698
       },
-      "strategy_score": 52.101792,
+      "strategy_score": 50.202288,
       "team": "Aston Martin"
     },
     {
       "components": {
-        "race_position_gain": 48.184136,
+        "race_position_gain": 47.589128,
         "sprint_execution": 46.004063
       },
-      "strategy_score": 47.639118,
+      "strategy_score": 47.192862,
       "team": "Audi"
     },
     {
       "components": {
-        "race_position_gain": 53.409368,
+        "race_position_gain": 54.385608,
         "sprint_execution": 59.925227
       },
-      "strategy_score": 55.038333,
+      "strategy_score": 55.770513,
       "team": "Cadillac F1 Team"
     },
     {
       "components": {
-        "race_position_gain": 45.098128,
+        "race_position_gain": 45.821568,
         "sprint_execution": 61.713113
       },
-      "strategy_score": 49.251874,
+      "strategy_score": 49.794454,
       "team": "Ferrari"
     },
     {
       "components": {
-        "race_position_gain": 53.807088,
+        "race_position_gain": 55.417168,
         "sprint_execution": 91.90904
       },
-      "strategy_score": 63.332576,
+      "strategy_score": 64.540136,
       "team": "Haas F1 Team"
     },
     {
       "components": {
-        "race_position_gain": 41.783408,
+        "race_position_gain": 44.326192,
         "sprint_execution": 13.495172
       },
-      "strategy_score": 34.711349,
+      "strategy_score": 36.618437,
       "team": "McLaren"
     },
     {
       "components": {
-        "race_position_gain": 53.720992,
+        "race_position_gain": 52.631424,
         "sprint_execution": 9.268673
       },
-      "strategy_score": 42.607912,
+      "strategy_score": 41.790736,
       "team": "Mercedes"
     },
     {
       "components": {
-        "race_position_gain": 63.145264,
+        "race_position_gain": 60.906688,
         "sprint_execution": 67.97768
       },
-      "strategy_score": 64.353368,
+      "strategy_score": 62.674436,
       "team": "RB F1 Team"
     },
     {
       "components": {
-        "race_position_gain": 64.292192,
+        "race_position_gain": 59.59704,
         "sprint_execution": 15.503792
       },
-      "strategy_score": 52.095092,
+      "strategy_score": 48.573728,
       "team": "Red Bull"
     },
     {
       "components": {
-        "race_position_gain": 38.180248,
+        "race_position_gain": 42.0998,
         "sprint_execution": 86.351378
       },
-      "strategy_score": 50.22303,
+      "strategy_score": 53.162695,
       "team": "Williams"
     }
   ]

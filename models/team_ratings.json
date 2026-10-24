@@ -1,56 +1,56 @@
 {
-  "inputs_hash": "9a19d6b39a28c27b6cab8322881bd85f53eb59c90c6d8018a117944a237dcd27",
+  "inputs_hash": "7020d905780e7376469f0cd2ad3787e1b8bf0c33e0a56e5fe3346e1f81f632d6",
   "season": 2026,
   "source_features": "data/processed/features_season_2026.json",
   "source_summary": "Full Season 2026 Data",
   "teams": [
     {
       "components": {
-        "qualifying_gap_proxy": 47.901188,
-        "qualifying_progression": 55.79932,
-        "qualifying_time_gap_proxy": 58.358206,
+        "qualifying_gap_proxy": 47.434799,
+        "qualifying_progression": 55.38884,
+        "qualifying_time_gap_proxy": 58.398872,
         "race_pace_proxy": 63.549458,
-        "race_position_gain": 40.761008,
+        "race_position_gain": 41.795168,
         "race_position_proxy": 51.270825,
         "sprint_qualifying_time_gap_proxy": 51.948573,
         "weekend_pace_proxy": 51.791117
       },
-      "qualifying_team_rating": 53.472972,
-      "race_team_rating": 54.737226,
+      "qualifying_team_rating": 53.302971,
+      "race_team_rating": 54.899374,
       "team": "Alpine F1 Team",
-      "team_rating": 54.168312
+      "team_rating": 54.180993
     },
     {
       "components": {
         "qualifying_gap_proxy": 8.0,
-        "qualifying_progression": 47.87252,
-        "qualifying_time_gap_proxy": 22.423009,
+        "qualifying_progression": 48.24372,
+        "qualifying_time_gap_proxy": 26.567278,
         "race_pace_proxy": 62.208909,
-        "race_position_gain": 50.523368,
+        "race_position_gain": 48.623864,
         "race_position_proxy": 40.877783,
         "sprint_qualifying_time_gap_proxy": 21.92939,
         "weekend_pace_proxy": 47.783754
       },
-      "qualifying_team_rating": 22.396891,
-      "race_team_rating": 50.572468,
+      "qualifying_team_rating": 24.031831,
+      "race_team_rating": 50.370259,
       "team": "Aston Martin",
-      "team_rating": 37.893458
+      "team_rating": 38.517966
     },
     {
       "components": {
-        "qualifying_gap_proxy": 41.410385,
-        "qualifying_progression": 53.14776,
-        "qualifying_time_gap_proxy": 52.344655,
+        "qualifying_gap_proxy": 41.658724,
+        "qualifying_progression": 53.17866,
+        "qualifying_time_gap_proxy": 53.910021,
         "race_pace_proxy": 59.864023,
-        "race_position_gain": 48.638102,
+        "race_position_gain": 48.191846,
         "race_position_proxy": 50.907417,
         "sprint_qualifying_time_gap_proxy": 54.972996,
         "weekend_pace_proxy": 52.513658
       },
-      "qualifying_team_rating": 49.252618,
-      "race_team_rating": 54.228806,
+      "qualifying_team_rating": 49.939244,
+      "race_team_rating": 54.20317,
       "team": "Audi",
-      "team_rating": 51.989521
+      "team_rating": 52.284403
     },
     {
       "components": {
@@ -58,127 +58,127 @@
         "qualifying_progression": 46.66666,
         "qualifying_time_gap_proxy": 18.4,
         "race_pace_proxy": 63.358595,
-        "race_position_gain": 52.557026,
+        "race_position_gain": 53.289206,
         "race_position_proxy": 38.334712,
         "sprint_qualifying_time_gap_proxy": 16.4,
         "weekend_pace_proxy": 45.0
       },
       "qualifying_team_rating": 19.851515,
-      "race_team_rating": 50.290706,
+      "race_team_rating": 50.414207,
       "team": "Cadillac F1 Team",
-      "team_rating": 36.59307
+      "team_rating": 36.660996
     },
     {
       "components": {
         "qualifying_gap_proxy": 92.0,
-        "qualifying_progression": 59.90104,
-        "qualifying_time_gap_proxy": 77.144017,
+        "qualifying_progression": 59.91752,
+        "qualifying_time_gap_proxy": 77.435209,
         "race_pace_proxy": 72.474643,
-        "race_position_gain": 46.323596,
+        "race_position_gain": 46.866176,
         "race_position_proxy": 67.384629,
         "sprint_qualifying_time_gap_proxy": 77.787889,
         "weekend_pace_proxy": 61.560299
       },
-      "qualifying_team_rating": 78.959843,
-      "race_team_rating": 66.192613,
+      "qualifying_team_rating": 79.073847,
+      "race_team_rating": 66.292374,
       "team": "Ferrari",
-      "team_rating": 71.937867
+      "team_rating": 72.044037
     },
     {
       "components": {
-        "qualifying_gap_proxy": 27.847287,
-        "qualifying_progression": 51.20272,
-        "qualifying_time_gap_proxy": 49.522399,
+        "qualifying_gap_proxy": 27.27419,
+        "qualifying_progression": 50.99382,
+        "qualifying_time_gap_proxy": 49.10348,
         "race_pace_proxy": 63.568874,
-        "race_position_gain": 52.855316,
+        "race_position_gain": 54.062876,
         "race_position_proxy": 48.865077,
         "sprint_qualifying_time_gap_proxy": 40.257421,
         "weekend_pace_proxy": 51.131293
       },
-      "qualifying_team_rating": 41.871954,
-      "race_team_rating": 55.274275,
+      "qualifying_team_rating": 41.508759,
+      "race_team_rating": 55.451705,
       "team": "Haas F1 Team",
-      "team_rating": 49.243231
+      "team_rating": 49.177379
     },
     {
       "components": {
-        "qualifying_gap_proxy": 92.0,
+        "qualifying_gap_proxy": 91.406156,
         "qualifying_progression": 60.0,
-        "qualifying_time_gap_proxy": 73.981106,
+        "qualifying_time_gap_proxy": 73.416733,
         "race_pace_proxy": 68.156301,
-        "race_position_gain": 43.837556,
+        "race_position_gain": 45.744644,
         "race_position_proxy": 63.983438,
         "sprint_qualifying_time_gap_proxy": 71.74428,
         "weekend_pace_proxy": 58.18868
       },
-      "qualifying_team_rating": 76.753521,
-      "race_team_rating": 62.659311,
+      "qualifying_team_rating": 76.346517,
+      "race_team_rating": 62.951566,
       "team": "McLaren",
-      "team_rating": 69.001706
+      "team_rating": 68.979294
     },
     {
       "components": {
         "qualifying_gap_proxy": 92.0,
-        "qualifying_progression": 59.20838,
-        "qualifying_time_gap_proxy": 74.117358,
+        "qualifying_progression": 59.34014,
+        "qualifying_time_gap_proxy": 74.876301,
         "race_pace_proxy": 73.000985,
-        "race_position_gain": 52.790744,
+        "race_position_gain": 51.973568,
         "race_position_proxy": 68.625638,
         "sprint_qualifying_time_gap_proxy": 72.929204,
         "weekend_pace_proxy": 61.192817
       },
-      "qualifying_team_rating": 77.141952,
-      "race_team_rating": 67.646224,
+      "qualifying_team_rating": 77.447158,
+      "race_team_rating": 67.53045,
       "team": "Mercedes",
-      "team_rating": 71.919302
+      "team_rating": 71.992969
     },
     {
       "components": {
-        "qualifying_gap_proxy": 50.307485,
-        "qualifying_progression": 55.74264,
-        "qualifying_time_gap_proxy": 58.400941,
+        "qualifying_gap_proxy": 51.167909,
+        "qualifying_progression": 55.89646,
+        "qualifying_time_gap_proxy": 58.860797,
         "race_pace_proxy": 59.33386,
-        "race_position_gain": 59.858948,
+        "race_position_gain": 58.180016,
         "race_position_proxy": 58.115459,
         "sprint_qualifying_time_gap_proxy": 51.481309,
         "weekend_pace_proxy": 54.228985
       },
-      "qualifying_team_rating": 54.418496,
-      "race_team_rating": 58.266795,
+      "qualifying_team_rating": 54.883923,
+      "race_team_rating": 58.017247,
       "team": "RB F1 Team",
-      "team_rating": 56.53506
+      "team_rating": 56.607251
     },
     {
       "components": {
-        "qualifying_gap_proxy": 85.938631,
-        "qualifying_progression": 59.45034,
-        "qualifying_time_gap_proxy": 75.062536,
+        "qualifying_gap_proxy": 87.728241,
+        "qualifying_progression": 59.54998,
+        "qualifying_time_gap_proxy": 75.632061,
         "race_pace_proxy": 66.845379,
-        "race_position_gain": 60.719144,
+        "race_position_gain": 57.19778,
         "race_position_proxy": 67.296383,
         "sprint_qualifying_time_gap_proxy": 70.782053,
         "weekend_pace_proxy": 58.423629
       },
-      "qualifying_team_rating": 75.104775,
-      "race_team_rating": 65.711477,
+      "qualifying_team_rating": 75.903298,
+      "race_team_rating": 65.175237,
       "team": "Red Bull",
-      "team_rating": 69.938461
+      "team_rating": 70.002864
     },
     {
       "components": {
         "qualifying_gap_proxy": 8.0,
-        "qualifying_progression": 50.7378,
-        "qualifying_time_gap_proxy": 41.907312,
+        "qualifying_progression": 50.05714,
+        "qualifying_time_gap_proxy": 41.282967,
         "race_pace_proxy": 53.618913,
-        "race_position_gain": 41.135186,
+        "race_position_gain": 44.07485,
         "race_position_proxy": 42.73864,
         "sprint_qualifying_time_gap_proxy": 16.4,
         "weekend_pace_proxy": 46.802091
       },
-      "qualifying_team_rating": 29.467815,
-      "race_team_rating": 46.357478,
+      "qualifying_team_rating": 29.164713,
+      "race_team_rating": 46.831414,
       "team": "Williams",
-      "team_rating": 38.75713
+      "team_rating": 38.881399
     }
   ]
 }

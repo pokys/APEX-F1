@@ -555,3 +555,7 @@
 - [ ] Formula 1’s ruined season diminishes Antonelli’s inevitable championship triumph | Comment (https://www.racefans.net/2026/10/24/formula-1s-ruined-season-diminishes-antonellis-inevitable-championship-triumph/)
 - [ ] Why Cadillac F1 boss provoked fresh intrigue by dodging driver question (https://www.autosport.com/f1/news/why-cadillac-f1-boss-provoked-fresh-intrigue-by-dodging-driver-question/10867820/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] Why Cadillac F1 boss provoked fresh intrigue by dodging driver question (https://www.motorsport.com/f1/news/why-cadillac-f1-boss-provoked-fresh-intrigue-by-dodging-driver-question/10867808/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Ferrari's last major 2026 F1 upgrade explained (https://www.the-race.com/formula-1/ferrari-last-major-2026-f1-upgrade-explained/)
+- [ ] Gary Anderson's simple design solution for F1's impeding problem (https://www.the-race.com/formula-1/gary-andersons-simple-solution-for-f1s-impeding-problem/)
+- [ ] How F1's top four teams are comparing in Austin (https://www.the-race.com/formula-1/f1-2026-wide-open-us-gp-fight-explained/)
+- [ ] The intrigue caused by Cadillac's F1 boss dodging driver market question (https://www.autosport.com/f1/news/the-intrigued-caused-by-cadillacs-f1-boss-dodging-driver-market-question/10867820/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)

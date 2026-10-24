@@ -18,8 +18,8 @@
   "calibration_source": "outputs/backtest/backtest_season_2026.json",
   "driver_substitutions": [],
   "event_format": "conventional",
-  "event_signal_count": 2,
-  "generated_at": "2026-10-24T20:30:45Z",
+  "event_signal_count": 3,
+  "generated_at": "2026-10-24T21:30:44Z",
   "grid_penalties": [],
   "grid_position_weight": 1500.0,
   "grid_source": "simulation",
@@ -101,9 +101,10 @@
       "back_of_grid": false,
       "driver": "BOR",
       "pit_lane": false,
-      "places": 20,
+      "places": 80,
       "sources": [
-        "https://www.fia.com/system/files/decision-document/2026_united_states_grand_prix_-_infringement_-_car_5_-_pu_elements.pdf"
+        "https://www.fia.com/system/files/decision-document/2026_united_states_grand_prix_-_infringement_-_car_5_-_pu_elements.pdf",
+        "https://www.fia.com/system/files/decision-document/2026_united_states_grand_prix_-_infringement_-_car_5_-_additional_changes_to_pu_elements.pdf"
       ]
     },
     {

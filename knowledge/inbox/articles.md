@@ -569,3 +569,4 @@
 - [ ] Franco Colapinto goes viral after surprise Doctor Doom appearance at United States GP (https://www.motorsport.com/f1/news/franco-colapinto-goes-viral-after-surprise-doctor-doom-appearance-at-united-states-gp/10867930/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Hamilton leads final practice after Leclerc lap deletion (https://www.the-race.com/formula-1/ferrari-completes-us-gp-practice-sweep/)
 - [ ] Hamilton leads final practice after spate of track limits violations | Formula 1 (https://www.racefans.net/2026/10/24/hamilton-leads-final-practice-after-spate-of-track-limits-violations/)
+- [ ] Colton Herta savours "super special" Austin homecoming as 2027 uncertainty remains (https://www.motorsport.com/f1/news/colton-herta-savours-super-special-austin-homecoming-as-2027-uncertainty-remains/10867950/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

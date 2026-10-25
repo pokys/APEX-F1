@@ -21,7 +21,7 @@
   "calibration_source": "outputs/backtest/backtest_season_2026.json",
   "driver_substitutions": [],
   "event_format": "conventional",
-  "event_signal_count": 3,
+  "event_signal_count": 4,
   "fixed_grid": [
     "ANT",
     "VER",
@@ -38,15 +38,15 @@
     "ALO",
     "BEA",
     "OCO",
-    "STR",
     "SAI",
     "ALB",
     "PER",
     "BOT",
     "BOR",
-    "COL"
+    "COL",
+    "STR"
   ],
-  "generated_at": "2026-10-25T19:32:09Z",
+  "generated_at": "2026-10-25T19:33:14Z",
   "grid_penalties": [
     {
       "back_of_grid": false,
@@ -65,6 +65,15 @@
       "places": 10,
       "sources": [
         "https://www.fia.com/system/files/decision-document/2026_united_states_grand_prix_-_infringement_-_car_43_-_pu_element.pdf"
+      ]
+    },
+    {
+      "back_of_grid": false,
+      "driver": "STR",
+      "pit_lane": true,
+      "places": 0,
+      "sources": [
+        "https://www.fia.com/system/files/decision-document/2026_united_states_grand_prix_-_infringement_-_car_18_-_changes_made_during_parc_ferme.pdf"
       ]
     }
   ],
@@ -161,6 +170,15 @@
       "places": 10,
       "sources": [
         "https://www.fia.com/system/files/decision-document/2026_united_states_grand_prix_-_infringement_-_car_43_-_pu_element.pdf"
+      ]
+    },
+    {
+      "back_of_grid": false,
+      "driver": "STR",
+      "pit_lane": true,
+      "places": 0,
+      "sources": [
+        "https://www.fia.com/system/files/decision-document/2026_united_states_grand_prix_-_infringement_-_car_18_-_changes_made_during_parc_ferme.pdf"
       ]
     }
   ],

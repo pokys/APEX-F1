@@ -1,5 +1,5 @@
 {
-  "last_checked": "2026-10-25T17:32:26+00:00",
+  "last_checked": "2026-10-25T19:33:19+00:00",
   "processed_documents": [
     "https://www.fia.com/system/files/decision-document/2026_bahrain_grand_prix_in_malaysia_-_decision_-_car_23_-_alleged_driving_erratically.pdf",
     "https://www.fia.com/system/files/decision-document/2026_bahrain_grand_prix_in_malaysia_-_infringement_-_car_18_-_failure_to_follow_race_directors_instructions_sc2-sc1_time_1st_offence.pdf",
@@ -33,6 +33,7 @@
     "https://www.fia.com/system/files/decision-document/2026_singapore_grand_prix_-_infringement_-_car_77_-_causing_a_collision_with_car_23.pdf",
     "https://www.fia.com/system/files/decision-document/2026_united_states_grand_prix_-_decision_-_car_63_-_alleged_forcing_another_driver_off_the_track.pdf",
     "https://www.fia.com/system/files/decision-document/2026_united_states_grand_prix_-_entry_list.pdf",
+    "https://www.fia.com/system/files/decision-document/2026_united_states_grand_prix_-_infringement_-_car_18_-_changes_made_during_parc_ferme.pdf",
     "https://www.fia.com/system/files/decision-document/2026_united_states_grand_prix_-_infringement_-_car_27_-_alleged_pit_lane_incident.pdf",
     "https://www.fia.com/system/files/decision-document/2026_united_states_grand_prix_-_infringement_-_car_43_-_pu_element.pdf",
     "https://www.fia.com/system/files/decision-document/2026_united_states_grand_prix_-_infringement_-_car_5_-_additional_changes_to_pu_elements.pdf",
@@ -156,6 +157,19 @@
       "source_name": "fia_decision_documents",
       "source_url": "https://www.fia.com/system/files/decision-document/2026_united_states_grand_prix_-_infringement_-_car_5_-_additional_changes_to_pu_elements.pdf",
       "timestamp": "2026-10-24T15:30:00",
+      "type": "grid_penalty"
+    },
+    {
+      "applies_to": "race",
+      "driver": "STR",
+      "event": "United States Grand Prix",
+      "evidence": "Required to start the Race from the pit lane.",
+      "pit_lane": true,
+      "season": 2026,
+      "source_confidence": 0.98,
+      "source_name": "fia_decision_documents",
+      "source_url": "https://www.fia.com/system/files/decision-document/2026_united_states_grand_prix_-_infringement_-_car_18_-_changes_made_during_parc_ferme.pdf",
+      "timestamp": "2026-10-25T12:30:00",
       "type": "grid_penalty"
     }
   ]

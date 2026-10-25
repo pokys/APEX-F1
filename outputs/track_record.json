@@ -8,11 +8,11 @@
       "mean_winner_probability": 0.139083
     },
     "R": {
-      "count": 1,
+      "count": 2,
       "hit_rate": 1.0,
       "mean_group_overlap": 2.0,
-      "mean_log_loss": 0.482076,
-      "mean_winner_probability": 0.6175
+      "mean_log_loss": 0.380344,
+      "mean_winner_probability": 0.687167
     },
     "S": {
       "count": 1,
@@ -99,13 +99,27 @@
       "season": 2026,
       "session_code": "Q",
       "winner_probability": 0.1825
+    },
+    {
+      "actual_winner": "ANT",
+      "archived_at": "2026-10-25T19:33:46+00:00",
+      "group": "podium",
+      "group_overlap": 2,
+      "hit": true,
+      "log_loss": 0.278613,
+      "predicted_winner": "ANT",
+      "race": "United States Grand Prix",
+      "round": 18,
+      "season": 2026,
+      "session_code": "R",
+      "winner_probability": 0.756833
     }
   ],
   "summary": {
-    "count": 5,
-    "hit_rate": 0.6,
-    "mean_group_overlap": 6.4,
-    "mean_log_loss": 1.555167,
-    "mean_winner_probability": 0.291633
+    "count": 6,
+    "hit_rate": 0.666667,
+    "mean_group_overlap": 5.666667,
+    "mean_log_loss": 1.342408,
+    "mean_winner_probability": 0.369167
   }
 }

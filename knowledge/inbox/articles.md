@@ -524,6 +524,7 @@
 - [ ] Norris says he did a “c*** job” in qualifying after penalty leaves him eighth | Formula 1 (https://www.racefans.net/2026/10/25/norris-says-he-did-a-c-job-in-qualifying-after-penalty-leaves-him-eighth/)
 - [ ] Oscar Piastri warns COTA bumps could become an overtaking hazard at US GP (https://www.motorsport.com/f1/news/oscar-piastri-compares-cota-bump-to-a-motocross-jump-after-us-gp-qualifying/10868037/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Why Ferrari failed to deliver on its hype in F1's United States GP qualifying (https://www.motorsport.com/f1/news/why-ferrari-couldnt-challenge-for-pole-in-us-gp-qualifying/10868050/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Norris says he’s “scared in every single corner” after “terrible” qualifying | Formula 1 (https://www.racefans.net/2026/10/25/norris-says-hes-scared-in-every-single-corner-after-terrible-qualifying/)
 
 ## 2026-10-25
 - [ ] Alpine issues statement after Jeremy Clarkson's controversial Franco Colapinto comments (https://www.motorsport.com/f1/news/alpine-issues-statement-after-jeremy-clarksons-controversial-franco-colapinto-comments/10868082/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
@@ -544,3 +545,4 @@
 - [ ] The two weaknesses conspiring against Ferrari at Austin (https://www.the-race.com/formula-1/why-another-ferrari-f1-pole-bid-faltered-us-gp-2026/)
 - [ ] Why F1 is so sure its Apple TV deal is working (https://www.the-race.com/business/why-f1-is-so-sure-its-apple-tv-deal-is-working/)
 - [ ] “It does feels different” Antonelli admits ahead of first chance to seal title | Formula 1 (https://www.racefans.net/2026/10/25/it-does-feels-different-antonelli-admits-ahead-of-first-chance-to-seal-title/)
+- [ ] Australian GP 2026 MotoGP rider rankings (https://www.the-race.com/motogp/2026-australian-grand-prix-motogp-rider-rankings/)

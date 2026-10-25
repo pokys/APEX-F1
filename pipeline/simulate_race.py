@@ -226,7 +226,7 @@ def noise_scale_from_config(config: dict[str, Any], scale_key: str, legacy_tempe
     raw = config.get(scale_key)
     if raw is None:
         raw = config.get(legacy_temperature_key)
-    return clamp(safe_float(raw, 1.0), 0.25, 6.0)
+    return clamp(safe_float(raw, 1.0), 0.25, 24.0)
 
 
 def simulate_qualifying(

@@ -1,5 +1,5 @@
 {
-  "inputs_hash": "14a88ff14aae012d46ad625dd6e0d3b9ef9672763c722c3180b0a2091f2287a3",
+  "inputs_hash": "fa549ed7b234cc07a65665df349fdf82161156c309aeb8b2cefe0ab2c2e10ce9",
   "season": 2026,
   "source_features": "data/processed/features_season_2026.json",
   "source_summary": "Full Season 2026 Data",
@@ -12,7 +12,7 @@
         "starts": 36.0
       },
       "dnf_probability": 0.150827,
-      "grid_penalty_rate": 0.058824,
+      "grid_penalty_rate": 0.083333,
       "reliability_score": 84.917345,
       "team": "Alpine F1 Team"
     },
@@ -24,7 +24,7 @@
         "starts": 36.0
       },
       "dnf_probability": 0.423554,
-      "grid_penalty_rate": 0.03125,
+      "grid_penalty_rate": 0.058824,
       "reliability_score": 57.644645,
       "team": "Aston Martin"
     },
@@ -36,7 +36,7 @@
         "starts": 36.0
       },
       "dnf_probability": 0.173554,
-      "grid_penalty_rate": 0.0,
+      "grid_penalty_rate": 0.029412,
       "reliability_score": 82.644599,
       "team": "Audi"
     },
@@ -60,7 +60,7 @@
         "starts": 36.0
       },
       "dnf_probability": 0.128099,
-      "grid_penalty_rate": 0.029412,
+      "grid_penalty_rate": 0.027778,
       "reliability_score": 87.19009,
       "team": "Ferrari"
     },
@@ -84,7 +84,7 @@
         "starts": 36.0
       },
       "dnf_probability": 0.196281,
-      "grid_penalty_rate": 0.064516,
+      "grid_penalty_rate": 0.060606,
       "reliability_score": 80.371936,
       "team": "McLaren"
     },
@@ -96,7 +96,7 @@
         "starts": 36.0
       },
       "dnf_probability": 0.128099,
-      "grid_penalty_rate": 0.088235,
+      "grid_penalty_rate": 0.083333,
       "reliability_score": 87.19009,
       "team": "Mercedes"
     },
@@ -108,7 +108,7 @@
         "starts": 36.0
       },
       "dnf_probability": 0.082645,
-      "grid_penalty_rate": 0.030303,
+      "grid_penalty_rate": 0.057143,
       "reliability_score": 91.735499,
       "team": "RB F1 Team"
     },
@@ -120,7 +120,7 @@
         "starts": 36.0
       },
       "dnf_probability": 0.173554,
-      "grid_penalty_rate": 0.090909,
+      "grid_penalty_rate": 0.085714,
       "reliability_score": 82.644599,
       "team": "Red Bull"
     },
@@ -132,7 +132,7 @@
         "starts": 36.0
       },
       "dnf_probability": 0.264463,
-      "grid_penalty_rate": 0.09375,
+      "grid_penalty_rate": 0.088235,
       "reliability_score": 73.553699,
       "team": "Williams"
     }

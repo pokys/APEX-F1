@@ -543,3 +543,4 @@
 - [ ] Spotlight: “I beat him up” – Andretti recalls fistfight with film star Burt Reynolds | Brief (https://www.racefans.net/2026/10/25/spotlight-i-beat-him-up-andretti-recalls-fistfight-with-film-star-burt-reynolds/)
 - [ ] The two weaknesses conspiring against Ferrari at Austin (https://www.the-race.com/formula-1/why-another-ferrari-f1-pole-bid-faltered-us-gp-2026/)
 - [ ] Why F1 is so sure its Apple TV deal is working (https://www.the-race.com/business/why-f1-is-so-sure-its-apple-tv-deal-is-working/)
+- [ ] “It does feels different” Antonelli admits ahead of first chance to seal title | Formula 1 (https://www.racefans.net/2026/10/25/it-does-feels-different-antonelli-admits-ahead-of-first-chance-to-seal-title/)

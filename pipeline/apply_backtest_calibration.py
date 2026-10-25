@@ -133,6 +133,7 @@ CALIBRATION_KEYS = {
     "recommended_grid_position_weight": ("grid_position_weight", 0.0, 2000.0),
     "recommended_standings_grid_decay": ("standings_grid_decay", 0.0, 5.0),
     "recommended_recovery_strength": ("recovery_strength", 0.0, 3.0),
+    "recommended_weekend_form_scale_qualifying": ("weekend_form_scale_qualifying", 0.0, 30.0),
 }
 
 

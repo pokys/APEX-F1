@@ -188,3 +188,22 @@ def test_recovery_lets_a_fast_car_climb_from_the_back() -> None:
         return total / 400
 
     assert mean_finish({"FAST": 300.0}) < mean_finish(None) - 1
+
+
+def test_weekend_form_scale_applies_to_qualifying_only(tmp_path) -> None:
+    import json
+
+    from pipeline.simulate_target_prediction import apply_weekend_adjustments
+
+    snapshot = {"events": [{"event_name": "Test Grand Prix", "round": 1, "sessions": [
+        {"session_code": "FP3", "results": [{"abbreviation": "AAA", "position": 1}, {"abbreviation": "BBB", "position": 2}]},
+    ]}]}
+    (tmp_path / "season_2026.json").write_text(json.dumps(snapshot))
+    entries = [{"name": n, "driver_rating": 60.0, "team_rating": 60.0} for n in ("AAA", "BBB")]
+    base = {"season": 2026, "race": "Test Grand Prix", "inputs_used": [{"source": "fp3", "source_key": "FP3", "weight": 1.0}], "weekend_form_scale_qualifying": 4.0}
+
+    def delta(target):
+        adjusted, _ = apply_weekend_adjustments(entries, {**base, "prediction_target": target}, tmp_path)
+        return adjusted[0]["weekend_form_delta"]
+
+    assert delta("qualifying") == 4.0 * delta("race") != 0

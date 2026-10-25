@@ -90,9 +90,15 @@ def apply_weekend_adjustments(entries: list[dict[str, Any]], config: dict[str, A
 
     adjusted: list[dict[str, Any]] = []
     form_by_driver: dict[str, dict[str, Any]] = {}
+    # Qualifying only: the race calibration (grid weight, blend) was tuned
+    # with the plain weekend form.
+    qualifying_target = str(config.get("prediction_target") or "race") in {"qualifying", "sprint_qualifying"}
+    form_scale = clamp(safe_float(config.get("weekend_form_scale_qualifying"), 1.0), 0.0, 30.0) if qualifying_target else 1.0
     for entry in entries:
         form = compute_weekend_form(entry["name"], event, manifest)
-        delta = float(form.get("delta") or 0.0)
+        # weekend_form_scale_qualifying (backtest-calibrated) sets how far this
+        # weekend's sessions move the ratings against the season history.
+        delta = float(form.get("delta") or 0.0) * form_scale
         updated = dict(entry)
         updated["driver_rating"] = round(clamp(entry["driver_rating"] + 0.7 * delta, 1.0, 99.0), 6)
         updated["team_rating"] = round(clamp(entry["team_rating"] + 0.3 * delta, 1.0, 99.0), 6)

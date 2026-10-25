@@ -2,9 +2,11 @@
   "qualifying": {
     "history_driver": 0.2,
     "history_team": 0.1,
-    "fp1": 0.15,
-    "fp2": 0.2,
-    "fp3": 0.2,
+    "fp1": 0.1,
+    "fp2": 0.15,
+    "fp3": 0.5,
+    "sprint_qualifying": 0.6,
+    "sprint": 0.15,
     "signals": 0.15
   },
   "race": {

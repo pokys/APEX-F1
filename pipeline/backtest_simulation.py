@@ -276,6 +276,7 @@ def build_event_config(
         "grid_position_weight",
         "standings_grid_decay",
         "recovery_strength",
+        "weekend_form_scale_qualifying",
     ):
         cfg.pop(key, None)
     cfg["season"] = season
@@ -525,6 +526,9 @@ def order_loss(prediction: dict[str, Any], finish: dict[str, int], winner: str, 
 # Candidate strengths of the recovery through the field (places per pace SD
 # at an average track; simulate_target_prediction.recovery_bonus).
 RECOVERY_STRENGTHS = (0.0, 0.25, 0.5, 1.0, 1.5)
+# Candidate multipliers of the weekend form in qualifying predictions
+# (simulate_target_prediction.apply_weekend_adjustments); 1 = plain form.
+FORM_SCALES = (1.0, 4.0, 8.0, 12.0, 16.0)
 
 
 def choose_blend_by_order(losses: dict[float, list[float]], fixed: float = DEFAULT_STANDINGS_BLEND) -> tuple[float, dict[str, Any]]:
@@ -638,7 +642,9 @@ def collect_cases(args: argparse.Namespace, raw: dict[str, Any], season: int) ->
             previous_features=previous_features,
         )[:4]
         available_sessions = available_sessions_for_event(event)
-        practice = [code for code in available_sessions if code in {"FP1", "FP2", "FP3"}]
+        # Everything run before qualifying: practice, and on sprint weekends
+        # sprint qualifying and the sprint.
+        practice = [code for code in available_sessions if code in {"FP1", "FP2", "FP3", "SQ", "S"}]
         race_sessions = [code for code in available_sessions if code in {"FP2", "FP3", "Q"}]
         common = dict(
             base_config=base_config,
@@ -708,6 +714,7 @@ def predict_case(
     grid_weight: float | None = None,
     standings_blend: float | None = None,
     recovery: float | None = None,
+    form_scale: float | None = None,
 ) -> dict[str, Any]:
     """target: "qualifying", "race" or "sprint" (actual starting grid)."""
     key = {"qualifying": "qualifying_config", "sprint": "sprint_config"}.get(target, "race_config")
@@ -722,6 +729,8 @@ def predict_case(
         config["standings_blend_race"] = standings_blend
     if recovery is not None:
         config["recovery_strength"] = recovery
+    if form_scale is not None:
+        config["weekend_form_scale_qualifying"] = form_scale
     return run_target_prediction(*case["models"], config, raw_dir=raw_dir)
 
 
@@ -769,12 +778,11 @@ def main() -> int:
 
     search_sims = max(500, min(args.simulations, args.search_simulations))
 
-    def pole_loss(scale: float) -> float:
-        losses = []
-        for case in pole_cases:
-            probs = pole_probabilities(predict_case(case, "qualifying", scale, search_sims, raw_dir), search_sims)
-            losses.append(log_loss(probs, case["pole"]))
-        return mean(losses)
+    def pole_losses(scale: float, form: float) -> list[float]:
+        return [
+            log_loss(pole_probabilities(predict_case(case, "qualifying", scale, search_sims, raw_dir, form_scale=form), search_sims), case["pole"])
+            for case in pole_cases
+        ]
 
     sprint_cases = [case for case in cases if case.get("sprint_winner") and case.get("sprint_config")]
 
@@ -789,7 +797,21 @@ def main() -> int:
             losses.append(log_loss(probs, case["sprint_winner"]))
         return mean(losses)
 
-    qualifying_scale, _, qualifying_grid = search_noise_scale(pole_loss) if pole_cases else (1.0, 0.0, {})
+    # How strongly this weekend's sessions (practice, sprint qualifying,
+    # sprint) move the qualifying ratings, each with its own noise scale;
+    # a stronger form replaces the plain one only when it wins leave-one-out.
+    form_scale, qualifying_scale, qualifying_grid, form_report = 1.0, 1.0, {}, {}
+    if pole_cases:
+        per_form: dict[float, tuple[float, dict[float, float]]] = {}
+        form_losses: dict[float, list[float]] = {}
+        for form in FORM_SCALES:
+            scale, _, grid = search_noise_scale(lambda s, f=form: mean(pole_losses(s, f)))
+            per_form[form] = (scale, grid)
+            form_losses[form] = pole_losses(scale, form)
+        form_scale, form_report = choose_blend_by_order(form_losses, fixed=1.0)
+        qualifying_scale, qualifying_grid = per_form[form_scale]
+        form_report["noise_scale_per_form"] = {str(f): per_form[f][0] for f in FORM_SCALES}
+    LOGGER.info("Qualifying weekend form scale: %s (%s)", form_scale, form_report)
     grid_weight, race_scale, race_grid, grid_weight_report = search_grid_weight(start_loss)
     LOGGER.info("Calibrated: qualifying noise=%s race noise=%s grid weight=%s", qualifying_scale, race_scale, grid_weight)
 
@@ -797,7 +819,7 @@ def main() -> int:
     pole_rows: list[tuple[dict[str, Any], dict[str, float], dict[str, float]]] = []
     for case in pole_cases:
         raw_probs = pole_probabilities(predict_case(case, "qualifying", 1.0, sims, raw_dir), sims)
-        probs = pole_probabilities(predict_case(case, "qualifying", qualifying_scale, sims, raw_dir), sims)
+        probs = pole_probabilities(predict_case(case, "qualifying", qualifying_scale, sims, raw_dir, form_scale=form_scale), sims)
         if case["pole"] in probs:
             pole_rows.append((case, raw_probs, probs))
     pole_blend = blend_report(
@@ -955,6 +977,8 @@ def main() -> int:
         "recommended_grid_position_weight": grid_weight,
         "recommended_standings_grid_decay": grid_decay,
         "recommended_recovery_strength": recovery_strength,
+        "recommended_weekend_form_scale_qualifying": form_scale,
+        "weekend_form_scale_search": form_report,
         "recovery_strength_search": recovery_report,
         "standings_grid_decay_search": grid_decay_report,
         "grid_weight_search": grid_weight_report,

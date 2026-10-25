@@ -41,6 +41,10 @@ TARGET_SOURCE_MAP = {
         "fp1": "FP1",
         "fp2": "FP2",
         "fp3": "FP3",
+        # Sprint weekends: sprint qualifying and the sprint run before
+        # qualifying, and SQ is the closest thing to it.
+        "sprint_qualifying": "SQ",
+        "sprint": "S",
         "signals": "signals",
     },
     "race": {

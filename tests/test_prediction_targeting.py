@@ -540,3 +540,17 @@ def test_american_country_aliases_resolve_like_full_names() -> None:
     assert short == full
     # Austin qualifying runs 21:00-22:00 UTC; it must not be marked done yet.
     assert "Q" not in short
+
+
+def test_qualifying_uses_sprint_sessions_on_sprint_weekends() -> None:
+    import json
+    from pathlib import Path
+
+    from pipeline.prediction_targeting import build_inputs_manifest
+
+    weights = json.loads(Path("config/session_weights.json").read_text())
+    sources = {row["source_key"]: row["weight"] for row in build_inputs_manifest("qualifying", ["FP1", "SQ", "S"], weights, 0)}
+    assert {"FP1", "SQ", "S"} <= set(sources)
+    assert sources["SQ"] > sources["FP1"]  # sprint qualifying is the closest thing to qualifying
+    standard = {row["source_key"]: row["weight"] for row in build_inputs_manifest("qualifying", ["FP1", "FP2", "FP3"], weights, 0)}
+    assert standard["FP3"] > standard["FP2"] > standard["FP1"]

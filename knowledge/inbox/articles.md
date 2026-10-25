@@ -537,3 +537,4 @@
 - [ ] Loss of pace in Q3 ‘something we have to look at because it’s very odd’ – Verstappen | Formula 1 (https://www.racefans.net/2026/10/25/loss-of-pace-in-q3-something-we-have-to-look-at-because-its-very-odd-verstappen/)
 - [ ] How Verstappen lost pole to Antonelli - and nearly got beaten by Hadjar (https://www.the-race.com/formula-1/how-verstappen-lost-pole-to-antonelli-and-nearly-got-beaten-by-hadjar/)
 - [ ] Why another Ferrari pole bid faltered (https://www.the-race.com/formula-1/why-another-ferrari-f1-pole-bid-faltered-us-gp-2026/)
+- [ ] MotoGP's final Phillip Island race cancelled, replaced with parade lap (https://www.the-race.com/motogp/motogps-final-phillip-island-race-cancelled-replaced-with-parade-lap/)

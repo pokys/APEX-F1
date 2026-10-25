@@ -540,3 +540,6 @@
 - [ ] MotoGP's final Phillip Island race cancelled, replaced with parade lap (https://www.the-race.com/motogp/motogps-final-phillip-island-race-cancelled-replaced-with-parade-lap/)
 - [ ] Max Verstappen reacts to COTA boss: "He can drive my car, after five laps he won't be able to walk" (https://www.motorsport.com/f1/news/max-verstappen-reacts-to-cota-boss-he-can-drive-my-car-after-five-laps-he-wont-be-able-to-walk/10868080/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Verstappen responds to COTA boss and proposes drastic measures to tackle bumps (https://www.autosport.com/f1/news/max-verstappen-responds-to-cota-boss-he-can-drive-my-car-after-five-laps-he-wont-be-able-to-walk/10868204/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Spotlight: “I beat him up” – Andretti recalls fistfight with film star Burt Reynolds | Brief (https://www.racefans.net/2026/10/25/spotlight-i-beat-him-up-andretti-recalls-fistfight-with-film-star-burt-reynolds/)
+- [ ] The two weaknesses conspiring against Ferrari at Austin (https://www.the-race.com/formula-1/why-another-ferrari-f1-pole-bid-faltered-us-gp-2026/)
+- [ ] Why F1 is so sure its Apple TV deal is working (https://www.the-race.com/business/why-f1-is-so-sure-its-apple-tv-deal-is-working/)

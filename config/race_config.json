@@ -46,7 +46,7 @@
     "COL",
     "STR"
   ],
-  "generated_at": "2026-10-25T19:33:14Z",
+  "generated_at": "2026-10-25T20:32:31Z",
   "grid_penalties": [
     {
       "back_of_grid": false,
@@ -149,7 +149,7 @@
   "overtaking_difficulty": 0.45,
   "prediction_target": "race",
   "prediction_target_label": "Race",
-  "qualifying_noise_scale": 6.0,
+  "qualifying_noise_scale": 2.0,
   "race": "United States Grand Prix",
   "race_date": "2026-10-25",
   "race_grid_penalties": [
@@ -210,5 +210,6 @@
   "track_profile": "event:united states grand prix",
   "weather": "dry",
   "weather_modifier": 0.0,
+  "weekend_form_scale_qualifying": 1.0,
   "weekend_format": "standard"
 }

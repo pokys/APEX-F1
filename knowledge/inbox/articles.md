@@ -546,3 +546,5 @@
 - [ ] Why F1 is so sure its Apple TV deal is working (https://www.the-race.com/business/why-f1-is-so-sure-its-apple-tv-deal-is-working/)
 - [ ] “It does feels different” Antonelli admits ahead of first chance to seal title | Formula 1 (https://www.racefans.net/2026/10/25/it-does-feels-different-antonelli-admits-ahead-of-first-chance-to-seal-title/)
 - [ ] Australian GP 2026 MotoGP rider rankings (https://www.the-race.com/motogp/2026-australian-grand-prix-motogp-rider-rankings/)
+- [ ] Max Verstappen puzzled by Q3 grip loss, but Austin shows how far Red Bull has progressed (https://www.motorsport.com/f1/news/max-verstappen-puzzled-by-q3-grip-loss-but-austin-shows-how-far-red-bull-has-progressed/10868113/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Red Bull no longer falls away on difficult days: What Austin qualifying reveals about its progress (https://www.autosport.com/f1/news/max-verstappen-puzzled-by-q3-grip-loss-but-austin-shows-how-far-red-bull-has-progressed/10868230/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)

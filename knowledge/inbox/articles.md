@@ -554,3 +554,4 @@
 - [ ] Charles Leclerc reacts to Ferrari fear: 'We know what line not to cross' (https://www.motorsport.com/f1/news/charles-leclerc-reacts-to-ferrari-fear-we-know-what-the-line-is-not-to-cross/10868297/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] F1 2026 United States Grand Prix starting grid with four penalties (https://www.the-race.com/formula-1/f1-2026-united-states-grand-prix-starting-grid-engine-penalties/)
 - [ ] Toto Wolff gets brutally honest about spotting F1 talent and why prodigies wash out (https://www.motorsport.com/f1/news/toto-wolff-gets-brutally-honest-about-spotting-f1-talent-and-why-prodigies-wash-out/10868224/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] 2026 United States Grand Prix in pictures | F1 Pictures (https://www.racefans.net/2026/10/25/2026-united-states-grand-prix-in-pictures/)

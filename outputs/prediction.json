@@ -1,15 +1,15 @@
 {
   "data_freshness": {
-    "days_since_latest_event": 0,
-    "days_until_next_race": 7,
+    "days_since_latest_event": 1,
+    "days_until_next_race": 6,
     "is_stale": false,
     "latest_completed_date": "2026-10-25",
     "latest_completed_event": "United States Grand Prix",
     "next_race_date": "2026-11-01",
-    "reference_date": "2026-10-25",
+    "reference_date": "2026-10-26",
     "stale_threshold_days": 21.0
   },
-  "deterministic_run_id": "6e652e1bae776a7d0862",
+  "deterministic_run_id": "1ce0591b5220c6eaec04",
   "drivers": [
     {
       "driver_share": 46.0,
@@ -782,7 +782,7 @@
       "weekend_form_delta": 0.0
     }
   ],
-  "generated_at": "2026-10-25T23:55:46Z",
+  "generated_at": "2026-10-26T04:00:22Z",
   "inputs_used": [
     {
       "source": "history_driver",
@@ -797,7 +797,7 @@
   ],
   "integrity": {
     "driver_ratings_hash": "1edbe1ad36b4",
-    "race_config_hash": "e7a2f8e429b1",
+    "race_config_hash": "fddb68d5a9cc",
     "team_ratings_hash": "ff949bea9c76"
   },
   "prediction_target": "qualifying",

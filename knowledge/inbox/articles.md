@@ -524,3 +524,12 @@
 - [ ] Fred Vasseur reveals two costly moments that denied Ferrari US GP double podium (https://www.motorsport.com/f1/news/fred-vasseur-blames-a-q3-disaster-and-a-broken-cadillac-for-robbing-ferrari-of-a-us-gp-win/10868569/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Naomi Schiff warns Red Bull over "knife's edge" F1 car after US GP struggles (https://www.motorsport.com/f1/news/naomi-schiff-warns-red-bull-over-knifes-edge-f1-car-after-us-gp-struggles/10868723/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Red Bull reveals damage behind Max Verstappen's US GP struggles (https://www.motorsport.com/f1/news/mekies-explains-the-invisible-debris-that-cost-max-verstappen-2nd-place-in-austin/10868579/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+
+## 2026-10-27
+- [ ] Featured Comment: F1’s flawed rules don’t lessen Antonelli’s achievement | Briefs (https://www.racefans.net/2026/10/27/featured-comment-f1s-flawed-rules-dont-lessen-antonellis-achievement/)
+- [ ] How to watch the 2026 Mexican Grand Prix live this weekend | TV Times (https://www.racefans.net/2026/10/27/how-to-watch-the-2026-mexican-grand-prix-live-this-weekend/)
+- [ ] Is Alonso's harsh F1 driver claim justified? (https://www.the-race.com/formula-1/is-alonsos-brutal-f1-driver-claim-justified/)
+- [ ] Red Bull explains why Verstappen and Hadjar's 'silly' problems won't all be fixed in 2026 (https://www.autosport.com/f1/news/red-bull-explains-why-verstappen-and-hadjar-silly-problems-wont-be-fixed-in-2026/10868779/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Red Bull reveals when 'silly' problems affecting Max Verstappen and Isack Hadjar can be fixed (https://www.motorsport.com/f1/news/red-bull-reveals-when-silly-problems-affecting-max-verstappen-and-isack-hadjar-can-be-fixed/10868773/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Stats: Russell scored as many points as Hulkenberg in last three rounds | 2026 United States GP stats and facts (https://www.racefans.net/2026/10/27/stats-russell-scored-as-many-points-as-hulkenberg-in-last-three-rounds/)
+- [ ] What the US GP really exposed about where Ferrari is lacking (https://www.the-race.com/formula-1/what-the-us-gp-really-exposed-about-where-ferrari-is-lacking/)

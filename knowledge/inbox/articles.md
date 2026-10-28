@@ -547,3 +547,4 @@
 - [ ] New contract to keep Perez racing for Cadillac until at least 2029 | Formula 1 (https://www.racefans.net/2026/10/28/new-contract-to-keep-perez-racing-for-cadillac-until-at-least-2029/)
 - [ ] Sergio Perez signs fresh Cadillac F1 deal until 2029 (https://www.motorsport.com/f1/news/sergio-perez-signs-fresh-cadillac-f1-deal-until-2029/10869093/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] When does each 2026 F1 driver's contract expire? (https://www.the-race.com/formula-1/f1-driver-contracts-when-do-they-expire/)
+- [ ] F1 newcomers Tsolov, Mini and Slater among eight drivers to run in practice on Friday | Formula 1 (https://www.racefans.net/2026/10/28/f1-newcomers-tsolov-mini-and-slater-among-eight-drivers-to-run-in-practice-on-friday/)

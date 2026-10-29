@@ -540,3 +540,4 @@
 - [ ] Kimi Antonelli reveals plans to launch his own racing academy outside F1 (https://www.motorsport.com/f1/news/kimi-antonelli-wants-to-build-a-racing-academy-and-team-up-with-his-dad-in-gt3/10869239/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Martin cleared to ride with broken wrist as he tries to stay in title hunt (https://www.the-race.com/motogp/martin-cleared-to-ride-with-broken-wrist-as-he-tries-to-stay-in-title-hunt/)
 - [ ] Mir explains the vision issues behind his long MotoGP absence (https://www.the-race.com/motogp/mir-explains-the-vision-issues-behind-his-long-motogp-absence/)
+- [ ] Sebastian Vettel reveals why BMW didn't want him – but Red Bull did (https://www.motorsport.com/f1/news/sebastian-vettel-reveals-why-bmw-didnt-want-him-but-red-bull-did/10869300/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

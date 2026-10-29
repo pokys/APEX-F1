@@ -572,3 +572,4 @@
 - [ ] Rivals reject Alonso's brutal 'low quality' F1 drivers claim (https://www.the-race.com/formula-1/rivals-reject-alonsos-brutal-low-quality-f1-drivers-claim/)
 - [ ] Russell believes tyre pressures and less “efficient” driving style hurt him in 2026 | Formula 1 (https://www.racefans.net/2026/10/29/russell-believes-tyre-pressures-and-less-efficient-driving-style-hurt-him-in-2026/)
 - [ ] Who would replace Charles Leclerc at Ferrari if he misses a race for his baby’s birth? (https://www.motorsport.com/f1/news/who-would-replace-charles-leclerc-at-ferrari-if-he-misses-a-race-for-his-babys-birth/10869393/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Lewis Hamilton: “I’m built differently” as he eyes F1 career into 2030s (https://www.motorsport.com/f1/news/lewis-hamilton-im-built-differently-as-he-eyes-f1-career-into-2030s/10869464/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

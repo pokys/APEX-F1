@@ -1,28 +1,5 @@
 # F1 Article Inbox
 
-## 2026-10-14
-- [ ] Red Bull sends warning to F1 rivals with engine development admission (https://www.motorsport.com/f1/news/red-bull-sends-warning-to-f1-rivals-with-engine-development-admission/10865049/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] Christian Horner reveals secret battle with panic attacks during F1 career (https://www.motorsport.com/f1/news/christian-horner-reveals-secret-battle-with-panic-attacks-during-high-pressure-f1-career/10864876/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] Formula 1 teams need decision ‘by mid-October’ on whether final races will go ahead | Formula 1 (https://www.racefans.net/2026/10/14/formula-1-teams-need-decision-on-whether-final-races-will-go-ahead-by-mid-october/)
-- [ ] How F1® Experiences is captivating a new generation trackside (https://www.the-race.com/promoted/how-f1-experiences-is-captivating-a-new-generation-trackside/)
-- [ ] Spotlight: Cadillac already has better facilities than Mercedes, says Bottas | Brief (https://www.racefans.net/2026/10/14/spotlight-cadillac-already-has-better-facilities-than-mercedes-says-bottas/)
-- [ ] Verstappen says Red Bull’s car was “scary” to drive early in 2026 | Formula 1 (https://www.racefans.net/2026/10/14/verstappen-says-red-bulls-car-was-scary-to-drive-early-in-2026/)
-- [ ] Visiting F1's new Rwanda track - everything we learned (https://www.the-race.com/formula-1/new-rwanda-f1-track-everything-we-learned-visiting/)
-- [ ] ‘I’m sideways all the time’ – How Alpine’s feral F1 car plagued Pierre Gasly in Singapore (https://www.motorsport.com/f1/news/im-sideways-all-the-time-how-alpines-feral-f1-car-plagued-pierre-gasly-in-singapore/10864744/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] “Just a disaster” – How Isack Hadjar’s nightmare Singapore F1 weekend unfolded (https://www.motorsport.com/f1/news/just-a-disaster-how-isack-hadjars-nightmare-singapore-f1-weekend-unfolded/10864759/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] Christian Horner opens up on Red Bull F1 exit: “Perhaps it was perceived I had too much influence over the team” (https://www.motorsport.com/f1/news/christian-horner-opens-up-on-red-bull-f1-exit-perhaps-it-was-perceived-i-had-too-much-influence-ove/10864999/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] Christian Horner reveals why he chose 2021 Abu Dhabi GP to open his memoir (https://www.motorsport.com/f1/news/christian-horner-reveals-why-he-chose-2021-abu-dhabi-gp-to-open-his-memoir/10865209/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] How F1 Experiences is captivating a new generation trackside (https://www.the-race.com/promoted/how-f1-experiences-is-captivating-a-new-generation-trackside/)
-- [ ] Laurent Mekies extends contract as Red Bull's F1 team boss (https://www.motorsport.com/f1/news/laurent-mekies-extends-contract-as-red-bulls-f1-team-boss/10865232/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] Martin Brundle reacts to "bizarre" Lewis Hamilton Singapore GP strategy choice (https://www.motorsport.com/f1/news/martin-brundle-reacts-to-bizarre-lewis-hamilton-singapore-gp-strategy-choice/10865194/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] Mekies extends contract as Red Bull's F1 team boss (https://www.autosport.com/f1/news/laurent-mekies-extends-contract-as-red-bulls-f1-team-boss/10865235/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-- [ ] Podcast: Is Russell F1's most underwhelming pre-season favourite? (https://www.the-race.com/formula-1/podcast-is-geroge-russell-f1-most-underwhelming-pre-season-favourite/)
-- [ ] Red Bull's F1 boss gets well-timed endorsement with extended deal (https://www.the-race.com/formula-1/red-bull-f1-team-principal-laurent-mekies-deal-extended/)
-- [ ] Social Media: Mekies extends contract to lead Red Bull until 2031 | Brief (https://www.racefans.net/2026/10/14/social-media-mekies-extends-contract-to-lead-red-bull-until-2031/)
-- [ ] Valentino Rossi wary of Max Verstappen threat at Portimao: "Big problem" (https://www.motorsport.com/f1/news/valentino-rossi-wary-of-max-verstappen-threat-at-portimao-big-problem/10865174/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] Christian Horner wanted Fernando Alonso and Charles Leclerc at Red Bull (https://www.motorsport.com/f1/news/christian-horner-wanted-fernando-alonso-and-charles-leclerc-at-red-bull/10865251/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] Why Christian Horner banned Mercedes' name as Red Bull built its own F1 engine (https://www.motorsport.com/f1/news/why-horner-banned-mercedes-name-as-red-bull-built-its-own-f1-engine/10864996/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-
 ## 2026-10-15
 - [ ] Christian Horner admits that F1 rivalry with Toto Wolff became "theatre" (https://www.motorsport.com/f1/news/christian-horner-admits-that-f1-rivalry-with-toto-wolff-became-theatre/10865113/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Colapinto tells his supporters to stop abusing rival drivers: “They don’t help me” | Formula 1 (https://www.racefans.net/2026/10/15/colapinto-tells-his-supporters-to-stop-abusing-rival-drivers-they-dont-help-me/)
@@ -548,3 +525,10 @@
 - [ ] Sergio Perez signs fresh Cadillac F1 deal until 2029 (https://www.motorsport.com/f1/news/sergio-perez-signs-fresh-cadillac-f1-deal-until-2029/10869093/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] When does each 2026 F1 driver's contract expire? (https://www.the-race.com/formula-1/f1-driver-contracts-when-do-they-expire/)
 - [ ] F1 newcomers Tsolov, Mini and Slater among eight drivers to run in practice on Friday | Formula 1 (https://www.racefans.net/2026/10/28/f1-newcomers-tsolov-mini-and-slater-among-eight-drivers-to-run-in-practice-on-friday/)
+- [ ] Christian Horner addresses past misconduct allegations in new interview (https://www.motorsport.com/f1/news/christian-horner-finally-speaks-on-the-leaked-whatsapp-file-and-coercion-allegations/10869049/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+
+## 2026-10-29
+- [ ] Christian Horner reveals why Netflix made him the villain of "Drive to Survive" (https://www.motorsport.com/f1/news/christian-horner-admits-netflix-hijacked-his-f1-reputation-i-was-the-villain/10869051/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Daniel Ricciardo opens door to racing return with Max Verstappen at Le Mans (https://www.motorsport.com/f1/news/daniel-ricciardo-opens-door-to-racing-return-with-max-verstappen-at-le-mans/10869169/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Daniel Ricciardo reveals major regret over 2018 Red Bull departure (https://www.motorsport.com/f1/news/daniel-ricciardo-reveals-major-regret-over-2018-red-bull-departure/10869167/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] FIA to use AI to help shape future F1 regulations in new AWS partnership (https://www.motorsport.com/f1/news/fia-to-use-ai-to-help-shape-future-f1-regulations-in-new-aws-partnership/10869165/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

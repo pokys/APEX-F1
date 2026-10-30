@@ -556,3 +556,5 @@
 - [ ] Why F1's new regulations make the Mexican GP an even bigger challenge (https://www.motorsport.com/f1/news/why-f1s-new-regulations-make-the-mexican-gp-an-even-bigger-challenge/10869622/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] ‘There’s no pay drivers now’: Alonso’s rivals reject his criticism of ‘one-third’ of the grid | Formula 1 (https://www.racefans.net/2026/10/30/theres-no-pay-drivers-now-alonsos-rivals-reject-his-criticism-of-one-third-of-the-grid/)
 - [ ] Isack Hadjar admits after criticising Red Bull: "There's stuff that I should have kept for myself" (https://www.motorsport.com/f1/news/isack-hadjar-admits-after-criticising-red-bull-theres-stuff-that-i-should-have-kept-for-myself/10869496/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] The 'bummer' hurdle to a Verstappen-Ricciardo Le Mans reunion (https://www.the-race.com/formula-1/the-bummer-hurdle-to-a-verstappen-ricciardo-le-mans-reunion/)
+- [ ] Three Mexico FP1 changes with high driver market stakes (https://www.the-race.com/formula-1/three-mexico-fp1-changes-with-high-driver-market-stakes/)

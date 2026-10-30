@@ -550,3 +550,8 @@
 - [ ] 'Built different' Hamilton claims he could still race in F1 in 2030 (https://www.the-race.com/formula-1/hamilton-f1-career-plans-2030-retirement-ferrari/)
 - [ ] Audi pays tribute as F1 stalwart Beat Zehnder set for exit (https://www.motorsport.com/f1/news/audi-pays-tribute-as-f1-stalwart-beat-zehnder-set-for-exit/10869594/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] F1 stalwart Zehnder set for Audi exit (https://www.autosport.com/f1/news/f1-stalwart-zehnder-set-for-audi-exit/10869600/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Key Sauber-era figure to leave Audi F1 team (https://www.the-race.com/formula-1/key-sauber-era-figure-to-leave-audi-f1-team/)
+- [ ] Why 'motocross' Sepang wasn't fixed - and is bruising riders (https://www.the-race.com/motogp/why-motocross-sepang-wasnt-fixed-and-is-bruising-riders/)
+- [ ] Why F1 teams and manufacturers face more unknowns in Mexico than ever (https://www.autosport.com/f1/news/why-f1-teams-and-manufacturers-face-more-unknowns-in-mexico-than-ever/10869626/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Why F1's new regulations make the Mexican GP an even bigger challenge (https://www.motorsport.com/f1/news/why-f1s-new-regulations-make-the-mexican-gp-an-even-bigger-challenge/10869622/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] ‘There’s no pay drivers now’: Alonso’s rivals reject his criticism of ‘one-third’ of the grid | Formula 1 (https://www.racefans.net/2026/10/30/theres-no-pay-drivers-now-alonsos-rivals-reject-his-criticism-of-one-third-of-the-grid/)

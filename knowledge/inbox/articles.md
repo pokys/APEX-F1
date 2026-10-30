@@ -545,3 +545,5 @@
 - [ ] Remembering Sir Patrick Stewart's unforgettable moment on the F1 podium with Daniel Ricciardo (https://www.motorsport.com/f1/news/remembering-sir-patrick-stewarts-unforgettable-moment-on-the-f1-podium-with-daniel-ricciardo/10869481/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Injured Martin cleared to race in Malaysia after first practice (https://www.the-race.com/motogp/how-injured-martin-fared-in-first-sepang-motogp-practice/)
 - [ ] ‘Not much more I could have done’ about ‘horrible’ title defence – Norris | Formula 1 (https://www.racefans.net/2026/10/30/not-much-more-i-could-have-done-about-horrible-title-defence-norris/)
+- [ ] George Russell predicts key Ferrari "advantage" at F1 Mexican GP (https://www.motorsport.com/f1/news/george-russell-predicts-key-ferrari-advantage-at-f1-mexico-gp/10869473/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Marquez quickest again, Martin done after three laps (https://www.the-race.com/motogp/marquez-quickest-again-martin-done-after-three-laps/)

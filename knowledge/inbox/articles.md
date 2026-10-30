@@ -547,3 +547,6 @@
 - [ ] ‘Not much more I could have done’ about ‘horrible’ title defence – Norris | Formula 1 (https://www.racefans.net/2026/10/30/not-much-more-i-could-have-done-about-horrible-title-defence-norris/)
 - [ ] George Russell predicts key Ferrari "advantage" at F1 Mexican GP (https://www.motorsport.com/f1/news/george-russell-predicts-key-ferrari-advantage-at-f1-mexico-gp/10869473/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Marquez quickest again, Martin done after three laps (https://www.the-race.com/motogp/marquez-quickest-again-martin-done-after-three-laps/)
+- [ ] 'Built different' Hamilton claims he could still race in F1 in 2030 (https://www.the-race.com/formula-1/hamilton-f1-career-plans-2030-retirement-ferrari/)
+- [ ] Audi pays tribute as F1 stalwart Beat Zehnder set for exit (https://www.motorsport.com/f1/news/audi-pays-tribute-as-f1-stalwart-beat-zehnder-set-for-exit/10869594/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] F1 stalwart Zehnder set for Audi exit (https://www.autosport.com/f1/news/f1-stalwart-zehnder-set-for-audi-exit/10869600/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)

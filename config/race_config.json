@@ -1,23 +1,23 @@
 {
-  "available_sessions": [],
-  "available_sessions_by_calendar": [],
-  "available_sessions_ingested": [],
+  "available_sessions": [
+    "FP1"
+  ],
+  "available_sessions_by_calendar": [
+    "FP1"
+  ],
+  "available_sessions_ingested": [
+    "FP1"
+  ],
   "calibration_season": 2026,
   "calibration_source": "outputs/backtest/backtest_season_2026.json",
   "driver_substitutions": [],
   "event_format": "conventional",
-  "event_signal_count": 0,
-  "generated_at": "2026-10-30T19:48:01Z",
+  "event_signal_count": 1,
+  "generated_at": "2026-10-30T20:48:06Z",
   "grid_penalties": [],
   "grid_position_weight": 2000.0,
   "grid_source": "simulation",
   "inputs_status": [
-    {
-      "configured_weight": 0.1,
-      "source": "fp1",
-      "source_key": "FP1",
-      "status": "missing"
-    },
     {
       "configured_weight": 0.15,
       "source": "fp2",
@@ -49,6 +49,12 @@
       "status": "missing"
     },
     {
+      "configured_weight": 0.1,
+      "source": "fp1",
+      "source_key": "FP1",
+      "status": "used"
+    },
+    {
       "configured_weight": 0.2,
       "source": "history_driver",
       "source_key": "history_driver",
@@ -65,12 +71,17 @@
     {
       "source": "history_driver",
       "source_key": "history_driver",
-      "weight": 0.666667
+      "weight": 0.5
+    },
+    {
+      "source": "fp1",
+      "source_key": "FP1",
+      "weight": 0.25
     },
     {
       "source": "history_team",
       "source_key": "history_team",
-      "weight": 0.333333
+      "weight": 0.25
     }
   ],
   "location": "Mexico City",
@@ -81,7 +92,17 @@
   "qualifying_noise_scale": 2.5,
   "race": "Mexico City Grand Prix",
   "race_date": "2026-11-01",
-  "race_grid_penalties": [],
+  "race_grid_penalties": [
+    {
+      "back_of_grid": false,
+      "driver": "BOT",
+      "pit_lane": false,
+      "places": 50,
+      "sources": [
+        "https://www.fia.com/system/files/decision-document/2026_mexico_city_grand_prix_-_infringement_-_car_77_-_pu_elements.pdf"
+      ]
+    }
+  ],
   "race_noise_scale": 6.0,
   "recovery_strength": 0.0,
   "safety_car_probability": 0.2,

@@ -572,3 +572,4 @@
 - [ ] F1 Mexico GP: Charles Leclerc beats Kimi Antonelli to top FP1 (https://www.motorsport.com/f1/news/f1-mexico-gp-fp1-report-10869780/10869780/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] F1 Mexico GP: Leclerc beats Antonelli to top FP1 (https://www.autosport.com/f1/news/f1-mexico-gp-leclerc-beats-antonelli-to-top-fp1/10869791/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] Leclerc puts Ferrari on top in practice again in Mexico | Formula 1 (https://www.racefans.net/2026/10/30/leclerc-puts-ferrari-on-top-in-practice-again-in-mexico/)
+- [ ] What happened in Mexican GP FP1 with 10 rookies (https://www.the-race.com/formula-1/what-happened-f1-2026-mexican-gp-first-practice/)

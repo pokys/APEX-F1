@@ -1,5 +1,5 @@
 {
-  "last_checked": "2026-10-30T17:56:08+00:00",
+  "last_checked": "2026-10-30T20:48:09+00:00",
   "processed_documents": [
     "https://www.fia.com/system/files/decision-document/2026_bahrain_grand_prix_in_malaysia_-_decision_-_car_23_-_alleged_driving_erratically.pdf",
     "https://www.fia.com/system/files/decision-document/2026_bahrain_grand_prix_in_malaysia_-_infringement_-_car_18_-_failure_to_follow_race_directors_instructions_sc2-sc1_time_1st_offence.pdf",
@@ -13,6 +13,7 @@
     "https://www.fia.com/system/files/decision-document/2026_bahrain_grand_prix_in_malaysia_-_infringement_-_car_5_-_causing_a_collision_with_car_55.pdf",
     "https://www.fia.com/system/files/decision-document/2026_bahrain_grand_prix_in_malaysia_-_infringement_-_car_6_-_changes_to_pu_elements.pdf",
     "https://www.fia.com/system/files/decision-document/2026_mexico_city_grand_prix_-_entry_list.pdf",
+    "https://www.fia.com/system/files/decision-document/2026_mexico_city_grand_prix_-_infringement_-_car_77_-_pu_elements.pdf",
     "https://www.fia.com/system/files/decision-document/2026_singapore_grand_prix_-_decision_-_car_11_-_causing_a_collision_with_car_18.pdf",
     "https://www.fia.com/system/files/decision-document/2026_singapore_grand_prix_-_decision_-_car_18_-_alleged_causing_a_collision_with_car_11.pdf",
     "https://www.fia.com/system/files/decision-document/2026_singapore_grand_prix_-_decision_-_car_1_-_alleged_causing_a_collision_with_car_81.pdf",
@@ -47,6 +48,19 @@
     "https://www.fia.com/system/files/decision-document/2026_united_states_grand_prix_-_infringement_-_car_87_-_causing_a_collision.pdf"
   ],
   "signals": [
+    {
+      "applies_to": "race",
+      "driver": "BOT",
+      "event": "Mexico City Grand Prix",
+      "evidence": "Drop of 50 grid positions for the next Race in which the driver participates.",
+      "places": 50,
+      "season": 2026,
+      "source_confidence": 0.98,
+      "source_name": "fia_decision_documents",
+      "source_url": "https://www.fia.com/system/files/decision-document/2026_mexico_city_grand_prix_-_infringement_-_car_77_-_pu_elements.pdf",
+      "timestamp": "2026-10-30T13:34:00",
+      "type": "grid_penalty"
+    },
     {
       "applies_to": "race",
       "driver": "RUS",

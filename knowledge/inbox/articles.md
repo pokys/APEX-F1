@@ -543,3 +543,4 @@
 - [ ] "Two steps forward, one step back" – Oscar Piastri explains the route out of McLaren's car woes (https://www.motorsport.com/f1/news/two-steps-forward-one-step-back-piastri-explains-the-route-out-of-mclarens-car-woes/10869477/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] On This Day: Vettel dominates first Indian GP as Hamilton and Massa tangle again | Brief (https://www.racefans.net/2026/10/30/on-this-day-indian-grand-prix/)
 - [ ] Remembering Sir Patrick Stewart's unforgettable moment on the F1 podium with Daniel Ricciardo (https://www.motorsport.com/f1/news/remembering-sir-patrick-stewarts-unforgettable-moment-on-the-f1-podium-with-daniel-ricciardo/10869481/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Injured Martin cleared to race in Malaysia after first practice (https://www.the-race.com/motogp/how-injured-martin-fared-in-first-sepang-motogp-practice/)

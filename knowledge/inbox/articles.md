@@ -587,3 +587,4 @@
 - [ ] Why F1's 2026 cars are unusually quick in Mexico (https://www.the-race.com/formula-1/why-f1-2026-cars-unusually-quick-mexican-gp/)
 - [ ] Winners and losers from MotoGP's Sepang sprint (https://www.the-race.com/motogp/motogp-malaysian-gp-sprint-sepang-2026-winners-losers/)
 - [ ] Red Bull finds ‘disconnect’ in RB22 in F1 Mexico GP practice (https://www.motorsport.com/f1/news/red-bull-finds-disconnect-in-rb22-in-f1-mexico-gp-practice/10870035/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] George Russell tips Frederik Vesti for F1 2027 Cadillac seat (https://www.motorsport.com/f1/news/george-russell-frederik-vesti-deserves-cadillac-seat-for-f1-2027/10870111/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

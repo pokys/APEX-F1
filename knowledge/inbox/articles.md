@@ -561,6 +561,7 @@
 - [ ] Max Verstappen sends blunt warning to Liam Lawson after Mexican GP FP2 clash (https://www.motorsport.com/f1/news/max-verstappen-sends-blunt-warning-to-liam-lawson-after-mexican-gp-fp2-clash/10869877/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Max Verstappen slams Liam Lawson for FP2 clash at F1 Mexico GP (https://www.motorsport.com/f1/news/max-verstappen-slams-liam-lawson-for-f1-mexico-gp-fp2-clash/10869875/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Verstappen says Lawson’s driving was ‘not smart behaviour when you’re fighting for your seat’ | Formula 1 (https://www.racefans.net/2026/10/30/verstappen-says-lawsons-driving-was-not-smart-behaviour-when-youre-fighting-for-your-seat/)
+- [ ] Verstappen and Lawson handed one-place grid drops for “unacceptable” practice collision | Formula 1 (https://www.racefans.net/2026/10/30/verstappen-and-lawson-handed-one-place-grid-drops-for-practice-collision/)
 
 ## 2026-10-31
 - [ ] Claims Bearman’s salary demands delayed contract talks are “absolute nonsense” – Komatsu | Formula 1 (https://www.racefans.net/2026/10/31/claims-bearmans-salary-demands-delayed-contract-talks-are-absolute-nonsense-komatsu/)
@@ -576,3 +577,5 @@
 - [ ] Verstappen and Lawson get grid drops for 'clumsy' Mexico clash (https://www.the-race.com/formula-1/verstappen-and-lawson-get-grid-drops-for-clumsy-mexico-clash/)
 - [ ] Martin admits MotoGP title 'already lost' after Sepang withdrawal (https://www.the-race.com/motogp/martin-admits-motogp-title-already-lost-after-sepang-withdrawal/)
 - [ ] Acosta wins chaotic Sepang MotoGP sprint (https://www.the-race.com/motogp/acosta-wins-chaotic-sepang-motogp-sprint/)
+- [ ] Inside Herta's Cadillac F1 audition - and how he compared to Perez (https://www.the-race.com/formula-1/colton-herta-mexican-gp-fp1-cadillac-f1-audition/)
+- [ ] Spotlight: Hadjar faces investigation over “alleged misconduct” at Mexican Grand Prix | Formula 1 (https://www.racefans.net/2026/10/31/spotlight-hadjar-faces-investigation-over-alleged-misconduct-at-mexican-grand-prix/)

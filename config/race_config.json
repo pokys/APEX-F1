@@ -16,7 +16,7 @@
   "driver_substitutions": [],
   "event_format": "conventional",
   "event_signal_count": 1,
-  "generated_at": "2026-10-31T08:49:09Z",
+  "generated_at": "2026-10-31T09:23:08Z",
   "grid_penalties": [],
   "grid_position_weight": 2000.0,
   "grid_source": "simulation",

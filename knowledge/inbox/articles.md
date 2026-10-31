@@ -579,3 +579,4 @@
 - [ ] Acosta wins chaotic Sepang MotoGP sprint (https://www.the-race.com/motogp/acosta-wins-chaotic-sepang-motogp-sprint/)
 - [ ] Inside Herta's Cadillac F1 audition - and how he compared to Perez (https://www.the-race.com/formula-1/colton-herta-mexican-gp-fp1-cadillac-f1-audition/)
 - [ ] Spotlight: Hadjar faces investigation over “alleged misconduct” at Mexican Grand Prix | Formula 1 (https://www.racefans.net/2026/10/31/spotlight-hadjar-faces-investigation-over-alleged-misconduct-at-mexican-grand-prix/)
+- [ ] Stewards penalise Verstappen, Lawson after “unacceptable” F1 Mexico GP practice clash (https://www.autosport.com/f1/news/max-verstappen-and-liam-lawson-handed-f1-mexico-gp-grid-penalties-after-practice-clash/10869942/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)

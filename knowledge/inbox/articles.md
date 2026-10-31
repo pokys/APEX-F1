@@ -575,3 +575,4 @@
 - [ ] Stewards penalize Verstappen, Lawson after “unacceptable” F1 Mexico GP practice clash (https://www.autosport.com/f1/news/max-verstappen-and-liam-lawson-handed-f1-mexico-gp-grid-penalties-after-practice-clash/10869942/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] Verstappen and Lawson get grid drops for 'clumsy' Mexico clash (https://www.the-race.com/formula-1/verstappen-and-lawson-get-grid-drops-for-clumsy-mexico-clash/)
 - [ ] Martin admits MotoGP title 'already lost' after Sepang withdrawal (https://www.the-race.com/motogp/martin-admits-motogp-title-already-lost-after-sepang-withdrawal/)
+- [ ] Acosta wins chaotic Sepang MotoGP sprint (https://www.the-race.com/motogp/acosta-wins-chaotic-sepang-motogp-sprint/)

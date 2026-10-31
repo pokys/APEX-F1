@@ -584,4 +584,5 @@
 - [ ] F1 fans rush to defend Isack Hadjar after controversial Mexican GP incident (https://www.motorsport.com/f1/news/f1-fans-defend-isack-hadjar-after-paddock-selfie-row-leads-to-fia-summons/10870067/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Lewis Hamilton "praying" for Ferrari power unit after Mexico FP2 failure (https://www.motorsport.com/f1/news/lewis-hamilton-praying-for-ferrari-power-unit-after-mexico-fp2-failure/10870069/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] How Herta compared to Perez in latest 2027 audition (https://www.the-race.com/formula-1/colton-herta-mexican-gp-fp1-cadillac-f1-audition/)
+- [ ] Why F1's 2026 cars are unusually quick in Mexico (https://www.the-race.com/formula-1/why-f1-2026-cars-unusually-quick-mexican-gp/)
 - [ ] Winners and losers from MotoGP's Sepang sprint (https://www.the-race.com/motogp/motogp-malaysian-gp-sprint-sepang-2026-winners-losers/)

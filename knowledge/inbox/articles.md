@@ -591,3 +591,7 @@
 - [ ] Ferrari downplays expectations for F1 Mexico GP despite blistering Friday (https://www.motorsport.com/f1/news/fred-vasseur-downplays-expectations-for-f1-mexico-gp-despite-blistering-friday/10870125/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] How F1 teams are tackling Mexico's altitude challenge in 2026 (https://www.the-race.com/formula-1/how-f1-teams-are-tackling-mexicos-altitude-challenge-in-2026/)
 - [ ] Ocon out, Hirakawa in as Haas make shock Mexican Grand Prix driver change | Formula 1 (https://www.racefans.net/2026/10/31/ocon-out-hirakawa-in-as-haas-make-shock-mexican-grand-prix-driver-change/)
+- [ ] All the reasons the Ocon-Haas relationship fell apart (https://www.the-race.com/formula-1/all-the-reasons-the-ocon-haas-relationship-fell-apart/)
+- [ ] Haas drops Esteban Ocon for F1 Mexico GP (https://www.motorsport.com/f1/news/haas-drops-esteban-ocon-for-f1-mexico-gp/10870158/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Haas drops Ocon for F1 Mexico GP (https://www.autosport.com/f1/news/haas-drops-ocon-for-f1-mexico-gp/10870160/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Ocon suddenly replaced at Haas for rest of Mexico F1 weekend (https://www.the-race.com/formula-1/esteban-ocon-replaced-haas-f1-rest-of-mexico-f1-weekend/)

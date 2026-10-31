@@ -597,3 +597,5 @@
 - [ ] Ocon suddenly replaced at Haas for rest of Mexico F1 weekend (https://www.the-race.com/formula-1/esteban-ocon-replaced-haas-f1-rest-of-mexico-f1-weekend/)
 - [ ] Mercedes out of performance window at Mexico GP - George Russell (https://www.motorsport.com/f1/news/george-russell-mercedes-out-of-performance-window-at-mexico-gp/10870173/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] What F1 teams have done to tackle Mexico's altitude challenge (https://www.the-race.com/formula-1/how-f1-teams-are-tackling-mexicos-altitude-challenge-in-2026/)
+- [ ] Hadjar escapes with warning for pushing Mexico F1 paddock guest (https://www.the-race.com/formula-1/isack-hadjar-warning-pushing-mexico-f1-paddock-guest/)
+- [ ] Isack Hadjar formally warned for fan incident in F1 Mexico GP paddock (https://www.motorsport.com/f1/news/isack-hadjar-warned-for-fan-incident-in-f1-mexico-gp-paddock/10870033/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

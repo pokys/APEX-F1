@@ -605,3 +605,4 @@
 - [ ] Norris beats Antonelli by a thousandth of a second in final practice | Formula 1 (https://www.racefans.net/2026/10/31/norris-beats-antonelli-by-a-thousandth-of-a-second-in-final-practice/)
 - [ ] Red Bull provides timeline for long-awaited new F1 wind tunnel (https://www.autosport.com/f1/news/when-red-bull-expects-to-start-using-its-long-awaited-new-f1-wind-tunnel/10870214/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] When Red Bull expects to start using its long-awaited new F1 wind tunnel (https://www.motorsport.com/f1/news/when-red-bull-expects-to-start-using-its-long-awaited-new-f1-wind-tunnel/10870210/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] What happened in F1 Mexican GP final practice (https://www.the-race.com/formula-1/f1-mexican-gp-final-practice-what-happened/)

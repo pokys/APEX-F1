@@ -588,3 +588,6 @@
 - [ ] Winners and losers from MotoGP's Sepang sprint (https://www.the-race.com/motogp/motogp-malaysian-gp-sprint-sepang-2026-winners-losers/)
 - [ ] Red Bull finds ‘disconnect’ in RB22 in F1 Mexico GP practice (https://www.motorsport.com/f1/news/red-bull-finds-disconnect-in-rb22-in-f1-mexico-gp-practice/10870035/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] George Russell tips Frederik Vesti for F1 2027 Cadillac seat (https://www.motorsport.com/f1/news/george-russell-frederik-vesti-deserves-cadillac-seat-for-f1-2027/10870111/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Ferrari downplays expectations for F1 Mexico GP despite blistering Friday (https://www.motorsport.com/f1/news/fred-vasseur-downplays-expectations-for-f1-mexico-gp-despite-blistering-friday/10870125/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] How F1 teams are tackling Mexico's altitude challenge in 2026 (https://www.the-race.com/formula-1/how-f1-teams-are-tackling-mexicos-altitude-challenge-in-2026/)
+- [ ] Ocon out, Hirakawa in as Haas make shock Mexican Grand Prix driver change | Formula 1 (https://www.racefans.net/2026/10/31/ocon-out-hirakawa-in-as-haas-make-shock-mexican-grand-prix-driver-change/)

@@ -638,3 +638,4 @@
 - [ ] Where Antonelli's 2026 will stand out among first-time F1 titles (https://www.the-race.com/formula-1/where-antonellis-2026-will-stand-out-among-first-time-f1-titles/)
 - [ ] Featured Comment: Lawson’s disqualification highlights another flaw in F1’s 2026 rules | Brief (https://www.racefans.net/2026/11/01/featured-comment-lawsons-disqualification-highlights-another-flaw-in-f1s-rules/)
 - [ ] “Everyone’s stuck in this speed limiter”: McLaren pair expect few passes in Mexico | Formula 1 (https://www.racefans.net/2026/11/01/everyones-kind-of-stuck-in-this-speed-limiter-mclaren-pair-expect-little-passing-in-mexico/)
+- [ ] Valtteri Bottas "pretty confident" of staying for F1 2027 amid Colton Herta rumours (https://www.motorsport.com/f1/news/valtteri-bottas-pretty-confident-of-staying-for-f1-2027-amid-colton-herta-rumours/10870623/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

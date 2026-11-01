@@ -616,3 +616,6 @@
 - [ ] Verstappen clears the air with Lawson, but keeps opinion on Racing Bulls F1 seat to himself (https://www.autosport.com/f1/news/verstappen-clears-the-air-with-lawson-but-keeps-opinion-on-racing-bulls-f1-seat-to-himself/10870388/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] Lawson thrown out of Mexican GP qualifying results (https://www.the-race.com/formula-1/lawson-at-risk-of-mexico-qualifying-dsq/)
 - [ ] Winners and losers from Mexican Grand Prix F1 qualifying 2026 (https://www.the-race.com/formula-1/winners-and-losers-from-mexican-grand-prix-f1-qualifying-2026/)
+- [ ] Lawson disqualified from F1 qualifying in Mexico – here's why (https://www.autosport.com/f1/news/lawson-disqualified-from-f1-qualifying-in-mexico-heres-why/10870411/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Liam Lawson disqualified from F1 qualifying in Mexico – here's why (https://www.motorsport.com/f1/news/liam-lawson-disqualified-after-f1-qualifying-in-mexico-heres-why/10870409/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] What decided Mexico pole fight before final laps even started (https://www.the-race.com/formula-1/what-decided-mexico-pole-fight-before-final-laps-even-started/)

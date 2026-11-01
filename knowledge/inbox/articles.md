@@ -603,6 +603,9 @@
 - [ ] Stewards warn drivers over cutting first corner sequences at start and restarts | Formula 1 (https://www.racefans.net/2026/10/31/stewards-warn-drivers-over-cutting-first-corner-sequences-at-start-and-restarts/)
 - [ ] Lawson apologised to Verstappen for clash: “Right now it’s not the best time” | Formula 1 (https://www.racefans.net/2026/10/31/lawson-apologised-to-verstappen-for-clash-right-now-its-not-the-best-time/)
 - [ ] Lewis Hamilton: First Ferrari F1 pole “takes me back to watching Michael” (https://www.motorsport.com/f1/news/lewis-hamilton-first-ferrari-f1-pole-takes-me-back-to-watching-michael/10870368/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Hamilton claims first pole position for three years ahead of Russell in Mexico | 2026 Mexican GP qualifying report (https://www.racefans.net/2026/10/31/hamilton-claims-first-pole-position-for-three-years-ahead-of-russell-in-mexico/)
+- [ ] Lawson disqualified from qualifying after cool-down lap error causes MGU-K rules breach | Formula 1 (https://www.racefans.net/2026/10/31/lawson-disqualified-from-qualifying-after-cool-down-lap-error-causes-mgu-k-rules-breach/)
+- [ ] “Difference in viewpoints” but no threat of violence: Ocon on his shock Haas exit in Mexico | Formula 1 (https://www.racefans.net/2026/10/31/ocon-confirms-difference-in-viewpoints-led-to-shock-exit-from-haas/)
 
 ## 2026-11-01
 - [ ] "I'll bombard myself with melatonin": Kimi Antonelli admits to driving "tense" and "tired" on cusp of F1 title (https://www.motorsport.com/f1/news/ill-bombard-myself-with-melatonin-kimi-antonelli-admits-to-driving-tense-and-tired-on-cusp-of-f1-ti/10870375/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
@@ -622,3 +625,8 @@
 - [ ] “Everyone’s kind of stuck in this speed limiter”: McLaren pair expect little passing in Mexico | Formula 1 (https://www.racefans.net/2026/11/01/everyones-kind-of-stuck-in-this-speed-limiter-mclaren-pair-expect-little-passing-in-mexico/)
 - [ ] Marquez takes complete control of title fight with Sepang win (https://www.the-race.com/motogp/marquez-takes-complete-control-of-title-fight-with-sepang-win/)
 - [ ] Alex Marquez withdraws from Qatar GP for surgery (https://www.the-race.com/motogp/alex-marquez-withdraws-from-qatar-gp-for-surgery/)
+- [ ] F1 2026 qualifying head-to-head: Mexico GP (https://www.motorsport.com/f1/news/f1-2026-qualifying-head-to-head-mexico-gp/10870529/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] F1's attempt to prevent a repeat of Mexico Turn 1 antics (https://www.the-race.com/formula-1/f1s-attempt-to-prevent-a-repeat-of-mexico-turn-1-antics/)
+- [ ] How Ocon's replacement's really faring on his shock F1 debut (https://www.the-race.com/formula-1/how-ocons-replacements-really-faring-on-his-shock-f1-debut/)
+- [ ] Red Bull drivers fear Mexico start, Max Verstappen jokes: “A Le Mans start would be just as quick” (https://www.motorsport.com/f1/news/red-bull-drivers-fear-mexico-start-max-verstappen-jokes-a-le-mans-start-would-be-just-as-quick/10870533/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Yamaha pulls out of Qatar GP, MotoGP threatens penalties (https://www.the-race.com/motogp/yamaha-pulls-out-of-qatar-motogp-race/)

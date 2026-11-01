@@ -1,15 +1,15 @@
 {
   "data_freshness": {
-    "days_since_latest_event": -1,
-    "days_until_next_race": 1,
+    "days_since_latest_event": 0,
+    "days_until_next_race": 0,
     "is_stale": false,
     "latest_completed_date": "2026-11-01",
     "latest_completed_event": "Mexico City Grand Prix",
     "next_race_date": "2026-11-01",
-    "reference_date": "2026-10-31",
+    "reference_date": "2026-11-01",
     "stale_threshold_days": 21.0
   },
-  "deterministic_run_id": "561733148831663c21f4",
+  "deterministic_run_id": "e269176711e7ebe97d8d",
   "drivers": [
     {
       "dnf_probability": 0.1312,
@@ -726,7 +726,7 @@
       "win_probability": 0.0
     }
   ],
-  "generated_at": "2026-10-31T23:50:22Z",
+  "generated_at": "2026-11-01T00:50:32Z",
   "inputs_used": [
     {
       "source": "qualifying",
@@ -756,7 +756,7 @@
   ],
   "integrity": {
     "driver_ratings_hash": "972385a015c7",
-    "race_config_hash": "80928895528b",
+    "race_config_hash": "2e372c19383d",
     "team_ratings_hash": "8a0b53f4b1b7"
   },
   "prediction_target": "race",

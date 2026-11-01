@@ -1,20 +1,14 @@
 {
-  "fetched_at": "2026-10-31T23:50:20+00:00",
+  "fetched_at": "2026-11-01T00:50:30+00:00",
   "longitude": -99.0907,
   "race": "Mexico City Grand Prix",
   "season": 2026,
   "sessions": {
-    "Q": {
-      "precipitation_mm": 0.0,
-      "rain_probability": 0.0,
-      "start": "2026-10-31T21:00:00+00:00",
-      "weather_code": 3
-    },
     "R": {
-      "precipitation_mm": 0.1,
+      "precipitation_mm": 0.0,
       "rain_probability": 0.04,
       "start": "2026-11-01T20:00:00+00:00",
-      "weather_code": 51
+      "weather_code": 1
     }
   },
   "source": "open-meteo.com"

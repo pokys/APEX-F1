@@ -630,3 +630,5 @@
 - [ ] How Ocon's replacement's really faring on his shock F1 debut (https://www.the-race.com/formula-1/how-ocons-replacements-really-faring-on-his-shock-f1-debut/)
 - [ ] Red Bull drivers fear Mexico start, Max Verstappen jokes: “A Le Mans start would be just as quick” (https://www.motorsport.com/f1/news/red-bull-drivers-fear-mexico-start-max-verstappen-jokes-a-le-mans-start-would-be-just-as-quick/10870533/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Yamaha pulls out of Qatar GP, MotoGP threatens penalties (https://www.the-race.com/motogp/yamaha-pulls-out-of-qatar-motogp-race/)
+- [ ] How Ocon's replacement is really faring on his shock F1 debut (https://www.the-race.com/formula-1/how-ocons-replacements-really-faring-on-his-shock-f1-debut/)
+- [ ] Qatar’s Moto GP round hit by first team withdrawal due to Iran war | Formula 1 (https://www.racefans.net/2026/11/01/qatars-moto-gp-round-hit-by-first-team-withdrawal-due-to-iran-war/)

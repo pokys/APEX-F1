@@ -8,11 +8,11 @@
       "mean_winner_probability": 0.142167
     },
     "R": {
-      "count": 2,
-      "hit_rate": 1.0,
-      "mean_group_overlap": 2.0,
-      "mean_log_loss": 0.380344,
-      "mean_winner_probability": 0.687167
+      "count": 3,
+      "hit_rate": 0.666667,
+      "mean_group_overlap": 1.666667,
+      "mean_log_loss": 2.008717,
+      "mean_winner_probability": 0.459833
     },
     "S": {
       "count": 1,
@@ -127,13 +127,27 @@
       "season": 2026,
       "session_code": "Q",
       "winner_probability": 0.148333
+    },
+    {
+      "actual_winner": "VER",
+      "archived_at": "2026-11-01T19:51:48+00:00",
+      "group": "podium",
+      "group_overlap": 1,
+      "hit": false,
+      "log_loss": 5.265463,
+      "predicted_winner": "HAM",
+      "race": "Mexico City Grand Prix",
+      "round": 19,
+      "season": 2026,
+      "session_code": "R",
+      "winner_probability": 0.005167
     }
   ],
   "summary": {
-    "count": 7,
-    "hit_rate": 0.571429,
-    "mean_group_overlap": 6.142857,
-    "mean_log_loss": 1.423249,
-    "mean_winner_probability": 0.337619
+    "count": 8,
+    "hit_rate": 0.5,
+    "mean_group_overlap": 5.5,
+    "mean_log_loss": 1.903526,
+    "mean_winner_probability": 0.296063
   }
 }

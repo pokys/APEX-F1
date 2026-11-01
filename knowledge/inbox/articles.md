@@ -621,3 +621,4 @@
 - [ ] What decided Mexico pole fight before final laps even started (https://www.the-race.com/formula-1/what-decided-mexico-pole-fight-before-final-laps-even-started/)
 - [ ] “Everyone’s kind of stuck in this speed limiter”: McLaren pair expect little passing in Mexico | Formula 1 (https://www.racefans.net/2026/11/01/everyones-kind-of-stuck-in-this-speed-limiter-mclaren-pair-expect-little-passing-in-mexico/)
 - [ ] Marquez takes complete control of title fight with Sepang win (https://www.the-race.com/motogp/marquez-takes-complete-control-of-title-fight-with-sepang-win/)
+- [ ] Alex Marquez withdraws from Qatar GP for surgery (https://www.the-race.com/motogp/alex-marquez-withdraws-from-qatar-gp-for-surgery/)

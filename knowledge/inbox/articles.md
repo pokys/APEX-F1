@@ -620,3 +620,4 @@
 - [ ] Liam Lawson disqualified from F1 qualifying in Mexico – here's why (https://www.motorsport.com/f1/news/liam-lawson-disqualified-after-f1-qualifying-in-mexico-heres-why/10870409/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] What decided Mexico pole fight before final laps even started (https://www.the-race.com/formula-1/what-decided-mexico-pole-fight-before-final-laps-even-started/)
 - [ ] “Everyone’s kind of stuck in this speed limiter”: McLaren pair expect little passing in Mexico | Formula 1 (https://www.racefans.net/2026/11/01/everyones-kind-of-stuck-in-this-speed-limiter-mclaren-pair-expect-little-passing-in-mexico/)
+- [ ] Marquez takes complete control of title fight with Sepang win (https://www.the-race.com/motogp/marquez-takes-complete-control-of-title-fight-with-sepang-win/)

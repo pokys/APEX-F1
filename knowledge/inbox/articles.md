@@ -614,3 +614,5 @@
 - [ ] Max Verstappen clears the air with Liam Lawson, but stays tight-lipped on Racing Bulls F1 seat (https://www.motorsport.com/f1/news/max-verstappen-clears-the-air-with-liam-lawson-but-stays-tight-lipped-on-racing-bulls-f1-seat/10870381/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Two ways Antonelli is unexpectedly struggling in Mexico (https://www.the-race.com/formula-1/two-ways-antonelli-is-unexpectedly-struggling-in-mexico/)
 - [ ] Verstappen clears the air with Lawson, but keeps opinion on Racing Bulls F1 seat to himself (https://www.autosport.com/f1/news/verstappen-clears-the-air-with-lawson-but-keeps-opinion-on-racing-bulls-f1-seat-to-himself/10870388/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Lawson thrown out of Mexican GP qualifying results (https://www.the-race.com/formula-1/lawson-at-risk-of-mexico-qualifying-dsq/)
+- [ ] Winners and losers from Mexican Grand Prix F1 qualifying 2026 (https://www.the-race.com/formula-1/winners-and-losers-from-mexican-grand-prix-f1-qualifying-2026/)

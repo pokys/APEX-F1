@@ -632,3 +632,4 @@
 - [ ] Yamaha pulls out of Qatar GP, MotoGP threatens penalties (https://www.the-race.com/motogp/yamaha-pulls-out-of-qatar-motogp-race/)
 - [ ] How Ocon's replacement is really faring on his shock F1 debut (https://www.the-race.com/formula-1/how-ocons-replacements-really-faring-on-his-shock-f1-debut/)
 - [ ] Qatar’s Moto GP round hit by first team withdrawal due to Iran war | Formula 1 (https://www.racefans.net/2026/11/01/qatars-moto-gp-round-hit-by-first-team-withdrawal-due-to-iran-war/)
+- [ ] The changes Hamilton thinks are behind his Mexico GP pole (https://www.autosport.com/f1/news/the-changes-hamilton-thinks-are-behind-his-mexico-gp-pole/10870570/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)

@@ -606,6 +606,7 @@
 - [ ] Hamilton claims first pole position for three years ahead of Russell in Mexico | 2026 Mexican GP qualifying report (https://www.racefans.net/2026/10/31/hamilton-claims-first-pole-position-for-three-years-ahead-of-russell-in-mexico/)
 - [ ] Lawson disqualified from qualifying after cool-down lap error causes MGU-K rules breach | Formula 1 (https://www.racefans.net/2026/10/31/lawson-disqualified-from-qualifying-after-cool-down-lap-error-causes-mgu-k-rules-breach/)
 - [ ] “Difference in viewpoints” but no threat of violence: Ocon on his shock Haas exit in Mexico | Formula 1 (https://www.racefans.net/2026/10/31/ocon-confirms-difference-in-viewpoints-led-to-shock-exit-from-haas/)
+- [ ] ‘Difference in viewpoints’ but no threat of violence: Ocon on his shock Haas exit | Formula 1 (https://www.racefans.net/2026/10/31/ocon-confirms-difference-in-viewpoints-led-to-shock-exit-from-haas/)
 
 ## 2026-11-01
 - [ ] "I'll bombard myself with melatonin": Kimi Antonelli admits to driving "tense" and "tired" on cusp of F1 title (https://www.motorsport.com/f1/news/ill-bombard-myself-with-melatonin-kimi-antonelli-admits-to-driving-tense-and-tired-on-cusp-of-f1-ti/10870375/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
@@ -635,3 +636,5 @@
 - [ ] The changes Hamilton thinks are behind his Mexico GP pole (https://www.autosport.com/f1/news/the-changes-hamilton-thinks-are-behind-his-mexico-gp-pole/10870570/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] Fernando Alonso 'beyond frustration' after engine issue in F1 Mexico GP qualifying (https://www.motorsport.com/f1/news/fernando-alonso-beyond-frustration-after-engine-issue-in-f1-mexico-gp-qualifying/10870590/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Where Antonelli's 2026 will stand out among first-time F1 titles (https://www.the-race.com/formula-1/where-antonellis-2026-will-stand-out-among-first-time-f1-titles/)
+- [ ] Featured Comment: Lawson’s disqualification highlights another flaw in F1’s 2026 rules | Brief (https://www.racefans.net/2026/11/01/featured-comment-lawsons-disqualification-highlights-another-flaw-in-f1s-rules/)
+- [ ] “Everyone’s stuck in this speed limiter”: McLaren pair expect few passes in Mexico | Formula 1 (https://www.racefans.net/2026/11/01/everyones-kind-of-stuck-in-this-speed-limiter-mclaren-pair-expect-little-passing-in-mexico/)

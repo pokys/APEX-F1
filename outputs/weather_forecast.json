@@ -1,12 +1,12 @@
 {
-  "fetched_at": "2026-11-01T14:51:24+00:00",
+  "fetched_at": "2026-11-01T15:51:34+00:00",
   "longitude": -99.0907,
   "race": "Mexico City Grand Prix",
   "season": 2026,
   "sessions": {
     "R": {
       "precipitation_mm": 0.0,
-      "rain_probability": 0.0,
+      "rain_probability": 0.02,
       "start": "2026-11-01T20:00:00+00:00",
       "weather_code": 1
     }

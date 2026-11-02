@@ -1,18 +1,5 @@
 # F1 Article Inbox
 
-## 2026-10-18
-- [ ] Poll: Does F1 needs its cost cap – or is it just holding back the smaller teams? | Debates and Polls (https://www.racefans.net/2026/10/18/poll-does-f1-needs-its-cost-cap-or-is-it-just-holding-back-the-smaller-teams/)
-- [ ] The maths behind when Mercedes could become F1 world champions in 2026 (https://www.autosport.com/f1/news/the-maths-behind-when-mercedes-could-become-f1-world-champions-in-2026/10866008/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-- [ ] When will Mercedes become F1 world champions in 2026? (https://www.motorsport.com/f1/news/when-can-mercedes-become-f1-world-champions-in-2026/10865358/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] What Ferrari's changing with its biggest F1 upgrade of 2026 (https://www.the-race.com/formula-1/what-ferrari-is-changing-biggest-f1-2026-upgrade/)
-- [ ] BBC could lose F1 radio rights after 32 years as rival broadcaster considers bid (https://www.motorsport.com/f1/news/bbc-could-lose-f1-radio-rights-after-32-years-as-rival-broadcaster-considers-bid/10866051/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] How Geri Halliwell helped Christian Horner deal with fan hate (https://www.motorsport.com/f1/news/how-geri-halliwell-helped-christian-horner-deal-with-fan-hate/10865211/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] Max Verstappen hits back at ex-F1 drivers over criticism of 2026 regulations (https://www.motorsport.com/f1/news/max-verstappen-hits-back-at-former-f1-drivers-over-criticism-of-2026-regulations/10866045/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] Mercedes explains why its upgrade made its F1 car harder to drive (https://www.autosport.com/f1/news/mercedes-explains-why-its-upgrade-made-its-f1-car-harder-to-drive/10866035/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-- [ ] The strange Alonso subplot to Aston Martin's weird recent run (https://www.the-race.com/formula-1/strange-fernando-alonso-subplot-aston-martin-weird-f1-form/)
-- [ ] Spotlight: Fornaroli tests for McLaren again alongside Hughes at Paul Ricard | Spotlight (https://www.racefans.net/2026/10/18/spotlight-fornaroli-tests-for-mclaren-again-alongside-hughes-at-paul-ricard/)
-- [ ] Documentary on Lewis Hamilton and Fernando Alonso's F1 rivalry reportedly in the works (https://www.motorsport.com/f1/news/lewis-hamilton-and-fernando-alonsos-infamous-mclaren-rivalry-set-for-bbc-documentary/10866138/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-
 ## 2026-10-19
 - [ ] Podcast: Horner on Ferrari rumours, Newey's Aston Martin and more (https://www.the-race.com/formula-1/podcast-horner-on-ferrari-rumours-neweys-aston-martin-and-more/)
 - [ ] Stray Kids' Felix sends fans into frenzy with behind-the-scenes Ferrari F1 photos (https://www.motorsport.com/f1/news/stray-kids-felix-sends-fans-into-frenzy-with-behind-the-scenes-ferrari-f1-photos/10866141/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
@@ -675,3 +662,17 @@
 - [ ] Lewis Hamilton says Ferrari needs “serious talks” after Charles Leclerc clash cost Mexico GP win (https://www.motorsport.com/f1/news/lewis-hamilton-says-ferrari-needs-serious-talks-after-charles-leclerc-clash-cost-mexico-gp-win/10870748/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Max Verstappen shares emotional message after Kimi Antonelli's historic F1 title win (https://www.motorsport.com/f1/news/max-verstappen-shares-emotional-message-after-kimi-antonellis-historic-f1-title-win/10870753/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Social Media: Vettel congratulates Antonelli for breaking his record as youngest F1 champion | Brief (https://www.racefans.net/2026/11/01/social-media-vettel-congratulates-antonelli-for-breaking-his-record-as-youngest-f1-champion/)
+- [ ] 2026 Mexican Grand Prix interactive data: lap charts, times and tyres | 2026 Mexican Grand Prix interactive data (https://www.racefans.net/2026/11/01/2026-mexican-grand-prix-interactive-data-lap-charts-times-and-tyres/)
+- [ ] F1 CEO Stefano Domenicali releases touching statement after Kimi Antonelli's title win (https://www.motorsport.com/f1/news/f1-ceo-stefano-domenicali-releases-touching-statement-after-kimi-antonellis-title-win/10870790/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+
+## 2026-11-02
+- [ ] Charles Leclerc responds to Lewis Hamilton's call for Ferrari talks after Mexico GP (https://www.motorsport.com/f1/news/charles-leclerc-responds-to-lewis-hamiltons-call-for-ferrari-talks-after-mexico-gp/10870814/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Fred Vasseur reacts to Lewis Hamilton, Charles Leclerc clash: “It’s a matter of respect” (https://www.motorsport.com/f1/news/fred-vasseur-reacts-to-lewis-hamilton-charles-leclerc-clash-its-a-matter-of-respect/10870842/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] How F1 drivers reacted to Kimi Antonelli's world title: "He's made everyone else look silly" (https://www.motorsport.com/f1/news/how-f1-drivers-reacted-to-kimi-antonellis-world-title-hes-made-everyone-else-look-silly/10870828/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Piastri loses points finish after 10-second penalty for Lindblad collision | Formula 1 (https://www.racefans.net/2026/11/02/piastri-loses-points-finish-after-10-second-penalty-for-lindblad-collision/)
+- [ ] Piastri punished for Lindblad collision (https://www.the-race.com/formula-1/piastri-punished-for-lindblad-collision/)
+- [ ] Toto Wolff apologises to George Russell after Mercedes "let him down" at Mexican GP (https://www.motorsport.com/f1/news/toto-wolff-apologises-to-george-russell-after-mercedes-let-him-down-at-mexican-gp/10870825/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Why Charles Leclerc didn’t yield Mexico GP lead after cutting Turn 5 (https://www.motorsport.com/f1/news/why-charles-leclerc-didnt-yield-mexico-gp-lead-after-cutting-turn-5/10870796/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Why Leclerc didn’t give up Mexico GP lead after cutting Turn 5 (https://www.autosport.com/f1/news/why-leclerc-didnt-give-up-mexico-gp-lead-after-cutting-turn-5/10870807/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Winners and losers from F1's record-breaking Mexico Grand Prix (https://www.motorsport.com/f1/news/winners-and-losers-from-f1s-historic-mexico-grand-prix/10870803/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] “When you’re one-two you don’t imagine you will lose, and we did” – Vasseur | Formula 1 (https://www.racefans.net/2026/11/02/when-youre-one-two-you-dont-imagine-you-will-lose-and-we-did-vasseur/)

@@ -34299,7 +34299,8 @@
           ],
           "session_code": "Q",
           "session_date": "2026-10-31T21:00:00+00:00",
-          "session_name": "Qualifying"
+          "session_name": "Qualifying",
+          "wet": false
         },
         {
           "results": [
@@ -34636,7 +34637,8 @@
           ],
           "session_code": "R",
           "session_date": "2026-11-01T20:00:00+00:00",
-          "session_name": "Race"
+          "session_name": "Race",
+          "wet": false
         }
       ]
     }

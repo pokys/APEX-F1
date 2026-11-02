@@ -7,9 +7,9 @@
   "driver_substitutions": [],
   "event_format": "conventional",
   "event_signal_count": 0,
-  "generated_at": "2026-11-02T13:52:36Z",
+  "generated_at": "2026-11-02T18:00:52Z",
   "grid_penalties": [],
-  "grid_position_weight": 2000.0,
+  "grid_position_weight": 550.0,
   "grid_source": "simulation",
   "inputs_status": [
     {
@@ -78,11 +78,11 @@
   "overtaking_difficulty": 0.52,
   "prediction_target": "qualifying",
   "prediction_target_label": "Qualifying",
-  "qualifying_noise_scale": 2.5,
+  "qualifying_noise_scale": 3.0,
   "race": "S\u00e3o Paulo Grand Prix",
   "race_date": "2026-11-08",
   "race_grid_penalties": [],
-  "race_noise_scale": 6.0,
+  "race_noise_scale": 3.0,
   "recovery_strength": 0.0,
   "safety_car_probability": 0.31,
   "season": 2026,
@@ -99,7 +99,7 @@
   "sprint_grid_penalties": [],
   "standings_blend_qualifying": 0.5,
   "standings_blend_race": 0.2,
-  "standings_grid_decay": 1.5,
+  "standings_grid_decay": 0.0,
   "target_output_type": "qualifying",
   "target_session_code": "Q",
   "track": {
@@ -110,6 +110,6 @@
   "track_profile": "country:brazil",
   "weather": "dry",
   "weather_modifier": 0.12,
-  "weekend_form_scale_qualifying": 1.0,
+  "weekend_form_scale_qualifying": 8.0,
   "weekend_format": "standard"
 }

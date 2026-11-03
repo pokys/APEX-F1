@@ -695,3 +695,11 @@
 
 ## 2026-11-03
 - [ ] Lewis Hamilton goes viral after emotional moment with Peter Bonnington in Mexico (https://www.motorsport.com/f1/news/lewis-hamilton-goes-viral-after-emotional-moment-with-peter-bonnington-in-mexico/10871136/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Antonelli says doubters “added fuel to the fire” in his world championship pursuit | Formula 1 (https://www.racefans.net/2026/11/03/antonelli-says-doubters-added-fuel-to-the-fire-in-his-world-championship-pursuit/)
+- [ ] Charles Leclerc blames Mexico GP clash on track layout - Fred Vasseur disagrees (https://www.motorsport.com/f1/news/charles-leclerc-blames-mexico-gp-clash-on-track-layout-fred-vasseur-disagrees/10871092/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] How a 'stupid' speed limit stopped Mexican GP overtaking (https://www.the-race.com/formula-1/the-stupid-speed-limit-that-neutered-mexican-gp-explained/)
+- [ ] Isack Hadjar blames himself for George Russell clash that “ruined” his Mexico GP (https://www.motorsport.com/f1/news/isack-hadjar-blames-himself-for-george-russell-clash-that-ruined-his-mexico-gp/10871223/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Kimi Antonelli labels the "turning point" in F1 title-winning season (https://www.motorsport.com/f1/news/kimi-antonelli-labels-the-turning-point-in-f1-title-winning-season/10871066/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Spotlight: Verstappen puzzled by engine braking: ‘It just decides by itself what to do’ | Formula 1 (https://www.racefans.net/2026/11/03/spotlight-verstappen-puzzled-by-engine-braking-it-just-decides-by-itself-what-to-do/)
+- [ ] What time is F1's 2026 Brazilian Grand Prix? Full weekend schedule (https://www.the-race.com/formula-1/what-time-is-f1s-2026-brazilian-grand-prix-full-weekend-schedule/)
+- [ ] “Silly” power unit rules prevent passing, says Hamilton: “The engine can go faster” | Formula 1 (https://www.racefans.net/2026/11/03/silly-power-unit-rules-prevent-passing-says-hamilton-the-engine-can-go-faster/)

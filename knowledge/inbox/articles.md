@@ -1,31 +1,5 @@
 # F1 Article Inbox
 
-## 2026-10-20
-- [ ] 'I felt sorry for Fred' - Horner on Ferrari team boss rumours (https://www.the-race.com/formula-1/i-felt-sorry-for-vasseur-horner-on-ferrari-f1-rumours/)
-- [ ] Aston Martin joins the padel court with new collaboration (https://www.the-race.com/extra/aston-martin-f1-team-joins-the-padel-court-with-new-collaboration/)
-- [ ] Christian Horner: Kimi Antonelli has 'earned' the right to be Mercedes' number one (https://www.motorsport.com/f1/news/christian-horner-kimi-antonelli-has-earned-the-right-to-be-mercedes-number-one/10865153/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] Early coronation for Antonelli? Five talking points for the United States Grand Prix | Formula 1 (https://www.racefans.net/2026/10/20/early-coronation-for-antonelli-five-talking-points-for-the-united-states-grand-prix/)
-- [ ] Featured Comment: Budget cap not to blame for lack of winning teams in F1 | Brief (https://www.racefans.net/2026/10/20/featured-comment-budget-cap-not-to-blame-for-lack-of-winning-teams-in-f1/)
-- [ ] Formula 1’s move to shorter grands prix in 2027 will not be permanent | Formula 1 (https://www.racefans.net/2026/10/20/formula-1s-move-to-shorter-grands-prix-in-2027-will-not-be-permanent/)
-- [ ] Gary Anderson: The details that really separate Red Bull and Mercedes (https://www.the-race.com/formula-1/details-that-really-separate-red-bull-and-mercedes/)
-- [ ] Lando Norris suffers defeat to F1 rivals in hilarious UNO showdown (https://www.motorsport.com/f1/news/lando-norris-suffers-embarrassing-defeat-to-f1-rivals-in-hilarious-uno-showdown/10866475/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] MotoGP 2027 line-up complete: All 17 moves (https://www.the-race.com/motogp/motogp-2027-line-up-complete-all-17-moves/)
-- [ ] Razgatlioglu to miss rest of 2026 MotoGP season (https://www.the-race.com/motogp/razgatlioglu-to-miss-rest-of-2026-motogp-season/)
-- [ ] F1’s former fuel flow meter supplier sues its replacement ahead of US GP (https://www.motorsport.com/f1/news/f1s-former-fuel-flow-meter-supplier-sues-its-replacement-in-texas/10866487/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] Spotlight: Haas produces another Godzilla livery for United States GP | Briefs (https://www.racefans.net/2026/10/20/spotlight-haas-produces-another-godzilla-livery-for-united-states-gp/)
-- [ ] Cadillac and Haas reveal special liveries for home race in Austin | Formula 1 (https://www.racefans.net/2026/10/20/cadillac-and-haas-reveal-special-liveries-for-home-race-in-austin/)
-- [ ] FIA adamant Qatar and Abu Dhabi GPs will go ahead (https://www.the-race.com/formula-1/fia-adamant-f1-qatar-abu-dhabi-gp-will-go-ahead/)
-- [ ] Mercedes: “We had people who hadn’t done a live pitstop for 15 years” in Singapore GP (https://www.motorsport.com/f1/news/mercedes-we-had-people-who-hadnt-done-a-live-pitstop-for-15-years-in-singapore-gp/10866416/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] MotoGP bikes to run at F1's US GP (https://www.the-race.com/motogp/motogp-bikes-to-run-at-f1-us-gp/)
-- [ ] Why Isack Hadjar doesn’t like F1 sprints anymore (https://www.motorsport.com/f1/news/why-isack-hadjar-doesnt-like-f1-sprints-anymore/10866320/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] FIA expects F1 races in Qatar and Abu Dhabi to continue as planned (https://www.motorsport.com/f1/news/fia-expects-f1-races-in-qatar-and-abu-dhabi-to-continue-as-planned/10866547/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] FIA expects F1 races in Qatar and Abu Dhabi to run as planned (https://www.autosport.com/f1/news/fia-expects-f1-races-in-qatar-and-abu-dhabi-to-run-as-planned/10866553/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-- [ ] Aston Martin announces first-of-its-kind F1 partnership ahead of US GP (https://www.motorsport.com/f1/news/aston-martin-announces-first-of-its-kind-f1-partnership-ahead-of-us-gp/10866576/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] Ferrari development driver reveals confirmed F1 test plans (https://www.motorsport.com/f1/news/ferrari-development-driver-reveals-confirmed-f1-test-plans/10866579/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] Max Verstappen backs Isack Hadjar to take over Red Bull F1 role (https://www.motorsport.com/f1/news/max-verstappen-backs-isack-hadjar-to-take-over-red-bull-f1-role/10866581/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] Aston Martin F1's latest merchandise collection comes with eye-watering prices (https://www.motorsport.com/f1/news/aston-martin-f1s-latest-merchandise-collection-comes-with-eye-watering-prices/10866584/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] Ferrari, Cadillac, Haas and Aston Martin reveal special liveries for United States Grand Prix | Formula 1 (https://www.racefans.net/2026/10/20/ferrari-cadillac-haas-and-aston-martin-reveal-special-liveries-for-united-states-grand-prix/)
-
 ## 2026-10-21
 - [ ] FIA imposes draconian new rules on F1 teams to stop cost cap exploitation (https://www.the-race.com/formula-1/fia-imposes-draconian-new-rules-on-f1-teams-to-stop-cost-cap-exploitation/)
 - [ ] Lewis Hamilton's "secret" Red Bull meeting revealed after 14 years (https://www.motorsport.com/f1/news/lewis-hamiltons-secret-red-bull-meeting-revealed-after-14-years/10866590/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
@@ -724,3 +698,9 @@
 - [ ] Rafa Camara to debut in F1 Brazil GP as Esteban Ocon out at Haas (https://www.autosport.com/f1/news/rafa-camara-to-debut-in-f1-brazil-gp-as-esteban-ocon-out-at-haas/10871378/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] Rafa Camara to debut in F1 Brazil GP as Esteban Ocon out at Haas (https://www.motorsport.com/f1/news/camara-to-debut-in-f1-brazil-gp-as-ocon-out-at-haas/10871372/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] The 'difference' between Kimi Antonelli's F1 title and Lewis Hamilton's according to Toto Wolff (https://www.motorsport.com/f1/news/the-difference-between-kimi-antonellis-f1-title-and-lewis-hamiltons-according-to-toto-wolff/10871082/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Andrea Stella explains how qualifying destroyed McLaren’s Mexico GP: “We paid the price” (https://www.motorsport.com/f1/news/stella-explains-how-a-nightmare-qualifying-destroyed-mclarens-mexico-gp-we-paid-the-price/10871257/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Charles Leclerc brushes off Lewis Hamilton clash: “I could be unhappy too” (https://www.motorsport.com/f1/news/charles-leclerc-brushes-off-lap-1-clash-with-furious-hamilton-i-could-be-unhappy-too/10871246/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Spotlight: Cadillac’s majority owner reportedly planning to sell stake | Brief (https://www.racefans.net/2026/11/03/spotlight-cadillacs-majority-owner-reportedly-planning-to-sell-stake/)
+
+## 2026-11-04
+- [ ] On This Day: Penske makes final CART appearance as longest season ends | Brief (https://www.racefans.net/2026/11/04/on-this-day-2001-champ-car-fontana/)

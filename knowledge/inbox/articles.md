@@ -723,3 +723,7 @@
 - [ ] Ferrari confirms Charles Leclerc's Brazilian GP schedule after birth of first child (https://www.motorsport.com/f1/news/ferrari-confirms-charles-leclercs-brazilian-gp-schedule-after-birth-of-first-child/10871798/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Where injured MotoGP riders stand ahead of Qatar GP (https://www.the-race.com/motogp/motogp-qatar-gp-rider-fitness-update/)
 - [ ] Why a new Honda F1 engine problem was brutally exposed (https://www.the-race.com/formula-1/honda-f1-engine-problem-aston-martin-mexico-brazil/)
+- [ ] Bottas crash diagnosis and his bold stance on Cadillac F1 future (https://www.the-race.com/formula-1/valtteri-bottas-crash-diagnosis-and-bold-stance-on-cadillac-f1-future/)
+- [ ] F1 thinks Apple will expand broadcast rights beyond the US (https://www.the-race.com/business/f1-thinks-apple-will-expand-broadcast-rights-beyond-the-us/)
+- [ ] How raw talent Rafa Camara feels ahead of 'very surprising' F1 home debut in Brazil (https://www.motorsport.com/f1/news/how-raw-diamond-rafa-camara-feels-ahead-of-very-surprising-f1-home-debut-in-brazil/10871809/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] How rough diamond Camara feels ahead of 'very surprising' F1 home debut (https://www.autosport.com/f1/news/how-rough-diamond-camara-feels-ahead-of-very-surprising-f1-home-debut/10871811/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)

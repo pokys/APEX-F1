@@ -748,3 +748,4 @@
 - [ ] What we learned about Ferrari's key Hamilton/Leclerc meeting (https://www.the-race.com/formula-1/what-we-learned-about-ferraris-hamilton-leclerc-meeting/)
 - [ ] Why Max Verstappen ended F1 practice early in Brazil – Red Bull explains (https://www.motorsport.com/f1/news/why-max-verstappen-ended-f1-practice-early-in-brazil-red-bull-explains/10872364/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] ‘Dangerous’ but also ‘brilliant’ - Rafael Camara’s F1 debut (https://www.the-race.com/formula-1/f1-debutant-camara-punished-for-dangerous-leclerc-impeding/)
+- [ ] Lando Norris reveals how Lewis Hamilton has changed his F1 championship ambitions (https://www.motorsport.com/f1/news/lando-norris-reveals-how-lewis-hamilton-has-changed-his-f1-championship-ambitions/10872375/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

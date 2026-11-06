@@ -1,14 +1,14 @@
 {
-  "fetched_at": "2026-11-06T13:19:59+00:00",
+  "fetched_at": "2026-11-06T14:19:02+00:00",
   "longitude": -46.6997,
   "race": "São Paulo Grand Prix",
   "season": 2026,
   "sessions": {
     "FP1": {
-      "precipitation_mm": 0.1,
+      "precipitation_mm": 0.9,
       "rain_probability": 0.37,
       "start": "2026-11-06T15:30:00+00:00",
-      "weather_code": 51
+      "weather_code": 53
     },
     "FP2": {
       "precipitation_mm": 0.1,
@@ -17,22 +17,22 @@
       "weather_code": 51
     },
     "FP3": {
-      "precipitation_mm": 0.0,
+      "precipitation_mm": 0.2,
       "rain_probability": 0.39,
       "start": "2026-11-07T14:30:00+00:00",
-      "weather_code": 2
+      "weather_code": 51
     },
     "Q": {
-      "precipitation_mm": 0.1,
+      "precipitation_mm": 0.2,
       "rain_probability": 0.76,
       "start": "2026-11-07T18:00:00+00:00",
       "weather_code": 51
     },
     "R": {
-      "precipitation_mm": 1.0,
+      "precipitation_mm": 0.4,
       "rain_probability": 0.95,
       "start": "2026-11-08T17:00:00+00:00",
-      "weather_code": 53
+      "weather_code": 51
     }
   },
   "source": "open-meteo.com"

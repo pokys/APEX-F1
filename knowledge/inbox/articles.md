@@ -694,3 +694,7 @@
 - [ ] Permane signs new Racing Bulls F1 deal (https://www.autosport.com/f1/news/permane-signs-new-racing-bulls-f1-deal/10871999/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] What's going on with Lawson's 'blurry' F1 future (https://www.the-race.com/formula-1/whats-going-on-with-lawsons-blurry-f1-future/)
 - [ ] “I’ve never had a season where there’s been so many blows” – Russell | Formula 1 (https://www.racefans.net/2026/11/06/ive-never-had-a-season-where-theres-been-so-many-blows-russell/)
+- [ ] Ferrari set for crunch meeting as Hamilton and Leclerc tension reaches Brazil (https://www.autosport.com/f1/news/ferrari-set-for-crunch-meeting-as-hamilton-and-leclerc-tension-reaches-brazil/10872030/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Ferrari set for crunch meeting as Lewis Hamilton and Charles Leclerc tension reaches Brazil (https://www.motorsport.com/f1/news/ferrari-set-for-crunch-meeting-as-lewis-hamilton-and-charles-leclerc-tension-reaches-brazil/10872021/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Racing Bulls boss gets new contract - but where's Lawson's? (https://www.the-race.com/formula-1/whats-going-on-with-lawsons-blurry-f1-future/)
+- [ ] Russell serving another F1 engine grid penalty in Brazil (https://www.the-race.com/formula-1/russell-serving-another-f1-engine-grid-penalty-in-brazil/)

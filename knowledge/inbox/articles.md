@@ -684,6 +684,7 @@
 - [ ] George Russell opens up on mental exhaustion after frustrating 2026 F1 season (https://www.motorsport.com/f1/news/george-russell-opens-up-on-mental-exhaustion-after-frustrating-2026-f1-season/10871940/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Mercedes held its breath over Kimi Antonelli’s title-winning move on Charles Leclerc (https://www.motorsport.com/f1/news/kimi-antonelli-reveals-the-dark-2025-slump-that-built-a-champion-i-questioned-myself-over-and-over/10871786/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Oscar Piastri: F1 guidelines “very tricky to enforce” in Mexico GP (https://www.motorsport.com/f1/news/oscar-piastri-accepts-lindblad-clash-penalty-guidelines-tricky-to-enforce-at-mexico-opening-corners/10871893/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Lewis Hamilton criticises Charles Leclerc: 'It was the same with Sebastian Vettel, the same with Carlos Sainz' (https://www.motorsport.com/f1/news/lewis-hamilton-backs-claims-charles-leclerc-races-him-harder-than-f1-rivals/10871849/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 
 ## 2026-11-06
 - [ ] Hamilton admits he’s “really struggled” with F1’s tyres since 2022 size change | Formula 1 (https://www.racefans.net/2026/11/06/hamilton-admits-hes-really-struggled-with-f1s-tyres-since-2022-size-change/)
@@ -698,3 +699,8 @@
 - [ ] Ferrari set for crunch meeting as Lewis Hamilton and Charles Leclerc tension reaches Brazil (https://www.motorsport.com/f1/news/ferrari-set-for-crunch-meeting-as-lewis-hamilton-and-charles-leclerc-tension-reaches-brazil/10872021/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Racing Bulls boss gets new contract - but where's Lawson's? (https://www.the-race.com/formula-1/whats-going-on-with-lawsons-blurry-f1-future/)
 - [ ] Russell serving another F1 engine grid penalty in Brazil (https://www.the-race.com/formula-1/russell-serving-another-f1-engine-grid-penalty-in-brazil/)
+- [ ] Ferrari must not throw away another ‘easy one-two’ again – Hamilton | Formula 1 (https://www.racefans.net/2026/11/06/ferrari-must-not-throw-away-another-easy-one-two-again-hamilton/)
+- [ ] Herta’s latest practice run does not mean he’ll replace me in 2027 – Bottas | Formula 1 (https://www.racefans.net/2026/11/06/hertas-latest-practice-run-does-not-mean-hell-replace-me-in-2027-bottas/)
+- [ ] How much has bad luck really cost George Russell in F1 2026? (https://www.the-race.com/formula-1/how-much-has-bad-luck-really-cost-george-russell-in-f1-2026/)
+- [ ] Lawson unsure if Racing Bulls will keep him: “I don’t know what else they want me to do” | Formula 1 (https://www.racefans.net/2026/11/06/lawson-unsure-if-racing-bulls-will-keep-him-i-dont-know-what-else-they-want-me-to-do/)
+- [ ] Russell to take grid penalty at F1's Brazilian GP (https://www.the-race.com/formula-1/russell-serving-another-f1-engine-grid-penalty-in-brazil/)

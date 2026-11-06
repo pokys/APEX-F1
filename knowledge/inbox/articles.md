@@ -688,3 +688,8 @@
 ## 2026-11-06
 - [ ] Hamilton admits he’s “really struggled” with F1’s tyres since 2022 size change | Formula 1 (https://www.racefans.net/2026/11/06/hamilton-admits-hes-really-struggled-with-f1s-tyres-since-2022-size-change/)
 - [ ] Verstappen says his sudden rise to second in the championship is a “big surprise” | Formula 1 (https://www.racefans.net/2026/11/06/verstappen-says-his-sudden-rise-to-second-in-the-championship-is-a-big-surprise/)
+- [ ] Alan Permane signs new Racing Bulls F1 deal (https://www.motorsport.com/f1/news/alan-permane-signs-new-racing-bulls-f1-deal/10871996/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] F1's revenue stabilises after cancelled 2026 grands prix (https://www.the-race.com/business/f1s-revenue-stabilises-after-cancelled-2026-grands-prix/)
+- [ ] Kimi Antonelli: “My 2027 preparation starts now” after F1 title triumph (https://www.motorsport.com/f1/news/kimi-antonelli-my-2027-preparation-starts-now-after-f1-title-triumph/10871954/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Permane signs new Racing Bulls F1 deal (https://www.autosport.com/f1/news/permane-signs-new-racing-bulls-f1-deal/10871999/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] What's going on with Lawson's 'blurry' F1 future (https://www.the-race.com/formula-1/whats-going-on-with-lawsons-blurry-f1-future/)

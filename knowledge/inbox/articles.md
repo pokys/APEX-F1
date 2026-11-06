@@ -687,3 +687,4 @@
 
 ## 2026-11-06
 - [ ] Hamilton admits he’s “really struggled” with F1’s tyres since 2022 size change | Formula 1 (https://www.racefans.net/2026/11/06/hamilton-admits-hes-really-struggled-with-f1s-tyres-since-2022-size-change/)
+- [ ] Verstappen says his sudden rise to second in the championship is a “big surprise” | Formula 1 (https://www.racefans.net/2026/11/06/verstappen-says-his-sudden-rise-to-second-in-the-championship-is-a-big-surprise/)

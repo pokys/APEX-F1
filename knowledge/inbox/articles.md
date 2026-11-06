@@ -709,3 +709,4 @@
 - [ ] McLaren's 2027 F1 front wing breaks cover in Brazil (https://www.the-race.com/formula-1/mclaren-2027-f1-front-wing-breaks-cover-in-brazil/)
 - [ ] Nico Rosberg compares Ferrari’s clashes to his own Mercedes F1 rivalry: “The instructions are not clear enough” (https://www.motorsport.com/f1/news/nico-rosberg-compares-ferraris-clashes-to-his-own-mercedes-f1-rivalry-the-instructions-are-not-clea/10872061/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Spotlight: Who won F1 and F2 in the same year? Colapinto knows his history | Brief (https://www.racefans.net/2026/11/06/spotlight-who-won-f1-and-f2-in-the-same-year-colapinto-knows-his-history/)
+- [ ] What's really happening with Cadillac F1 buyout talks (https://www.the-race.com/business/cadillac-f1-buyout-talks-what-is-really-happening/)

@@ -704,3 +704,6 @@
 - [ ] How much has bad luck really cost George Russell in F1 2026? (https://www.the-race.com/formula-1/how-much-has-bad-luck-really-cost-george-russell-in-f1-2026/)
 - [ ] Lawson unsure if Racing Bulls will keep him: “I don’t know what else they want me to do” | Formula 1 (https://www.racefans.net/2026/11/06/lawson-unsure-if-racing-bulls-will-keep-him-i-dont-know-what-else-they-want-me-to-do/)
 - [ ] Russell to take grid penalty at F1's Brazilian GP (https://www.the-race.com/formula-1/russell-serving-another-f1-engine-grid-penalty-in-brazil/)
+- [ ] Carlos Sainz recalls Charles Leclerc battles: “We always managed to find a solution” (https://www.motorsport.com/f1/news/carlos-sainz-recalls-charles-leclerc-battles-we-always-managed-to-find-a-solution/10871952/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Marquez quickest as Qatar MotoGP weekend kicks off (https://www.the-race.com/motogp/marquez-quickest-as-qatar-motogp-weekend-kicks-off/)
+- [ ] McLaren's 2027 F1 front wing breaks cover in Brazil (https://www.the-race.com/formula-1/mclaren-2027-f1-front-wing-breaks-cover-in-brazil/)

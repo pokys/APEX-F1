@@ -693,3 +693,4 @@
 - [ ] Kimi Antonelli: “My 2027 preparation starts now” after F1 title triumph (https://www.motorsport.com/f1/news/kimi-antonelli-my-2027-preparation-starts-now-after-f1-title-triumph/10871954/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Permane signs new Racing Bulls F1 deal (https://www.autosport.com/f1/news/permane-signs-new-racing-bulls-f1-deal/10871999/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] What's going on with Lawson's 'blurry' F1 future (https://www.the-race.com/formula-1/whats-going-on-with-lawsons-blurry-f1-future/)
+- [ ] “I’ve never had a season where there’s been so many blows” – Russell | Formula 1 (https://www.racefans.net/2026/11/06/ive-never-had-a-season-where-theres-been-so-many-blows-russell/)

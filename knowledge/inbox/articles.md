@@ -707,3 +707,6 @@
 - [ ] F1 Brazil GP long runs: Kimi Antonelli dominates as Ferrari endures a nightmare Friday (https://www.motorsport.com/f1/news/f1-brazil-gp-long-runs-kimi-antonelli-dominates-as-ferrari-endures-a-nightmare-friday/10872476/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Hamilton set for Brazil grid penalty after Ferrari's worst 2026 Friday (https://www.the-race.com/formula-1/hamilton-set-for-brazil-grid-penalty-after-ferraris-worst-2026-friday/)
 - [ ] Ayao Komatsu: Esteban Ocon axing ‘surprised everybody at Haas’ (https://www.motorsport.com/f1/news/ayao-komatsu-esteban-ocon-axing-surprised-everybody-at-haas/10872455/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Verstappen set to start from the back at F1's Brazilian GP (https://www.the-race.com/formula-1/max-verstappen-set-to-start-from-the-back-at-f1s-brazilian-gp/)
+- [ ] Verstappen to start at back of grid with power unit penalty in Brazil | Formula 1 (https://www.racefans.net/2026/11/07/verstappen-to-start-at-back-of-grid-with-power-unit-penalty-in-brazil/)
+- [ ] ‘I don’t care to connect, I’m here to win’: Verstappen on how he’s different to Senna | Formula 1 (https://www.racefans.net/2026/11/07/i-dont-care-to-connect-im-here-to-win-verstappen-on-the-difference-between-him-and-senna/)

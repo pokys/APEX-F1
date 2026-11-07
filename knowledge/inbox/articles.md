@@ -727,3 +727,6 @@
 - [ ] Verstappen pips Antonelli in final practice as Hamilton suffers engine trouble | Formula 1 (https://www.racefans.net/2026/11/07/verstappen-pips-antonelli-in-final-practice-as-hamilton-suffers-engine-trouble/)
 - [ ] What happened in final Brazil F1 practice (https://www.the-race.com/formula-1/what-happened-in-final-brazil-f1-practice/)
 - [ ] Bagnaia taken to medical centre after crash red flags MotoGP Qatar sprint (https://www.the-race.com/motogp/pecco-bagnaia-taken-to-medical-centre-after-crash-red-flags-motogp-qatar-sprint/)
+- [ ] Foot fractures for Bagnaia after scary Qatar sprint crash (https://www.the-race.com/motogp/pecco-bagnaia-taken-to-medical-centre-after-crash-red-flags-motogp-qatar-sprint/)
+- [ ] Fred Vasseur personally contributed $1m to Esteban Ocon’s first F1 drive (https://www.motorsport.com/f1/news/fred-vasseur-personally-contributed-1m-to-esteban-ocons-first-f1-drive/10872524/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Marquez wins Qatar sprint after contentious Bezzecchi clash (https://www.the-race.com/motogp/marc-marquez-wins-qatar-sprint-after-contentious-bezzecchi-clash/)

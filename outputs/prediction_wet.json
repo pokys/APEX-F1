@@ -1,15 +1,15 @@
 {
   "data_freshness": {
-    "days_since_latest_event": -2,
-    "days_until_next_race": 2,
+    "days_since_latest_event": -1,
+    "days_until_next_race": 1,
     "is_stale": false,
     "latest_completed_date": "2026-11-08",
     "latest_completed_event": "S\u00e3o Paulo Grand Prix",
     "next_race_date": "2026-11-08",
-    "reference_date": "2026-11-06",
+    "reference_date": "2026-11-07",
     "stale_threshold_days": 21.0
   },
-  "deterministic_run_id": "3566ea25c25d38027914",
+  "deterministic_run_id": "d2f9b1cab356058e027d",
   "drivers": [
     {
       "driver_share": 48.9,
@@ -782,7 +782,7 @@
       "weekend_form_delta": -12.831168
     }
   ],
-  "generated_at": "2026-11-06T23:20:42Z",
+  "generated_at": "2026-11-07T00:20:08Z",
   "inputs_used": [
     {
       "source": "history_driver",
@@ -807,7 +807,7 @@
   ],
   "integrity": {
     "driver_ratings_hash": "b930f9aec0ab",
-    "race_config_hash": "36f79b556922",
+    "race_config_hash": "db68bbc920f6",
     "team_ratings_hash": "3c66af65afe2"
   },
   "prediction_target": "qualifying",

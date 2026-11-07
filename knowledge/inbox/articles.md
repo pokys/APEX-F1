@@ -706,3 +706,4 @@
 - [ ] Bezzecchi dominates for Qatar MotoGP pole (https://www.the-race.com/motogp/bezzecchi-dominates-for-qatar-motogp-pole/)
 - [ ] F1 Brazil GP long runs: Kimi Antonelli dominates as Ferrari endures a nightmare Friday (https://www.motorsport.com/f1/news/f1-brazil-gp-long-runs-kimi-antonelli-dominates-as-ferrari-endures-a-nightmare-friday/10872476/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Hamilton set for Brazil grid penalty after Ferrari's worst 2026 Friday (https://www.the-race.com/formula-1/hamilton-set-for-brazil-grid-penalty-after-ferraris-worst-2026-friday/)
+- [ ] Ayao Komatsu: Esteban Ocon axing ‘surprised everybody at Haas’ (https://www.motorsport.com/f1/news/ayao-komatsu-esteban-ocon-axing-surprised-everybody-at-haas/10872455/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

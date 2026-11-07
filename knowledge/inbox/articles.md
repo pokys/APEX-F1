@@ -691,6 +691,7 @@
 - [ ] ‘Dangerous’ but also ‘brilliant’ - Rafael Camara’s F1 debut (https://www.the-race.com/formula-1/f1-debutant-camara-punished-for-dangerous-leclerc-impeding/)
 - [ ] Lando Norris reveals how Lewis Hamilton has changed his F1 championship ambitions (https://www.motorsport.com/f1/news/lando-norris-reveals-how-lewis-hamilton-has-changed-his-f1-championship-ambitions/10872375/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Winners & losers from F1 2026 Brazilian GP Friday practice (https://www.the-race.com/formula-1/winners-losers-from-f1-2026-brazilian-gp-friday-practice/)
+- [ ] What’s happening with Cadillac F1 buyout talks amid Fenway interest (https://www.the-race.com/business/cadillac-f1-buyout-talks-what-is-really-happening/)
 
 ## 2026-11-07
 - [ ] Herta finally clears his last F1 superlicence hurdle (https://www.the-race.com/formula-1/herta-finally-clears-his-last-f1-superlicence-hurdle/)

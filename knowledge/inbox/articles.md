@@ -726,3 +726,4 @@
 - [ ] F1 Brazilian GP: Verstappen edges out Antonelli to top FP3 as Hamilton hits mechanical trouble (https://www.autosport.com/f1/news/f1-brazilian-gp-verstappen-edges-out-antonelli-to-top-fp3-as-hamilton-hits-mechanical-trouble/10872582/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] Verstappen pips Antonelli in final practice as Hamilton suffers engine trouble | Formula 1 (https://www.racefans.net/2026/11/07/verstappen-pips-antonelli-in-final-practice-as-hamilton-suffers-engine-trouble/)
 - [ ] What happened in final Brazil F1 practice (https://www.the-race.com/formula-1/what-happened-in-final-brazil-f1-practice/)
+- [ ] Bagnaia taken to medical centre after crash red flags MotoGP Qatar sprint (https://www.the-race.com/motogp/pecco-bagnaia-taken-to-medical-centre-after-crash-red-flags-motogp-qatar-sprint/)

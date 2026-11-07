@@ -696,3 +696,5 @@
 ## 2026-11-07
 - [ ] Herta finally clears his last F1 superlicence hurdle (https://www.the-race.com/formula-1/herta-finally-clears-his-last-f1-superlicence-hurdle/)
 - [ ] Racing Bulls boss ‘understands frustration’ over driver decision delay (https://www.motorsport.com/f1/news/racing-bulls-boss-understands-frustration-over-driver-decision-delay/10872425/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Ferrari slow on straights, struggling in corners: ‘One of the worst feelings’ for Charles Leclerc (https://www.motorsport.com/f1/news/ferrari-slow-on-straights-struggling-in-corners-one-of-the-worst-feelings-for-charles-leclerc/10872444/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Racing Bulls promises "right decision" as Liam Lawson's F1 future remains in doubt (https://www.motorsport.com/f1/news/racing-bulls-boss-understands-frustration-over-driver-decision-delay/10872425/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

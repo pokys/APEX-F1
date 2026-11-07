@@ -2,12 +2,14 @@
   "available_sessions": [
     "FP1",
     "FP2",
-    "FP3"
+    "FP3",
+    "Q"
   ],
   "available_sessions_by_calendar": [
     "FP1",
     "FP2",
-    "FP3"
+    "FP3",
+    "Q"
   ],
   "available_sessions_ingested": [
     "FP1",
@@ -19,8 +21,54 @@
   "driver_substitutions": [],
   "event_format": "conventional",
   "event_signal_count": 5,
-  "generated_at": "2026-11-07T19:21:50Z",
-  "grid_penalties": [],
+  "generated_at": "2026-11-07T20:21:01Z",
+  "grid_penalties": [
+    {
+      "back_of_grid": false,
+      "driver": "HAM",
+      "pit_lane": false,
+      "places": 10,
+      "sources": [
+        "https://www.fia.com/system/files/decision-document/2026_sao_paulo_grand_prix_-_infringement_-_car_44_-_changes_to_pu_element.pdf"
+      ]
+    },
+    {
+      "back_of_grid": false,
+      "driver": "LEC",
+      "pit_lane": false,
+      "places": 10,
+      "sources": [
+        "https://www.fia.com/system/files/decision-document/2026_sao_paulo_grand_prix_-_infringement_-_car_16_-_changes_to_pu_element.pdf"
+      ]
+    },
+    {
+      "back_of_grid": false,
+      "driver": "PER",
+      "pit_lane": false,
+      "places": 30,
+      "sources": [
+        "https://www.fia.com/system/files/decision-document/2026_sao_paulo_grand_prix_-_infringement_-_car_11_-_changes_to_pu_elements.pdf"
+      ]
+    },
+    {
+      "back_of_grid": false,
+      "driver": "RUS",
+      "pit_lane": false,
+      "places": 5,
+      "sources": [
+        "https://www.fia.com/system/files/decision-document/2026_sao_paulo_grand_prix_-_infringement_-_car_63_-_changes_to_pu_element.pdf"
+      ]
+    },
+    {
+      "back_of_grid": false,
+      "driver": "VER",
+      "pit_lane": false,
+      "places": 30,
+      "sources": [
+        "https://www.fia.com/system/files/decision-document/2026_sao_paulo_grand_prix_-_infringement_-_car_3_-_changes_to_pu_elements.pdf"
+      ]
+    }
+  ],
   "grid_position_weight": 550.0,
   "grid_source": "simulation",
   "inputs_status": [
@@ -31,37 +79,25 @@
       "status": "missing"
     },
     {
-      "configured_weight": 0.15,
-      "source": "sprint",
-      "source_key": "S",
-      "status": "missing"
-    },
-    {
-      "configured_weight": 0.6,
-      "source": "sprint_qualifying",
-      "source_key": "SQ",
-      "status": "missing"
+      "configured_weight": 0.4,
+      "source": "qualifying",
+      "source_key": "Q",
+      "status": "pending_ingest"
     },
     {
       "configured_weight": 0.1,
-      "source": "fp1",
-      "source_key": "FP1",
-      "status": "used"
-    },
-    {
-      "configured_weight": 0.15,
       "source": "fp2",
       "source_key": "FP2",
       "status": "used"
     },
     {
-      "configured_weight": 0.5,
+      "configured_weight": 0.1,
       "source": "fp3",
       "source_key": "FP3",
       "status": "used"
     },
     {
-      "configured_weight": 0.2,
+      "configured_weight": 0.15,
       "source": "history_driver",
       "source_key": "history_driver",
       "status": "used"
@@ -75,36 +111,31 @@
   ],
   "inputs_used": [
     {
-      "source": "fp3",
-      "source_key": "FP3",
-      "weight": 0.47619
-    },
-    {
       "source": "history_driver",
       "source_key": "history_driver",
-      "weight": 0.190476
+      "weight": 0.333333
     },
     {
       "source": "fp2",
       "source_key": "FP2",
-      "weight": 0.142857
+      "weight": 0.222222
     },
     {
-      "source": "fp1",
-      "source_key": "FP1",
-      "weight": 0.095238
+      "source": "fp3",
+      "source_key": "FP3",
+      "weight": 0.222222
     },
     {
       "source": "history_team",
       "source_key": "history_team",
-      "weight": 0.095238
+      "weight": 0.222222
     }
   ],
   "location": "S\u00e3o Paulo",
   "next_round": 20,
   "overtaking_difficulty": 0.52,
-  "prediction_target": "qualifying",
-  "prediction_target_label": "Qualifying",
+  "prediction_target": "race",
+  "prediction_target_label": "Race",
   "qualifying_noise_scale": 3.0,
   "race": "S\u00e3o Paulo Grand Prix",
   "race_date": "2026-11-08",
@@ -173,8 +204,8 @@
   "standings_blend_qualifying": 0.5,
   "standings_blend_race": 0.2,
   "standings_grid_decay": 0.0,
-  "target_output_type": "qualifying",
-  "target_session_code": "Q",
+  "target_output_type": "race",
+  "target_session_code": "R",
   "track": {
     "qualifying_noise": 2.45,
     "race_noise": 3.65,

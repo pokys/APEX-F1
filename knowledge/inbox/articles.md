@@ -730,3 +730,7 @@
 - [ ] Foot fractures for Bagnaia after scary Qatar sprint crash (https://www.the-race.com/motogp/pecco-bagnaia-taken-to-medical-centre-after-crash-red-flags-motogp-qatar-sprint/)
 - [ ] Fred Vasseur personally contributed $1m to Esteban Ocon’s first F1 drive (https://www.motorsport.com/f1/news/fred-vasseur-personally-contributed-1m-to-esteban-ocons-first-f1-drive/10872524/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Marquez wins Qatar sprint after contentious Bezzecchi clash (https://www.the-race.com/motogp/marc-marquez-wins-qatar-sprint-after-contentious-bezzecchi-clash/)
+- [ ] Brazilian GP qualifying red flagged almost immediately due to rain (https://www.the-race.com/formula-1/brazilian-gp-qualifying-red-flagged-almost-immediately-due-to-rain/)
+- [ ] Hamilton gets back-of-the-grid penalty for Brazilian GP (https://www.the-race.com/formula-1/lewis-hamilton-gets-back-of-the-grid-penalty-for-brazilian-gp/)
+- [ ] Hamilton set for new penalty, will start F1 Brazilian GP from back of grid (https://www.autosport.com/f1/news/hamilton-set-for-new-penalty-will-start-f1-brazilian-gp-from-back-of-grid/10872645/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Lewis Hamilton set for new penalty, will start F1 Brazilian GP from back of grid (https://www.motorsport.com/f1/news/lewis-hamilton-set-for-new-penalty-will-start-f1-brazilian-gp-from-back-of-grid/10872640/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

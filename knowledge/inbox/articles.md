@@ -721,3 +721,8 @@
 - [ ] Max Verstappen to start Brazilian GP from back of grid as Red Bull confirms penalty (https://www.motorsport.com/f1/news/max-verstappen-to-start-brazilian-gp-from-back-of-grid-as-red-bull-confirms-penalty/10872541/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] New contract keeps Brazilian Grand Prix on the calendar until 2035 | Formula 1 (https://www.racefans.net/2026/11/07/new-contract-keeps-brazilian-grand-prix-on-the-calendar-until-2035/)
 - [ ] Verstappen, Hamilton and Leclerc to take grid penalties at Brazilian GP | Formula 1 (https://www.racefans.net/2026/11/07/verstappen-hamilton-and-leclerc-to-take-grid-penalties-at-brazilian-gp/)
+- [ ] Both Ferrari drivers to serve Brazil F1 grid penalties (https://www.the-race.com/formula-1/leclerc-joins-growing-list-of-brazilian-gp-grid-peanlties/)
+- [ ] F1 Brazilian GP: Max Verstappen edges out Kimi Antonelli in FP3 (https://www.motorsport.com/f1/news/f1-brazilian-gp-fp3-report/10872574/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] F1 Brazilian GP: Verstappen edges out Antonelli to top FP3 as Hamilton hits mechanical trouble (https://www.autosport.com/f1/news/f1-brazilian-gp-verstappen-edges-out-antonelli-to-top-fp3-as-hamilton-hits-mechanical-trouble/10872582/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Verstappen pips Antonelli in final practice as Hamilton suffers engine trouble | Formula 1 (https://www.racefans.net/2026/11/07/verstappen-pips-antonelli-in-final-practice-as-hamilton-suffers-engine-trouble/)
+- [ ] What happened in final Brazil F1 practice (https://www.the-race.com/formula-1/what-happened-in-final-brazil-f1-practice/)

@@ -702,3 +702,4 @@
 - [ ] Komatsu was ‘protecting Haas from rhetoric’ by dropping Ocon – Wolff | Formula 1 (https://www.racefans.net/2026/11/07/komatsu-was-protecting-haas-from-rhetoric-by-dropping-ocon-wolff/)
 - [ ] Ocon axing ‘surprised everybody at Haas’ (https://www.autosport.com/f1/news/ayao-komatsu-esteban-ocon-axing-surprised-everybody-at-haas/10872457/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] “Everyone will be happy” with Racing Bulls’ decision on its 2027 driver line-up – Permane | Formula 1 (https://www.racefans.net/2026/11/07/everyone-will-be-happy-with-racing-bulls-decision-on-its-2027-driver-line-up-permane/)
+- [ ] Ralf Schumacher slams Colton Herta's F1 prospects: "He's just burning fuel" (https://www.motorsport.com/f1/news/ralf-schumacher-slams-colton-hertas-f1-prospects-hes-just-burning-fuel/10872433/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

@@ -697,6 +697,16 @@
 - [ ] Social Media: Wolff believes Russell’s aborted lap would have put him second | Brief (https://www.racefans.net/2026/11/07/social-media-wolff-believes-russells-aborted-lap-would-have-put-him-second/)
 - [ ] Why Russell was so angry in Brazilian GP qualifying despite already having a grid penalty (https://www.autosport.com/f1/news/why-russell-was-so-angry-in-brazilian-gp-qualifying-despite-already-having-a-grid-penalty/10872788/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] Winners and losers from F1 2026 Brazilian GP qualifying (https://www.the-race.com/formula-1/winners-and-losers-from-f1-2026-brazilian-gp-qualifying/)
+- [ ] Norris claims pole in rain-lashed Brazilian Grand Prix qualifying | 2026 Brazilian GP qualifying report (https://www.racefans.net/2026/11/07/norris-claims-pole-in-rain-lashed-brazilian-grand-prix-qualifying/)
+- [ ] Norris on Brazil pole as Russell rages at Mercedes over aborted lap (https://www.the-race.com/formula-1/norris-on-brazilian-gp-pole-as-russell-rages-at-mercedes-over-aborted-lap/)
 
 ## 2026-11-08
 - [ ] Why Russell's 'pole' was lost either way - and it hurt like hell (https://www.the-race.com/formula-1/why-russells-pole-was-lost-either-way-and-it-hurt-like-hell/)
+- [ ] F1 2026 qualifying head-to-head: Brazilian GP (https://www.motorsport.com/f1/news/f1-2026-qualifying-head-to-head-brazilian-gp/10872869/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] McLaren’s 2027-spec front wing is making its F1 car more predictable (https://www.motorsport.com/f1/news/mclarens-2027-spec-front-wing-is-making-its-f1-car-more-predictable/10872891/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Pierre Gasly on Franco Colapinto fan pressure: “Once you deal with Helmut Marko, anything else is no pressure” (https://www.motorsport.com/f1/news/pierre-gasly-on-colapinto-fan-pressure-once-you-deal-with-helmut-marko-anything-else-is-no-pressure/10872811/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] The wet-weather challenges thrown up by Brazilian GP qualifying (https://www.autosport.com/f1/news/the-wet-weather-challenges-thrown-up-by-brazilian-gp-qualifying/10872894/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] The wet-weather challenges thrown up by Brazilian GP qualifying (https://www.motorsport.com/f1/news/the-wet-weather-challenges-thrown-up-by-brazilian-gp-qualifying/10872818/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] What's got F1 drivers so worried about Brazilian GP spectacle (https://www.the-race.com/formula-1/what-has-got-f1-drivers-so-worried-brazilian-gp-racing-spectacle/)
+- [ ] Why F1 risks 'horrific incident' if Brazilian GP perils are repeated (https://www.the-race.com/formula-1/why-f1-risks-horrific-incident-if-brazilian-gp-risks-are-repeated/)
+- [ ] ‘Very high chance of a horrific crash’ if F1 races in same conditions as qualifying, drivers warn | Formula 1 (https://www.racefans.net/2026/11/08/very-high-chance-of-a-horrific-crash-if-f1-races-in-same-conditions-as-qualifying-drivers-warn/)

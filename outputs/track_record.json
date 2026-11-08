@@ -1,11 +1,11 @@
 {
   "by_session": {
     "Q": {
-      "count": 3,
-      "hit_rate": 0.333333,
-      "mean_group_overlap": 9.0,
-      "mean_log_loss": 1.985394,
-      "mean_winner_probability": 0.142167
+      "count": 4,
+      "hit_rate": 0.25,
+      "mean_group_overlap": 8.25,
+      "mean_log_loss": 2.022256,
+      "mean_winner_probability": 0.13625
     },
     "R": {
       "count": 3,
@@ -141,13 +141,27 @@
       "season": 2026,
       "session_code": "R",
       "winner_probability": 0.005167
+    },
+    {
+      "actual_winner": "NOR",
+      "archived_at": "2026-11-07T17:21:10+00:00",
+      "group": "top10",
+      "group_overlap": 6,
+      "hit": false,
+      "log_loss": 2.132842,
+      "predicted_winner": "VER",
+      "race": "S\u00e3o Paulo Grand Prix",
+      "round": 20,
+      "season": 2026,
+      "session_code": "Q",
+      "winner_probability": 0.1185
     }
   ],
   "summary": {
-    "count": 8,
-    "hit_rate": 0.5,
-    "mean_group_overlap": 5.5,
-    "mean_log_loss": 1.903526,
-    "mean_winner_probability": 0.296063
+    "count": 9,
+    "hit_rate": 0.444444,
+    "mean_group_overlap": 5.555556,
+    "mean_log_loss": 1.929005,
+    "mean_winner_probability": 0.276333
   }
 }

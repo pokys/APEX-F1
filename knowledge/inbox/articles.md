@@ -699,6 +699,7 @@
 - [ ] Winners and losers from F1 2026 Brazilian GP qualifying (https://www.the-race.com/formula-1/winners-and-losers-from-f1-2026-brazilian-gp-qualifying/)
 - [ ] Norris claims pole in rain-lashed Brazilian Grand Prix qualifying | 2026 Brazilian GP qualifying report (https://www.racefans.net/2026/11/07/norris-claims-pole-in-rain-lashed-brazilian-grand-prix-qualifying/)
 - [ ] Norris on Brazil pole as Russell rages at Mercedes over aborted lap (https://www.the-race.com/formula-1/norris-on-brazilian-gp-pole-as-russell-rages-at-mercedes-over-aborted-lap/)
+- [ ] F1 2026 Brazilian Grand Prix starting grid with seven penalties (https://www.the-race.com/formula-1/f1-2026-brazilian-grand-prix-starting-grid-with-four-penalties-copy/)
 
 ## 2026-11-08
 - [ ] Why Russell's 'pole' was lost either way - and it hurt like hell (https://www.the-race.com/formula-1/why-russells-pole-was-lost-either-way-and-it-hurt-like-hell/)
@@ -710,3 +711,10 @@
 - [ ] What's got F1 drivers so worried about Brazilian GP spectacle (https://www.the-race.com/formula-1/what-has-got-f1-drivers-so-worried-brazilian-gp-racing-spectacle/)
 - [ ] Why F1 risks 'horrific incident' if Brazilian GP perils are repeated (https://www.the-race.com/formula-1/why-f1-risks-horrific-incident-if-brazilian-gp-risks-are-repeated/)
 - [ ] ‘Very high chance of a horrific crash’ if F1 races in same conditions as qualifying, drivers warn | Formula 1 (https://www.racefans.net/2026/11/08/very-high-chance-of-a-horrific-crash-if-f1-races-in-same-conditions-as-qualifying-drivers-warn/)
+- [ ] Bezzecchi dominates but Marquez on brink of title (https://www.the-race.com/motogp/bezzecchi-dominates-but-marquez-on-brink-of-title/)
+- [ ] Can Hamilton and Verstappen fight back for F1 Brazilian GP victory? (https://www.autosport.com/f1/news/ill-try-to-win-somehow-can-lewis-hamilton-and-max-verstappen-fight-back-for-f1-brazilian-gp-victory/10872922/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Featured Comment: Wolff leaps to Liberty Media’s defence again with attack on Moto GP riders | Brief (https://www.racefans.net/2026/11/08/featured-comment-wolff-leaps-to-liberty-medias-defence-again-with-attack-on-moto-gp-riders/)
+- [ ] Gabriel Bortoleto's partner Isabella Bernardini shows off custom Audi dress at Brazil GP (https://www.motorsport.com/f1/news/gabriel-bortoletos-partner-isabella-bernardini-shows-off-custom-audi-dress-at-brazil-gp/10872947/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Marini out as Qatar grid is reduced to 16 riders (https://www.the-race.com/motogp/marini-out-as-motogp-grid-is-reduced-to-16-riders/)
+- [ ] ‘I’ll try to win, somehow’ – Can Lewis Hamilton and Max Verstappen fight back for F1 Brazilian GP victory? (https://www.motorsport.com/f1/news/ill-try-to-win-somehow-can-lewis-hamilton-and-max-verstappen-fight-back-for-f1-brazilian-gp-victory/10872909/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] ‘Very high chance of a horrific crash’ if F1 races in same conditions as qualifying | Formula 1 (https://www.racefans.net/2026/11/08/very-high-chance-of-a-horrific-crash-if-f1-races-in-same-conditions-as-qualifying-drivers-warn/)

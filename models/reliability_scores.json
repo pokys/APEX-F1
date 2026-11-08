@@ -1,5 +1,5 @@
 {
-  "inputs_hash": "e882c6e931aa17fdee46d630ab68b5d44ccef8f57b8bdff9a547b9e969f3fc64",
+  "inputs_hash": "e54b9c760372212da922df6faa8aca201beb7fd2c31ea70bae9212099fe4f7dc",
   "season": 2026,
   "source_features": "data/processed/features_season_2026.json",
   "source_summary": "Full Season 2026 Data",
@@ -60,7 +60,7 @@
         "starts": 40.0
       },
       "dnf_probability": 0.116667,
-      "grid_penalty_rate": 0.025,
+      "grid_penalty_rate": 0.075,
       "reliability_score": 88.333333,
       "team": "Ferrari"
     },
@@ -96,7 +96,7 @@
         "starts": 40.0
       },
       "dnf_probability": 0.116667,
-      "grid_penalty_rate": 0.075,
+      "grid_penalty_rate": 0.1,
       "reliability_score": 88.333333,
       "team": "Mercedes"
     },
@@ -108,7 +108,7 @@
         "starts": 40.0
       },
       "dnf_probability": 0.095833,
-      "grid_penalty_rate": 0.076923,
+      "grid_penalty_rate": 0.102564,
       "reliability_score": 90.416667,
       "team": "RB F1 Team"
     },
@@ -120,7 +120,7 @@
         "starts": 40.0
       },
       "dnf_probability": 0.158333,
-      "grid_penalty_rate": 0.076923,
+      "grid_penalty_rate": 0.102564,
       "reliability_score": 84.166667,
       "team": "Red Bull"
     },

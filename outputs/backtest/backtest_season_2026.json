@@ -737,9 +737,49 @@
       "predicted_pole": "ANT",
       "race": "Mexico City Grand Prix",
       "round": 19
+    },
+    {
+      "actual_pole": "NOR",
+      "baseline_favourite": "ANT",
+      "baseline_hit": false,
+      "baseline_log_loss": {
+        "championship_order": 2.926408,
+        "previous_event": 3.352407,
+        "uniform": 3.044522
+      },
+      "event_date": "2026-11-08",
+      "model_only_log_loss": 1.821391,
+      "pole_hit": false,
+      "pole_log_loss": 2.228453,
+      "pole_probabilities": {
+        "ALB": 0.000615,
+        "ALO": 0.00108,
+        "ANT": 0.257681,
+        "BEA": 0.002723,
+        "BOR": 0.001986,
+        "BOT": 0.000476,
+        "COL": 0.003751,
+        "GAS": 0.007187,
+        "HAD": 0.015771,
+        "HAM": 0.08042,
+        "HUL": 0.001458,
+        "LAW": 0.009982,
+        "LEC": 0.093923,
+        "LIN": 0.005185,
+        "NOR": 0.107695,
+        "PER": 0.000376,
+        "PIA": 0.030664,
+        "RUS": 0.119461,
+        "SAI": 0.000809,
+        "STR": 0.000305,
+        "VER": 0.258452
+      },
+      "predicted_pole": "VER",
+      "race": "S\u00e3o Paulo Grand Prix",
+      "round": 20
     }
   ],
-  "qualifying_sessions_evaluated": 18,
+  "qualifying_sessions_evaluated": 19,
   "races": [
     {
       "actual_winner": "ANT",
@@ -750,10 +790,10 @@
         "previous_event": 3.401197,
         "uniform": 3.091042
       },
-      "brier_podium": 0.016687,
-      "brier_win": 0.016912,
+      "brier_podium": 0.016059,
+      "brier_win": 0.015525,
       "event_date": "2026-03-15",
-      "model_only_log_loss": 0.557046,
+      "model_only_log_loss": 0.518897,
       "podium_overlap": 3,
       "predicted_winner": "ANT",
       "race": "Chinese Grand Prix",
@@ -761,29 +801,29 @@
       "win_probabilities": {
         "ALB": 0.002223,
         "ALO": 0.001649,
-        "ANT": 0.498969,
+        "ANT": 0.516791,
         "BEA": 0.007877,
         "BOR": 0.004141,
         "BOT": 0.001238,
         "COL": 0.000943,
-        "GAS": 0.004296,
+        "GAS": 0.004455,
         "HAD": 0.000732,
-        "HAM": 0.062441,
+        "HAM": 0.065624,
         "HUL": 0.000581,
         "LAW": 0.000473,
-        "LEC": 0.042215,
+        "LEC": 0.04126,
         "LIN": 0.0057,
         "NOR": 0.015153,
         "OCO": 0.000395,
         "PER": 0.00034,
         "PIA": 0.0003,
-        "RUS": 0.338899,
+        "RUS": 0.31869,
         "SAI": 0.000271,
         "STR": 0.000251,
         "VER": 0.010914
       },
       "winner_hit": true,
-      "winner_log_loss": 0.695212
+      "winner_log_loss": 0.660117
     },
     {
       "actual_winner": "ANT",
@@ -794,10 +834,10 @@
         "previous_event": 1.203973,
         "uniform": 3.091042
       },
-      "brier_podium": 0.063836,
-      "brier_win": 0.01144,
+      "brier_podium": 0.060504,
+      "brier_win": 0.010944,
       "event_date": "2026-03-29",
-      "model_only_log_loss": 0.374739,
+      "model_only_log_loss": 0.360946,
       "podium_overlap": 2,
       "predicted_winner": "ANT",
       "race": "Japanese Grand Prix",
@@ -805,7 +845,7 @@
       "win_probabilities": {
         "ALB": 0.000581,
         "ALO": 0.000473,
-        "ANT": 0.590625,
+        "ANT": 0.598263,
         "BEA": 0.015153,
         "BOR": 0.001238,
         "BOT": 0.000395,
@@ -815,19 +855,19 @@
         "HAM": 0.021228,
         "HUL": 0.00034,
         "LAW": 0.0057,
-        "LEC": 0.042692,
+        "LEC": 0.041737,
         "LIN": 0.002223,
-        "NOR": 0.01155,
+        "NOR": 0.01171,
         "OCO": 0.0003,
         "PER": 0.000271,
-        "PIA": 0.00515,
-        "RUS": 0.285115,
+        "PIA": 0.006582,
+        "RUS": 0.27684,
         "SAI": 0.000943,
         "STR": 0.000251,
         "VER": 0.004141
       },
       "winner_hit": true,
-      "winner_log_loss": 0.526575
+      "winner_log_loss": 0.513726
     },
     {
       "actual_winner": "ANT",
@@ -838,10 +878,10 @@
         "previous_event": 1.203973,
         "uniform": 3.091042
       },
-      "brier_podium": 0.127453,
-      "brier_win": 0.005419,
+      "brier_podium": 0.12495,
+      "brier_win": 0.005742,
       "event_date": "2026-05-03",
-      "model_only_log_loss": 0.235087,
+      "model_only_log_loss": 0.251833,
       "podium_overlap": 1,
       "predicted_winner": "ANT",
       "race": "Miami Grand Prix",
@@ -849,29 +889,29 @@
       "win_probabilities": {
         "ALB": 0.000473,
         "ALO": 0.000395,
-        "ANT": 0.689133,
+        "ANT": 0.67863,
         "BEA": 0.007877,
         "BOR": 0.001238,
         "BOT": 0.00034,
         "COL": 0.000732,
         "GAS": 0.0057,
         "HAD": 0.002223,
-        "HAM": 0.02266,
+        "HAM": 0.022183,
         "HUL": 0.0003,
         "LAW": 0.003023,
-        "LEC": 0.126073,
+        "LEC": 0.119867,
         "LIN": 0.001649,
-        "NOR": 0.020086,
+        "NOR": 0.021836,
         "OCO": 0.000581,
         "PER": 0.000271,
         "PIA": 0.010914,
-        "RUS": 0.052305,
+        "RUS": 0.049918,
         "SAI": 0.000943,
         "STR": 0.000251,
-        "VER": 0.052833
+        "VER": 0.070655
       },
       "winner_hit": true,
-      "winner_log_loss": 0.372322
+      "winner_log_loss": 0.387679
     },
     {
       "actual_winner": "ANT",
@@ -882,10 +922,10 @@
         "previous_event": 1.203973,
         "uniform": 3.091042
       },
-      "brier_podium": 0.113157,
-      "brier_win": 0.033871,
+      "brier_podium": 0.114478,
+      "brier_win": 0.03546,
       "event_date": "2026-05-24",
-      "model_only_log_loss": 1.093009,
+      "model_only_log_loss": 1.156075,
       "podium_overlap": 1,
       "predicted_winner": "RUS",
       "race": "Canadian Grand Prix",
@@ -893,29 +933,29 @@
       "win_probabilities": {
         "ALB": 0.000581,
         "ALO": 0.000395,
-        "ANT": 0.324896,
+        "ANT": 0.308506,
         "BEA": 0.0057,
         "BOR": 0.000732,
         "BOT": 0.00034,
         "COL": 0.002223,
         "GAS": 0.004141,
         "HAD": 0.001649,
-        "HAM": 0.024729,
+        "HAM": 0.02457,
         "HUL": 0.0003,
         "LAW": 0.003023,
         "LEC": 0.029644,
         "LIN": 0.001238,
-        "NOR": 0.038703,
+        "NOR": 0.042841,
         "OCO": 0.000473,
         "PER": 0.000271,
-        "PIA": 0.016642,
-        "RUS": 0.534772,
+        "PIA": 0.017756,
+        "RUS": 0.54607,
         "SAI": 0.000943,
         "STR": 0.000251,
         "VER": 0.008354
       },
       "winner_hit": false,
-      "winner_log_loss": 1.12425
+      "winner_log_loss": 1.176014
     },
     {
       "actual_winner": "ANT",
@@ -926,10 +966,10 @@
         "previous_event": 1.203973,
         "uniform": 3.091042
       },
-      "brier_podium": 0.07174,
-      "brier_win": 0.005872,
+      "brier_podium": 0.070869,
+      "brier_win": 0.006036,
       "event_date": "2026-06-07",
-      "model_only_log_loss": 0.258766,
+      "model_only_log_loss": 0.264968,
       "podium_overlap": 2,
       "predicted_winner": "ANT",
       "race": "Monaco Grand Prix",
@@ -937,17 +977,17 @@
       "win_probabilities": {
         "ALB": 0.000581,
         "ALO": 0.000395,
-        "ANT": 0.674334,
+        "ANT": 0.670515,
         "BEA": 0.004141,
         "BOR": 0.000732,
         "BOT": 0.00034,
         "COL": 0.002223,
         "GAS": 0.0057,
         "HAD": 0.002922,
-        "HAM": 0.083923,
+        "HAM": 0.081218,
         "HUL": 0.0003,
         "LAW": 0.003023,
-        "LEC": 0.039509,
+        "LEC": 0.039191,
         "LIN": 0.000943,
         "NOR": 0.015153,
         "OCO": 0.000473,
@@ -956,10 +996,10 @@
         "RUS": 0.041326,
         "SAI": 0.001238,
         "STR": 0.000251,
-        "VER": 0.111308
+        "VER": 0.11815
       },
       "winner_hit": true,
-      "winner_log_loss": 0.39403
+      "winner_log_loss": 0.399709
     },
     {
       "actual_winner": "HAM",
@@ -970,10 +1010,10 @@
         "previous_event": 3.401197,
         "uniform": 3.091042
       },
-      "brier_podium": 0.063164,
-      "brier_win": 0.033332,
+      "brier_podium": 0.061593,
+      "brier_win": 0.036291,
       "event_date": "2026-06-14",
-      "model_only_log_loss": 1.116423,
+      "model_only_log_loss": 1.203973,
       "podium_overlap": 2,
       "predicted_winner": "RUS",
       "race": "Barcelona Grand Prix",
@@ -981,14 +1021,14 @@
       "win_probabilities": {
         "ALB": 0.000732,
         "ALO": 0.000395,
-        "ANT": 0.141425,
+        "ANT": 0.12408,
         "BEA": 0.002223,
         "BOR": 0.000473,
         "BOT": 0.00034,
         "COL": 0.001649,
         "GAS": 0.004141,
         "HAD": 0.006018,
-        "HAM": 0.302609,
+        "HAM": 0.280649,
         "HUL": 0.0003,
         "LAW": 0.003023,
         "LEC": 0.021069,
@@ -997,13 +1037,13 @@
         "OCO": 0.000581,
         "PER": 0.000271,
         "PIA": 0.015312,
-        "RUS": 0.475352,
+        "RUS": 0.514338,
         "SAI": 0.000943,
         "STR": 0.000251,
-        "VER": 0.008672
+        "VER": 0.00899
       },
       "winner_hit": false,
-      "winner_log_loss": 1.195315
+      "winner_log_loss": 1.270649
     },
     {
       "actual_winner": "RUS",
@@ -1014,10 +1054,10 @@
         "previous_event": 3.401197,
         "uniform": 3.091042
       },
-      "brier_podium": 0.099848,
-      "brier_win": 0.015697,
+      "brier_podium": 0.100305,
+      "brier_win": 0.014721,
       "event_date": "2026-06-28",
-      "model_only_log_loss": 0.567165,
+      "model_only_log_loss": 0.531678,
       "podium_overlap": 1,
       "predicted_winner": "RUS",
       "race": "Austrian Grand Prix",
@@ -1025,29 +1065,29 @@
       "win_probabilities": {
         "ALB": 0.000732,
         "ALO": 0.000395,
-        "ANT": 0.084617,
+        "ANT": 0.079207,
         "BEA": 0.002223,
         "BOR": 0.000473,
         "BOT": 0.00034,
         "COL": 0.001649,
         "GAS": 0.004141,
         "HAD": 0.005859,
-        "HAM": 0.193608,
+        "HAM": 0.168307,
         "HUL": 0.0003,
         "LAW": 0.003023,
-        "LEC": 0.18083,
+        "LEC": 0.194833,
         "LIN": 0.001238,
         "NOR": 0.01563,
         "OCO": 0.000581,
         "PER": 0.000271,
         "PIA": 0.010914,
-        "RUS": 0.482831,
+        "RUS": 0.499221,
         "SAI": 0.000943,
         "STR": 0.000251,
-        "VER": 0.00915
+        "VER": 0.009468
       },
       "winner_hit": true,
-      "winner_log_loss": 0.728088
+      "winner_log_loss": 0.694706
     },
     {
       "actual_winner": "LEC",
@@ -1058,10 +1098,10 @@
         "previous_event": 3.401197,
         "uniform": 3.091042
       },
-      "brier_podium": 0.05184,
-      "brier_win": 0.053507,
+      "brier_podium": 0.052424,
+      "brier_win": 0.051206,
       "event_date": "2026-07-05",
-      "model_only_log_loss": 2.003162,
+      "model_only_log_loss": 1.82287,
       "podium_overlap": 2,
       "predicted_winner": "ANT",
       "race": "British Grand Prix",
@@ -1069,29 +1109,29 @@
       "win_probabilities": {
         "ALB": 0.000732,
         "ALO": 0.000395,
-        "ANT": 0.621186,
+        "ANT": 0.612594,
         "BEA": 0.002223,
         "BOR": 0.000473,
         "BOT": 0.00034,
         "COL": 0.001649,
         "GAS": 0.004141,
         "HAD": 0.00761,
-        "HAM": 0.133552,
+        "HAM": 0.122254,
         "HUL": 0.0003,
         "LAW": 0.003023,
-        "LEC": 0.12288,
+        "LEC": 0.144203,
         "LIN": 0.001397,
-        "NOR": 0.010914,
+        "NOR": 0.011073,
         "OCO": 0.000581,
         "PER": 0.000271,
         "PIA": 0.021228,
-        "RUS": 0.058034,
+        "RUS": 0.056443,
         "SAI": 0.000943,
         "STR": 0.000251,
         "VER": 0.007877
       },
       "winner_hit": false,
-      "winner_log_loss": 2.096543
+      "winner_log_loss": 1.936532
     },
     {
       "actual_winner": "ANT",
@@ -1102,10 +1142,10 @@
         "previous_event": 3.401197,
         "uniform": 3.091042
       },
-      "brier_podium": 0.054096,
-      "brier_win": 0.009659,
+      "brier_podium": 0.051332,
+      "brier_win": 0.00967,
       "event_date": "2026-07-19",
-      "model_only_log_loss": 0.403801,
+      "model_only_log_loss": 0.404695,
       "podium_overlap": 2,
       "predicted_winner": "ANT",
       "race": "Belgian Grand Prix",
@@ -1113,29 +1153,29 @@
       "win_probabilities": {
         "ALB": 0.000581,
         "ALO": 0.000395,
-        "ANT": 0.590953,
+        "ANT": 0.590475,
         "BEA": 0.001649,
         "BOR": 0.000943,
         "BOT": 0.00034,
         "COL": 0.001238,
         "GAS": 0.003023,
         "HAD": 0.0057,
-        "HAM": 0.039669,
+        "HAM": 0.037123,
         "HUL": 0.0003,
         "LAW": 0.004141,
-        "LEC": 0.033481,
+        "LEC": 0.033799,
         "LIN": 0.002223,
         "NOR": 0.015153,
         "OCO": 0.000473,
         "PER": 0.000271,
         "PIA": 0.011232,
-        "RUS": 0.163534,
+        "RUS": 0.150008,
         "SAI": 0.000732,
         "STR": 0.000251,
-        "VER": 0.123719
+        "VER": 0.13995
       },
       "winner_hit": true,
-      "winner_log_loss": 0.526019
+      "winner_log_loss": 0.526828
     },
     {
       "actual_winner": "NOR",
@@ -1146,10 +1186,10 @@
         "previous_event": 3.401197,
         "uniform": 3.091042
       },
-      "brier_podium": 0.126158,
-      "brier_win": 0.014147,
+      "brier_podium": 0.124892,
+      "brier_win": 0.01349,
       "event_date": "2026-07-26",
-      "model_only_log_loss": 0.461428,
+      "model_only_log_loss": 0.441744,
       "podium_overlap": 1,
       "predicted_winner": "NOR",
       "race": "Hungarian Grand Prix",
@@ -1164,22 +1204,22 @@
         "COL": 0.001649,
         "GAS": 0.003023,
         "HAD": 0.0057,
-        "HAM": 0.043076,
+        "HAM": 0.042917,
         "HUL": 0.0003,
         "LAW": 0.004141,
-        "LEC": 0.267394,
+        "LEC": 0.258165,
         "LIN": 0.002223,
-        "NOR": 0.51926,
+        "NOR": 0.529285,
         "OCO": 0.000473,
         "PER": 0.000271,
-        "PIA": 0.049422,
+        "PIA": 0.048786,
         "RUS": 0.029644,
         "SAI": 0.000732,
         "STR": 0.000251,
         "VER": 0.012014
       },
       "winner_hit": true,
-      "winner_log_loss": 0.65535
+      "winner_log_loss": 0.636228
     },
     {
       "actual_winner": "NOR",
@@ -1190,10 +1230,10 @@
         "previous_event": 1.203973,
         "uniform": 3.091042
       },
-      "brier_podium": 0.013004,
-      "brier_win": 0.012785,
+      "brier_podium": 0.013195,
+      "brier_win": 0.013017,
       "event_date": "2026-08-23",
-      "model_only_log_loss": 0.428223,
+      "model_only_log_loss": 0.433426,
       "podium_overlap": 3,
       "predicted_winner": "NOR",
       "race": "Dutch Grand Prix",
@@ -1201,29 +1241,29 @@
       "win_probabilities": {
         "ALB": 0.000732,
         "ALO": 0.000395,
-        "ANT": 0.139515,
+        "ANT": 0.131718,
         "BEA": 0.001649,
         "BOR": 0.001238,
         "BOT": 0.00034,
         "COL": 0.002223,
         "GAS": 0.004141,
-        "HAM": 0.04594,
+        "HAM": 0.044826,
         "HUL": 0.000473,
         "LAW": 0.0057,
         "LEC": 0.021546,
         "LIN": 0.003023,
-        "NOR": 0.536287,
+        "NOR": 0.533582,
         "OCO": 0.000581,
         "PER": 0.0003,
-        "PIA": 0.014242,
-        "RUS": 0.209296,
+        "PIA": 0.014719,
+        "RUS": 0.220434,
         "SAI": 0.000943,
         "STR": 0.000271,
         "TSU": 0.000251,
         "VER": 0.010914
       },
       "winner_hit": true,
-      "winner_log_loss": 0.623086
+      "winner_log_loss": 0.628143
     },
     {
       "actual_winner": "ANT",
@@ -1234,8 +1274,8 @@
         "previous_event": 3.401197,
         "uniform": 3.091042
       },
-      "brier_podium": 0.157978,
-      "brier_win": 0.053517,
+      "brier_podium": 0.156214,
+      "brier_win": 0.054408,
       "event_date": "2026-09-06",
       "model_only_log_loss": 8.299535,
       "podium_overlap": 1,
@@ -1250,21 +1290,21 @@
         "BOR": 0.001238,
         "BOT": 0.00034,
         "COL": 0.002223,
-        "GAS": 0.467035,
-        "HAM": 0.078561,
+        "GAS": 0.49329,
+        "HAM": 0.068854,
         "HUL": 0.000943,
         "LAW": 0.0057,
-        "LEC": 0.11747,
+        "LEC": 0.102513,
         "LIN": 0.003023,
         "NOR": 0.021069,
         "OCO": 0.000395,
         "PER": 0.0003,
         "PIA": 0.007877,
-        "RUS": 0.221866,
+        "RUS": 0.219798,
         "SAI": 0.000732,
         "STR": 0.000271,
         "TSU": 0.000251,
-        "VER": 0.011073
+        "VER": 0.01155
       },
       "winner_hit": false,
       "winner_log_loss": 2.865938
@@ -1278,10 +1318,10 @@
         "previous_event": 1.203973,
         "uniform": 2.995732
       },
-      "brier_podium": 0.026467,
-      "brier_win": 0.035865,
+      "brier_podium": 0.024427,
+      "brier_win": 0.037086,
       "event_date": "2026-09-13",
-      "model_only_log_loss": 1.086595,
+      "model_only_log_loss": 1.128764,
       "podium_overlap": 3,
       "predicted_winner": "NOR",
       "race": "Spanish Grand Prix",
@@ -1289,27 +1329,27 @@
       "win_probabilities": {
         "ALB": 0.000733,
         "ALO": 0.000581,
-        "ANT": 0.326657,
+        "ANT": 0.315512,
         "BOR": 0.00165,
         "BOT": 0.00034,
         "COL": 0.002224,
         "GAS": 0.004143,
-        "HAM": 0.042239,
+        "HAM": 0.040488,
         "HUL": 0.001239,
         "LAW": 0.005704,
-        "LEC": 0.016595,
+        "LEC": 0.016754,
         "LIN": 0.003025,
-        "NOR": 0.508724,
+        "NOR": 0.517639,
         "OCO": 0.000473,
         "PER": 0.0003,
         "PIA": 0.007881,
         "RUS": 0.04151,
         "SAI": 0.000944,
         "TSU": 0.000395,
-        "VER": 0.034642
+        "VER": 0.038463
       },
       "winner_hit": false,
-      "winner_log_loss": 1.118846
+      "winner_log_loss": 1.153558
     },
     {
       "actual_winner": "RUS",
@@ -1320,10 +1360,10 @@
         "previous_event": 3.401197,
         "uniform": 3.091042
       },
-      "brier_podium": 0.111647,
-      "brier_win": 0.008386,
+      "brier_podium": 0.112392,
+      "brier_win": 0.009086,
       "event_date": "2026-09-26",
-      "model_only_log_loss": 0.332532,
+      "model_only_log_loss": 0.357243,
       "podium_overlap": 1,
       "predicted_winner": "RUS",
       "race": "Azerbaijan Grand Prix",
@@ -1337,23 +1377,23 @@
         "BOT": 0.0003,
         "COL": 0.001649,
         "GAS": 0.003023,
-        "HAD": 0.018908,
+        "HAD": 0.019226,
         "HAM": 0.029485,
         "HUL": 0.000732,
         "LAW": 0.004141,
-        "LEC": 0.163457,
+        "LEC": 0.175392,
         "LIN": 0.002223,
-        "NOR": 0.030298,
+        "NOR": 0.02823,
         "OCO": 0.00034,
         "PER": 0.000271,
-        "PIA": 0.059115,
-        "RUS": 0.614334,
+        "PIA": 0.062934,
+        "RUS": 0.600331,
         "SAI": 0.000581,
         "STR": 0.000251,
         "VER": 0.010914
       },
       "winner_hit": true,
-      "winner_log_loss": 0.487216
+      "winner_log_loss": 0.510274
     },
     {
       "actual_winner": "VER",
@@ -1364,10 +1404,10 @@
         "previous_event": 3.401197,
         "uniform": 3.091042
       },
-      "brier_podium": 0.012125,
-      "brier_win": 0.015952,
+      "brier_podium": 0.012739,
+      "brier_win": 0.015495,
       "event_date": "2026-10-04",
-      "model_only_log_loss": 0.529987,
+      "model_only_log_loss": 0.514562,
       "podium_overlap": 3,
       "predicted_winner": "VER",
       "race": "Bahrain Grand Prix",
@@ -1375,17 +1415,17 @@
       "win_probabilities": {
         "ALB": 0.000395,
         "ALO": 0.00034,
-        "ANT": 0.199187,
+        "ANT": 0.178024,
         "BEA": 0.001238,
         "BOR": 0.000943,
         "BOT": 0.0003,
         "COL": 0.001649,
         "GAS": 0.003023,
         "HAD": 0.0057,
-        "HAM": 0.198793,
+        "HAM": 0.212001,
         "HUL": 0.000732,
         "LAW": 0.004141,
-        "LEC": 0.025337,
+        "LEC": 0.025973,
         "LIN": 0.002223,
         "NOR": 0.023774,
         "OCO": 0.000581,
@@ -1394,10 +1434,10 @@
         "RUS": 0.041007,
         "SAI": 0.000473,
         "STR": 0.000251,
-        "VER": 0.481605
+        "VER": 0.488925
       },
       "winner_hit": true,
-      "winner_log_loss": 0.730631
+      "winner_log_loss": 0.715546
     },
     {
       "actual_winner": "VER",
@@ -1408,10 +1448,10 @@
         "previous_event": 1.203973,
         "uniform": 3.091042
       },
-      "brier_podium": 0.03889,
-      "brier_win": 0.010218,
+      "brier_podium": 0.041684,
+      "brier_win": 0.010245,
       "event_date": "2026-10-11",
-      "model_only_log_loss": 0.333642,
+      "model_only_log_loss": 0.33392,
       "podium_overlap": 2,
       "predicted_winner": "VER",
       "race": "Singapore Grand Prix",
@@ -1419,17 +1459,17 @@
       "win_probabilities": {
         "ALB": 0.00034,
         "ALO": 0.000732,
-        "ANT": 0.066636,
+        "ANT": 0.064886,
         "BEA": 0.001238,
         "BOR": 0.000943,
         "BOT": 0.0003,
         "COL": 0.001649,
         "GAS": 0.003023,
         "HAD": 0.0057,
-        "HAM": 0.059559,
+        "HAM": 0.059877,
         "HUL": 0.000581,
         "LAW": 0.004141,
-        "LEC": 0.203744,
+        "LEC": 0.205336,
         "LIN": 0.002223,
         "NOR": 0.015312,
         "OCO": 0.000473,
@@ -1438,10 +1478,10 @@
         "RUS": 0.040848,
         "SAI": 0.000395,
         "STR": 0.000251,
-        "VER": 0.583763
+        "VER": 0.583604
       },
       "winner_hit": true,
-      "winner_log_loss": 0.53826
+      "winner_log_loss": 0.538532
     },
     {
       "actual_winner": "ANT",
@@ -1452,10 +1492,10 @@
         "previous_event": 3.401197,
         "uniform": 3.091042
       },
-      "brier_podium": 0.03416,
-      "brier_win": 0.011297,
+      "brier_podium": 0.03575,
+      "brier_win": 0.01106,
       "event_date": "2026-10-25",
-      "model_only_log_loss": 0.442054,
+      "model_only_log_loss": 0.437114,
       "podium_overlap": 2,
       "predicted_winner": "ANT",
       "race": "United States Grand Prix",
@@ -1463,17 +1503,17 @@
       "win_probabilities": {
         "ALB": 0.00034,
         "ALO": 0.000581,
-        "ANT": 0.570903,
+        "ANT": 0.573449,
         "BEA": 0.001238,
         "BOR": 0.000732,
         "BOT": 0.0003,
         "COL": 0.001649,
         "GAS": 0.003023,
-        "HAD": 0.04389,
+        "HAD": 0.048982,
         "HAM": 0.033622,
         "HUL": 0.000943,
         "LAW": 0.004141,
-        "LEC": 0.033452,
+        "LEC": 0.033134,
         "LIN": 0.002223,
         "NOR": 0.010914,
         "OCO": 0.000473,
@@ -1482,10 +1522,10 @@
         "RUS": 0.041326,
         "SAI": 0.000395,
         "STR": 0.000251,
-        "VER": 0.241457
+        "VER": 0.234137
       },
       "winner_hit": true,
-      "winner_log_loss": 0.560536
+      "winner_log_loss": 0.556087
     },
     {
       "actual_winner": "VER",
@@ -1496,10 +1536,10 @@
         "previous_event": 3.401197,
         "uniform": 3.091042
       },
-      "brier_podium": 0.090971,
-      "brier_win": 0.060762,
+      "brier_podium": 0.095028,
+      "brier_win": 0.060759,
       "event_date": "2026-11-01",
-      "model_only_log_loss": 5.080659,
+      "model_only_log_loss": 5.334262,
       "podium_overlap": 1,
       "predicted_winner": "HAM",
       "race": "Mexico City Grand Prix",
@@ -1507,32 +1547,75 @@
       "win_probabilities": {
         "ALB": 0.000395,
         "ALO": 0.000581,
-        "ANT": 0.083981,
+        "ANT": 0.079366,
         "BEA": 0.001238,
         "BOR": 0.000732,
         "BOT": 0.00034,
         "COL": 0.001649,
         "GAS": 0.003023,
         "HAD": 0.0057,
-        "HAM": 0.587694,
+        "HAM": 0.582443,
         "HIR": 0.0003,
         "HUL": 0.000943,
         "LAW": 0.004141,
-        "LEC": 0.109196,
+        "LEC": 0.099807,
         "LIN": 0.002223,
         "NOR": 0.010914,
         "PER": 0.000271,
         "PIA": 0.007877,
-        "RUS": 0.152236,
+        "RUS": 0.172604,
         "SAI": 0.000473,
         "STR": 0.000251,
-        "VER": 0.025843
+        "VER": 0.024729
       },
       "winner_hit": false,
-      "winner_log_loss": 3.655725
+      "winner_log_loss": 3.699784
+    },
+    {
+      "actual_winner": "NOR",
+      "baseline_favourite": "ANT",
+      "baseline_hit": false,
+      "baseline_log_loss": {
+        "championship_order": 2.926408,
+        "previous_event": 3.352407,
+        "uniform": 3.044522
+      },
+      "brier_podium": 0.152922,
+      "brier_win": 0.01941,
+      "event_date": "2026-11-08",
+      "model_only_log_loss": 0.565515,
+      "podium_overlap": 1,
+      "predicted_winner": "NOR",
+      "race": "S\u00e3o Paulo Grand Prix",
+      "round": 20,
+      "win_probabilities": {
+        "ALB": 0.000395,
+        "ALO": 0.000581,
+        "ANT": 0.338984,
+        "BEA": 0.001238,
+        "BOR": 0.000944,
+        "BOT": 0.00034,
+        "COL": 0.001649,
+        "GAS": 0.003024,
+        "HAD": 0.006975,
+        "HAM": 0.029333,
+        "HUL": 0.005826,
+        "LAW": 0.057303,
+        "LEC": 0.015157,
+        "LIN": 0.002223,
+        "NOR": 0.465172,
+        "PER": 0.0003,
+        "PIA": 0.007879,
+        "RUS": 0.021074,
+        "SAI": 0.000473,
+        "STR": 0.000271,
+        "VER": 0.040859
+      },
+      "winner_hit": true,
+      "winner_log_loss": 0.765348
     }
   ],
-  "races_evaluated": 18,
+  "races_evaluated": 19,
   "season": 2026,
   "sprints": [
     {
@@ -1544,10 +1627,10 @@
         "previous_event": 1.203973,
         "uniform": 3.091042
       },
-      "brier_podium": 0.11534,
-      "brier_win": 0.004592,
+      "brier_podium": 0.120008,
+      "brier_win": 0.005118,
       "event_date": "2026-03-15",
-      "model_only_log_loss": 0.175028,
+      "model_only_log_loss": 0.196101,
       "podium_overlap": 1,
       "predicted_winner": "RUS",
       "race": "Chinese Grand Prix",
@@ -1555,29 +1638,29 @@
       "win_probabilities": {
         "ALB": 0.002223,
         "ALO": 0.001649,
-        "ANT": 0.158601,
+        "ANT": 0.169739,
         "BEA": 0.007877,
         "BOR": 0.004141,
         "BOT": 0.001238,
         "COL": 0.000943,
         "GAS": 0.003023,
         "HAD": 0.000732,
-        "HAM": 0.023297,
+        "HAM": 0.022819,
         "HUL": 0.000581,
         "LAW": 0.000473,
         "LEC": 0.029325,
         "LIN": 0.0057,
-        "NOR": 0.019449,
+        "NOR": 0.022791,
         "OCO": 0.000395,
         "PER": 0.00034,
         "PIA": 0.0003,
-        "RUS": 0.728277,
+        "RUS": 0.714274,
         "SAI": 0.000271,
         "STR": 0.000251,
         "VER": 0.010914
       },
       "winner_hit": true,
-      "winner_log_loss": 0.317073
+      "winner_log_loss": 0.336488
     },
     {
       "actual_winner": "NOR",
@@ -1588,10 +1671,10 @@
         "previous_event": 3.401197,
         "uniform": 3.091042
       },
-      "brier_podium": 0.061276,
-      "brier_win": 0.028914,
+      "brier_podium": 0.060652,
+      "brier_win": 0.023455,
       "event_date": "2026-05-03",
-      "model_only_log_loss": 0.817754,
+      "model_only_log_loss": 0.67092,
       "podium_overlap": 2,
       "predicted_winner": "ANT",
       "race": "Miami Grand Prix",
@@ -1599,7 +1682,7 @@
       "win_probabilities": {
         "ALB": 0.000473,
         "ALO": 0.000395,
-        "ANT": 0.482429,
+        "ANT": 0.424349,
         "BEA": 0.007877,
         "BOR": 0.001238,
         "BOT": 0.00034,
@@ -1609,19 +1692,19 @@
         "HAM": 0.021069,
         "HUL": 0.0003,
         "LAW": 0.003023,
-        "LEC": 0.037918,
+        "LEC": 0.036327,
         "LIN": 0.001649,
-        "NOR": 0.368092,
+        "NOR": 0.423945,
         "OCO": 0.000581,
         "PER": 0.000271,
-        "PIA": 0.019348,
-        "RUS": 0.041007,
+        "PIA": 0.023326,
+        "RUS": 0.040848,
         "SAI": 0.000943,
         "STR": 0.000251,
         "VER": 0.004141
       },
       "winner_hit": false,
-      "winner_log_loss": 0.999423
+      "winner_log_loss": 0.858152
     },
     {
       "actual_winner": "RUS",
@@ -1632,10 +1715,10 @@
         "previous_event": 3.401197,
         "uniform": 3.091042
       },
-      "brier_podium": 0.006525,
-      "brier_win": 0.013334,
+      "brier_podium": 0.006755,
+      "brier_win": 0.012124,
       "event_date": "2026-05-24",
-      "model_only_log_loss": 0.424871,
+      "model_only_log_loss": 0.393429,
       "podium_overlap": 3,
       "predicted_winner": "RUS",
       "race": "Canadian Grand Prix",
@@ -1643,7 +1726,7 @@
       "win_probabilities": {
         "ALB": 0.000581,
         "ALO": 0.000395,
-        "ANT": 0.317417,
+        "ANT": 0.297049,
         "BEA": 0.0057,
         "BOR": 0.000732,
         "BOT": 0.00034,
@@ -1655,17 +1738,17 @@
         "LAW": 0.003023,
         "LEC": 0.029325,
         "LIN": 0.001238,
-        "NOR": 0.026292,
+        "NOR": 0.029474,
         "OCO": 0.000473,
         "PER": 0.000271,
-        "PIA": 0.012028,
-        "RUS": 0.563732,
+        "PIA": 0.012505,
+        "RUS": 0.580441,
         "SAI": 0.000943,
         "STR": 0.000251,
         "VER": 0.007877
       },
       "winner_hit": true,
-      "winner_log_loss": 0.573176
+      "winner_log_loss": 0.543968
     },
     {
       "actual_winner": "ANT",
@@ -1676,10 +1759,10 @@
         "previous_event": 3.401197,
         "uniform": 3.091042
       },
-      "brier_podium": 0.073486,
-      "brier_win": 0.043379,
+      "brier_podium": 0.073755,
+      "brier_win": 0.043952,
       "event_date": "2026-07-05",
-      "model_only_log_loss": 1.429897,
+      "model_only_log_loss": 1.464565,
       "podium_overlap": 2,
       "predicted_winner": "HAM",
       "race": "British Grand Prix",
@@ -1687,29 +1770,29 @@
       "win_probabilities": {
         "ALB": 0.000732,
         "ALO": 0.000395,
-        "ANT": 0.248198,
+        "ANT": 0.241674,
         "BEA": 0.002223,
         "BOR": 0.000473,
         "BOT": 0.00034,
         "COL": 0.001649,
         "GAS": 0.004141,
         "HAD": 0.0057,
-        "HAM": 0.621429,
+        "HAM": 0.623498,
         "HUL": 0.0003,
         "LAW": 0.003023,
-        "LEC": 0.01563,
+        "LEC": 0.016108,
         "LIN": 0.001238,
         "NOR": 0.010914,
         "OCO": 0.000581,
         "PER": 0.000271,
         "PIA": 0.021069,
-        "RUS": 0.041326,
+        "RUS": 0.041167,
         "SAI": 0.000943,
         "STR": 0.000251,
-        "VER": 0.019174
+        "VER": 0.023312
       },
       "winner_hit": false,
-      "winner_log_loss": 1.39353
+      "winner_log_loss": 1.420167
     },
     {
       "actual_winner": "RUS",
@@ -1720,10 +1803,10 @@
         "previous_event": 3.401197,
         "uniform": 3.091042
       },
-      "brier_podium": 0.002079,
-      "brier_win": 0.009285,
+      "brier_podium": 0.002253,
+      "brier_win": 0.007837,
       "event_date": "2026-08-23",
-      "model_only_log_loss": 0.321772,
+      "model_only_log_loss": 0.274084,
       "podium_overlap": 3,
       "predicted_winner": "RUS",
       "race": "Dutch Grand Prix",
@@ -1740,20 +1823,20 @@
         "HAM": 0.040848,
         "HUL": 0.000473,
         "LAW": 0.0057,
-        "LEC": 0.040482,
+        "LEC": 0.038254,
         "LIN": 0.003023,
-        "NOR": 0.211195,
+        "NOR": 0.185098,
         "OCO": 0.000581,
         "PER": 0.0003,
         "PIA": 0.008354,
-        "RUS": 0.609017,
+        "RUS": 0.637341,
         "SAI": 0.000943,
         "STR": 0.000271,
         "TSU": 0.000251,
         "VER": 0.010914
       },
       "winner_hit": true,
-      "winner_log_loss": 0.495909
+      "winner_log_loss": 0.45045
     },
     {
       "actual_winner": "VER",
@@ -1764,10 +1847,10 @@
         "previous_event": 1.203973,
         "uniform": 3.091042
       },
-      "brier_podium": 0.088243,
-      "brier_win": 0.004989,
+      "brier_podium": 0.088399,
+      "brier_win": 0.005182,
       "event_date": "2026-10-11",
-      "model_only_log_loss": 0.141476,
+      "model_only_log_loss": 0.148374,
       "podium_overlap": 2,
       "predicted_winner": "VER",
       "race": "Singapore Grand Prix",
@@ -1785,111 +1868,112 @@
         "HAM": 0.029325,
         "HUL": 0.000581,
         "LAW": 0.004141,
-        "LEC": 0.031412,
+        "LEC": 0.030616,
         "LIN": 0.002223,
         "NOR": 0.015153,
         "OCO": 0.000473,
         "PER": 0.000271,
-        "PIA": 0.007877,
-        "RUS": 0.131868,
+        "PIA": 0.008036,
+        "RUS": 0.137278,
         "SAI": 0.000395,
         "STR": 0.000251,
-        "VER": 0.705176
+        "VER": 0.700402
       },
       "winner_hit": true,
-      "winner_log_loss": 0.349309
+      "winner_log_loss": 0.356101
     }
   ],
   "summary": {
-    "baseline_pole_accuracy": 0.277778,
+    "baseline_pole_accuracy": 0.263158,
     "baseline_pole_log_loss": {
-      "championship_order": 1.982188,
-      "previous_event": 2.663229,
-      "uniform": 3.085747
+      "championship_order": 2.031884,
+      "previous_event": 2.699501,
+      "uniform": 3.083577
     },
     "baseline_win_log_loss": {
-      "championship_order": 1.83404,
-      "previous_event": 2.546721,
-      "uniform": 3.085747
+      "championship_order": 1.891533,
+      "previous_event": 2.589126,
+      "uniform": 3.083577
     },
-    "baseline_winner_accuracy": 0.388889,
-    "best_baseline_pole_log_loss": 1.982188,
-    "best_baseline_win_log_loss": 1.83404,
-    "calibrated_pole_log_loss": 1.783813,
-    "calibrated_win_log_loss": 1.049663,
+    "baseline_winner_accuracy": 0.368421,
+    "best_baseline_pole_log_loss": 2.031884,
+    "best_baseline_win_log_loss": 1.891533,
+    "calibrated_pole_log_loss": 1.807215,
+    "calibrated_win_log_loss": 1.033442,
     "grid_weight_search": {
       "1000.0": {
-        "loss": 1.098689,
+        "loss": 1.07843,
         "noise_scale": 6.0
       },
       "120.0": {
-        "loss": 1.293405,
+        "loss": 1.286132,
         "noise_scale": 1.5
       },
       "16.0": {
-        "loss": 1.693359,
+        "loss": 1.706529,
         "noise_scale": 1.5
       },
       "250.0": {
-        "loss": 1.144844,
+        "loss": 1.130695,
         "noise_scale": 1.5
       },
       "4.0": {
-        "loss": 1.844328,
+        "loss": 1.870098,
         "noise_scale": 1.5
       },
       "400.0": {
-        "loss": 1.101667,
-        "noise_scale": 2.5
+        "loss": 1.085281,
+        "noise_scale": 2.0
       },
       "48.0": {
-        "loss": 1.49968,
+        "loss": 1.500657,
         "noise_scale": 2.0
       },
       "550.0": {
-        "loss": 1.095883,
+        "loss": 1.076299,
         "noise_scale": 3.0
       },
       "750.0": {
-        "loss": 1.096656,
+        "loss": 1.075601,
         "noise_scale": 4.0
       }
     },
-    "mean_brier_podium": 0.070734,
-    "mean_brier_win": 0.022702,
-    "mean_podium_overlap_top3": 1.833333,
-    "mean_pole_log_loss": 2.384124,
-    "mean_winner_log_loss": 1.775312,
-    "model_only_pole_log_loss": 1.93543,
-    "model_only_win_log_loss": 1.311325,
+    "mean_brier_podium": 0.074829,
+    "mean_brier_win": 0.022613,
+    "mean_podium_overlap_top3": 1.789474,
+    "mean_pole_log_loss": 2.404719,
+    "mean_winner_log_loss": 1.827782,
+    "model_only_pole_log_loss": 1.929428,
+    "model_only_win_log_loss": 1.282212,
     "noise_scale_search": {
       "qualifying": {
-        "0.75": 2.772139,
-        "1.0": 2.494668,
-        "1.25": 2.321644,
-        "1.5": 2.220269,
-        "2.0": 2.004472,
-        "2.5": 1.920707,
-        "3.0": 1.900582,
-        "4.0": 1.912024
+        "0.75": 2.774598,
+        "1.0": 2.487753,
+        "1.25": 2.312435,
+        "1.5": 2.208851,
+        "2.0": 1.998709,
+        "2.5": 1.916258,
+        "3.0": 1.896607,
+        "4.0": 1.907189
       },
       "race": {
-        "0.75": 1.238026,
-        "1.0": 1.202319,
-        "1.25": 1.182769,
-        "1.5": 1.17022,
-        "2.0": 1.126717,
-        "2.5": 1.115321,
-        "3.0": 1.095883,
-        "4.0": 1.108124
+        "0.75": 1.181443,
+        "1.0": 1.180681,
+        "1.25": 1.171055,
+        "1.5": 1.147518,
+        "2.0": 1.128214,
+        "2.5": 1.100001,
+        "3.0": 1.084755,
+        "4.0": 1.075601,
+        "6.0": 1.106602
       },
       "simulations_per_event": 1000
     },
-    "pole_accuracy": 0.333333,
-    "pole_ece_10_bins": 0.101563,
-    "recommended_grid_position_weight": 550.0,
+    "pole_accuracy": 0.315789,
+    "pole_ece_10_bins": 0.10982,
+    "recommended_grid_position_weight": 750.0,
     "recommended_qualifying_noise_scale": 3.0,
-    "recommended_race_noise_scale": 3.0,
+    "recommended_race_noise_scale": 4.0,
     "recommended_recovery_strength": 0.0,
     "recommended_standings_blend_qualifying": 0.5,
     "recommended_standings_blend_race": 0.2,
@@ -1897,16 +1981,16 @@
     "recommended_weekend_form_scale_qualifying": 8.0,
     "recovery_strength_search": {
       "chosen": 0.0,
-      "fixed_loss": 3.201566,
+      "fixed_loss": 3.221759,
       "fixed_weight": 0.0,
       "in_sample": {
-        "0.0": 3.201566,
-        "0.25": 3.200593,
-        "0.5": 3.204526,
-        "1.0": 3.216654,
-        "1.5": 3.240903
+        "0.0": 3.221759,
+        "0.25": 3.22034,
+        "0.5": 3.22147,
+        "1.0": 3.235252,
+        "1.5": 3.260651
       },
-      "leave_one_out_loss": 3.220287
+      "leave_one_out_loss": 3.23902
     },
     "sprint_baseline_win_log_loss": {
       "championship_order": 1.926667,
@@ -1914,40 +1998,40 @@
       "uniform": 3.091042
     },
     "sprint_baseline_winner_accuracy": 0.333333,
-    "sprint_win_log_loss": 0.68807,
+    "sprint_win_log_loss": 0.660888,
     "sprint_winner_accuracy": 0.666667,
     "sprints_evaluated": 6,
     "standings_blend_search": {
       "pole": {
-        "loss": 1.783813,
-        "tuned_in_sample_loss": 1.768579,
-        "tuned_leave_one_out_loss": 1.865827,
+        "loss": 1.807215,
+        "tuned_in_sample_loss": 1.783145,
+        "tuned_leave_one_out_loss": 1.860924,
         "tuned_weight": 0.3,
         "weight": 0.5
       },
       "race_order": {
         "chosen": 0.2,
-        "fixed_loss": 3.357719,
+        "fixed_loss": 3.363399,
         "fixed_weight": 0.5,
         "in_sample": {
-          "0.0": 3.483927,
-          "0.1": 3.243411,
-          "0.2": 3.201566,
-          "0.3": 3.221938,
-          "0.4": 3.270442,
-          "0.5": 3.357719,
-          "0.6": 3.495367,
-          "0.7": 3.666932,
-          "0.8": 3.893142,
-          "0.9": 4.177576
+          "0.0": 3.519635,
+          "0.1": 3.26927,
+          "0.2": 3.221759,
+          "0.3": 3.236665,
+          "0.4": 3.278432,
+          "0.5": 3.363399,
+          "0.6": 3.495656,
+          "0.7": 3.664345,
+          "0.8": 3.898912,
+          "0.9": 4.191052
         },
-        "leave_one_out_loss": 3.201566
+        "leave_one_out_loss": 3.221759
       },
       "win": {
         "chosen_weight": 0.2,
-        "loss": 1.124211,
-        "tuned_in_sample_loss": 0.943557,
-        "tuned_leave_one_out_loss": 1.141258,
+        "loss": 1.11753,
+        "tuned_in_sample_loss": 0.926351,
+        "tuned_leave_one_out_loss": 1.116144,
         "tuned_weight": 0.1,
         "weight": 0.5
       }
@@ -1955,30 +2039,30 @@
     "standings_grid_decay_search": {
       "chosen": 0.0,
       "in_sample": {
-        "0.0": 1.124211,
-        "0.1": 1.110368,
-        "0.2": 1.121643,
-        "0.35": 1.160508,
-        "0.5": 1.192493,
-        "0.75": 1.179399,
-        "1.0": 1.163974,
-        "1.5": 1.150829
+        "0.0": 1.11753,
+        "0.1": 1.101533,
+        "0.2": 1.110509,
+        "0.35": 1.146315,
+        "0.5": 1.176104,
+        "0.75": 1.162586,
+        "1.0": 1.14745,
+        "1.5": 1.134476
       },
-      "leave_one_out_loss": 1.461597,
-      "no_decay_loss": 1.124211
+      "leave_one_out_loss": 1.446335,
+      "no_decay_loss": 1.11753
     },
     "weekend_form_scale_search": {
       "chosen": 8.0,
-      "fixed_loss": 2.067177,
+      "fixed_loss": 2.07631,
       "fixed_weight": 1.0,
       "in_sample": {
-        "1.0": 2.067177,
-        "12.0": 1.927445,
-        "16.0": 2.02703,
-        "4.0": 1.946611,
-        "8.0": 1.900582
+        "1.0": 2.07631,
+        "12.0": 1.913599,
+        "16.0": 2.007286,
+        "4.0": 1.948451,
+        "8.0": 1.896607
       },
-      "leave_one_out_loss": 1.900582,
+      "leave_one_out_loss": 1.955544,
       "noise_scale_per_form": {
         "1.0": 2.5,
         "12.0": 4.0,
@@ -1987,7 +2071,7 @@
         "8.0": 3.0
       }
     },
-    "win_ece_10_bins": 0.109569,
-    "winner_accuracy": 0.666667
+    "win_ece_10_bins": 0.126599,
+    "winner_accuracy": 0.684211
   }
 }

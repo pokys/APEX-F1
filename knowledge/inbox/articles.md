@@ -1,26 +1,5 @@
 # F1 Article Inbox
 
-## 2026-10-27
-- [ ] Featured Comment: F1’s flawed rules don’t lessen Antonelli’s achievement | Briefs (https://www.racefans.net/2026/10/27/featured-comment-f1s-flawed-rules-dont-lessen-antonellis-achievement/)
-- [ ] How to watch the 2026 Mexican Grand Prix live this weekend | TV Times (https://www.racefans.net/2026/10/27/how-to-watch-the-2026-mexican-grand-prix-live-this-weekend/)
-- [ ] Is Alonso's harsh F1 driver claim justified? (https://www.the-race.com/formula-1/is-alonsos-brutal-f1-driver-claim-justified/)
-- [ ] Red Bull explains why Verstappen and Hadjar's 'silly' problems won't all be fixed in 2026 (https://www.autosport.com/f1/news/red-bull-explains-why-verstappen-and-hadjar-silly-problems-wont-be-fixed-in-2026/10868779/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-- [ ] Red Bull reveals when 'silly' problems affecting Max Verstappen and Isack Hadjar can be fixed (https://www.motorsport.com/f1/news/red-bull-reveals-when-silly-problems-affecting-max-verstappen-and-isack-hadjar-can-be-fixed/10868773/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] Stats: Russell scored as many points as Hulkenberg in last three rounds | 2026 United States GP stats and facts (https://www.racefans.net/2026/10/27/stats-russell-scored-as-many-points-as-hulkenberg-in-last-three-rounds/)
-- [ ] What the US GP really exposed about where Ferrari is lacking (https://www.the-race.com/formula-1/what-the-us-gp-really-exposed-about-where-ferrari-is-lacking/)
-- [ ] Toto Wolff dismisses Helmut Marko's Russell theory: "He still has what it takes" (https://www.motorsport.com/f1/news/toto-wolff-dismisses-helmut-marko--george-russell-theory/10868811/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] “I couldn’t disappear” – Oliver Bearman rues “crazy” penalty for Pierre Gasly clash (https://www.motorsport.com/f1/news/i-just-couldnt-disappear-oliver-bearman-rues-crazy-10s-penalty-for-pierre-gasly-clash/10868777/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] Franco Colapinto, George Russell to sit out FP1 at F1 Mexico GP (https://www.motorsport.com/f1/news/franco-colapinto-george-russell-to-sit-out-fp1-at-f1-mexico-gp/10868889/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] McLaren boss claims the MCL40 had podium pace despite a “disappointing” P5 and P7 (https://www.motorsport.com/f1/news/mclaren-boss-claims-the-mcl40-had-podium-pace-despite-a-disappointing-5th-and-7th/10868598/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] Mercedes has a Russell-sized problem and it is sharing responsibility (https://www.autosport.com/f1/news/mercedes-has-a-russell-sized-problem-and-it-is-sharing-responsibility/10868909/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-- [ ] The mistakes that cost Lewis Hamilton a podium at F1’s US GP (https://www.motorsport.com/f1/news/the-mistakes-that-cost-lewis-hamilton-a-podium-at-f1s-us-gp/10868845/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] The role Friday practice played in Hamilton failing to achieve a podium at the US GP (https://www.autosport.com/f1/news/the-role-friday-practice-played-in-hamilton-failing-to-achieve-podium-at-us-gp/10868872/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-- [ ] Toto Wolff takes blame for George Russell's US GP struggles (https://www.motorsport.com/f1/news/wolff-admits-its-painful-watching-george-russell-struggle-while-kimi-antonelli-walks-on-water/10868566/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] Valtteri Bottas denies he might lose his Cadillac seat for F1 2027 (https://www.motorsport.com/f1/news/valtteri-bottas-denies-he-might-lose-his-cadillac-seat-for-f1-2027/10868664/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] Why one team let Sky breach F1's 'most sacred' connection (https://www.the-race.com/formula-1/why-one-team-let-sky-breach-f1s-most-sacred-connection/)
-- [ ] Kimi Antonelli extends F1 title lead with US GP win Mercedes didn’t expect (https://www.motorsport.com/f1/news/mercedes-admits-they-were-clueless-before-kimi-antonellis-austin-miracle-a-remarkable-turnaround/10868571/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] Social media: Pierson joins Hauger at Foyt for 2027 IndyCar season | Brief (https://www.racefans.net/2026/10/27/social-media-pierson-joins-hauger-at-foyt-for-2027-indycar-season/)
-
 ## 2026-10-28
 - [ ] George Russell F1 title chances defended by Toto Wolff after Helmut Marko comments (https://www.motorsport.com/f1/news/george-russell-f1-title-chances-defended-by-toto-wolff-after-helmut-marko-comments/10868961/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Helmut Marko invests in AI start-up after Red Bull F1 exit (https://www.motorsport.com/f1/news/helmut-marko-invests-in-ai-start-up-after-red-bull-f1-exit/10868955/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
@@ -720,3 +699,10 @@
 - [ ] What we learned from an unexpected MotoGP cameo (https://www.the-race.com/motogp/jake-dixon-unexpected-motogp-cameo-what-we-learned/)
 - [ ] ‘Kimi Antonelli isn’t Ayrton Senna yet, but he may be a Senninha’ – Toto Wolff (https://www.motorsport.com/f1/news/toto-wolff-kimi-antonelli-isnt-ayrton-senna-yet-but-he-may-be-a-senninha-/10873544/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Social Media: Hamilton witnesses humanitarian relief effort in Gaza Strip | Brief (https://www.racefans.net/2026/11/10/social-media-hamilton-witnesses-humanitarian-relief-effort-in-gaza-strip/)
+- [ ] Lando Norris questions Charles Leclerc's Brazilian GP penalty: "Just racing" (https://www.motorsport.com/f1/news/lando-norris-questions-charles-leclercs-brazilian-gp-penalty-just-racing/10873736/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Lewis Hamilton tours Gaza aid operation at Egypt's Rafah border (https://www.motorsport.com/f1/news/lewis-hamilton-tours-gaza-aid-operation-at-egypts-rafah-border/10873731/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Max Verstappen names the one condition that would make him retire from F1 (https://www.motorsport.com/f1/news/max-verstappen-id-quit-f1-if-i-didnt-think-i-was-the-best-driver/10873734/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+
+## 2026-11-11
+- [ ] Daniel Ricciardo: Max Verstappen will "go down as one of the best ever" (https://www.motorsport.com/f1/news/daniel-ricciardo-max-verstappen-will-go-down-as-one-of-the-best-ever/10873738/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Oscar Piastri reveals unexpected upside of being out of F1 title fight (https://www.motorsport.com/f1/news/oscar-piastri-reveals-unexpected-upside-of-being-out-of-f1-title-fight/10873740/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

@@ -723,3 +723,5 @@
 - [ ] MotoGP makes major US TV step with ESPN deal (https://www.the-race.com/business/motogp-makes-major-us-tv-step-with-espn-deal/)
 - [ ] Racing Bulls officially keeps Lawson for 2027 (https://www.the-race.com/formula-1/racing-bulls-commits-to-lawson-and-lindblad-as-2027-f1-line-up/)
 - [ ] Toto Wolff reflects on Mercedes’ non-title years: ‘We weren’t complete losers’ (https://www.motorsport.com/f1/news/toto-wolff-reflects-on-mercedes-non-title-years-we-werent-complete-losers/10873281/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Guenther Steiner suggests Max Verstappen could be better suited to lead Ferrari (https://www.motorsport.com/f1/news/guenther-steiner-suggests-max-verstappen-could-be-better-suited-to-lead-ferrari/10874192/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Hearing set for Audi Tsunoda appeal (https://www.the-race.com/formula-1/audi-appeal-f1-italian-gp-yuki-tsunoda/)

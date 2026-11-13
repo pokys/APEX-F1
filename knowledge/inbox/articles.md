@@ -679,6 +679,14 @@
 - [ ] Toto Wolff reflects on Mercedes’ non-title years: ‘We weren’t complete losers’ (https://www.motorsport.com/f1/news/toto-wolff-reflects-on-mercedes-non-title-years-we-werent-complete-losers/10873281/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Guenther Steiner suggests Max Verstappen could be better suited to lead Ferrari (https://www.motorsport.com/f1/news/guenther-steiner-suggests-max-verstappen-could-be-better-suited-to-lead-ferrari/10874192/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Hearing set for Audi Tsunoda appeal (https://www.the-race.com/formula-1/audi-appeal-f1-italian-gp-yuki-tsunoda/)
+- [ ] Guenther Steiner warns Oscar Piastri's McLaren future could be at risk after 2027 (https://www.motorsport.com/f1/news/guether-steiner-warns-oscar-piastris-mclaren-future-could-be-at-risk-after-2027/10874189/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 
 ## 2026-11-13
 - [ ] On This Day: Verstappen stars as Hamilton wins soaked Brazilian Grand Prix | Brief (https://www.racefans.net/2026/11/13/on-this-day-brazilian-grand-prix-2/)
+- [ ] F1 driver contracts: How long is each driver tied down for? (https://www.motorsport.com/f1/news/f1-driver-contracts-how-long-is-each-driver-tied-down-for/10850679/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Ferrari's Leclerc-Hamilton problem is far from solved (https://www.the-race.com/formula-1/ferrari-leclerc-hamilton-f1-problem-far-from-solved/)
+- [ ] Grosjean admits his single-seater career is likely over after ending IndyCar season 19th | Formula 1 (https://www.racefans.net/2026/11/13/grosjean-admits-his-single-seater-racing-career-is-likely-over-after-ending-indycar-season-19th/)
+- [ ] How Madrid F1 race’s economic impact compares to Barcelona’s (https://www.the-race.com/business/how-madrid-f1-races-economic-impact-compares-to-barcelonas/)
+- [ ] Spotlight: FIA pulls F1 reporter’s pass over column calling Leclerc a ‘sneaky b*****d’ | Brief (https://www.racefans.net/2026/11/13/spotlight-fia-pulls-f1-reporters-pass-over-column-calling-leclerc-a-sneaky-bd/)
+- [ ] The Antonelli you don't know: Inside the Mercedes garage with F1's new world champion (https://www.autosport.com/f1/news/the-antonelli-you-dont-know-inside-the-mercedes-garage-with-f1s-new-world-champion/10874265/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] The Kimi Antonelli you don't know: Inside the Mercedes garage with F1's new world champion (https://www.motorsport.com/f1/news/the-kimi-antonelli-you-dont-know-inside-the-mercedes-garage-with-f1s-new-world-champion-/10874164/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

@@ -653,3 +653,12 @@
 
 ## 2026-11-14
 - [ ] On This Day: Racing rules in spotlight as Hamilton takes Brazil win from Verstappen | Brief (https://www.racefans.net/2026/11/14/on-this-day-2021-brazilian-grand-prix/)
+- [ ] 'ADUO for teams' plan to be discussed by F1 (https://www.the-race.com/formula-1/aduo-for-teams-to-be-discussed-by-f1/)
+- [ ] George Russell is “looking down the barrel” of Kimi Antonelli’s raw pace, says James Allison (https://www.motorsport.com/f1/news/george-russell-is-looking-down-the-barrel-of-kimi-antonellis-raw-pace-says-allison/10874424/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Ignore social media echo chamber and trust F1 over Middle East races – Wolff | Formula 1 (https://www.racefans.net/2026/11/14/ignore-social-media-echo-chamber-trust-f1-over-middle-east-races-wolff/)
+- [ ] Kimi Antonelli meets Italian president Sergio Mattarella (https://www.motorsport.com/f1/news/kimi-antonelli-meets-italian-president-sergio-mattarella/10874471/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Max Verstappen signs ambassador deal with Dutch technical group VDK (https://www.motorsport.com/f1/news/max-verstappen-signs-ambassador-deal-with-dutch-technical-group-vdk/10874486/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] McLaren to upgrade MCL40 car at its bogey F1 track Las Vegas (https://www.motorsport.com/f1/news/mclaren-to-upgrade-mcl40-car-at-its-bogey-f1-track-las-vegas/10874307/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] McLaren to upgrade MCL40 F1 car at its bogey track Las Vegas (https://www.autosport.com/f1/news/mclaren-to-upgrade-mcl40-f1-car-at-its-bogey-track-las-vegas/10874450/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Mercedes and Audi unveil adidas collections for F1 Las Vegas Grand Prix (https://www.motorsport.com/f1/news/mercedes-and-audi-unveil-adidas-collections-for-f1-las-vegas-grand-prix/10874493/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Mercedes technical director warns F1 teams won’t “lie down” over 2027 downforce cuts (https://www.motorsport.com/f1/news/mercedes-tech-boss-warns-f1-teams-wont-lie-down-over-massive-2027-downforce-cuts/10874433/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

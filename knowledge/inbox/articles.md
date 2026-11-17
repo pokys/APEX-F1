@@ -510,3 +510,12 @@
 - [ ] Williams and Aston Martin reveal one-off liveries for Las Vegas Grand Prix | Formula 1 (https://www.racefans.net/2026/11/16/williams-and-aston-martin-reveal-one-off-liveries-for-las-vegas-grand-prix/)
 - [ ] Zak Brown recalls McLaren's "very toxic environment" after joining team in 2016 (https://www.motorsport.com/f1/news/zak-brown-recalls-mclarens-very-toxic-environment-after-joining-team-in-2016/10874891/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Williams, Aston Martin among new F1 liveries for Las Vegas GP as Acura "replaces" Honda (https://www.motorsport.com/f1/news/williams-aston-martin-among-new-f1-liveries-for-las-vegas-gp-as-acura-replaces-honda/10874925/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+
+## 2026-11-17
+- [ ] Alonso to contest 2027 Dakar Rally with new Aston Martin project (https://www.the-race.com/formula-1/fernando-alonso-2027-dakar-rally-new-aston-martin-project/)
+- [ ] Alonso, Loeb join Aston Martin for 2027 Dakar Rally (https://www.autosport.com/dakar/news/alonso-loeb-join-aston-martin-for-2027-dakar-rally/10875003/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] An early season finale? Five talking points for the 2026 Las Vegas Grand Prix | Formula 1 (https://www.racefans.net/2026/11/17/an-early-season-finale-five-talking-points-for-the-2026-las-vegas-grand-prix/)
+- [ ] F1's 'stupid' speed limit to change in 2027? What you need to know (https://www.the-race.com/formula-1/what-f1-looking-to-change-about-stupid-speed-limit-rule/)
+- [ ] Fernando Alonso to return to Dakar Rally with Aston Martin in 2027 (https://www.motorsport.com/dakar/news/fernando-alonso-to-return-to-dakar-rally-with-aston-martin-in-2027/10874907/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Spotlight: Alonso to enter Dakar in car Aston Martin designed for Call of Duty | Brief (https://www.racefans.net/2026/11/17/spotlight-alonso-to-enter-dakar-in-car-aston-martin-designed-for-call-of-duty/)
+- [ ] Toto Wolff is not afraid of losing Kimi Antonelli to Ferrari (https://www.motorsport.com/f1/news/toto-wolff-is-not-afraid-of-losing-kimi-antonelli-to-ferrari/10875044/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

@@ -511,6 +511,7 @@
 - [ ] Zak Brown recalls McLaren's "very toxic environment" after joining team in 2016 (https://www.motorsport.com/f1/news/zak-brown-recalls-mclarens-very-toxic-environment-after-joining-team-in-2016/10874891/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Williams, Aston Martin among new F1 liveries for Las Vegas GP as Acura "replaces" Honda (https://www.motorsport.com/f1/news/williams-aston-martin-among-new-f1-liveries-for-las-vegas-gp-as-acura-replaces-honda/10874925/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Cadillac, Williams and Aston Martin reveal one-off liveries for Las Vegas GP | Formula 1 (https://www.racefans.net/2026/11/16/cadillac-williams-and-aston-martin-reveal-one-off-liveries-for-las-vegas-gp/)
+- [ ] Cadillac, Williams, Alpine and Aston Martin change liveries for Las Vegas GP | Formula 1 (https://www.racefans.net/2026/11/16/cadillac-williams-alpine-and-aston-martin-change-liveries-for-las-vegas-gp/)
 
 ## 2026-11-17
 - [ ] Alonso to contest 2027 Dakar Rally with new Aston Martin project (https://www.the-race.com/formula-1/fernando-alonso-2027-dakar-rally-new-aston-martin-project/)

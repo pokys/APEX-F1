@@ -537,3 +537,4 @@
 - [ ] New F1 season ticket winner revealed (https://www.the-race.com/extra/new-f1-season-ticket-winner-revealed/)
 - [ ] The most valuable F1 sponsors in 2026 (https://www.the-race.com/business/most-valuable-f1-sponsors-2026-anthropic-microsoft-google-aramco-meta-amd-visa/)
 - [ ] Video: FIA reveals how Formula 1 race control takes decisions during an event | Brief (https://www.racefans.net/2026/11/19/video-fia-reveals-how-formula-1-race-control-takes-decisions-during-an-event/)
+- [ ] Oscar Piastri addresses management plans after Mark Webber split (https://www.motorsport.com/f1/news/oscar-piastri-addresses-management-plans-after-mark-webber-split/10875654/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

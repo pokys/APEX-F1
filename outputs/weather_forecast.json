@@ -1,26 +1,26 @@
 {
-  "fetched_at": "2026-11-19T01:47:30+00:00",
+  "fetched_at": "2026-11-19T06:27:21+00:00",
   "longitude": -115.1728,
   "race": "Las Vegas Grand Prix",
   "season": 2026,
   "sessions": {
     "FP1": {
-      "precipitation_mm": 0.0,
-      "rain_probability": 0.28,
+      "precipitation_mm": 0.4,
+      "rain_probability": 0.31,
       "start": "2026-11-20T00:30:00+00:00",
-      "weather_code": 3
+      "weather_code": 51
     },
     "FP2": {
       "precipitation_mm": 0.0,
-      "rain_probability": 0.06,
+      "rain_probability": 0.09,
       "start": "2026-11-20T04:00:00+00:00",
       "weather_code": 0
     },
     "FP3": {
       "precipitation_mm": 0.0,
-      "rain_probability": 0.01,
+      "rain_probability": 0.03,
       "start": "2026-11-21T00:30:00+00:00",
-      "weather_code": 3
+      "weather_code": 0
     },
     "Q": {
       "precipitation_mm": 0.0,

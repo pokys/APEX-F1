@@ -543,3 +543,4 @@
 - [ ] Major F1 stewarding revamp coming for 2027 (https://www.the-race.com/formula-1/f1-to-use-full-time-stewards-from-2027/)
 - [ ] FIA to introduce full-time F1 stewards from 2027 to improve consistency (https://www.motorsport.com/f1/news/fia-to-introduce-full-time-f1-stewards-from-2027-in-bid-to-improve-consistency/10875716/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] FIA to phase in full-time F1 stewards from 2027 (https://www.autosport.com/f1/news/fia-to-introduce-full-time-f1-stewards-from-2027-to-improve-consistency/10875719/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Lewis Hamilton backs V8 return, hits out at 2026 engines “dying” on straights (https://www.motorsport.com/f1/news/lewis-hamilton-backs-v8-return-hits-out-at-engines-dying-on-straights/10875488/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

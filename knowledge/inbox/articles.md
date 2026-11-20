@@ -556,3 +556,6 @@
 - [ ] Marquez's plan to ensure he wins MotoGP 2026 title early (https://www.the-race.com/motogp/marc-marquez-plan-ducati-motogp-2026-title-portimao-portuguese-gp/)
 - [ ] Social Media: Fire halts final day of Formula E testing | Brief (https://www.racefans.net/2026/11/20/social-media-fire-halts-final-day-of-formula-e-testing/)
 - [ ] Video: Verstappen avoids welcome reception for drivers in Las Vegas paddock | Brief (https://www.racefans.net/2026/11/20/video-verstappen-avoids-welcome-reception-for-drivers-in-las-vegas-paddock/)
+- [ ] F1 set for V8 return from 2030 (https://www.autosport.com/f1/news/f1-set-for-v8-return-from-2030/10875119/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Formula 1 set for V8 turbo return in 2030 (https://www.motorsport.com/f1/news/f1-set-for-v8-turbo-move-by-2030-season/10875113/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Martin admits 2021 crash memories still slow him at Portimao (https://www.the-race.com/motogp/martin-admits-2021-crash-memories-still-slow-him-at-portimao/)

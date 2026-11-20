@@ -549,3 +549,4 @@
 - [ ] Piastri needed to curb his speed through quick corners – Brown | Formula 1 (https://www.racefans.net/2026/11/20/piastri-needed-to-curb-his-speed-through-quick-corners-brown/)
 - [ ] Max Verstappen: “I really thought that we would not win a race this year” (https://www.motorsport.com/f1/news/max-verstappen-i-really-thought-that-we-would-not-win-a-race-this-year/10875990/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Piastri needed to reduce his speed through F1’s quickest corners – Brown | Formula 1 (https://www.racefans.net/2026/11/20/piastri-needed-to-curb-his-speed-through-quick-corners-brown/)
+- [ ] Verstappen reveals which F1 races he'd most like to attend as a fan (https://www.the-race.com/extra/max-verstappen-reveals-which-f1-races-hed-most-like-to-attend-as-a-fan/)

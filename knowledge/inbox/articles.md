@@ -559,3 +559,4 @@
 - [ ] F1 set for V8 return from 2030 (https://www.autosport.com/f1/news/f1-set-for-v8-return-from-2030/10875119/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] Formula 1 set for V8 turbo return in 2030 (https://www.motorsport.com/f1/news/f1-set-for-v8-turbo-move-by-2030-season/10875113/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Martin admits 2021 crash memories still slow him at Portimao (https://www.the-race.com/motogp/martin-admits-2021-crash-memories-still-slow-him-at-portimao/)
+- [ ] F1's new V8 engine agreed – five things you need to know (https://www.the-race.com/formula-1/f1s-new-v8-engine-agreed-five-things-you-need-to-know/)

@@ -507,3 +507,6 @@
 - [ ] F1 Las Vegas GP: Rain impacts FP1 running (https://www.motorsport.com/f1/news/f1-las-vegas-gp-rain-washes-out-fp1/10875778/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] No times set at all in Las Vegas FP1 washout (https://www.the-race.com/formula-1/no-times-set-at-all-in-las-vegas-fp1-washout/)
 - [ ] F1 Las Vegas GP: Rain ruins FP1 running (https://www.motorsport.com/f1/news/f1-las-vegas-gp-rain-washes-out-fp1/10875778/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Cadillac ditches plan to produce own V6 hybrid engine ahead of F1’s V8 push (https://www.autosport.com/f1/news/cadillac-ditches-plan-to-produce-own-v6-hybrid-engine-ahead-of-f1s-v8-push/10875807/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Cadillac scraps V6 F1 engine, delays entry as PU manufacturer (https://www.motorsport.com/f1/news/cadillac-confirms-gm-will-introduce-its-own-f1-power-unit-a-year-later-than-initially-planned/10875798/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Formula 1 teams set no lap times set in wet first practice at Las Vegas | Formula 1 (https://www.racefans.net/2026/11/20/formula-1-teams-set-no-lap-times-set-in-wet-first-practice-at-las-vegas/)

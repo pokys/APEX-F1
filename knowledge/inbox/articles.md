@@ -546,3 +546,4 @@
 - [ ] Fernando Alonso returns to Dakar: Why his first rally-raid experience was a shock to the system (https://www.motorsport.com/dakar/news/fernando-alonso-returns-to-dakar-why-his-first-rally-raid-experience-was-a-shock-to-the-system/10875881/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] How the F1 2026 regulations neutered Oscar Piastri's "real strength" (https://www.motorsport.com/f1/news/how-the-f1-2026-regulations-neutered-oscar-piastris-real-strength/10875907/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] New autobiography to detail remarkable F1 crash and recovery (https://www.the-race.com/extra/new-autobiography-to-detail-remarkable-f1-crash-and-recovery/)
+- [ ] Piastri needed to curb his speed through quick corners – Brown | Formula 1 (https://www.racefans.net/2026/11/20/piastri-needed-to-curb-his-speed-through-quick-corners-brown/)

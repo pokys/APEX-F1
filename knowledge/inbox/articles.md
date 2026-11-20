@@ -551,3 +551,4 @@
 - [ ] Piastri needed to reduce his speed through F1’s quickest corners – Brown | Formula 1 (https://www.racefans.net/2026/11/20/piastri-needed-to-curb-his-speed-through-quick-corners-brown/)
 - [ ] Verstappen reveals which F1 races he'd most like to attend as a fan (https://www.the-race.com/extra/max-verstappen-reveals-which-f1-races-hed-most-like-to-attend-as-a-fan/)
 - [ ] Vinales withdraws after single MotoGP session in Portugal (https://www.the-race.com/motogp/vinales-withdraws-after-single-motogp-session-in-portugal/)
+- [ ] Everything that happened in Portimao MotoGP practice (https://www.the-race.com/motogp/everything-that-happened-in-portimao-motogp-practice/)

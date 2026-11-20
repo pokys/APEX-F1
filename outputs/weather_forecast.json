@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-20T07:30:22+00:00",
+  "fetched_at": "2026-11-20T08:27:42+00:00",
   "longitude": -115.1728,
   "race": "Las Vegas Grand Prix",
   "season": 2026,
@@ -8,7 +8,7 @@
       "precipitation_mm": 0.0,
       "rain_probability": 0.04,
       "start": "2026-11-21T00:30:00+00:00",
-      "weather_code": 1
+      "weather_code": 0
     },
     "Q": {
       "precipitation_mm": 0.0,

@@ -500,3 +500,5 @@
 ## 2026-11-20
 - [ ] Nike joins F1 as apparel partner (https://www.motorsport.com/f1/news/nike-joins-f1-as-apparel-partner/10875754/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Nike to return to F1 after 24 years (https://www.the-race.com/business/nike-to-return-to-f1-after-24-years/)
+- [ ] Lando Norris confident F1 would not "put us at risk" in the Middle East (https://www.motorsport.com/f1/news/lando-norris-confident-f1-would-not-put-us-at-risk-in-the-middle-east/10875771/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Nike joins F1 as apparel partner (https://www.autosport.com/f1/news/nike-joins-f1-as-apparel-partner/10875757/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)

@@ -36460,6 +36460,35 @@
           "wet": true
         }
       ]
+    },
+    {
+      "country": "United States",
+      "event_date": "2026-11-21T00:00:00+00:00",
+      "event_format": "conventional",
+      "event_name": "Las Vegas Grand Prix",
+      "location": "Las Vegas",
+      "official_event_name": "FORMULA 1 HEINEKEN LAS VEGAS GRAND PRIX 2026",
+      "round": 21,
+      "sessions": [
+        {
+          "openf1_session_key": 11413,
+          "results": [
+            {
+              "abbreviation": "CAM",
+              "best_lap_seconds": 1867.424,
+              "position": 1,
+              "position_source": "best_lap",
+              "source": "openf1",
+              "team_name": "Haas F1 Team",
+              "time": "0 days 00:31:07.424000"
+            }
+          ],
+          "session_code": "FP1",
+          "session_date": "2026-11-20T00:30:00+00:00",
+          "session_name": null,
+          "source": "openf1"
+        }
+      ]
     }
   ],
   "season": 2026,

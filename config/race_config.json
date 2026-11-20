@@ -15,8 +15,8 @@
   "calibration_source": "outputs/backtest/backtest_season_2026.json",
   "driver_substitutions": [],
   "event_format": "conventional",
-  "event_signal_count": 0,
-  "generated_at": "2026-11-20T06:27:29Z",
+  "event_signal_count": 5,
+  "generated_at": "2026-11-20T07:27:22Z",
   "grid_penalties": [],
   "grid_position_weight": 750.0,
   "grid_source": "simulation",
@@ -100,7 +100,53 @@
   "qualifying_noise_scale": 3.0,
   "race": "Las Vegas Grand Prix",
   "race_date": "2026-11-21",
-  "race_grid_penalties": [],
+  "race_grid_penalties": [
+    {
+      "back_of_grid": false,
+      "driver": "ANT",
+      "pit_lane": false,
+      "places": 5,
+      "sources": [
+        "https://www.fia.com/system/files/decision-document/2026_las_vegas_grand_prix_-_infringement_-_car_12_-_changes_to_pu_element.pdf"
+      ]
+    },
+    {
+      "back_of_grid": false,
+      "driver": "BEA",
+      "pit_lane": false,
+      "places": 35,
+      "sources": [
+        "https://www.fia.com/system/files/decision-document/2026_las_vegas_grand_prix_-_infringement_-_car_87_-_changes_to_pu_elements.pdf"
+      ]
+    },
+    {
+      "back_of_grid": false,
+      "driver": "PIA",
+      "pit_lane": false,
+      "places": 10,
+      "sources": [
+        "https://www.fia.com/system/files/decision-document/2026_las_vegas_grand_prix_-_infringement_-_car_81_-_changes_to_pu_element.pdf"
+      ]
+    },
+    {
+      "back_of_grid": false,
+      "driver": "SAI",
+      "pit_lane": false,
+      "places": 10,
+      "sources": [
+        "https://www.fia.com/system/files/decision-document/2026_las_vegas_grand_prix_-_infringement_-_car_55_-_changes_to_pu_element.pdf"
+      ]
+    },
+    {
+      "back_of_grid": false,
+      "driver": "STR",
+      "pit_lane": false,
+      "places": 10,
+      "sources": [
+        "https://www.fia.com/system/files/decision-document/2026_las_vegas_grand_prix_-_infringement_-_car_18_-_changes_to_pu_elements.pdf"
+      ]
+    }
+  ],
   "race_noise_scale": 4.0,
   "recovery_strength": 0.0,
   "safety_car_probability": 0.35,

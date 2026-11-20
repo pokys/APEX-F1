@@ -552,3 +552,4 @@
 - [ ] Verstappen reveals which F1 races he'd most like to attend as a fan (https://www.the-race.com/extra/max-verstappen-reveals-which-f1-races-hed-most-like-to-attend-as-a-fan/)
 - [ ] Vinales withdraws after single MotoGP session in Portugal (https://www.the-race.com/motogp/vinales-withdraws-after-single-motogp-session-in-portugal/)
 - [ ] Everything that happened in Portimao MotoGP practice (https://www.the-race.com/motogp/everything-that-happened-in-portimao-motogp-practice/)
+- [ ] Forbes releases 2026 F1 team valuations (https://www.the-race.com/business/formula-1-team-values-jump-47-in-2026-as-they-near-10bn/)

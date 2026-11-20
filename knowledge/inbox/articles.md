@@ -553,3 +553,6 @@
 - [ ] Vinales withdraws after single MotoGP session in Portugal (https://www.the-race.com/motogp/vinales-withdraws-after-single-motogp-session-in-portugal/)
 - [ ] Everything that happened in Portimao MotoGP practice (https://www.the-race.com/motogp/everything-that-happened-in-portimao-motogp-practice/)
 - [ ] Forbes releases 2026 F1 team valuations (https://www.the-race.com/business/formula-1-team-values-jump-47-in-2026-as-they-near-10bn/)
+- [ ] Marquez's plan to ensure he wins MotoGP 2026 title early (https://www.the-race.com/motogp/marc-marquez-plan-ducati-motogp-2026-title-portimao-portuguese-gp/)
+- [ ] Social Media: Fire halts final day of Formula E testing | Brief (https://www.racefans.net/2026/11/20/social-media-fire-halts-final-day-of-formula-e-testing/)
+- [ ] Video: Verstappen avoids welcome reception for drivers in Las Vegas paddock | Brief (https://www.racefans.net/2026/11/20/video-verstappen-avoids-welcome-reception-for-drivers-in-las-vegas-paddock/)

@@ -547,3 +547,5 @@
 - [ ] How the F1 2026 regulations neutered Oscar Piastri's "real strength" (https://www.motorsport.com/f1/news/how-the-f1-2026-regulations-neutered-oscar-piastris-real-strength/10875907/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] New autobiography to detail remarkable F1 crash and recovery (https://www.the-race.com/extra/new-autobiography-to-detail-remarkable-f1-crash-and-recovery/)
 - [ ] Piastri needed to curb his speed through quick corners – Brown | Formula 1 (https://www.racefans.net/2026/11/20/piastri-needed-to-curb-his-speed-through-quick-corners-brown/)
+- [ ] Max Verstappen: “I really thought that we would not win a race this year” (https://www.motorsport.com/f1/news/max-verstappen-i-really-thought-that-we-would-not-win-a-race-this-year/10875990/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Piastri needed to reduce his speed through F1’s quickest corners – Brown | Formula 1 (https://www.racefans.net/2026/11/20/piastri-needed-to-curb-his-speed-through-quick-corners-brown/)

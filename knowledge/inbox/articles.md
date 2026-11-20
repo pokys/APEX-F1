@@ -533,3 +533,5 @@
 - [ ] Everything we learned from F1's wet Las Vegas GP practice running (https://www.the-race.com/formula-1/f1-2026-las-vegas-gp-wet-practice-everything-we-learned/)
 - [ ] Pirelli reintroduces stint limit for F1 Qatar GP (https://www.autosport.com/f1/news/pirelli-reintroduces-stint-limit-for-f1-qatar-gp/10875958/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] Pirelli reintroduces stint limit for F1 Qatar GP (https://www.motorsport.com/f1/news/pirelli-introduces-stint-limit-for-f1-qatar-gp-but-increases-total-from-2025/10875950/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] How Marc Marquez can win the 2026 MotoGP title in Portimao sprint (https://www.the-race.com/motogp/how-marc-marquez-can-win-the-2026-motogp-title-in-portimao-sprint/)
+- [ ] Wet Las Vegas practice was like a cold, miserable day karting at Rowrah – Hamilton | Formula 1 (https://www.racefans.net/2026/11/20/wet-las-vegas-practice-was-like-a-cold-miserable-day-karting-at-rowrah-hamilton/)

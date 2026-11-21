@@ -1,11 +1,11 @@
 {
   "by_session": {
     "Q": {
-      "count": 4,
-      "hit_rate": 0.25,
-      "mean_group_overlap": 8.25,
-      "mean_log_loss": 2.022256,
-      "mean_winner_probability": 0.13625
+      "count": 5,
+      "hit_rate": 0.2,
+      "mean_group_overlap": 8.2,
+      "mean_log_loss": 1.939693,
+      "mean_winner_probability": 0.149
     },
     "R": {
       "count": 4,
@@ -169,13 +169,27 @@
       "season": 2026,
       "session_code": "R",
       "winner_probability": 0.237667
+    },
+    {
+      "actual_winner": "ANT",
+      "archived_at": "2026-11-21T03:49:36+00:00",
+      "group": "top10",
+      "group_overlap": 8,
+      "hit": false,
+      "log_loss": 1.609438,
+      "predicted_winner": "RUS",
+      "race": "Las Vegas Grand Prix",
+      "round": 21,
+      "season": 2026,
+      "session_code": "Q",
+      "winner_probability": 0.2
     }
   ],
   "summary": {
-    "count": 10,
-    "hit_rate": 0.4,
-    "mean_group_overlap": 5.2,
-    "mean_log_loss": 1.879793,
-    "mean_winner_probability": 0.272467
+    "count": 11,
+    "hit_rate": 0.363636,
+    "mean_group_overlap": 5.454545,
+    "mean_log_loss": 1.855216,
+    "mean_winner_probability": 0.265879
   }
 }

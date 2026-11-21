@@ -2,27 +2,99 @@
   "available_sessions": [
     "FP1",
     "FP2",
-    "FP3"
+    "FP3",
+    "Q"
   ],
   "available_sessions_by_calendar": [
     "FP1",
     "FP2",
-    "FP3"
+    "FP3",
+    "Q"
   ],
   "available_sessions_ingested": [
     "FP1",
     "FP2",
-    "FP3"
+    "FP3",
+    "Q"
   ],
   "calibration_season": 2026,
   "calibration_source": "outputs/backtest/backtest_season_2026.json",
   "driver_substitutions": [],
   "event_format": "conventional",
   "event_signal_count": 5,
-  "generated_at": "2026-11-21T05:29:14Z",
-  "grid_penalties": [],
+  "fixed_grid": [
+    "VER",
+    "RUS",
+    "NOR",
+    "HAD",
+    "LIN",
+    "ANT",
+    "LAW",
+    "GAS",
+    "COL",
+    "LEC",
+    "HAM",
+    "HUL",
+    "BOR",
+    "ALB",
+    "CAM",
+    "PIA",
+    "PER",
+    "ALO",
+    "BOT",
+    "SAI",
+    "STR"
+  ],
+  "generated_at": "2026-11-21T06:29:23Z",
+  "grid_penalties": [
+    {
+      "back_of_grid": false,
+      "driver": "ANT",
+      "pit_lane": false,
+      "places": 5,
+      "sources": [
+        "https://www.fia.com/system/files/decision-document/2026_las_vegas_grand_prix_-_infringement_-_car_12_-_changes_to_pu_element.pdf"
+      ]
+    },
+    {
+      "back_of_grid": false,
+      "driver": "BEA",
+      "pit_lane": false,
+      "places": 35,
+      "sources": [
+        "https://www.fia.com/system/files/decision-document/2026_las_vegas_grand_prix_-_infringement_-_car_87_-_changes_to_pu_elements.pdf"
+      ]
+    },
+    {
+      "back_of_grid": false,
+      "driver": "PIA",
+      "pit_lane": false,
+      "places": 10,
+      "sources": [
+        "https://www.fia.com/system/files/decision-document/2026_las_vegas_grand_prix_-_infringement_-_car_81_-_changes_to_pu_element.pdf"
+      ]
+    },
+    {
+      "back_of_grid": false,
+      "driver": "SAI",
+      "pit_lane": false,
+      "places": 10,
+      "sources": [
+        "https://www.fia.com/system/files/decision-document/2026_las_vegas_grand_prix_-_infringement_-_car_55_-_changes_to_pu_element.pdf"
+      ]
+    },
+    {
+      "back_of_grid": false,
+      "driver": "STR",
+      "pit_lane": false,
+      "places": 10,
+      "sources": [
+        "https://www.fia.com/system/files/decision-document/2026_las_vegas_grand_prix_-_infringement_-_car_18_-_changes_to_pu_elements.pdf"
+      ]
+    }
+  ],
   "grid_position_weight": 750.0,
-  "grid_source": "simulation",
+  "grid_source": "qualifying+penalties",
   "inputs_status": [
     {
       "configured_weight": 0.15,
@@ -31,37 +103,19 @@
       "status": "missing"
     },
     {
-      "configured_weight": 0.15,
-      "source": "sprint",
-      "source_key": "S",
-      "status": "missing"
-    },
-    {
-      "configured_weight": 0.6,
-      "source": "sprint_qualifying",
-      "source_key": "SQ",
-      "status": "missing"
-    },
-    {
       "configured_weight": 0.1,
-      "source": "fp1",
-      "source_key": "FP1",
-      "status": "used"
-    },
-    {
-      "configured_weight": 0.15,
       "source": "fp2",
       "source_key": "FP2",
       "status": "used"
     },
     {
-      "configured_weight": 0.5,
+      "configured_weight": 0.1,
       "source": "fp3",
       "source_key": "FP3",
       "status": "used"
     },
     {
-      "configured_weight": 0.2,
+      "configured_weight": 0.15,
       "source": "history_driver",
       "source_key": "history_driver",
       "status": "used"
@@ -70,41 +124,47 @@
       "configured_weight": 0.1,
       "source": "history_team",
       "source_key": "history_team",
+      "status": "used"
+    },
+    {
+      "configured_weight": 0.4,
+      "source": "qualifying",
+      "source_key": "Q",
       "status": "used"
     }
   ],
   "inputs_used": [
     {
-      "source": "fp3",
-      "source_key": "FP3",
-      "weight": 0.47619
+      "source": "qualifying",
+      "source_key": "Q",
+      "weight": 0.470588
     },
     {
       "source": "history_driver",
       "source_key": "history_driver",
-      "weight": 0.190476
+      "weight": 0.176471
     },
     {
       "source": "fp2",
       "source_key": "FP2",
-      "weight": 0.142857
+      "weight": 0.117647
     },
     {
-      "source": "fp1",
-      "source_key": "FP1",
-      "weight": 0.095238
+      "source": "fp3",
+      "source_key": "FP3",
+      "weight": 0.117647
     },
     {
       "source": "history_team",
       "source_key": "history_team",
-      "weight": 0.095238
+      "weight": 0.117647
     }
   ],
   "location": "Las Vegas",
   "next_round": 21,
   "overtaking_difficulty": 0.35,
-  "prediction_target": "qualifying",
-  "prediction_target_label": "Qualifying",
+  "prediction_target": "race",
+  "prediction_target_label": "Race",
   "qualifying_noise_scale": 3.0,
   "race": "Las Vegas Grand Prix",
   "race_date": "2026-11-21",
@@ -173,8 +233,8 @@
   "standings_blend_qualifying": 0.5,
   "standings_blend_race": 0.2,
   "standings_grid_decay": 0.0,
-  "target_output_type": "qualifying",
-  "target_session_code": "Q",
+  "target_output_type": "race",
+  "target_session_code": "R",
   "track": {
     "qualifying_noise": 2.4,
     "race_noise": 3.6,

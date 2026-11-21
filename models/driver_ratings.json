@@ -61,7 +61,7 @@
       "components": {
         "consistency": 63.0,
         "qualifying_gap_pace": 14.0,
-        "qualifying_pace": 31.033884,
+        "qualifying_pace": 30.014665,
         "qualifying_progression": 55.920186,
         "race_gap_pace": 48.746048,
         "recent_race_form": 31.733334,
@@ -70,11 +70,11 @@
         "weekend_practice_pace": 45.095818
       },
       "driver": "BEA",
-      "driver_rating": 37.321959,
-      "qualifying_rating": 31.033884,
-      "race_rating": 42.466748,
+      "driver_rating": 36.804918,
+      "qualifying_rating": 30.014665,
+      "race_rating": 42.360579,
       "team": "Haas F1 Team",
-      "wet_rating": 68.568703
+      "wet_rating": 70.232731
     },
     {
       "components": {
@@ -419,7 +419,7 @@
       "wet_rating": 45.68532
     }
   ],
-  "inputs_hash": "dc9bd913240142ec23ebadec070a22978effe32c51042349b8637cefbbf99fc5",
+  "inputs_hash": "fb7fa315980057592b283d30428d4c0137a7c51b5918b0da5fddea1edc9df381",
   "season": 2026,
   "source_features": "data/processed/features_season_2026.json",
   "source_summary": "Full Season 2026 Data"

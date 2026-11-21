@@ -496,6 +496,7 @@
 - [ ] Martin admits 2021 crash memories still slow him at Portimao (https://www.the-race.com/motogp/martin-admits-2021-crash-memories-still-slow-him-at-portimao/)
 - [ ] F1's new V8 engine agreed – five things you need to know (https://www.the-race.com/formula-1/f1s-new-v8-engine-agreed-five-things-you-need-to-know/)
 - [ ] FIA, F1 and teams unanimously agree to drop current power units after 2029 | Formula 1 (https://www.racefans.net/2026/11/20/fia-f1-and-teams-unanimously-agree-to-drop-current-power-units-after-2029/)
+- [ ] F1's new V8 engine agreed - five things you need to know (https://www.the-race.com/formula-1/f1s-new-v8-engine-agreed-five-things-you-need-to-know/)
 
 ## 2026-11-21
 - [ ] On This Day: Hamilton takes vital Qatar win to cut Verstappen’s points lead | Brief (https://www.racefans.net/2026/11/21/on-this-day-qatar-grand-prix/)
@@ -536,3 +537,8 @@
 - [ ] Lando Norris brands McLaren “awful in the straight” despite third on Las Vegas GP grid (https://www.motorsport.com/f1/news/lando-norris-slams-mclaren-as-awful-in-the-straight-despite-third-on-las-vegas-gp-grid/10876306/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Verstappen responds to Russell after Las Vegas GP practice clash over 'gentleman's agreement' (https://www.autosport.com/f1/news/verstappen-responds-to-russell-after-las-vegas-gp-practice-clash-over-gentlemans-agreement/10876337/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] Winners and losers from F1 2026 Las Vegas Grand Prix qualifying (https://www.the-race.com/formula-1/winners-and-losers-from-f1-2026-las-vegas-grand-prix-qualifying/)
+- [ ] Antonelli fastest but Verstappen takes pole for Las Vegas Grand Prix | 2026 Las Vegas GP qualifying report (https://www.racefans.net/2026/11/21/antonelli-fastest-but-verstappen-takes-pole-for-las-vegas-grand-prix/)
+- [ ] Antonelli says he made the decision to run at the back of the field in qualifying | Formula 1 (https://www.racefans.net/2026/11/21/antonelli-says-he-made-the-decision-to-run-at-the-back-of-the-field-in-qualifying/)
+- [ ] F1 2026 Las Vegas GP starting grid after five penalties (https://www.the-race.com/formula-1/f1-2026-las-vegas-gp-starting-grid-after-five-penalties/)
+- [ ] Plastic bag and a 'horrendous' weakness hurt Norris in Vegas (https://www.the-race.com/formula-1/plastic-bag-and-a-horrendous-weakness-hurt-norris-in-vegas/)
+- [ ] “We lost one second down the straight” – Charles Leclerc upset with Ferrari’s “crazy” Las Vegas deficiency (https://www.motorsport.com/f1/news/we-lost-one-second-down-the-straight-charles-leclerc-upset-with-ferraris-crazy-las-vegas-deficiency/10876355/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

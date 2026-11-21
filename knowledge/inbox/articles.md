@@ -562,3 +562,6 @@
 - [ ] Marquez crashes out on brink of MotoGP title (https://www.the-race.com/motogp/marquez-crashes-out-on-brink-of-motogp-title/)
 - [ ] Isack Hadjar: “We looked stupid” in Las Vegas as I don’t like slipstreaming (https://www.motorsport.com/f1/news/isack-hadjar-we-looked-stupid-in-las-vegas-as-i-dont-like-slipstreaming/10876445/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Marquez explains shock late crash that kept MotoGP title fight open (https://www.the-race.com/motogp/marquez-explains-shock-late-crash-that-kept-motogp-title-fight-open/)
+- [ ] 'Joke' MotoGP sprint rescheduling infuriates Miller (https://www.the-race.com/motogp/joke-motogp-sprint-rescheduling-infuriates-miller/)
+- [ ] Max Verstappen takes Las Vegas pole despite “weird issues” since Brazil (https://www.motorsport.com/f1/news/max-verstappen-takes-las-vegas-pole-despite-weird-issues-since-brazil/10876373/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Why Mercedes' tow plan for George Russell fell apart in Las Vegas (https://www.motorsport.com/f1/news/why-mercedes-tow-plan-for-george-russell-fell-apart-in-las-vegas/10876341/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

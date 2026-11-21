@@ -558,3 +558,5 @@
 - [ ] Bezzecchi on pole as wild Moreira crash causes red flag (https://www.the-race.com/motogp/bezzecchi-on-pole-as-wild-moreira-crash-causes-red-flag/)
 - [ ] How McLaren tried to mitigate its Las Vegas F1 top speed deficit (https://www.motorsport.com/f1/news/how-mclaren-tried-to-mitigate-its-las-vegas-f1-top-speed-deficit/10876451/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Pirelli’s F1 tyres still can’t cope with Losail: Maximum stint lengths imposed again | Formula 1 (https://www.racefans.net/2026/11/21/pirellis-f1-tyres-still-cant-cope-with-losail-maximum-stint-lengths-imposed-again/)
+- [ ] F1 still 'very small' in US - Domenicali (https://www.the-race.com/formula-1/f1-still-very-small-in-us-domenicali/)
+- [ ] Marquez crashes out on brink of MotoGP title (https://www.the-race.com/motogp/marquez-crashes-out-on-brink-of-motogp-title/)

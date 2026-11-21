@@ -560,3 +560,5 @@
 - [ ] Pirelli’s F1 tyres still can’t cope with Losail: Maximum stint lengths imposed again | Formula 1 (https://www.racefans.net/2026/11/21/pirellis-f1-tyres-still-cant-cope-with-losail-maximum-stint-lengths-imposed-again/)
 - [ ] F1 still 'very small' in US - Domenicali (https://www.the-race.com/formula-1/f1-still-very-small-in-us-domenicali/)
 - [ ] Marquez crashes out on brink of MotoGP title (https://www.the-race.com/motogp/marquez-crashes-out-on-brink-of-motogp-title/)
+- [ ] Isack Hadjar: “We looked stupid” in Las Vegas as I don’t like slipstreaming (https://www.motorsport.com/f1/news/isack-hadjar-we-looked-stupid-in-las-vegas-as-i-dont-like-slipstreaming/10876445/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Marquez explains shock late crash that kept MotoGP title fight open (https://www.the-race.com/motogp/marquez-explains-shock-late-crash-that-kept-motogp-title-fight-open/)

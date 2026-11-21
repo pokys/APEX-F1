@@ -497,6 +497,7 @@
 - [ ] F1's new V8 engine agreed – five things you need to know (https://www.the-race.com/formula-1/f1s-new-v8-engine-agreed-five-things-you-need-to-know/)
 - [ ] FIA, F1 and teams unanimously agree to drop current power units after 2029 | Formula 1 (https://www.racefans.net/2026/11/20/fia-f1-and-teams-unanimously-agree-to-drop-current-power-units-after-2029/)
 - [ ] F1's new V8 engine agreed - five things you need to know (https://www.the-race.com/formula-1/f1s-new-v8-engine-agreed-five-things-you-need-to-know/)
+- [ ] Video: Fire halts final day of Formula E testing | Brief (https://www.racefans.net/2026/11/20/social-media-fire-halts-final-day-of-formula-e-testing/)
 
 ## 2026-11-21
 - [ ] On This Day: Hamilton takes vital Qatar win to cut Verstappen’s points lead | Brief (https://www.racefans.net/2026/11/21/on-this-day-qatar-grand-prix/)
@@ -547,3 +548,5 @@
 - [ ] Max Verstappen reveals mysterious Red Bull issue that cannot be fixed in Las Vegas (https://www.motorsport.com/f1/news/max-verstappen-reveals-mysterious-red-bull-issue-that-cannot-be-fixed-in-las-vegas/10876399/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Verstappen reveals mysterious Red Bull F1 car issue that cannot be fixed in Las Vegas (https://www.autosport.com/f1/news/verstappen-reveals-mysterious-red-bull-f1-car-issue-that-cannot-be-fixed-in-las-vegas/10876404/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] What 'crazy' tow was actually worth in Vegas qualifying (https://www.the-race.com/formula-1/what-crazy-tow-was-actually-worth-in-vegas-qualifying/)
+- [ ] Drivers expect Monza-style race at Las Vegas with “extreme” slipstream | Formula 1 (https://www.racefans.net/2026/11/21/drivers-expect-extreme-slipstream-to-create-monza-style-race-at-las-vegas/)
+- [ ] Fernando Alonso: Honda lacks so much power that rivals take extra margin behind us (https://www.motorsport.com/f1/news/fernando-alonso-honda-lacks-so-much-power-that-rivals-take-extra-margin-behind-us/10876414/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

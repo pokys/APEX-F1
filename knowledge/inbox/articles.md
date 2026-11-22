@@ -495,3 +495,18 @@
 - [ ] Why Mercedes' tow plan for George Russell fell apart in Las Vegas (https://www.motorsport.com/f1/news/why-mercedes-tow-plan-for-george-russell-fell-apart-in-las-vegas/10876341/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Oscar Piastri questions "strange" pace deficit to other Mercedes-powered cars in Las Vegas (https://www.motorsport.com/f1/news/piastri-questions-strange-pace-deficit-to-other-mercedes-powered-cars-in-las-vegas/10876516/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] How Marc Marquez can seal MotoGP title in the Portuguese GP (https://www.the-race.com/motogp/how-marc-marquez-can-seal-motogp-title-in-the-portuguese-gp/)
+
+## 2026-11-22
+- [ ] 2026 Las Vegas Grand Prix race result and championship points | Formula 1 (https://www.racefans.net/2026/11/22/2026-las-vegas-grand-prix-race-result-and-championship-points/)
+- [ ] F1 2026 Las Vegas Grand Prix race result (https://www.the-race.com/formula-1/f1-2026-las-vegas-grand-prix-race-result/)
+- [ ] F1 Las Vegas GP: Max Verstappen wins thriller as Ferraris come to blows (https://www.motorsport.com/f1/news/f1-las-vegas-gp-report/10876675/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] F1 Las Vegas GP: Verstappen wins thriller as Russell hits the wall late on (https://www.autosport.com/f1/news/f1-las-vegas-gp-report/10876677/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Five quick takeaways from Las Vegas GP (https://www.motorsport.com/f1/news/five-quick-takeaways-from-las-vegas-gp/10876667/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] George Russell explains late-race crash in Las Vegas F1 victory bid (https://www.motorsport.com/f1/news/george-russell-explains-late-race-crash-in-las-vegas-f1-victory-bid/10876718/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Lewis Hamilton questions stewards in unaired radio message after F1 Vegas penalty (https://www.motorsport.com/f1/news/hamilton-questions-stewards-consistency-over-unaired-las-vegas-radio-after-10-second-penalty/10876678/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Our verdict on crazy Las Vegas GP with 20-plus lead changes (https://www.the-race.com/formula-1/our-verdict-f1-crazy-las-vegas-gp-20-plus-lead-changes/)
+- [ ] Rate the race: 2026 Las Vegas Grand Prix | Formula 1 (https://www.racefans.net/2026/11/22/rate-the-race-2026-las-vegas-grand-prix/)
+- [ ] Stewards explains Leclerc’s penalty for hitting Hamilton | Formula 1 (https://www.racefans.net/2026/11/22/stewards-explains-leclercs-penalty-for-hitting-hamilton/)
+- [ ] Verstappen leads parade of position-swapping to win in Las Vegas | 2026 Las Vegas Grand Prix report (https://www.racefans.net/2026/11/22/verstappen-leads-parade-of-position-swapping-to-win-in-las-vegas/)
+- [ ] Verstappen wins breathless Las Vegas GP as Ferraris collide (https://www.the-race.com/formula-1/f1-las-vegas-gp-max-verstappen-wins-ferrari-drivers-collide/)
+- [ ] Vote for your 2026 Las Vegas Grand Prix Driver of the Weekend | Formula 1 (https://www.racefans.net/2026/11/22/vote-for-your-2026-las-vegas-grand-prix-driver-of-the-weekend/)

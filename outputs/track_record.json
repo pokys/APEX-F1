@@ -8,11 +8,11 @@
       "mean_winner_probability": 0.149
     },
     "R": {
-      "count": 4,
-      "hit_rate": 0.5,
-      "mean_group_overlap": 1.75,
-      "mean_log_loss": 1.865759,
-      "mean_winner_probability": 0.404292
+      "count": 5,
+      "hit_rate": 0.6,
+      "mean_group_overlap": 1.8,
+      "mean_log_loss": 1.609466,
+      "mean_winner_probability": 0.434933
     },
     "S": {
       "count": 1,
@@ -183,13 +183,27 @@
       "season": 2026,
       "session_code": "Q",
       "winner_probability": 0.2
+    },
+    {
+      "actual_winner": "VER",
+      "archived_at": "2026-11-21T23:31:24+00:00",
+      "group": "podium",
+      "group_overlap": 2,
+      "hit": true,
+      "log_loss": 0.584293,
+      "predicted_winner": "VER",
+      "race": "Las Vegas Grand Prix",
+      "round": 21,
+      "season": 2026,
+      "session_code": "R",
+      "winner_probability": 0.5575
     }
   ],
   "summary": {
-    "count": 11,
-    "hit_rate": 0.363636,
-    "mean_group_overlap": 5.454545,
-    "mean_log_loss": 1.855216,
-    "mean_winner_probability": 0.265879
+    "count": 12,
+    "hit_rate": 0.416667,
+    "mean_group_overlap": 5.166667,
+    "mean_log_loss": 1.749305,
+    "mean_winner_probability": 0.290181
   }
 }

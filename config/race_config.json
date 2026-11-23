@@ -7,9 +7,9 @@
   "driver_substitutions": [],
   "event_format": "conventional",
   "event_signal_count": 0,
-  "generated_at": "2026-11-23T16:31:34Z",
+  "generated_at": "2026-11-23T19:58:27Z",
   "grid_penalties": [],
-  "grid_position_weight": 750.0,
+  "grid_position_weight": 550.0,
   "grid_source": "simulation",
   "inputs_status": [
     {
@@ -82,7 +82,7 @@
   "race": "Qatar Grand Prix",
   "race_date": "2026-11-29",
   "race_grid_penalties": [],
-  "race_noise_scale": 4.0,
+  "race_noise_scale": 3.0,
   "recovery_strength": 0.0,
   "safety_car_probability": 0.2,
   "season": 2026,

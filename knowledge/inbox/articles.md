@@ -1,40 +1,5 @@
 # F1 Article Inbox
 
-## 2026-11-09
-- [ ] Apple TV confirms free F1 Las Vegas Grand Prix coverage: How to watch in the US (https://www.motorsport.com/f1/news/apple-tv-confirms-free-f1-las-vegas-grand-prix-coverage-how-to-watch-in-the-us/10873443/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] Aston Martin told Alonso he was “quicker than the Mercedes” at end of Brazilian GP | Formula 1 (https://www.racefans.net/2026/11/09/aston-martin-told-alonso-he-was-quicker-than-the-mercedes-at-end-of-brazilian-gp/)
-- [ ] Ayrton Senna's rare Honda NSX smashes auction estimate with record six-figure sale (https://www.motorsport.com/f1/news/ayrton-sennas-rare-honda-nsx-smashes-auction-estimate-with-record-six-figure-sale/10873355/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] Edd Straw's F1 2026 Brazilian Grand Prix tier list driver rankings (https://www.the-race.com/formula-1/f1-2026-brazilian-grand-prix-tier-list-driver-rankings-edd-straw/)
-- [ ] Everything we learned from F1's 2026 Brazilian Grand Prix (https://www.the-race.com/formula-1/everything-we-learned-from-f1s-2026-brazilian-grand-prix/)
-- [ ] F1 podcast: Did Red Bull problems cost Verstappen a shot at win? (https://www.the-race.com/formula-1/f1-podcast-did-red-bull-issues-cost-verstappen-brazilian-gp-win-shot/)
-- [ ] George Russell has lost 90 points to Max Verstappen in F1 2026 runner-up battle (https://www.motorsport.com/f1/news/mercedes-considers-push-for-george-russell-to-be-f1-2026-runner-up/10873310/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] How Max Verstappen beat Red Bull's own simulation tools with P2 in Brazil (https://www.motorsport.com/f1/news/how-max-verstappen-beat-red-bulls-own-simulation-tools-with-p2-in-brazil/10873308/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] How the Racing Bulls pendulum is swinging back towards Lawson (https://www.autosport.com/f1/news/how-the-racing-bulls-pendulum-is-swinging-back-towards-lawson/10873320/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-- [ ] How the Racing Bulls pendulum is swinging back towards undeniable Liam Lawson (https://www.motorsport.com/f1/news/how-the-racing-bulls-pendulum-is-swinging-back-towards-undeniable-liam-lawson/10873304/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] Lawson closing in on F1 2027 stay with Racing Bulls (https://www.the-race.com/formula-1/liam-lawson-closing-on-f1-2027-racing-bulls-stay/)
-- [ ] Lewis Hamilton sends message to Ferrari fans after 'devastating' Brazil GP (https://www.motorsport.com/f1/news/lewis-hamilton-sends-message-to-ferrari-fans-after-devastating-brazil-gp/10873360/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] Oscar Piastri splits from Mark Webber management (https://www.motorsport.com/f1/news/oscar-piastri-wont-have-mark-webber-as-his-manager-anymore/10873253/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] Piastri and Webber terminate management agreement (https://www.autosport.com/f1/news/oscar-piastri-splits-from-mark-webber-management/10873258/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-- [ ] Piastri splits from Webber’s management team | Formula 1 (https://www.racefans.net/2026/11/09/piastri-splits-from-webbers-management-team/)
-- [ ] Piastri splits with Webber's F1 management team (https://www.the-race.com/formula-1/oscar-piastri-mark-webber-f1-management-split/)
-- [ ] Qatar Grand Prix 2026 MotoGP rider rankings (https://www.the-race.com/motogp/qatar-grand-prix-2026-motogp-rider-rankings/)
-- [ ] Russell explains pit exit spin: ‘I took too much risk because I saw a chance to win’ | Formula 1 (https://www.racefans.net/2026/11/09/russell-explains-pit-exit-spin-i-took-too-much-risk-because-i-saw-a-chance-to-win/)
-- [ ] Spotlight: FIA president Ben Sulayem ‘planning to remove age limits’ for office-holders | Brief (https://www.racefans.net/2026/11/09/spotlight-fia-president-ben-sulayem-planning-to-remove-age-limits-for-office-holders/)
-- [ ] The 'fear' Martin banished with his injured Qatar GP ride (https://www.the-race.com/motogp/jorge-martin-motogp-qatar-fear-banished/)
-- [ ] What's behind Oscar Piastri's split with Mark Webber – and what it means for his F1 career (https://www.motorsport.com/f1/news/what-the-split-with-mark-webber-says-about-the-next-phase-of-oscar-piastris-f1-career/10873385/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] What's behind Piastri's split with Webber – and what it means for his F1 career (https://www.autosport.com/f1/news/whats-behind-piastris-split-with-webber-and-what-it-means-for-his-f1-career/10873410/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-- [ ] Who slept best last night: Toto Wolff (https://www.motorsport.com/f1/news/who-slept-best-last-night-toto-wolff-10873302/10873302/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] Who slept worst last night: Fernando Alonso (https://www.motorsport.com/f1/news/who-slept-worst-last-night-fernando-alonso/10873272/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] Why Mercedes says a repeat of its 2014-2021 dominance is "impossible" (https://www.motorsport.com/f1/news/why-mercedes-says-a-repeat-of-its-2014-2021-dominance-is-impossible/10873407/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] “S***, I missed the pit lane”: Hamilton’s unheard radio from his Brazilian GP struggle | Formula 1 (https://www.racefans.net/2026/11/09/i-missed-the-pit-lane-hamiltons-unheard-radio-from-his-brazilian-gp-struggle/)
-- [ ] “The car is steering by itself, don’t you see it?”: How handling trouble baffled Antonelli | Formula 1 (https://www.racefans.net/2026/11/09/the-car-is-steering-by-itself-dont-you-see-it-how-handling-trouble-baffled-antonelli/)
-- [ ] Did Red Bull car problems cost Verstappen Brazilian GP victory? (https://www.the-race.com/formula-1/did-red-bull-car-problems-cost-verstappen-brazilian-gp-victory/)
-- [ ] George Russell teases imminent karting announcement as F1 fans spot major clue (https://www.motorsport.com/f1/news/george-russell-teases-imminent-karting-announcement-as-f1-fans-spot-major-clue/10873459/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] F1 Las Vegas Grand Prix announces pre-race music line-up (https://www.motorsport.com/f1/news/f1-las-vegas-grand-prix-announces-pre-race-music-line-up/10873488/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] George Russell "keeps getting kicked" as F1 pundit addresses 2026 struggles (https://www.motorsport.com/f1/news/george-russell-keeps-getting-kicked-as-f1-pundit-addresses-2026-struggles/10873477/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] Lewis Hamilton to share flight with Mercedes after former team's F1 title triumph (https://www.motorsport.com/f1/news/lewis-hamilton-to-share-flight-with-mercedes-after-former-teams-f1-title-triumph/10873483/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] Edd Straw's F1 2026 Brazilian Grand Prix driver rankings (https://www.the-race.com/formula-1/f1-2026-brazilian-grand-prix-tier-list-driver-rankings-edd-straw/)
-
 ## 2026-11-10
 - [ ] F1's underrated rain master has proven himself again (https://www.the-race.com/formula-1/f1s-underrated-rain-master-has-proven-himself-again/)
 - [ ] FIA makes latest ADUO ruling and hints at 2027 revamp (https://www.the-race.com/formula-1/fia-makes-latest-aduo-ruling-and-hints-at-2027-revamp/)
@@ -547,3 +512,6 @@
 - [ ] Why Ferrari believes written rules won't help manage Charles Leclerc and Lewis Hamilton (https://www.motorsport.com/f1/news/why-ferrari-believes-written-rules-wont-help-manage-charles-leclerc-and-lewis-hamilton/10877145/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Why Ferrari believes written rules won't help manage Leclerc and Hamilton (https://www.autosport.com/f1/news/why-ferrari-believes-written-rules-wont-help-manage-leclerc-and-hamilton/10877158/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] Max Verstappen jokes last time he won a race like F1 Las Vegas GP it was "Mario Kart" (https://www.motorsport.com/f1/news/max-verstappen-the-last-time-i-won-a-race-like-las-vegas-was-on-mario-kart/10877295/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+
+## 2026-11-24
+- [ ] On This Day: McLaren appoint rookie Hamilton as Alonso’s team mate for 2007 | Brief (https://www.racefans.net/2026/11/24/on-this-day-hamilton-joins-mclaren/)

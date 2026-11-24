@@ -515,3 +515,5 @@
 
 ## 2026-11-24
 - [ ] On This Day: McLaren appoint rookie Hamilton as Alonso’s team mate for 2007 | Brief (https://www.racefans.net/2026/11/24/on-this-day-hamilton-joins-mclaren/)
+- [ ] Featured Comment: Herta deserves credit for trying to make the switch from IndyCar | Brief (https://www.racefans.net/2026/11/24/featured-comment-herta-deserves-credit-for-trying-to-make-the-switch-from-indycar/)
+- [ ] Was Hadjar helping himself or Verstappen when he collected a penalty in the pits? | Formula 1 (https://www.racefans.net/2026/11/24/was-hadjar-helping-himself-or-verstappen-when-he-collected-a-penalty-in-the-pits/)

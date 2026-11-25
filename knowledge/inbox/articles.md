@@ -522,3 +522,9 @@
 ## 2026-11-25
 - [ ] How to watch the 2026 Qatar Grand Prix live this weekend | TV Times (https://www.racefans.net/2026/11/25/how-to-watch-the-2026-qatar-grand-prix-live-this-weekend/)
 - [ ] Stats: Mercedes have disappeared from the podium since their championship win | 2026 Las Vegas Grand Prix stats and facts (https://www.racefans.net/2026/11/25/stats-mercedes-have-disappeared-from-the-podium-since-their-championship-win/)
+- [ ] Alonso: “We can't be competitive with the power unit we have” (https://www.autosport.com/f1/news/fernando-alonso-we-cant-be-competitive-with-the-power-unit-we-have/10877607/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] F1 returns to the track its tyres can’t cope with: Seven Qatar GP talking points | Formula 1 (https://www.racefans.net/2026/11/25/f1-returns-to-the-track-its-tyres-cant-cope-with-seven-qatar-gp-talking-points/)
+- [ ] Fernando Alonso: “We can't be competitive with the power unit we have” (https://www.motorsport.com/f1/news/fernando-alonso-we-cant-be-competitive-with-the-power-unit-we-have/10877596/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] McLaren's driver management lessons for Ferrari (https://www.the-race.com/formula-1/mclarens-driver-management-lessons-for-ferrari/)
+- [ ] The unusual reason F1's engine freeze could return (https://www.the-race.com/formula-1/unusual-reason-f1-engine-freeze-could-return/)
+- [ ] Zak Brown rules out McLaren engine programme for F1 2030 (https://www.motorsport.com/f1/news/zak-brown-rules-out-mclaren-engine-programme-for-f1-2030/10877436/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

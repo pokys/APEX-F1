@@ -1,15 +1,15 @@
 {
   "data_freshness": {
-    "days_since_latest_event": 3,
-    "days_until_next_race": 5,
+    "days_since_latest_event": 4,
+    "days_until_next_race": 4,
     "is_stale": false,
     "latest_completed_date": "2026-11-21",
     "latest_completed_event": "Las Vegas Grand Prix",
     "next_race_date": "2026-11-29",
-    "reference_date": "2026-11-24",
+    "reference_date": "2026-11-25",
     "stale_threshold_days": 21.0
   },
-  "deterministic_run_id": "eb80e87d77874de3cafa",
+  "deterministic_run_id": "e8a68a28afa5273ff2e1",
   "drivers": [
     {
       "driver_share": 45.9,
@@ -782,7 +782,7 @@
       "weekend_form_delta": 0.0
     }
   ],
-  "generated_at": "2026-11-24T19:25:28Z",
+  "generated_at": "2026-11-25T03:25:55Z",
   "inputs_used": [
     {
       "source": "history_driver",
@@ -797,7 +797,7 @@
   ],
   "integrity": {
     "driver_ratings_hash": "c1fe66e0d7e4",
-    "race_config_hash": "9e9ab842d7a8",
+    "race_config_hash": "27adb411b7ab",
     "team_ratings_hash": "35efb3f0a542"
   },
   "prediction_target": "qualifying",

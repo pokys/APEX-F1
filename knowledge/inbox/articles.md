@@ -1,27 +1,5 @@
 # F1 Article Inbox
 
-## 2026-11-10
-- [ ] F1's underrated rain master has proven himself again (https://www.the-race.com/formula-1/f1s-underrated-rain-master-has-proven-himself-again/)
-- [ ] FIA makes latest ADUO ruling and hints at 2027 revamp (https://www.the-race.com/formula-1/fia-makes-latest-aduo-ruling-and-hints-at-2027-revamp/)
-- [ ] FIA reveals ADUO results in final review of 2026 F1 season (https://www.autosport.com/f1/news/fia-reveals-aduo-results-in-final-review-of-2026-f1-season/10873566/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-- [ ] FIA reveals latest ADUO results in final review of 2026 F1 season (https://www.motorsport.com/f1/news/fia-reveals-latest-aduo-results-in-final-review-of-2026-f1-season/10873562/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] Hadjar kept asking Red Bull if they would reverse his position swap with Verstappen | Formula 1 (https://www.racefans.net/2026/11/10/hadjar-repeatedly-asked-red-bull-if-they-would-reverse-his-position-swap-with-verstappen/)
-- [ ] Honda struggling to explain Lance Stroll’s 13th DNF of the season (https://www.motorsport.com/f1/news/honda-struggling-to-explain-lance-strolls-13th-dnf-of-the-season/10873412/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] Laurent Mekies: Liam Lawson’s fate has nothing to do with me (https://www.motorsport.com/f1/news/laurent-mekies-liam-lawsons-fate-has-nothing-to-do-with-me/10873368/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] No F1 engine manufacturers to get extra upgrades after FIA’s third ADUO evaluation | Formula 1 (https://www.racefans.net/2026/11/10/no-f1-engine-manufacturers-to-get-extra-upgrades-after-fias-third-aduo-evaluation/)
-- [ ] F1 2026 calendar update: Imola GP off the table, no plan B if war escalates (https://www.motorsport.com/f1/news/f1-2026-calendar-update-imola-gp-off-the-table-no-plan-b-if-war-escalates/10873637/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] F1 2026 calendar update: Imola off the table, no plan B if Iran war escalates (https://www.autosport.com/f1/news/f1-2026-calendar-update-imola-off-the-table-no-plan-b-if-iran-war-escalates/10873643/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
-- [ ] F1 scraps back-up plan to race at Imola if Middle East GPs are cancelled – reports | Formula 1 (https://www.racefans.net/2026/11/10/f1-scraps-back-up-plan-to-race-at-imola-if-middle-east-gps-are-cancelled-reports/)
-- [ ] F1 stands Imola down - what it means for 2026 and '27 calendars (https://www.the-race.com/formula-1/f1-stands-imola-down-what-it-means-for-2026-and-27-calendars/)
-- [ ] Liberty Media founder sells voting power of F1's parent company (https://www.the-race.com/business/liberty-media-founder-john-malone-sells-voting-power-f1-parent-company/)
-- [ ] What we learned from an unexpected MotoGP cameo (https://www.the-race.com/motogp/jake-dixon-unexpected-motogp-cameo-what-we-learned/)
-- [ ] ‘Kimi Antonelli isn’t Ayrton Senna yet, but he may be a Senninha’ – Toto Wolff (https://www.motorsport.com/f1/news/toto-wolff-kimi-antonelli-isnt-ayrton-senna-yet-but-he-may-be-a-senninha-/10873544/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] Social Media: Hamilton witnesses humanitarian relief effort in Gaza Strip | Brief (https://www.racefans.net/2026/11/10/social-media-hamilton-witnesses-humanitarian-relief-effort-in-gaza-strip/)
-- [ ] Lando Norris questions Charles Leclerc's Brazilian GP penalty: "Just racing" (https://www.motorsport.com/f1/news/lando-norris-questions-charles-leclercs-brazilian-gp-penalty-just-racing/10873736/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] Lewis Hamilton tours Gaza aid operation at Egypt's Rafah border (https://www.motorsport.com/f1/news/lewis-hamilton-tours-gaza-aid-operation-at-egypts-rafah-border/10873731/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] Max Verstappen names the one condition that would make him retire from F1 (https://www.motorsport.com/f1/news/max-verstappen-id-quit-f1-if-i-didnt-think-i-was-the-best-driver/10873734/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
-- [ ] Imola stood down - what it means for F1's 2026 and '27 calendars (https://www.the-race.com/formula-1/f1-stands-imola-down-what-it-means-for-2026-and-27-calendars/)
-
 ## 2026-11-11
 - [ ] Daniel Ricciardo: Max Verstappen will "go down as one of the best ever" (https://www.motorsport.com/f1/news/daniel-ricciardo-max-verstappen-will-go-down-as-one-of-the-best-ever/10873738/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Oscar Piastri reveals unexpected upside of being out of F1 title fight (https://www.motorsport.com/f1/news/oscar-piastri-reveals-unexpected-upside-of-being-out-of-f1-title-fight/10873740/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
@@ -538,3 +516,5 @@
 - [ ] Jolyon Palmer: No rival could match Max Verstappen's fight against George Russell in Las Vegas (https://www.motorsport.com/f1/news/jolyon-palmer-hails-max-verstappens-unbelievable-racecraft-in-george-russell-duel/10877407/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Unaired Las Vegas radio reveals Red Bull considered giving up Max Verstappen's lead (https://www.motorsport.com/f1/news/unaired-radio-reveals-red-bull-told-max-verstappen-to-consider-giving-antonelli-the-lead-before-las/10877450/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] What time is F1's 2026 Qatar Grand Prix? Full weekend schedule (https://www.the-race.com/promoted/what-time-is-f1s-2026-qatar-grand-prix-full-weekend-schedule/)
+- [ ] Lando Norris expects 2030 F1 racing to surpass Las Vegas GP spectacle (https://www.motorsport.com/f1/news/lando-norris-admits-some-of-the-overtakes-werent-overtakes-in-vegas-thriller-and-explains-why-2030-/10877443/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Spotlight: IndyCar adds Kansas to 2027 calendar alongside NASCAR | Brief (https://www.racefans.net/2026/11/24/spotlight-indycar-adds-kansas-to-2027-calendar-alongside-nascar/)

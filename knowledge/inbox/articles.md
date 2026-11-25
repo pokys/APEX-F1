@@ -518,3 +518,7 @@
 - [ ] What time is F1's 2026 Qatar Grand Prix? Full weekend schedule (https://www.the-race.com/promoted/what-time-is-f1s-2026-qatar-grand-prix-full-weekend-schedule/)
 - [ ] Lando Norris expects 2030 F1 racing to surpass Las Vegas GP spectacle (https://www.motorsport.com/f1/news/lando-norris-admits-some-of-the-overtakes-werent-overtakes-in-vegas-thriller-and-explains-why-2030-/10877443/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Spotlight: IndyCar adds Kansas to 2027 calendar alongside NASCAR | Brief (https://www.racefans.net/2026/11/24/spotlight-indycar-adds-kansas-to-2027-calendar-alongside-nascar/)
+
+## 2026-11-25
+- [ ] How to watch the 2026 Qatar Grand Prix live this weekend | TV Times (https://www.racefans.net/2026/11/25/how-to-watch-the-2026-qatar-grand-prix-live-this-weekend/)
+- [ ] Stats: Mercedes have disappeared from the podium since their championship win | 2026 Las Vegas Grand Prix stats and facts (https://www.racefans.net/2026/11/25/stats-mercedes-have-disappeared-from-the-podium-since-their-championship-win/)

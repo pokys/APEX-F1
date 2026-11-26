@@ -6,8 +6,8 @@
   "calibration_source": "outputs/backtest/backtest_season_2026.json",
   "driver_substitutions": [],
   "event_format": "conventional",
-  "event_signal_count": 0,
-  "generated_at": "2026-11-26T15:50:30Z",
+  "event_signal_count": 1,
+  "generated_at": "2026-11-26T16:44:39Z",
   "grid_penalties": [],
   "grid_position_weight": 550.0,
   "grid_source": "simulation",
@@ -81,7 +81,17 @@
   "qualifying_noise_scale": 3.0,
   "race": "Qatar Grand Prix",
   "race_date": "2026-11-29",
-  "race_grid_penalties": [],
+  "race_grid_penalties": [
+    {
+      "back_of_grid": false,
+      "driver": "PER",
+      "pit_lane": false,
+      "places": 5,
+      "sources": [
+        "https://www.fia.com/system/files/decision-document/2026_las_vegas_grand_prix_-_infringement_-_car_11_-_causing_a_collision_with_car_51.pdf"
+      ]
+    }
+  ],
   "race_noise_scale": 3.0,
   "recovery_strength": 0.0,
   "safety_car_probability": 0.2,

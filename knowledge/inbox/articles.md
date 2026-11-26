@@ -563,3 +563,6 @@
 - [ ] FIA used a game to get F1 drivers' feedback on 2026 incidents (https://www.the-race.com/formula-1/fia-used-a-game-to-get-f1-drivers-feedback-on-2026-incidents/)
 - [ ] Kimi Antonelli teases Nordschleife race with Max Verstappen, but there is one condition (https://www.motorsport.com/f1/news/kimi-antonelli-teases-nordschleife-race-with-max-verstappen-but-there-is-one-condition/10878047/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] F1 drivers just played Kahoot! on real stewards' decisions (https://www.the-race.com/formula-1/fia-used-a-game-to-get-f1-drivers-feedback-on-2026-incidents/)
+- [ ] Leclerc denies claim he has a ‘number one’ clause in his Ferrari contract | Formula 1 (https://www.racefans.net/2026/11/26/leclerc-denies-claim-he-has-a-number-one-clause-in-his-ferrari-contract/)
+- [ ] Max Verstappen details his ideal 2030 F1 Formula (https://www.motorsport.com/f1/news/verstappen-outlines-his-ideal-2030-f1-formula-lighter-cars-simpler-engines-and-push-to-pass-over-en/10878035/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Spotlight: Ford reveals the GT41 Hypercar it will race in WEC | Brief (https://www.racefans.net/2026/11/26/spotlight-ford-reveals-the-gt41-hypercar-it-will-race-in-wec/)

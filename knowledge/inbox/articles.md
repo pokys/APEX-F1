@@ -518,3 +518,8 @@
 - [ ] Williams given aero test reduction and fine for cost cap breach, Alpine also fined | Formula 1 (https://www.racefans.net/2026/11/25/williams-given-aero-test-reduction-and-fine-for-cost-cap-breach-alpine-also-fined/)
 - [ ] Williams, Alpine fall foul of F1's 2025 cost cap (https://www.motorsport.com/f1/news/williams-breaches-2025-f1-cost-cap-reveals-penalty/10877740/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Ralf Schumacher sees echoes of Lewis Hamilton's Nico Rosberg "mind games" after Las Vegas (https://www.motorsport.com/f1/news/ralf-schumacher-says-lewis-hamilton-wants-ferraris-no-1-power-by-any-means-necessary-after-leclerc-/10877712/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+
+## 2026-11-26
+- [ ] F1 drivers face highest tyre pressure orders yet in Qatar (https://www.the-race.com/formula-1/f1-drivers-face-highest-tyre-pressure-orders-yet-in-qatar/)
+- [ ] Fred Vasseur backs FIA ruling after Charles Leclerc's Las Vegas clash with Lewis Hamilton (https://www.motorsport.com/f1/news/fred-vasseur-refuses-to-shield-leclerc-over-hamilton-collision-the-decision-of-the-fia-was-quite-cl/10877483/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Nico Rosberg rules George Russell out of 2027 F1 title fight: “Dug himself into a mental hole” (https://www.motorsport.com/f1/news/nico-rosberg-rules-george-russell-out-of-2027-f1-title-fight-he-dug-himself-into-a-mental-hole/10877719/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

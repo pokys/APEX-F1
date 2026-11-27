@@ -548,3 +548,4 @@
 - [ ] Carlos Sainz explains his intriguing DRS proposal for F1 2030 (https://www.motorsport.com/f1/news/carlos-sainz-explains-his-intriguing-drs-proposal-for-f1-2030/10878146/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Sainz proposes intriguing DRS solution for F1 2030 (https://www.autosport.com/f1/news/carlos-sainz-explains-his-intriguing-drs-proposal-for-f1-2030/10878170/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] Spotlight: Why the best thing about Las Vegas for Antonelli is its F1 track | Brief (https://www.racefans.net/2026/11/27/spotlight-why-the-best-thing-about-las-vegas-for-antonelli-is-its-f1-track/)
+- [ ] Five big revelations from Marquez's retirement announcement (https://www.the-race.com/motogp/five-big-revelations-from-marc-marquez-motogp-retirement-announcement/)

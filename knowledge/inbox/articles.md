@@ -573,3 +573,4 @@
 - [ ] Social Media: Alonso pays tribute to retiring Moto GP champion Marquez | Brief (https://www.racefans.net/2026/11/27/social-media-alonso-pays-tribute-to-retiring-moto-gp-champion-marquez/)
 - [ ] Vowles explains why Williams exceeded F1’s cost cap by £627,000 | Formula 1 (https://www.racefans.net/2026/11/27/vowles-explains-why-williams-exceeded-f1s-cost-cap-by-627000/)
 - [ ] “Not worth thinking about” being able to beat Mercedes even with new floor – Norris | Formula 1 (https://www.racefans.net/2026/11/27/not-worth-thinking-about-being-able-to-beat-mercedes-even-with-new-floor-norris/)
+- [ ] Winners & losers from F1 2026 Qatar GP Friday practice (https://www.the-race.com/formula-1/winners-losers-from-f1-2026-qatar-gp-friday-practice/)

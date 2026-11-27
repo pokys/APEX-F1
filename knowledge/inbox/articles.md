@@ -533,3 +533,4 @@
 ## 2026-11-27
 - [ ] Mercedes boss Toto Wolff reveals why rival F1 teams never try to hire him (https://www.motorsport.com/f1/news/mercedes-boss-toto-wolff-reveals-why-rival-f1-teams-never-try-to-hire-him/10874986/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] On This Day: Hamilton’s tactical slowdown can’t stop Rosberg taking the title | Brief (https://www.racefans.net/2026/11/27/on-this-day-abu-dhabi-grand-prix/)
+- [ ] Russell says he’s learned some in media will be “cheeky” with his quotes | Formula 1 (https://www.racefans.net/2026/11/27/russell-says-hes-learned-some-in-media-will-be-cheeky-with-his-quotes/)

@@ -549,3 +549,8 @@
 - [ ] Sainz proposes intriguing DRS solution for F1 2030 (https://www.autosport.com/f1/news/carlos-sainz-explains-his-intriguing-drs-proposal-for-f1-2030/10878170/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] Spotlight: Why the best thing about Las Vegas for Antonelli is its F1 track | Brief (https://www.racefans.net/2026/11/27/spotlight-why-the-best-thing-about-las-vegas-for-antonelli-is-its-f1-track/)
 - [ ] Five big revelations from Marquez's retirement announcement (https://www.the-race.com/motogp/five-big-revelations-from-marc-marquez-motogp-retirement-announcement/)
+- [ ] Antonelli quickest by half a second on medium tyre compound in first practice | Formula 1 (https://www.racefans.net/2026/11/27/antonelli-quickest-by-half-a-second-on-medium-tyre-compound-in-first-practice/)
+- [ ] F1 2026 Qatar Grand Prix practice results (https://www.the-race.com/formula-1/f1-2026-qatar-grand-prix-practice-results/)
+- [ ] F1 Qatar GP: Antonelli leads Russell in opening practice (https://www.autosport.com/f1/news/f1-qatar-gp-fp1-report-10878259/10878259/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] F1 Qatar GP: Kimi Antonelli leads Mercedes 1-2 in tricky FP1 (https://www.motorsport.com/f1/news/f1-qatar-gp-fp1-report-10878251/10878251/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] What happened in 2026 F1 Qatar GP first practice (https://www.the-race.com/formula-1/what-happened-in-2026-f1-qatar-gp-first-practice/)

@@ -537,3 +537,8 @@
 - [ ] Drivers divided on how F1's 2030 overtaking aid should work (https://www.the-race.com/formula-1/drivers-divided-on-how-f1s-2030-overtaking-aid-should-work/)
 - [ ] How Nico Rosberg beat Lewis Hamilton – and his demons – to clinch F1 world title (https://www.motorsport.com/f1/news/how-nico-rosberg-beat-lewis-hamilton-and-his-demon-to-clinch-f1-world-title/10877499/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] How Rosberg beat Hamilton – and his demons – to clinch F1 world title (https://www.autosport.com/f1/news/how-nico-rosberg-beat-lewis-hamilton-and-his-demon-to-clinch-f1-world-title/10878126/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Ducati's candidates to replace Marquez (https://www.the-race.com/motogp/ducatis-candidates-to-replace-marquez/)
+- [ ] F1 drivers go through quizzical exercise in stewarding debate (https://www.autosport.com/f1/news/f1-drivers-go-through-quizzical-exercise-in-stewarding-debate/10878073/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Marc Marquez stuns MotoGP with retirement announcement (https://www.the-race.com/motogp/marc-marquez-stuns-motogp-with-retirement-announcement/)
+- [ ] Our verdict on Marc Marquez's bombshell MotoGP retirement (https://www.the-race.com/motogp/our-verdict-on-marc-marquezs-bombshell-motogp-retirement/)
+- [ ] The retirement hints Marquez dropped last year (https://www.the-race.com/motogp/the-retirement-hints-marquez-dropped-last-year/)

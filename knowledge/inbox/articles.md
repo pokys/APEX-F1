@@ -574,3 +574,5 @@
 - [ ] Vowles explains why Williams exceeded F1’s cost cap by £627,000 | Formula 1 (https://www.racefans.net/2026/11/27/vowles-explains-why-williams-exceeded-f1s-cost-cap-by-627000/)
 - [ ] “Not worth thinking about” being able to beat Mercedes even with new floor – Norris | Formula 1 (https://www.racefans.net/2026/11/27/not-worth-thinking-about-being-able-to-beat-mercedes-even-with-new-floor-norris/)
 - [ ] Winners & losers from F1 2026 Qatar GP Friday practice (https://www.the-race.com/formula-1/winners-losers-from-f1-2026-qatar-gp-friday-practice/)
+- [ ] 100% wear in 15 laps - Qatar tyre issue has got even worse (https://www.the-race.com/f1/100-wear-in-15-laps-qatar-tyre-issue-has-got-even-worse/)
+- [ ] F1 Qatar GP practice analysis: Kimi Antonelli nearly a second clear of Max Verstappen on long runs (https://www.motorsport.com/f1/news/f1-qatar-gp-practice-analysis-antonelli-nearly-a-second-clear-of-verstappen-on-long-runs/10878464/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

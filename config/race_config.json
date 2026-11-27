@@ -1,23 +1,21 @@
 {
-  "available_sessions": [],
-  "available_sessions_by_calendar": [],
+  "available_sessions": [
+    "FP1"
+  ],
+  "available_sessions_by_calendar": [
+    "FP1"
+  ],
   "available_sessions_ingested": [],
   "calibration_season": 2026,
   "calibration_source": "outputs/backtest/backtest_season_2026.json",
   "driver_substitutions": [],
   "event_format": "conventional",
   "event_signal_count": 1,
-  "generated_at": "2026-11-27T14:46:17Z",
+  "generated_at": "2026-11-27T15:38:58Z",
   "grid_penalties": [],
   "grid_position_weight": 550.0,
   "grid_source": "simulation",
   "inputs_status": [
-    {
-      "configured_weight": 0.1,
-      "source": "fp1",
-      "source_key": "FP1",
-      "status": "missing"
-    },
     {
       "configured_weight": 0.15,
       "source": "fp2",
@@ -47,6 +45,12 @@
       "source": "sprint_qualifying",
       "source_key": "SQ",
       "status": "missing"
+    },
+    {
+      "configured_weight": 0.1,
+      "source": "fp1",
+      "source_key": "FP1",
+      "status": "pending_ingest"
     },
     {
       "configured_weight": 0.2,

@@ -554,3 +554,5 @@
 - [ ] F1 Qatar GP: Antonelli leads Russell in opening practice (https://www.autosport.com/f1/news/f1-qatar-gp-fp1-report-10878259/10878259/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
 - [ ] F1 Qatar GP: Kimi Antonelli leads Mercedes 1-2 in tricky FP1 (https://www.motorsport.com/f1/news/f1-qatar-gp-fp1-report-10878251/10878251/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] What happened in 2026 F1 Qatar GP first practice (https://www.the-race.com/formula-1/what-happened-in-2026-f1-qatar-gp-first-practice/)
+- [ ] Marquez fastest in his final MotoGP Friday practice session (https://www.the-race.com/motogp/marquez-fastest-in-his-final-motogp-friday-practice-session/)
+- [ ] Spotlight: Some F1 broadcasters choose not to attend Qatar Grand Prix | Brief (https://www.racefans.net/2026/11/27/spotlight-some-f1-broadcasters-choose-not-to-attend-qatar-grand-prix/)

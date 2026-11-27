@@ -557,6 +557,5 @@
 - [ ] Marquez fastest in his final MotoGP Friday practice session (https://www.the-race.com/motogp/marquez-fastest-in-his-final-motogp-friday-practice-session/)
 - [ ] Spotlight: Some F1 broadcasters choose not to attend Qatar Grand Prix | Brief (https://www.racefans.net/2026/11/27/spotlight-some-f1-broadcasters-choose-not-to-attend-qatar-grand-prix/)
 - [ ] 50-year-old structure led Williams to F1 cost cap breach (https://www.the-race.com/business/50-year-old-structure-led-williams-to-f1-cost-cap-breach/)
-- [ ] Court of Appeal rejects Audi’s call for Tsunoda penalty in Italian Grand Prix | Formula 1 (https://www.racefans.net/2026/11/27/court-of-appeal-rejects-audis-call-for-tsunoda-penalty-in-italian-grand-prix/)
 - [ ] FIA confirms F1 engine freeze and imposes testing restrictions ahead of V8 return (https://www.motorsport.com/f1/news/fia-confirms-f1-engine-freeze-and-imposes-testing-restrictions-ahead-of-v8-return/10878333/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] FIA details F1 engine freeze and imposes testing restrictions ahead of V8 return (https://www.autosport.com/f1/news/fia-details-f1-engine-freeze-and-imposes-testing-restrictions-ahead-of-v8-return/10878336/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)

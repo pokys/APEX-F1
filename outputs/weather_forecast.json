@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-28T08:42:42+00:00",
+  "fetched_at": "2026-11-28T09:41:59+00:00",
   "longitude": 51.4542,
   "race": "Qatar Grand Prix",
   "season": 2026,
@@ -14,7 +14,7 @@
       "precipitation_mm": 0.0,
       "rain_probability": 0.0,
       "start": "2026-11-28T18:00:00+00:00",
-      "weather_code": 0
+      "weather_code": 2
     },
     "R": {
       "precipitation_mm": 0.0,

@@ -556,3 +556,7 @@
 - [ ] F1 Qatar GP practice analysis: Kimi Antonelli nearly a second clear of Max Verstappen on long runs (https://www.motorsport.com/f1/news/f1-qatar-gp-practice-analysis-antonelli-nearly-a-second-clear-of-verstappen-on-long-runs/10878464/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] 100% wear in 15 laps - Qatar tyre issue has got even worse (https://www.the-race.com/formula-1/100-wear-in-15-laps-qatar-tyre-issue-has-got-even-worse/)
 - [ ] Mercedes' early advantage is even scarier than it looks (https://www.the-race.com/formula-1/mercedes-early-qatar-advantage-is-even-scarier-than-it-looks/)
+- [ ] F1 Qatar GP long runs: Kimi Antonelli nearly a second clear of Max Verstappen on Friday (https://www.motorsport.com/f1/news/f1-qatar-gp-practice-analysis-antonelli-nearly-a-second-clear-of-verstappen-on-long-runs/10878464/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+
+## 2026-11-28
+- [ ] George Russell drops cryptic hint over where Toto Wolff “stands off the record” on Max Verstappen (https://www.motorsport.com/f1/news/george-russell-drops-cryptic-hint-over-where-toto-wolff-stands-off-the-record-on-max-verstappen/10878290/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

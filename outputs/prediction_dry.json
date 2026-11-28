@@ -1,15 +1,15 @@
 {
   "data_freshness": {
-    "days_since_latest_event": -2,
-    "days_until_next_race": 2,
+    "days_since_latest_event": -1,
+    "days_until_next_race": 1,
     "is_stale": false,
     "latest_completed_date": "2026-11-29",
     "latest_completed_event": "Qatar Grand Prix",
     "next_race_date": "2026-11-29",
-    "reference_date": "2026-11-27",
+    "reference_date": "2026-11-28",
     "stale_threshold_days": 21.0
   },
-  "deterministic_run_id": "0a2459270564e4d88a9d",
+  "deterministic_run_id": "0038bb5a788ec3cce196",
   "drivers": [
     {
       "driver_share": 49.0,
@@ -782,7 +782,7 @@
       "weekend_form_delta": -14.718616
     }
   ],
-  "generated_at": "2026-11-27T23:41:08Z",
+  "generated_at": "2026-11-28T00:41:22Z",
   "inputs_used": [
     {
       "source": "history_driver",
@@ -807,7 +807,7 @@
   ],
   "integrity": {
     "driver_ratings_hash": "fb5ab3070475",
-    "race_config_hash": "d777a4ffc03a",
+    "race_config_hash": "edbc1da61d5f",
     "team_ratings_hash": "965f3294d205"
   },
   "prediction_target": "qualifying",

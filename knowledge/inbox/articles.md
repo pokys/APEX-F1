@@ -560,3 +560,4 @@
 
 ## 2026-11-28
 - [ ] George Russell drops cryptic hint over where Toto Wolff “stands off the record” on Max Verstappen (https://www.motorsport.com/f1/news/george-russell-drops-cryptic-hint-over-where-toto-wolff-stands-off-the-record-on-max-verstappen/10878290/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Formula 1 planning new engine development freeze before 2030 rules change | Formula 1 (https://www.racefans.net/2026/11/28/formula-1-planning-new-engine-development-freeze-before-2030-rules-change/)

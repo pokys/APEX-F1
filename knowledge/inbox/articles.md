@@ -568,3 +568,6 @@
 - [ ] 100% wear in 15 laps – F1’s tyre challenges in Qatar far more extreme than Pirelli expected (https://www.motorsport.com/f1/news/100-wear-in-15-laps-f1s-tyre-challenges-in-qatar-more-extreme-than-pirelli-expected/10878479/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Pedrosa leaves KTM MotoGP project (https://www.the-race.com/motogp/pedrosa-leaves-ktm-motogp-project/)
 - [ ] George Russell says Lewis Hamilton offers a different example from Max Verstappen (https://www.motorsport.com/f1/news/george-russell-draws-pointed-contrast-between-hamiltons-grace-and-dignity-and-verstappens-style/10878293/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Bezzecchi on pole, Marquez claims MotoGP qualifying title (https://www.the-race.com/motogp/bezzecchi-on-pole-marquez-claims-motogp-qualifying-title/)
+- [ ] Why Williams breached the 2025 F1 cost cap (https://www.autosport.com/f1/news/why-williams-breached-the-2025-f1-cost-cap/10878549/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Why Williams breached the 2025 F1 cost cap (https://www.motorsport.com/f1/news/why-williams-breached-the-2025-f1-cost-cap/10878544/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)

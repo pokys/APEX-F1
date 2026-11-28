@@ -561,3 +561,6 @@
 ## 2026-11-28
 - [ ] George Russell drops cryptic hint over where Toto Wolff “stands off the record” on Max Verstappen (https://www.motorsport.com/f1/news/george-russell-drops-cryptic-hint-over-where-toto-wolff-stands-off-the-record-on-max-verstappen/10878290/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
 - [ ] Formula 1 planning new engine development freeze before 2030 rules change | Formula 1 (https://www.racefans.net/2026/11/28/formula-1-planning-new-engine-development-freeze-before-2030-rules-change/)
+- [ ] Hankook poised to enter race for F1 tyre supply contract (https://www.autosport.com/f1/news/hankook-poised-to-enter-race-for-f1-tyre-supply-contract/10878399/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk)
+- [ ] Hankook tipped to enter race for F1 tyre supply contract (https://www.motorsport.com/f1/news/hankook-tipped-to-enter-race-for-f1-tyre-supply-contract/10878383/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www)
+- [ ] Hankook's bid for F1 tyre supply - what you need to know (https://www.the-race.com/formula-1/hankook-emerges-with-serious-f1-tyre-supply-push/)
